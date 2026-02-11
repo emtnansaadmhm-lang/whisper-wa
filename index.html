@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +7,7 @@
 
 <style>
 :root {
-    --green-dark: #071F16;
+    --green-dark: #04140E;
     --green-main: #0F6B3A;
     --green-accent: #2FA66A;
     --green-light: #9BE3B4;
@@ -23,19 +22,19 @@ body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
     height: 100vh;
-    background: linear-gradient(120deg, #061A13, #0F6B3A);
+    background: linear-gradient(120deg, #04140E, #0F6B3A);
     color: var(--text-light);
     overflow: hidden;
 }
 
-/* Subtle forensic grid */
+/* Subtle digital grid */
 .background-grid {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(155,227,180,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(155,227,180,0.05) 1px, transparent 1px);
-    background-size: 80px 80px;
+        linear-gradient(rgba(155,227,180,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(155,227,180,0.04) 1px, transparent 1px);
+    background-size: 90px 90px;
     z-index: 0;
 }
 
@@ -48,51 +47,52 @@ body {
     align-items: center;
 }
 
-/* LEFT SECTION */
+/* LEFT PANEL – ALL CONTENT */
 .left-panel {
-    width: 45%;
-    padding-left: 100px;
+    width: 50%;
+    padding-left: 90px;
 }
 
-/* Logo */
+/* BIG LOGO */
 .logo {
-    width: 190px;
-    margin-bottom: 35px;
+    width: 240px;
+    margin-bottom: 45px;
 }
 
-/* Titles */
+/* MAIN TITLE */
 h1 {
-    font-size: 66px;
+    font-size: 72px;
     margin: 0;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
     color: var(--green-light);
 }
 
+/* SUB TITLE */
 h2 {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: normal;
-    margin: 18px 0 40px;
+    margin: 20px 0 45px;
     color: #CFEFE0;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
 }
 
-/* Description */
+/* DESCRIPTION */
 .description {
     font-size: 18px;
-    line-height: 1.9;
-    max-width: 520px;
-    margin-bottom: 60px;
+    line-height: 2;
+    max-width: 540px;
+    margin-bottom: 70px;
     color: #E2F5EC;
 }
 
-/* Button */
+/* BUTTON */
 .btn {
     background: linear-gradient(135deg, #9BE3B4, #2FA66A);
-    color: #062016;
+    color: #04140E;
     border: none;
-    padding: 18px 58px;
-    border-radius: 50px;
-    font-size: 18px;
+    padding: 20px 65px;
+    border-radius: 60px;
+    font-size: 19px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.35s ease;
@@ -100,17 +100,17 @@ h2 {
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+    box-shadow: 0 22px 50px rgba(0,0,0,0.6);
 }
 
-/* Footer */
+/* FOOTER */
 .footer {
     position: absolute;
     bottom: 25px;
-    left: 100px;
+    left: 90px;
     font-size: 13px;
     color: #BFE8D5;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.7px;
 }
 </style>
 </head>
@@ -121,7 +121,7 @@ h2 {
 
 <div class="main">
 
-    <!-- LEFT SIDE CONTENT -->
+    <!-- LEFT SIDE CONTENT ONLY -->
     <div class="left-panel">
 
         <img src="logo.png" alt="Whisper-WA Logo" class="logo">
