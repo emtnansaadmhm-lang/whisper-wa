@@ -7,10 +7,10 @@
 
 <style>
 :root {
-    --green-dark: #04140E;
+    --green-dark: #0B3D2A;
     --green-main: #0F6B3A;
-    --green-accent: #2FA66A;
     --green-light: #9BE3B4;
+    --green-accent: #2FA66A;
     --text-light: #EAF7F0;
 }
 
@@ -22,77 +22,74 @@ body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
     height: 100vh;
-    background: linear-gradient(120deg, #04140E, #0F6B3A);
+    background: linear-gradient(135deg, #071F16, #0F6B3A);
     color: var(--text-light);
     overflow: hidden;
 }
 
-/* Subtle digital grid */
+/* Background effect */
 .background-grid {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(155,227,180,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(155,227,180,0.04) 1px, transparent 1px);
-    background-size: 90px 90px;
+        linear-gradient(rgba(155, 227, 180, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(155, 227, 180, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
     z-index: 0;
 }
 
-/* Main container */
+/* Main layout */
 .main {
     position: relative;
     z-index: 1;
     height: 100%;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 40px;
 }
 
-/* LEFT PANEL – ALL CONTENT */
-.left-panel {
-    width: 50%;
-    padding-left: 90px;
-}
-
-/* BIG LOGO */
+/* Logo */
 .logo {
-    width: 240px;
-    margin-bottom: 45px;
+    width: 260px;
+    margin-bottom: 35px;
 }
 
-/* MAIN TITLE */
+/* Title */
 h1 {
-    font-size: 72px;
+    font-size: 48px;
     margin: 0;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
     color: var(--green-light);
 }
 
-/* SUB TITLE */
 h2 {
-    font-size: 26px;
+    font-size: 20px;
     font-weight: normal;
-    margin: 20px 0 45px;
+    margin: 10px 0 30px;
     color: #CFEFE0;
-    letter-spacing: 1.5px;
+    letter-spacing: 1px;
 }
 
-/* DESCRIPTION */
+/* Description */
 .description {
-    font-size: 18px;
-    line-height: 2;
-    max-width: 540px;
-    margin-bottom: 70px;
+    max-width: 720px;
+    font-size: 17px;
+    line-height: 1.8;
+    margin-bottom: 50px;
     color: #E2F5EC;
 }
 
-/* BUTTON */
+/* Button */
 .btn {
     background: linear-gradient(135deg, #9BE3B4, #2FA66A);
-    color: #04140E;
+    color: #062016;
     border: none;
-    padding: 20px 65px;
-    border-radius: 60px;
-    font-size: 19px;
+    padding: 16px 48px;
+    border-radius: 50px;
+    font-size: 17px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.35s ease;
@@ -100,17 +97,16 @@ h2 {
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 22px 50px rgba(0,0,0,0.6);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
 }
 
-/* FOOTER */
+/* Footer text */
 .footer {
     position: absolute;
     bottom: 25px;
-    left: 90px;
     font-size: 13px;
     color: #BFE8D5;
-    letter-spacing: 0.7px;
+    letter-spacing: 0.5px;
 }
 </style>
 </head>
@@ -121,25 +117,20 @@ h2 {
 
 <div class="main">
 
-    <!-- LEFT SIDE CONTENT ONLY -->
-    <div class="left-panel">
+    <img src="logo.png" alt="Whisper-WA Logo" class="logo">
 
-        <img src="logo.png" alt="Whisper-WA Logo" class="logo">
+    <h1>Whisper-WA</h1>
+    <h2>Digital Forensic Analysis Tool</h2>
 
-        <h1>Whisper-WA</h1>
-        <h2>Digital Forensic Analysis Tool</h2>
+    <p class="description">
+        Whisper-WA is a digital forensic system designed to analyze WhatsApp data,
+        support investigative processes, and generate structured forensic reports
+        within a secure and controlled environment.
+    </p>
 
-        <p class="description">
-            Whisper-WA is a digital forensic system designed to analyze WhatsApp data,
-            support investigative processes, and generate structured forensic reports
-            within a secure and controlled environment.
-        </p>
-
-        <a href="auth.html">
-            <button class="btn">Secure Sign In</button>
-        </a>
-
-    </div>
+    <a href="auth.html">
+        <button class="btn" >Sign In</button>
+    </a>
 
 </div>
 
