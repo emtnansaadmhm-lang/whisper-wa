@@ -7,10 +7,10 @@
 
 <style>
 :root {
-    --green-dark: #0B3D2A;
+    --green-dark: #071F16;
     --green-main: #0F6B3A;
-    --green-light: #9BE3B4;
     --green-accent: #2FA66A;
+    --green-light: #9BE3B4;
     --text-light: #EAF7F0;
 }
 
@@ -27,14 +27,14 @@ body {
     overflow: hidden;
 }
 
-/* Background effect */
+/* Background grid */
 .background-grid {
     position: absolute;
     inset: 0;
     background-image:
         linear-gradient(rgba(155, 227, 180, 0.05) 1px, transparent 1px),
         linear-gradient(90deg, rgba(155, 227, 180, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background-size: 70px 70px;
     z-index: 0;
 }
 
@@ -44,41 +44,42 @@ body {
     z-index: 1;
     height: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    padding: 40px;
+    padding-left: 90px;
+}
+
+/* Left content */
+.content {
+    max-width: 750px;
 }
 
 /* Logo */
 .logo {
-    width: 140px;
-    margin-bottom: 25px;
+    width: 180px;
+    margin-bottom: 30px;
 }
 
-/* Title */
+/* Titles */
 h1 {
-    font-size: 48px;
+    font-size: 64px;
     margin: 0;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     color: var(--green-light);
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: normal;
-    margin: 10px 0 30px;
+    margin: 15px 0 35px;
     color: #CFEFE0;
     letter-spacing: 1px;
 }
 
 /* Description */
 .description {
-    max-width: 720px;
-    font-size: 17px;
-    line-height: 1.8;
-    margin-bottom: 50px;
+    font-size: 18px;
+    line-height: 1.9;
+    margin-bottom: 55px;
     color: #E2F5EC;
 }
 
@@ -87,9 +88,9 @@ h2 {
     background: linear-gradient(135deg, #9BE3B4, #2FA66A);
     color: #062016;
     border: none;
-    padding: 16px 48px;
+    padding: 18px 54px;
     border-radius: 50px;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.35s ease;
@@ -97,16 +98,17 @@ h2 {
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.55);
 }
 
-/* Footer text */
+/* Footer */
 .footer {
     position: absolute;
     bottom: 25px;
+    left: 90px;
     font-size: 13px;
     color: #BFE8D5;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
 }
 </style>
 </head>
@@ -116,22 +118,24 @@ h2 {
 <div class="background-grid"></div>
 
 <div class="main">
+    <div class="content">
 
-    <img src="logo.png" alt="Whisper-WA Logo" class="logo">
+        <img src="logo.png" alt="Whisper-WA Logo" class="logo">
 
-    <h1>Whisper-WA</h1>
-    <h2>Digital Forensic Analysis Tool</h2>
+        <h1>Whisper-WA</h1>
+        <h2>Digital Forensic Analysis Tool</h2>
 
-    <p class="description">
-        Whisper-WA is a digital forensic system designed to analyze WhatsApp data,
-        support investigative processes, and generate structured forensic reports
-        within a secure and controlled environment.
-    </p>
+        <p class="description">
+            Whisper-WA is a digital forensic system designed to analyze WhatsApp data,
+            support investigative processes, and generate structured forensic reports
+            within a secure and controlled environment.
+        </p>
 
-    <a href="auth.html">
-        <button class="btn">Secure Sign In</button>
-    </a>
+        <a href="auth.html">
+            <button class="btn">Secure Sign In</button>
+        </a>
 
+    </div>
 </div>
 
 <div class="footer">
