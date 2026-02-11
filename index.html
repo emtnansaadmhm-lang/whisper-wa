@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,46 +23,46 @@ body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
     height: 100vh;
-    background: linear-gradient(135deg, #071F16, #0F6B3A);
+    background: linear-gradient(120deg, #061A13, #0F6B3A);
     color: var(--text-light);
     overflow: hidden;
 }
 
-/* Background grid */
+/* Subtle forensic grid */
 .background-grid {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(155, 227, 180, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(155, 227, 180, 0.05) 1px, transparent 1px);
-    background-size: 70px 70px;
+        linear-gradient(rgba(155,227,180,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(155,227,180,0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
     z-index: 0;
 }
 
-/* Main layout */
+/* Main container */
 .main {
     position: relative;
     z-index: 1;
     height: 100%;
     display: flex;
     align-items: center;
-    padding-left: 90px;
 }
 
-/* Left content */
-.content {
-    max-width: 750px;
+/* LEFT SECTION */
+.left-panel {
+    width: 45%;
+    padding-left: 100px;
 }
 
 /* Logo */
 .logo {
-    width: 180px;
-    margin-bottom: 30px;
+    width: 190px;
+    margin-bottom: 35px;
 }
 
 /* Titles */
 h1 {
-    font-size: 64px;
+    font-size: 66px;
     margin: 0;
     letter-spacing: 3px;
     color: var(--green-light);
@@ -70,7 +71,7 @@ h1 {
 h2 {
     font-size: 24px;
     font-weight: normal;
-    margin: 15px 0 35px;
+    margin: 18px 0 40px;
     color: #CFEFE0;
     letter-spacing: 1px;
 }
@@ -79,7 +80,8 @@ h2 {
 .description {
     font-size: 18px;
     line-height: 1.9;
-    margin-bottom: 55px;
+    max-width: 520px;
+    margin-bottom: 60px;
     color: #E2F5EC;
 }
 
@@ -88,7 +90,7 @@ h2 {
     background: linear-gradient(135deg, #9BE3B4, #2FA66A);
     color: #062016;
     border: none;
-    padding: 18px 54px;
+    padding: 18px 58px;
     border-radius: 50px;
     font-size: 18px;
     font-weight: 600;
@@ -98,14 +100,14 @@ h2 {
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+    box-shadow: 0 20px 45px rgba(0,0,0,0.6);
 }
 
 /* Footer */
 .footer {
     position: absolute;
     bottom: 25px;
-    left: 90px;
+    left: 100px;
     font-size: 13px;
     color: #BFE8D5;
     letter-spacing: 0.6px;
@@ -118,7 +120,9 @@ h2 {
 <div class="background-grid"></div>
 
 <div class="main">
-    <div class="content">
+
+    <!-- LEFT SIDE CONTENT -->
+    <div class="left-panel">
 
         <img src="logo.png" alt="Whisper-WA Logo" class="logo">
 
@@ -136,6 +140,7 @@ h2 {
         </a>
 
     </div>
+
 </div>
 
 <div class="footer">
