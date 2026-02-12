@@ -13,19 +13,24 @@
       --primary-mid:#3f9b5f;
       --primary-light:#5fbf7a;
       --accent-glow:#8fd9a8;
+
       --bg-dark:#0e1a12;
+
       --glass-bg: rgba(20, 40, 30, 0.65);
       --glass-border: rgba(95, 191, 122, 0.3);
+
       --text-white:#ffffff;
       --text-muted:#c2dec9;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
     body{
       font-family:'Tajawal',sans-serif;
-      background: var(--bg-dark);
+      background-color: var(--bg-dark);
       color: var(--text-white);
       height:100vh;
       overflow:hidden;
+
       background-image:
         linear-gradient(rgba(31,95,59,0.10) 1px, transparent 1px),
         linear-gradient(90deg, rgba(31,95,59,0.10) 1px, transparent 1px);
@@ -33,348 +38,222 @@
     }
 
     .animated-bg-logo{
-      position:fixed;top:50%;left:50%;
-      transform:translate(-50%,-50%);
-      z-index:-1;width:520px;opacity:.22;pointer-events:none;
-      animation:pulse 8s ease-in-out infinite alternate;
+      position: fixed;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      z-index:-1;
+      width: 600px;
+      pointer-events:none;
+      opacity:0.2;
+      animation: cyberGlowPulse 8s ease-in-out infinite alternate;
     }
-    .animated-bg-logo img{width:100%;filter:drop-shadow(0 0 30px var(--primary-mid))}
-    @keyframes pulse{
-      0%{opacity:.14;transform:translate(-50%,-50%) scale(.95)}
-      100%{opacity:.34;transform:translate(-50%,-50%) scale(1.05)}
+    .animated-bg-logo img{
+      width:100%;
+      filter: drop-shadow(0 0 30px var(--primary-mid));
     }
 
-    .page{
-      height:100vh;
+    .main-container{
       display:flex;
       flex-direction:column;
+      height:100vh;
       padding:25px;
       gap:20px;
+      position:relative;
+      z-index:1;
     }
 
-    header{
+    .glass-header{
       background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
       backdrop-filter: blur(12px);
-      padding: 12px 20px;
+      border: 1px solid var(--glass-border);
+      padding: 12px 25px;
       border-radius: 16px;
       display:flex;
       justify-content:space-between;
       align-items:center;
-      box-shadow: 0 4px 20px rgba(0,0,0,.2);
-    }
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{height:42px;filter:drop-shadow(0 0 6px var(--primary-mid))}
-    .brand h3{font-size:1.2rem}
-    .badge{
-      display:inline-block;
-      margin-top:3px;
-      font-size:.8rem;
-      padding:4px 10px;
-      border-radius:6px;
-      color: var(--accent-glow);
-      background: var(--primary-dark);
-      border:1px solid var(--primary-mid);
     }
 
-    .nav{display:flex;gap:14px;align-items:center}
-    .nav a{
-      color: var(--text-muted);
-      text-decoration:none;
-      font-weight:700;
-      transition:.2s;
-    }
-    .nav a:hover{color: var(--primary-light); transform: translateY(-1px);}
-    .nav a.active{
-      color: var(--accent-glow);
-      border-bottom:2px solid var(--accent-glow);
-      padding-bottom:3px;
-    }
-
-    main{
+    .center-area{
       flex:1;
       display:flex;
-      justify-content:center;
       align-items:center;
+      justify-content:center;
     }
 
-    .card{
-      width:min(740px, 92vw);
+    .glass-card{
+      width:min(760px, 92vw);
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(15px);
       border-radius: 22px;
-      padding: 24px;
-      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      padding: 26px;
     }
 
-    .title{font-size:1.55rem;color:var(--accent-glow);margin-bottom:8px}
-    .sub{color:var(--text-muted);line-height:1.6;margin-bottom:16px}
-
-    .tabs{display:flex;gap:10px;margin-bottom:14px}
-    .tabs button{
-      flex:1;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.20);
-      color: var(--text-muted);
-      cursor:pointer;
-      font-weight:800;
-      transition:.2s;
-    }
-    .tabs button.active{
-      background: rgba(95,191,122,.15);
-      border-color: var(--glass-border);
-      color: var(--accent-glow);
-    }
-
-    .tab{display:none}
-    .tab.active{display:block}
-
-    label{display:block;color:var(--text-muted);font-weight:800;margin:8px 0}
-    input, select{
+    .field-input{
       width:100%;
       padding:12px 14px;
-      border-radius:12px;
-      border:1px solid var(--glass-border);
-      background: rgba(0,0,0,.28);
-      color:white;
-      outline:none;
-      font-size:1rem;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: rgba(0,0,0,0.28);
+      color: white;
     }
-    input::placeholder{color:rgba(194,222,201,.7)}
-    .hint{margin-top:10px;color:rgba(194,222,201,.85);font-size:.9rem}
 
-    .actions{display:flex;gap:12px;margin-top:16px}
-    .btn{
+    .actions-row{
+      display:flex;
+      gap:12px;
+      margin-top: 18px;
+    }
+
+    .btn-primary{
       flex:1;
-      padding:12px 14px;
-      border-radius:14px;
-      cursor:pointer;
-      font-weight:900;
-      border:none;
-      transition:.2s;
-    }
-    .btn.primary{
-      color:white;
       background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
+      color:white;
+      border:none;
+      padding: 12px;
+      border-radius: 14px;
+      cursor:pointer;
     }
-    .btn.primary:hover{filter:brightness(1.15);transform:translateY(-1px)}
-    .btn.ghost{
-      background: rgba(0,0,0,.18);
+
+    .btn-ghost{
+      flex:1;
+      background: rgba(0,0,0,0.18);
       color: var(--accent-glow);
-      border:1px solid rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 12px;
+      border-radius: 14px;
+      cursor:pointer;
     }
-    .btn.ghost:hover{background: rgba(95,191,122,.12)}
 
     .alert{
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.08);
-      font-weight:800;
-      display:none;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 14px;
     }
-    .alert.info{display:block;background:rgba(63,155,95,.12);color:var(--accent-glow)}
-    .alert.success{display:block;background:rgba(95,191,122,.15);color:#dffbe7}
-    .alert.danger{display:block;background:rgba(255,107,107,.14);color:#ffd2d2;border-color:rgba(255,107,107,.35)}
 
-    .device, .progress{
-      margin-top:14px;
-      padding:14px;
-      border-radius:16px;
-      background: rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.08);
-      display:none;
+    .alert.hidden{ display:none; }
+    .alert.info{ background: rgba(63,155,95,0.12); }
+    .alert.success{ background: rgba(95,191,122,0.15); }
+    .alert.danger{ background: rgba(255,107,107,0.14); }
+
+    .log-box{
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.22);
+      height: 190px;
+      overflow-y: auto;
+      font-family: monospace;
     }
-    .device.show, .progress.show{display:block}
 
-    .row{display:flex;justify-content:space-between;padding:6px 0;color:var(--text-muted)}
-    .row b{color:white}
-
-    .step{display:flex;align-items:center;gap:10px;padding:8px 0;color:var(--text-muted);font-weight:800}
-    .dot{
-      width:12px;height:12px;border-radius:50%;
-      background: rgba(255,255,255,.18);
-      border:1px solid rgba(255,255,255,.18);
-    }
-    .dot.running{background: rgba(143,217,168,.35); border-color: rgba(143,217,168,.65); box-shadow: 0 0 10px rgba(143,217,168,.35);}
-    .dot.done{background: rgba(95,191,122,.9); border-color: rgba(95,191,122,1); box-shadow: 0 0 12px rgba(95,191,122,.45);}
+    .log-line.success{ color:#8ff0b0; }
+    .log-line.danger{ color:#ffb3b3; }
   </style>
 </head>
 
 <body>
-  <div class="animated-bg-logo"><img src="logo.png" alt=""></div>
 
-  <div class="page">
-    <header>
-      <div class="brand">
-        <img src="logo.png" alt="logo">
-        <div>
-          <h3>Whisper-WA</h3>
-          <span class="badge">Case #: 055xxx</span>
-        </div>
+<div class="main-container">
+
+  <main class="center-area">
+
+    <section class="glass-card">
+
+      <h2>Connect Device</h2>
+
+      <label>IP:PORT (اختياري)</label>
+      <input class="field-input" id="ipInput" placeholder="192.168.1.20:5555" />
+
+      <div class="hint">
+        لو تبين USB: اشبكي الجوال بالكيبل + فعّلي USB Debugging ثم اضغطي Connect
       </div>
 
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a class="active" href="connect.html">Connect</a>
-        <a href="chat.html">Chats</a>
-        <a href="reports.html">Reports</a>
-      </nav>
-    </header>
+      <div class="actions-row">
+        <button class="btn-primary" id="btnConnect">Connect</button>
+        <button class="btn-ghost" id="btnViewPrev">View Previous Chats</button>
+      </div>
 
-    <main>
-      <section class="card">
-        <div class="title">Connect Device</div>
-        <div class="sub">Enter IP:PORT or connect using USB. (Demo UI — backend later)</div>
+      <div class="alert hidden" id="alertBox"></div>
 
-        <div class="tabs">
-          <button class="active" id="tabIpBtn">Wi-Fi (IP:PORT)</button>
-          <button id="tabUsbBtn">USB</button>
-        </div>
+      <div class="log-box hidden" id="logBox"></div>
 
-        <div class="tab active" id="tabIp">
-          <label for="ip">Device IP:PORT</label>
-          <input id="ip" type="text" placeholder="192.168.1.20:5555">
-          <div class="hint">Demo: just type anything then Connect.</div>
-        </div>
+    </section>
 
-        <div class="tab" id="tabUsb">
-          <label for="usb">USB Device</label>
-          <select id="usb">
-            <option value="">Select device (Demo)</option>
-            <option value="d1">Android Device — demo</option>
-          </select>
-          <div class="hint">Real: this will be loaded from ADB devices list.</div>
-        </div>
+  </main>
+</div>
 
-        <div class="actions">
-          <button class="btn primary" id="connectBtn">Connect</button>
-          <button class="btn ghost" id="prevBtn">View Previous Chats</button>
-        </div>
+<script>
+const CHAT_PAGE = "chat.html";
 
-        <div class="alert" id="alertBox"></div>
+const DEMO_IS_ROOTED = true;
+const DEMO_USB_DEVICE_FOUND = true;
 
-        <div class="device" id="deviceBox">
-          <div class="row"><span>Model:</span> <b id="m">—</b></div>
-          <div class="row"><span>Android:</span> <b id="v">—</b></div>
-          <div class="row"><span>Root:</span> <b id="r">—</b></div>
-        </div>
+const alertBox = document.getElementById("alertBox");
+const logBox = document.getElementById("logBox");
 
-        <div class="progress" id="progressBox">
-          <div class="step"><span class="dot" id="s1"></span> ADB Connection</div>
-          <div class="step"><span class="dot" id="s2"></span> Pull Evidence (Key + DB)</div>
-          <div class="step"><span class="dot" id="s3"></span> SHA-256 Hashing</div>
-          <div class="step"><span class="dot" id="s4"></span> Decryption</div>
-          <div class="step"><span class="dot" id="s5"></span> Analysis & Extraction</div>
-        </div>
-      </section>
-    </main>
-  </div>
+function showAlert(type, text) {
+  alertBox.className = "alert " + type;
+  alertBox.textContent = text;
+}
 
-  <script>
-    const tabIpBtn = document.getElementById("tabIpBtn");
-    const tabUsbBtn = document.getElementById("tabUsbBtn");
-    const tabIp = document.getElementById("tabIp");
-    const tabUsb = document.getElementById("tabUsb");
+function addLog(text, type="") {
+  logBox.classList.remove("hidden");
+  const d = document.createElement("div");
+  d.className = "log-line " + type;
+  d.textContent = text;
+  logBox.appendChild(d);
+}
 
-    const alertBox = document.getElementById("alertBox");
-    const deviceBox = document.getElementById("deviceBox");
-    const progressBox = document.getElementById("progressBox");
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
-    const m = document.getElementById("m");
-    const v = document.getElementById("v");
-    const r = document.getElementById("r");
+async function pipeline(){
+  addLog("[INFO] Detecting device...");
+  await sleep(500);
 
-    const connectBtn = document.getElementById("connectBtn");
-    const prevBtn = document.getElementById("prevBtn");
+  addLog("[INFO] ADB connection established");
+  await sleep(500);
 
-    // غيّريها لو تبين تجربة "مو مروت"
-    const DEMO_IS_ROOTED = true;
+  addLog("[INFO] Extracting WhatsApp data...");
+  await sleep(600);
 
-    function setAlert(type, text){
-      alertBox.className = "alert " + type;
-      alertBox.textContent = text;
-    }
+  addLog("[INFO] Calculating SHA-256 hashes...");
+  await sleep(600);
 
-    function resetDots(){
-      ["s1","s2","s3","s4","s5"].forEach(id=>{
-        document.getElementById(id).className = "dot";
-      });
-    }
+  addLog("[INFO] Decrypting database...");
+  await sleep(700);
 
-    function dot(id, state){
-      document.getElementById(id).classList.add(state);
-    }
+  addLog("[SUCCESS] Extraction complete!", "success");
+}
 
-    function sleep(ms){ return new Promise(res=>setTimeout(res, ms)); }
+document.getElementById("btnConnect").onclick = async () => {
 
-    function switchTab(isIp){
-      tabIpBtn.classList.toggle("active", isIp);
-      tabUsbBtn.classList.toggle("active", !isIp);
-      tabIp.classList.toggle("active", isIp);
-      tabUsb.classList.toggle("active", !isIp);
+  const ip = document.getElementById("ipInput").value.trim();
 
-      alertBox.className = "alert";
-      alertBox.textContent = "";
-      deviceBox.classList.remove("show");
-      progressBox.classList.remove("show");
-      resetDots();
-    }
+  if (!ip && !DEMO_USB_DEVICE_FOUND) {
+    showAlert("danger", "لم يتم العثور على جهاز USB");
+    addLog("[ERROR] No USB device found", "danger");
+    return;
+  }
 
-    tabIpBtn.onclick = ()=>switchTab(true);
-    tabUsbBtn.onclick = ()=>switchTab(false);
+  if (!DEMO_IS_ROOTED) {
+    showAlert("danger", "الجهاز غير مروّت ولا يمكن المتابعة");
+    addLog("[ERROR] Device not rooted", "danger");
+    return;
+  }
 
-    async function runPipeline(){
-      progressBox.classList.add("show");
+  showAlert("info", "بدء العمليات...");
+  await pipeline();
 
-      dot("s1","running"); await sleep(600); dot("s1","done");
-      dot("s2","running"); await sleep(800); dot("s2","done");
-      dot("s3","running"); await sleep(650); dot("s3","done");
-      dot("s4","running"); await sleep(850); dot("s4","done");
-      dot("s5","running"); await sleep(850); dot("s5","done");
+  showAlert("success", "تم الانتهاء... الانتقال لصفحة الشات");
 
-      setAlert("success", "Completed (Demo). Redirecting to Chats...");
-      await sleep(700);
-      window.location.href = "chat.html";
-    }
+  await sleep(700);
+  window.location.href = CHAT_PAGE;
+};
 
-    connectBtn.onclick = async ()=>{
-      // تحقق بسيط
-      const isIp = tabIpBtn.classList.contains("active");
-      if(isIp){
-        const ip = document.getElementById("ip").value.trim();
-        if(!ip) return setAlert("danger","Please enter IP:PORT.");
-      }else{
-        const usb = document.getElementById("usb").value;
-        if(!usb) return setAlert("danger","Please select a USB device.");
-      }
+document.getElementById("btnViewPrev").onclick = () => {
+  window.location.href = CHAT_PAGE;
+};
+</script>
 
-      deviceBox.classList.add("show");
-      m.textContent = "Android (Demo Device)";
-      v.textContent = "13";
-      r.textContent = DEMO_IS_ROOTED ? "Rooted ✅" : "Not Rooted ❌";
-
-      if(!DEMO_IS_ROOTED){
-        return setAlert("danger","Device is not rooted. This tool requires root to continue.");
-      }
-
-      setAlert("info","Connected (Demo). Running forensic pipeline...");
-      connectBtn.disabled = true;
-      prevBtn.disabled = true;
-
-      resetDots();
-      try{
-        await runPipeline();
-      }finally{
-        connectBtn.disabled = false;
-        prevBtn.disabled = false;
-      }
-    };
-
-    prevBtn.onclick = ()=> window.location.href = "chat.html";
-  </script>
 </body>
 </html>
