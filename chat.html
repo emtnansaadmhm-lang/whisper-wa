@@ -438,6 +438,13 @@
     }
   </style>
 </head>
+<script>
+  fetch("header.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("header-placeholder").innerHTML = html;
+    });
+</script>
 
 <body>
   <div class="animated-bg-logo">
@@ -445,25 +452,8 @@
   </div>
 
   <div class="main-container">
-    <header class="glass-header small-header">
-      <div class="logo-section">
-        <img src="logo.png" alt="Logo" class="logo-img">
-        <div class="logo-text">
-          <h3>Whisper-WA</h3>
-          <span class="case-badge" id="txt-case">قضية رقم: #055xxx</span>
-        </div>
-      </div>
-
-      <div class="header-actions">
-        <button class="lang-switch-btn" onclick="toggleLanguage()">
-          <i class="fa-solid fa-globe"></i> <span id="lang-label">English</span>
-        </button>
-
-        <a href="index.html" class="icon-btn highlight" id="txt-home">الرئيسية</a>
-        <button class="icon-btn" id="txt-stats"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
-        <button class="icon-btn" id="txt-account"><i class="fa-solid fa-user"></i> حسابي</button>
-      </div>
-    </header>
+   
+<div id="header-placeholder"></div>
 
     <div class="workspace-grid">
 
