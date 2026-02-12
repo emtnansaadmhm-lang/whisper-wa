@@ -1,159 +1,685 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whisper-WA | بناء التقرير</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whisper-WA | بناء التقرير</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-dark: #1f5f3b;
+      --primary-mid: #3f9b5f;
+      --primary-light: #5fbf7a;
+      --accent-glow: #8fd9a8;
+
+      --bg-dark: #0e1a12;
+
+      --glass-bg: rgba(20, 40, 30, 0.65);
+      --glass-border: rgba(95, 191, 122, 0.3);
+
+      --text-white: #ffffff;
+      --text-muted: #c2dec9;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      height: 100vh;
+      overflow: hidden;
+
+      background-image:
+        linear-gradient(rgba(31, 95, 59, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 95, 59, 0.1) 1px, transparent 1px);
+      background-size: 40px 40px;
+
+      direction: rtl;
+    }
+
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding: 25px;
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .small-header {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      padding: 12px 25px;
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .logo-section { display: flex; align-items: center; gap: 15px; }
+
+    .logo-img {
+      height: 45px;
+      width: auto;
+      filter: drop-shadow(0 0 5px var(--primary-mid));
+    }
+
+    .logo-text h3 { color: var(--text-white); font-size: 1.3rem; margin-bottom: 2px; }
+
+    .case-badge {
+      background: var(--primary-dark);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--accent-glow);
+      border: 1px solid var(--primary-mid);
+    }
+
+    .header-actions { display: flex; gap: 15px; align-items: center; }
+
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-family: 'Tajawal';
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .icon-btn:hover { color: var(--primary-light); transform: translateY(-2px); }
+    .icon-btn.highlight { color: var(--accent-glow); font-weight: bold; border-bottom: 2px solid var(--accent-glow); }
+
+    .lang-switch-btn {
+      background: rgba(95, 191, 122, 0.1);
+      border: 1px solid var(--primary-mid);
+      color: var(--accent-glow);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: bold;
+      display: flex; align-items: center; gap: 8px;
+      transition: 0.3s;
+      margin-left: 10px;
+    }
+    .lang-switch-btn:hover {
+      background: var(--primary-mid);
+      color: white;
+      box-shadow: 0 0 10px var(--primary-mid);
+    }
+
+    .workspace-grid {
+      display: flex;
+      flex: 1;
+      gap: 20px;
+      overflow: hidden;
+    }
+
+    /* ✅ يمين: أكبر من الشات */
+    .report-sidebar {
+      width: auto;
+      flex: 1.25;
+      min-width: 420px;
+
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    /* ✅ هيدر التقرير: Title + زرين */
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 10px;
+    }
+
+    .sidebar-header h3 { font-size: 1.1rem; color: var(--primary-light); }
+
+    .sidebar-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-secondary {
+      background: rgba(95, 191, 122, 0.12);
+      border: 1px solid rgba(95, 191, 122, 0.35);
+      color: var(--accent-glow);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Tajawal';
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: 0.25s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover {
+      background: rgba(63, 155, 95, 0.35);
+      border-color: rgba(95, 191, 122, 0.6);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: 'Tajawal';
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      align-items: center;
+      transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(31, 95, 59, 0.3);
+    }
+    .btn-primary:hover { filter: brightness(1.2); transform: scale(1.02); }
+    .mb-10 { margin-bottom: 20px; }
+
+    /* ✅ جدول التقرير */
+    .report-table-wrap {
+      flex: 1;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    .report-table thead th {
+      position: sticky;
+      top: 0;
+      background: rgba(20, 40, 30, 0.95);
+      color: var(--primary-light);
+      font-size: 0.85rem;
+      text-align: right;
+      padding: 12px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 2;
+    }
+
+    .report-table tbody td {
+      padding: 12px 10px;
+      font-size: 0.85rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-white);
+      vertical-align: top;
+    }
+
+    .report-table tbody tr:hover {
+      background: rgba(95, 191, 122, 0.08);
+    }
+
+    .cell-msg { white-space: normal; line-height: 1.4; }
+
+    .badge-type {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .badge-sent { background: rgba(63,155,95,0.22); color: #d8ffe4; }
+    .badge-recv { background: rgba(44,62,80,0.35); color: #d7e6ff; }
+
+    /* ✅ الشات (يسار): نفس تصميمه بس أصغر */
+    .chat-interface {
+      flex: 1;
+
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .search-area {
+      padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.1);
+    }
+
+    .search-input-wrapper { position: relative; margin-bottom: 15px; }
+
+    .search-input-wrapper input {
+      width: 80%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--glass-border);
+      padding: 10px 40px 10px 15px;
+      border-radius: 10px;
+      color: white;
+      outline: none;
+      font-family: 'Tajawal';
+      font-size: 0.95rem;
+    }
+
+    .search-input-wrapper i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .tags-row { display: flex; gap: 10px; }
+
+    .tag {
+      background: rgba(95, 191, 122, 0.15);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--accent-glow);
+      border: 1px solid rgba(95, 191, 122, 0.3);
+      cursor: pointer;
+    }
+    .tag:hover { background: var(--primary-mid); color: white; }
+
+    .chat-split-view { display: flex; flex: 1; overflow: hidden; }
+
+    .chat-list {
+      width: 150px;
+      border-left: 1px solid rgba(255,255,255,0.1);
+      overflow-y: auto;
+      background: rgba(0,0,0,0.1);
+    }
+
+    .chat-item {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .chat-item:hover, .chat-item.active {
+      background: rgba(95, 191, 122, 0.1);
+      border-right: 4px solid var(--primary-light);
+    }
+
+    .chat-info h4 { font-size: 0.95rem; margin-bottom: 5px; color: white; }
+    .chat-info p { font-size: 0.85rem; color: var(--text-muted); }
+    .time { font-size: 0.75rem; color: var(--text-muted); margin-right: auto; }
+
+    .message-view {
+      flex: 1;
+      padding: 25px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+      background-blend-mode: overlay;
+      background-color: rgba(14, 26, 18, 0.9);
+    }
+
+    .msg {
+      padding: 10px 15px;
+      border-radius: 12px;
+      max-width: 70%;
+      font-size: 0.95rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    .msg.received {
+      background: #202c33;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+      color: white;
+    }
+
+    .msg.sent {
+      background: var(--primary-dark);
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+      border: 1px solid var(--primary-mid);
+      color: white;
+    }
+
+    .msg-time {
+      display: block;
+      font-size: 0.7rem;
+      margin-top: 5px;
+      opacity: 0.7;
+      text-align: left;
+    }
+
+    .animated-bg-logo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      width: 600px;
+      pointer-events: none;
+      opacity: 0.2;
+      animation: cyberGlowPulse 8s ease-in-out infinite alternate;
+    }
+
+    .animated-bg-logo img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 30px var(--primary-mid));
+    }
+
+    @keyframes cyberGlowPulse {
+      0% {
+        opacity: 0.15;
+        transform: translate(-50%, -50%) scale(0.95);
+        filter: drop-shadow(0 0 20px var(--primary-dark));
+      }
+      100% {
+        opacity: 0.35;
+        transform: translate(-50%, -50%) scale(1.05);
+        filter: drop-shadow(0 0 70px var(--accent-glow)) brightness(1.2);
+      }
+    }
+  </style>
 </head>
+
 <body>
-
-    <div class="animated-bg-logo">
+  <div class="animated-bg-logo">
     <img src="logo.png" alt="Background Logo">
-</div>
+  </div>
 
-    <div class="main-container">
-        
-        <header class="glass-header small-header">
-            <div class="logo-section">
-                <img src="logo.png" alt="Logo" class="logo-img">
-                <div class="logo-text">
-                    <h3>Whisper-WA</h3>
-                    <span class="case-badge" id="txt-case">قضية رقم: #055xxx</span>
-                </div>
-            </div>
-            <div class="header-actions">
-                <button class="lang-switch-btn" onclick="toggleLanguage()">
-                    <i class="fa-solid fa-globe"></i> <span id="lang-label">English</span>
-                </button>
-
-                <a href="index.html" class="icon-btn highlight" id="txt-home">الرئيسية</a>
-                <button class="icon-btn" id="txt-stats"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
-                <button class="icon-btn" id="txt-account"><i class="fa-solid fa-user"></i> حسابي</button>
-            </div>
-        </header>
-
-        <div class="workspace-grid">
-            
-            <aside class="glass-panel report-sidebar">
-                <div class="sidebar-header">
-                    <h3 id="txt-draft-title"><i class="fa-solid fa-file-contract"></i> مسودة التقرير</h3>
-                    <button class="btn-small"><i class="fa-solid fa-plus"></i></button>
-                </div>
-                
-                <button class="btn-primary full-width mb-10" id="txt-add-btn">
-                    <i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي
-                </button>
-
-                <div class="report-items-list">
-                    <div class="report-card">
-                        <div class="card-content">
-                            <span class="sender">خالد (055xxxx)</span>
-                            <span class="preview">بيانات الموقع الجغرافي...</span>
-                        </div>
-                        <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                </div>
-
-                <div class="sidebar-footer">
-                    <button class="btn-download" id="txt-download">
-                        تصدير التقرير (PDF) <i class="fa-solid fa-file-arrow-down"></i>
-                    </button>
-                </div>
-            </aside>
-
-            <section class="glass-panel chat-interface">
-                <div class="search-area">
-                    <div class="search-input-wrapper">
-                        <i class="fa-solid fa-search"></i>
-                        <input type="text" id="inp-search" placeholder="بحث في المحادثات (كلمة، رقم، رابط)...">
-                    </div>
-                    <div class="tags-row">
-                        <span class="tag">#Location</span>
-                        <span class="tag">#URL</span>
-                        <span class="tag">#Images</span>
-                    </div>
-                </div>
-
-                <div class="chat-split-view">
-                    <div class="chat-list">
-                        <div class="chat-item active">
-                            <input type="checkbox" checked>
-                            <div class="chat-info">
-                                <h4>خالد (المشتبه به)</h4>
-                                <p>وينك؟ تأخرت...</p>
-                            </div>
-                            <span class="time">10:15</span>
-                        </div>
-                    </div>
-
-                    <div class="message-view">
-
-                        <div class="msg received">
-                            <p>وينك؟ تأخرت علي.</p>
-                            <span class="msg-time">10:15</span>
-                        </div>
-                        <div class="msg sent">
-                            <p>واصل قريب، لا تشيل هم.</p>
-                            <span class="msg-time">10:16</span>
-                            <i class="fa-solid fa-check-double read-receipt"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+  <div class="main-container">
+    <header class="glass-header small-header">
+      <div class="logo-section">
+        <img src="logo.png" alt="Logo" class="logo-img">
+        <div class="logo-text">
+          <h3>Whisper-WA</h3>
+          <span class="case-badge" id="txt-case">قضية رقم: #055xxx</span>
         </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="lang-switch-btn" onclick="toggleLanguage()">
+          <i class="fa-solid fa-globe"></i> <span id="lang-label">English</span>
+        </button>
+
+        <a href="index.html" class="icon-btn highlight" id="txt-home">الرئيسية</a>
+        <button class="icon-btn" id="txt-stats"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
+        <button class="icon-btn" id="txt-account"><i class="fa-solid fa-user"></i> حسابي</button>
+      </div>
+    </header>
+
+    <div class="workspace-grid">
+
+      <!-- ✅ Report (يمين) -->
+      <aside class="glass-panel report-sidebar">
+
+        <div class="sidebar-header">
+          <h3 id="txt-draft-title"><i class="fa-solid fa-file-contract"></i> مسودة التقرير</h3>
+
+          <!-- ✅ زرين جنب Report Draft -->
+          <div class="sidebar-actions">
+            <button class="btn-secondary" id="btn-export" type="button">
+              <i class="fa-solid fa-file-arrow-down"></i> <span id="txt-export">تنزيل التقرير</span>
+            </button>
+
+            <!-- ✅ View يروح لملف رهف reports.html -->
+            <a class="btn-secondary" id="btn-view" href="reports.html">
+              <i class="fa-solid fa-eye"></i> <span id="txt-view">عرض التقرير</span>
+            </a>
+          </div>
+        </div>
+
+        <button class="btn-primary full-width mb-10" id="txt-add-btn" type="button">
+          <i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي
+        </button>
+
+        <!-- ✅ الجدول -->
+        <div class="report-table-wrap">
+          <table class="report-table" id="reportTable">
+            <thead>
+              <tr>
+                <th id="th-msg">الرسالة</th>
+                <th id="th-type">النوع</th>
+                <th id="th-num">الرقم</th>
+                <th id="th-time">التاريخ والوقت</th>
+              </tr>
+            </thead>
+            <tbody id="reportTbody"></tbody>
+          </table>
+        </div>
+      </aside>
+
+      <!-- الشات (يسار) -->
+      <section class="glass-panel chat-interface">
+        <div class="search-area">
+          <div class="search-input-wrapper">
+            <i class="fa-solid fa-search"></i>
+            <input type="text" id="inp-search" placeholder="بحث في المحادثات (كلمة، رقم، رابط)...">
+          </div>
+          <div class="tags-row">
+            <span class="tag">#Location</span>
+            <span class="tag">#URL</span>
+            <span class="tag">#Images</span>
+          </div>
+        </div>
+
+        <div class="chat-split-view">
+          <div class="chat-list">
+
+            <div class="chat-item active" data-chat-id="chat1">
+              <input type="checkbox" checked>
+              <div class="chat-info">
+                <h4>خالد (المشتبه به)</h4>
+                <p>وينك؟ تأخرت...</p>
+              </div>
+              <span class="time">10:15</span>
+            </div>
+
+          </div>
+
+          <div class="message-view">
+            <div class="msg received">
+              <p>وينك؟ تأخرت علي.</p>
+              <span class="msg-time">10:15</span>
+            </div>
+
+            <div class="msg sent">
+              <p>واصل قريب، لا تشيل هم.</p>
+              <span class="msg-time">10:16</span>
+              <i class="fa-solid fa-check-double read-receipt"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
+  </div>
 
-    <script>
-        let currentLang = 'ar';
+  <script>
+    // ---------------------------
+    // ✅ داتا ديمو (بدون باك-إند)
+    // ---------------------------
+    const chatsData = [
+      {
+        id: "chat1",
+        number: "055xxxx",
+        name: "خالد (المشتبه به)",
+        messages: [
+          { text: "وينك؟ تأخرت علي.", type: "received", datetime: "2026-02-12 10:15" },
+          { text: "واصل قريب، لا تشيل هم.", type: "sent", datetime: "2026-02-12 10:16" }
+        ]
+      }
+    ];
 
-        function toggleLanguage() {
-            const htmlTag = document.documentElement;
-            const langLabel = document.getElementById('lang-label');
-            const searchInput = document.getElementById('inp-search');
+    let selectedChatId = "chat1";
 
-            if (currentLang === 'ar') {
-                // تحويل إلى إنجليزي
-                currentLang = 'en';
-                htmlTag.setAttribute('lang', 'en');
-                htmlTag.setAttribute('dir', 'ltr'); // يقلب الصفحة يسار
-                langLabel.textContent = "العربية"; // يغير اسم الزر
+    // ✅ تحديد محادثة
+    document.querySelectorAll('.chat-item').forEach((item) => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.chat-item').forEach(x => x.classList.remove('active'));
+        item.classList.add('active');
+        selectedChatId = item.dataset.chatId;
+      });
+    });
 
-                // تغيير النصوص
-                document.title = "Whisper-WA | Report Builder";
-                document.getElementById('txt-case').textContent = "Case #: 055xxx";
-                document.getElementById('txt-home').textContent = "Home";
-                document.getElementById('txt-stats').innerHTML = '<i class="fa-solid fa-chart-pie"></i> Statistics';
-                document.getElementById('txt-account').innerHTML = '<i class="fa-solid fa-user"></i> My Account';
-                document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> Report Draft';
-                document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> Add to Current Report';
-                document.getElementById('txt-download').innerHTML = 'Export Report (PDF) <i class="fa-solid fa-file-arrow-down"></i>';
-                searchInput.placeholder = "Search chats (keyword, number, url)...";
+    // ✅ Add to Current Report => يعبّي الجدول
+    const addBtn = document.getElementById('txt-add-btn');
+    const tbody = document.getElementById('reportTbody');
 
-            } else {
-                // تحويل إلى عربي
-                currentLang = 'ar';
-                htmlTag.setAttribute('lang', 'ar');
-                htmlTag.setAttribute('dir', 'rtl'); // يقلب الصفحة يمين
-                langLabel.textContent = "English";
+    addBtn.addEventListener('click', () => {
+      const chat = chatsData.find(c => c.id === selectedChatId);
+      if (!chat) return;
 
-                // استرجاع النصوص العربية
-                document.title = "Whisper-WA | بناء التقرير";
-                document.getElementById('txt-case').textContent = "قضية رقم: #055xxx";
-                document.getElementById('txt-home').textContent = "الرئيسية";
-                document.getElementById('txt-stats').innerHTML = '<i class="fa-solid fa-chart-pie"></i> الإحصائيات';
-                document.getElementById('txt-account').innerHTML = '<i class="fa-solid fa-user"></i> حسابي';
-                document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> مسودة التقرير';
-                document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي';
-                document.getElementById('txt-download').innerHTML = 'تصدير التقرير (PDF) <i class="fa-solid fa-file-arrow-down"></i>';
-                searchInput.placeholder = "بحث في المحادثات (كلمة، رقم، رابط)...";
-            }
-        }
-    </script>
+      tbody.innerHTML = "";
+
+      chat.messages.forEach((m) => {
+        const tr = document.createElement('tr');
+
+        const tdMsg = document.createElement('td');
+        tdMsg.className = "cell-msg";
+        tdMsg.textContent = m.text;
+
+        const tdType = document.createElement('td');
+        const badge = document.createElement('span');
+        badge.className = `badge-type ${m.type === "sent" ? "badge-sent" : "badge-recv"}`;
+        badge.textContent = (m.type === "sent") ? "Sent" : "Received";
+        tdType.appendChild(badge);
+
+        const tdNum = document.createElement('td');
+        tdNum.textContent = chat.number;
+
+        const tdTime = document.createElement('td');
+        tdTime.textContent = m.datetime;
+
+        tr.appendChild(tdMsg);
+        tr.appendChild(tdType);
+        tr.appendChild(tdNum);
+        tr.appendChild(tdTime);
+
+        tbody.appendChild(tr);
+      });
+    });
+
+    // ✅ Download Report (CSV بسيط مؤقت)
+    const exportBtn = document.getElementById('btn-export');
+    exportBtn.addEventListener('click', () => {
+      const rows = [...tbody.querySelectorAll('tr')];
+      if (!rows.length) return;
+
+      const header = ["Message","Type","Number","DateTime"];
+      const csvLines = [header.join(",")];
+
+      rows.forEach(r => {
+        const cols = [...r.querySelectorAll('td')].map(td => {
+          const text = td.innerText.replace(/\n/g, " ").replace(/"/g, '""');
+          return `"${text}"`;
+        });
+        csvLines.push(cols.join(","));
+      });
+
+      const blob = new Blob([csvLines.join("\n")], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = "report_export.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // ---------------------------
+    // ✅ Language Toggle (نفس حقك بس مع نصوص الأزرار والجدول)
+    // ---------------------------
+    let currentLang = 'ar';
+
+    function toggleLanguage() {
+      const htmlTag = document.documentElement;
+      const langLabel = document.getElementById('lang-label');
+      const searchInput = document.getElementById('inp-search');
+
+      if (currentLang === 'ar') {
+        currentLang = 'en';
+        htmlTag.setAttribute('lang', 'en');
+        htmlTag.setAttribute('dir', 'ltr');
+        langLabel.textContent = "العربية";
+
+        document.title = "Whisper-WA | Report Builder";
+        document.getElementById('txt-case').textContent = "Case #: 055xxx";
+        document.getElementById('txt-home').textContent = "Home";
+        document.getElementById('txt-stats').innerHTML = '<i class="fa-solid fa-chart-pie"></i> Statistics';
+        document.getElementById('txt-account').innerHTML = '<i class="fa-solid fa-user"></i> My Account';
+
+        document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> Report Draft';
+        document.getElementById('txt-export').textContent = "Download Report";
+        document.getElementById('txt-view').textContent = "View Report";
+        document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> Add to Current Report';
+
+        document.getElementById('th-msg').textContent = "Message";
+        document.getElementById('th-type').textContent = "Type";
+        document.getElementById('th-num').textContent = "Number";
+        document.getElementById('th-time').textContent = "Date & Time";
+
+        searchInput.placeholder = "Search chats (keyword, number, url)...";
+
+      } else {
+        currentLang = 'ar';
+        htmlTag.setAttribute('lang', 'ar');
+        htmlTag.setAttribute('dir', 'rtl');
+        langLabel.textContent = "English";
+
+        document.title = "Whisper-WA | بناء التقرير";
+        document.getElementById('txt-case').textContent = "قضية رقم: #055xxx";
+        document.getElementById('txt-home').textContent = "الرئيسية";
+        document.getElementById('txt-stats').innerHTML = '<i class="fa-solid fa-chart-pie"></i> الإحصائيات';
+        document.getElementById('txt-account').innerHTML = '<i class="fa-solid fa-user"></i> حسابي';
+
+        document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> مسودة التقرير';
+        document.getElementById('txt-export').textContent = "تنزيل التقرير";
+        document.getElementById('txt-view').textContent = "عرض التقرير";
+        document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي';
+
+        document.getElementById('th-msg').textContent = "الرسالة";
+        document.getElementById('th-type').textContent = "النوع";
+        document.getElementById('th-num').textContent = "الرقم";
+        document.getElementById('th-time').textContent = "التاريخ والوقت";
+
+        searchInput.placeholder = "بحث في المحادثات (كلمة، رقم، رابط)...";
+      }
+    }
+  </script>
 </body>
 </html>
-
-                        
