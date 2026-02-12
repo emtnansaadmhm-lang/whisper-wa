@@ -1,8 +1,254 @@
-<!doctype html>
-<html>
-<head><meta charset="utf-8"><title>Page</title></head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whisper-WA | Case Reports</title>
+    <link rel="stylesheet" href="static/style.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
 <body>
-  <h2>Coming soon</h2>
-  <a href="index.html">Back</a>
+
+    <div class="background-glow" style="right: -100px; left: auto; top: 20%;"></div>
+
+    <div class="main-container">
+        
+        <header class="glass-header">
+            <div class="logo-section">
+                <i class="fa-solid fa-file-shield logo-icon"></i>
+                <h2>Whisper-WA <span style="font-size: 0.6em; opacity: 0.7;">| Reports Center</span></h2>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="connect.html" class="nav-item">Acquisition</a>
+                <a href="chat.html" class="nav-item">Analysis</a>
+                <a href="reports.html" class="nav-item active">Reports</a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="avatar-small">E</div>
+            </div>
+        </header>
+
+        <section class="glass-panel full-height-panel">
+            <div class="panel-header">
+                <div class="header-title">
+                    <h3><i class="fa-solid fa-folder-open"></i> Case Archive</h3>
+                    <p>Manage and export forensic reports</p>
+                </div>
+                
+                <div class="action-buttons">
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Search Case ID or Name...">
+                    </div>
+                    <button class="btn-primary small">
+                        <i class="fa-solid fa-plus"></i> New Report
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="glass-table">
+                    <thead>
+                        <tr>
+                            <th>Case ID</th>
+                            <th>Target Device</th>
+                            <th>Investigator</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                            <th>Evidence Count</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="case-id">#CASE-2026-001</td>
+                            <td>Samsung S21 (Rooted)</td>
+                            <td>Emtnan</td>
+                            <td>2026-02-12 <span class="time">10:30 AM</span></td>
+                            <td><span class="status-badge complete">Completed</span></td>
+                            <td>145 Messages</td>
+                            <td>
+                                <button class="btn-icon" title="Download PDF"><i class="fa-solid fa-file-arrow-down"></i></button>
+                                <button class="btn-icon" title="View Details"><i class="fa-solid fa-eye"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="case-id">#CASE-2026-002</td>
+                            <td>Pixel 6 Pro</td>
+                            <td>Sarah</td>
+                            <td>2026-02-11 <span class="time">02:15 PM</span></td>
+                            <td><span class="status-badge processing">Processing</span></td>
+                            <td>--</td>
+                            <td>
+                                <button class="btn-icon disabled"><i class="fa-solid fa-spinner fa-spin"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="case-id">#CASE-2025-089</td>
+                            <td>Huawei P30</td>
+                            <td>Emtnan</td>
+                            <td>2025-12-20 <span class="time">09:00 AM</span></td>
+                            <td><span class="status-badge complete">Completed</span></td>
+                            <td>22 Files</td>
+                            <td>
+                                <button class="btn-icon" title="Download PDF"><i class="fa-solid fa-file-arrow-down"></i></button>
+                                <button class="btn-icon" title="View Details"><i class="fa-solid fa-eye"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </div>
 </body>
 </html>
+/* --- ستايل صفحة التقارير والجداول --- */
+
+.full-height-panel {
+    flex: 1;
+    margin-top: 20px;
+    padding: 0; /* نخلي البادينج داخلي للعناصر */
+}
+
+.header-title h3 {
+    margin-bottom: 5px;
+    color: var(--primary-light);
+}
+
+.header-title p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--glass-border);
+    padding: 10px 15px 10px 35px;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.search-box i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+/* تصميم الجدول الزجاجي */
+.table-container {
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.glass-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text-white);
+}
+
+.glass-table th {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid var(--glass-border);
+    color: var(--primary-mid);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.glass-table td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.95rem;
+}
+
+.glass-table tr:hover td {
+    background: rgba(95, 191, 122, 0.05); /* إضاءة خفيفة عند المرور */
+}
+
+.case-id {
+    font-family: 'Courier New', monospace;
+    color: var(--primary-light);
+    font-weight: bold;
+}
+
+.time {
+    font-size: 0.8em;
+    color: var(--text-muted);
+    margin-left: 5px;
+}
+
+/* شارات الحالة (Status Badges) */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.status-badge.complete {
+    background: rgba(95, 191, 122, 0.2);
+    color: var(--primary-light);
+    border: 1px solid var(--primary-mid);
+}
+
+.status-badge.processing {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+    border: 1px solid #ffc107;
+}
+
+/* أزرار الإجراءات */
+.btn-icon {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: var(--text-white);
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-right: 5px;
+}
+
+.btn-icon:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: 0.3s;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.nav-item:hover, .nav-item.active {
+    color: var(--primary-light);
+    background: rgba(255,255,255,0.05);
+}
