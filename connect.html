@@ -318,20 +318,31 @@
     .logline.danger{ color:#ffb3b3; font-weight:900; }
   </style>
 </head>
-<script>
-  fetch("header.html")
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("header-placeholder").innerHTML = data;
-    })
-    .catch(err => console.error("Header load error:", err));
-</script>
+
 <body>
-  
+  <div class="animated-bg-logo">
+    <img src="logo.png" alt="Background Logo">
+  </div>
 
   <div class="main-container">
-<div id="header-placeholder"></div>
- 
+
+    <header class="topbar">
+      <div class="brand">
+        <img src="logo.png" alt="Whisper-WA Logo">
+        <div class="title">
+
+> H:
+<b>Whisper-WA</b>
+          <span id="top-subtitle">Digital Forensics Platform</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <a class="nav-link" href="index.html" id="nav-home">Home</a>
+        <a class="nav-link" href="chat.html" id="nav-chats">Chats</a>
+        <button class="lang-btn" id="btnLang"><span id="langText">AR</span></button>
+      </div>
+    </header>
 
     <main class="center">
       <section class="card">
