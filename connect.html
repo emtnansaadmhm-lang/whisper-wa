@@ -314,14 +314,7 @@
     .logline.success{ color:#8ff0b0; font-weight:900; }
     .logline.danger{ color:#ffb3b3; font-weight:900; }
   </style>
-</head>
-<script>
-  fetch("header.html")
-    .then(res => res.text())
-    .then(data => {
-      document.getElementById("header-placeholder").innerHTML = data;
-    });
-</script>
+
 <body>
   <div class="animated-bg-logo">
     <img src="logo.png" alt="Background Logo">
@@ -330,6 +323,15 @@
   <div class="main-container">
 
     <div id="header-placeholder"></div>
+
+<script>
+  fetch("header.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("header-placeholder").innerHTML = data;
+    });
+</script>
+
 
     <main class="center">
       <section class="card">
