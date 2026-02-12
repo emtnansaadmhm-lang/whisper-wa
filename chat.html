@@ -1,196 +1,188 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whisper-WA | بناء التقرير</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whisper-WA | بناء التقرير</title>
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <!-- 🔹 التعديل الوحيد: توزيع الصفحة -->
-    <style>
-        .workspace-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr; /* الريبورت أكبر */
-            gap: 16px;
-        }
+<style>
+/* توزيع الصفحة فقط */
+.workspace-grid{
+    display:grid;
+    grid-template-columns: 2fr 1fr; /* الريبورت أكبر */
+    gap:16px;
+}
 
-        /* تثبيت المواقع */
-        .report-sidebar {
-            order: 1; /* يسار */
-        }
+/* شات مثل واتساب */
+.message-view{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
 
-        .chat-interface {
-            order: 2; /* يمين */
-        }
-    </style>
+.msg{
+    max-width:70%;
+    padding:10px 14px;
+    border-radius:14px;
+    font-size:14px;
+    position:relative;
+}
+
+.msg.sent{
+    background:#2FA66A;
+    color:#062016;
+    margin-right:auto;
+}
+
+.msg.received{
+    background:rgba(255,255,255,0.15);
+    margin-left:auto;
+}
+
+.msg input{
+    position:absolute;
+    top:6px;
+    left:6px;
+}
+
+/* suggestions */
+.suggestions{
+    display:none;
+    background:#0F6B3A;
+    border-radius:10px;
+    padding:6px;
+    margin-top:6px;
+}
+
+.suggestions span{
+    display:block;
+    padding:6px;
+    cursor:pointer;
+}
+
+.suggestions span:hover{
+    background:#2FA66A;
+    color:#062016;
+}
+</style>
 </head>
 
 <body>
 
-    <div class="animated-bg-logo">
-        <img src="logo.png" alt="Background Logo">
+<div class="main-container">
+
+<header class="glass-header small-header">
+    <div class="logo-section">
+        <img src="logo.png" class="logo-img">
+        <h3>Whisper-WA</h3>
     </div>
 
-    <div class="main-container">
-        
-        <header class="glass-header small-header">
-            <div class="logo-section">
-                <img src="logo.png" alt="Logo" class="logo-img">
-                <div class="logo-text">
-                    <h3>Whisper-WA</h3>
-                    <span class="case-badge" id="txt-case">قضية رقم: #055xxx</span>
-                </div>
-            </div>
-            <div class="header-actions">
-                <button class="lang-switch-btn" onclick="toggleLanguage()">
-                    <i class="fa-solid fa-globe"></i> <span id="lang-label">English</span>
-                </button>
+    <div class="header-actions">
+        <button onclick="toggleLanguage()" class="lang-switch-btn">
+            <i class="fa fa-globe"></i> <span id="lang-label">English</span>
+        </button>
 
-                <a href="index.html" class="icon-btn highlight" id="txt-home">الرئيسية</a>
-                <button class="icon-btn" id="txt-stats"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
-                <button class="icon-btn" id="txt-account"><i class="fa-solid fa-user"></i> حسابي</button>
-            </div>
-        </header>
+        <button class="icon-btn">
+            <i class="fa fa-user"></i> Settings
+        </button>
+    </div>
+</header>
 
-        <div class="workspace-grid">
-            
-            <!-- REPORT (يسار – أكبر) -->
-            <aside class="glass-panel report-sidebar">
-                <div class="sidebar-header">
-                    <h3 id="txt-draft-title">
-                        <i class="fa-solid fa-file-contract"></i> مسودة التقرير
-                    </h3>
-                    <button class="btn-small">
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-                </div>
-                
-                <button class="btn-primary full-width mb-10" id="txt-add-btn">
-                    <i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي
-                </button>
+<div class="workspace-grid">
 
-                <div class="report-items-list">
-                    <div class="report-card">
-                        <div class="card-content">
-                            <span class="sender">خالد (055xxxx)</span>
-                            <span class="preview">بيانات الموقع الجغرافي...</span>
-                        </div>
-                        <button class="close-btn">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="sidebar-footer">
-                    <button class="btn-download" id="txt-download">
-                        تصدير التقرير (PDF)
-                        <i class="fa-solid fa-file-arrow-down"></i>
-                    </button>
-                </div>
-            </aside>
-
-            <!-- CHAT (يمين – أصغر) -->
-            <section class="glass-panel chat-interface">
-                <div class="search-area">
-                    <div class="search-input-wrapper">
-                        <i class="fa-solid fa-search"></i>
-                        <input type="text" id="inp-search" placeholder="بحث في المحادثات (كلمة، رقم، رابط)...">
-                    </div>
-                    <div class="tags-row">
-                        <span class="tag">#Location</span>
-                        <span class="tag">#URL</span>
-                        <span class="tag">#Images</span>
-
-                        </div>
-                </div>
-
-                <div class="chat-split-view">
-                    <div class="chat-list">
-                        <div class="chat-item active">
-                            <input type="checkbox" checked>
-                            <div class="chat-info">
-                                <h4>خالد (المشتبه به)</h4>
-                                <p>وينك؟ تأخرت...</p>
-                            </div>
-                            <span class="time">10:15</span>
-                        </div>
-                    </div>
-
-                    <div class="message-view">
-                        <div class="msg received">
-                            <p>وينك؟ تأخرت علي.</p>
-                            <span class="msg-time">10:15</span>
-                        </div>
-                        <div class="msg sent">
-                            <p>واصل قريب، لا تشيل هم.</p>
-                            <span class="msg-time">10:16</span>
-                            <i class="fa-solid fa-check-double read-receipt"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+<!-- REPORT -->
+<aside class="glass-panel report-sidebar">
+    <div class="sidebar-header">
+        <h3>Report</h3>
+        <div>
+            <select>
+                <option>Export</option>
+                <option>PDF</option>
+                <option>CSV</option>
+            </select>
+            <a href="reports.html" class="btn-small">All Reports</a>
         </div>
     </div>
 
-    <script>
-        let currentLang = 'ar';
+    <table style="width:100%;margin-top:10px">
+        <thead>
+            <tr>
+                <th>النص</th>
+                <th>الرقم</th>
+                <th>النوع</th>
+                <th>الوقت</th>
+                <th>التاريخ</th>
+            </tr>
+        </thead>
+        <tbody id="reportTable"></tbody>
+    </table>
+</aside>
 
-        function toggleLanguage() {
-            const htmlTag = document.documentElement;
-            const langLabel = document.getElementById('lang-label');
-            const searchInput = document.getElementById('inp-search');
+<!-- CHAT -->
+<section class="glass-panel chat-interface">
 
-            if (currentLang === 'ar') {
-                currentLang = 'en';
-                htmlTag.setAttribute('lang', 'en');
-                htmlTag.setAttribute('dir', 'ltr');
-                langLabel.textContent = "العربية";
+    <div class="search-area">
+        <input type="text" id="searchInput" placeholder="بحث..." onfocus="showSuggestions()">
+        <div class="suggestions" id="suggestions">
+            <span onclick="filterKeyword('بنك')">بنك</span>
+            <span onclick="filterKeyword('سرقة')">سرقة</span>
+            <span onclick="filterKeyword('كلمة مرور')">كلمة مرور</span>
+            <span onclick="filterKeyword('هجوم')">هجوم</span>
+        </div>
+    </div>
 
-                document.title = "Whisper-WA | Report Builder";
-                document.getElementById('txt-case').textContent = "Case #: 055xxx";
-                document.getElementById('txt-home').textContent = "Home";
-                document.getElementById('txt-stats').innerHTML =
-                    '<i class="fa-solid fa-chart-pie"></i> Statistics';
-                document.getElementById('txt-account').innerHTML =
-                    '<i class="fa-solid fa-user"></i> My Account';
-                document.getElementById('txt-draft-title').innerHTML =
-                    '<i class="fa-solid fa-file-contract"></i> Report Draft';
-                document.getElementById('txt-add-btn').innerHTML =
-                    '<i class="fa-solid fa-plus-circle"></i> Add to Current Report';
-                document.getElementById('txt-download').innerHTML =
-                    'Export Report (PDF) <i class="fa-solid fa-file-arrow-down"></i>';
-                searchInput.placeholder =
-                    "Search chats (keyword, number, url)...";
+    <div class="message-view" id="chat">
+        <div class="msg received">
+            <input type="checkbox" onclick="addToReport(this,'وينك؟','055xxx','مستقبل','10:15','2026/02/12')">
+            وينك؟
+        </div>
 
-            } else {
-                currentLang = 'ar';
-                htmlTag.setAttribute('lang', 'ar');
-                htmlTag.setAttribute('dir', 'rtl');
-                langLabel.textContent = "English";
+        <div class="msg sent">
+            <input type="checkbox" onclick="addToReport(this,'في الطريق','055xxx','مرسل','10:16','2026/02/12')">
+            في الطريق
+        </div>
 
-                document.title = "Whisper-WA | بناء التقرير";
-                document.getElementById('txt-case').textContent =
-                    "قضية رقم: #055xxx";
-                document.getElementById('txt-home').textContent = "الرئيسية";
-                document.getElementById('txt-stats').innerHTML =
-                    '<i class="fa-solid fa-chart-pie"></i> الإحصائيات';
-                document.getElementById('txt-account').innerHTML =
-                    '<i class="fa-solid fa-user"></i> حسابي';
-                document.getElementById('txt-draft-title').innerHTML =
-                    '<i class="fa-solid fa-file-contract"></i> مسودة التقرير';
-                document.getElementById('txt-add-btn').innerHTML =
-                    '<i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي';
-                document.getElementById('txt-download').innerHTML =
-                    'تصدير التقرير (PDF) <i class="fa-solid fa-file-arrow-down"></i>';
-                searchInput.placeholder =
-                    "بحث في المحادثات (كلمة، رقم، رابط)...";
-            }
-        }
-    </script>
-    </body>
+        <div class="msg received">
+            <input type="checkbox" onclick="addToReport(this,'رابط البنك https://bank.com','055xxx','مستقبل','10:18','2026/02/12')">
+            رابط البنك https://bank.com
+        </div>
+    </div>
+
+</section>
+
+</div>
+</div>
+
+<script>
+function showSuggestions(){
+    document.getElementById("suggestions").style.display="block";
+}
+
+function filterKeyword(word){
+    alert("تصفية حسب: "+word+" (واجهة فقط)");
+}
+
+function addToReport(cb,text,number,type,time,date){
+    if(!cb.checked) return;
+
+    const row=document.createElement("tr");
+    row.
+        innerHTML=`
+        <td>${text}</td>
+        <td>${number}</td>
+        <td>${type}</td>
+        <td>${time}</td>
+        <td>${date}</td>
+    `;
+    document.getElementById("reportTable").appendChild(row);
+}
+</script>
+
+</body>
 </html>
-                        
+
+        
