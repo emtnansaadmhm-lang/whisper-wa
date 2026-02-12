@@ -3,43 +3,119 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Whisper-WA | بناء التقرير</title>
+<title>Whisper-WA | Report Builder</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
-/* توزيع الصفحة فقط */
-.workspace-grid{
-    display:grid;
-    grid-template-columns: 2fr 1fr; /* الريبورت أكبر */
-    gap:16px;
+/* ====== COLORS FROM LOGO ====== */
+:root{
+    --dark:#071F16;
+    --main:#0F6B3A;
+    --accent:#2FA66A;
+    --light:#9BE3B4;
+    --glass:rgba(255,255,255,0.08);
+    --border:rgba(155,227,180,0.35);
 }
 
-/* شات مثل واتساب */
-.message-view{
+/* ====== LAYOUT ====== */
+.workspace-grid{
+    display:grid;
+    grid-template-columns: 3fr 1.4fr; /* report أكبر */
+    gap:18px;
+}
+
+/* ====== REPORT ====== */
+.report-sidebar{
     display:flex;
     flex-direction:column;
-    gap:12px;
+}
+
+.report-toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.report-toolbar button{
+    background:var(--main);
+    color:#fff;
+    border:1px solid var(--accent);
+    padding:8px 16px;
+    border-radius:10px;
+    cursor:pointer;
+    font-family:inherit;
+}
+
+.report-toolbar button:hover{
+    background:var(--accent);
+    color:#062016;
+}
+
+/* ====== REPORT TABLE ====== */
+.report-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0 10px;
+    font-size:14px;
+}
+
+.report-table thead th{
+    background:var(--main);
+    padding:10px;
+    border-radius:10px;
+    color:#fff;
+}
+
+.report-table tbody tr{
+    background:rgba(15,107,58,0.25);
+    border:1px solid var(--border);
+}
+
+.report-table td{
+    padding:10px;
+    text-align:center;
+    border-right:1px solid var(--border);
+}
+
+.report-table td:last-child{
+    border-right:none;
+}
+
+/* ====== CHAT ====== */
+.chat-interface{
+    display:flex;
+    flex-direction:column;
+}
+
+.chat-messages{
+    flex:1;
+    padding:12px;
+    overflow-y:auto;
+    background:rgba(0,0,0,0.2);
+    border-radius:14px;
 }
 
 .msg{
-    max-width:70%;
+    max-width:75%;
     padding:10px 14px;
+    margin-bottom:12px;
     border-radius:14px;
     font-size:14px;
     position:relative;
 }
 
 .msg.sent{
-    background:#2FA66A;
+    background:linear-gradient(135deg,var(--light),var(--accent));
     color:#062016;
     margin-right:auto;
 }
 
 .msg.received{
-    background:rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.18);
     margin-left:auto;
 }
 
@@ -49,23 +125,22 @@
     left:6px;
 }
 
-/* suggestions */
+/* ====== SEARCH SUGGESTIONS ====== */
 .suggestions{
     display:none;
-    background:#0F6B3A;
+    background:var(--main);
     border-radius:10px;
-    padding:6px;
     margin-top:6px;
 }
 
 .suggestions span{
     display:block;
-    padding:6px;
+    padding:6px 10px;
     cursor:pointer;
 }
 
 .suggestions span:hover{
-    background:#2FA66A;
+    background:var(--accent);
     color:#062016;
 }
 </style>
@@ -82,10 +157,9 @@
     </div>
 
     <div class="header-actions">
-        <button onclick="toggleLanguage()" class="lang-switch-btn">
-            <i class="fa fa-globe"></i> <span id="lang-label">English</span>
+        <button class="lang-switch-btn">
+            <i class="fa fa-globe"></i> English
         </button>
-
         <button class="icon-btn">
             <i class="fa fa-user"></i> Settings
         </button>
@@ -94,21 +168,17 @@
 
 <div class="workspace-grid">
 
-<!-- REPORT -->
+<!-- ===== REPORT (LEFT) ===== -->
 <aside class="glass-panel report-sidebar">
-    <div class="sidebar-header">
-        <h3>Report</h3>
-        <div>
-            <select>
-                <option>Export</option>
-                <option>PDF</option>
-                <option>CSV</option>
-            </select>
-            <a href="reports.html" class="btn-small">All Reports</a>
-        </div>
+
+    <div class="report-toolbar">
+        <button>Export</button>
+        <a href="reports.html">
+            <button>All Reports</button>
+        </a>
     </div>
 
-    <table style="width:100%;margin-top:10px">
+    <table class="report-table">
         <thead>
             <tr>
                 <th>النص</th>
@@ -118,36 +188,36 @@
                 <th>التاريخ</th>
             </tr>
         </thead>
-        <tbody id="reportTable"></tbody>
+        <tbody id="reportBody"></tbody>
     </table>
+
 </aside>
 
-<!-- CHAT -->
+<!-- ===== CHAT (RIGHT) ===== -->
 <section class="glass-panel chat-interface">
 
     <div class="search-area">
-        <input type="text" id="searchInput" placeholder="بحث..." onfocus="showSuggestions()">
+        <input type="text" placeholder="بحث..." onfocus="showSuggestions()">
         <div class="suggestions" id="suggestions">
-            <span onclick="filterKeyword('بنك')">بنك</span>
-            <span onclick="filterKeyword('سرقة')">سرقة</span>
-            <span onclick="filterKeyword('كلمة مرور')">كلمة مرور</span>
-            <span onclick="filterKeyword('هجوم')">هجوم</span>
+            <span>سرقة</span>
+            <span>كلمة مرور</span>
+            <span>هجوم</span>
         </div>
     </div>
 
-    <div class="message-view" id="chat">
+    <div class="chat-messages">
         <div class="msg received">
-            <input type="checkbox" onclick="addToReport(this,'وينك؟','055xxx','مستقبل','10:15','2026/02/12')">
+            <input type="checkbox" onclick="addRow('وينك؟','055xxx','مستقبل','10:15','2026/02/12')">
             وينك؟
         </div>
 
         <div class="msg sent">
-            <input type="checkbox" onclick="addToReport(this,'في الطريق','055xxx','مرسل','10:16','2026/02/12')">
+            <input type="checkbox" onclick="addRow('في الطريق','055xxx','مرسل','10:16','2026/02/12')">
             في الطريق
         </div>
 
         <div class="msg received">
-            <input type="checkbox" onclick="addToReport(this,'رابط البنك https://bank.com','055xxx','مستقبل','10:18','2026/02/12')">
+            <input type="checkbox" onclick="addRow('رابط البنك https://bank.com','055xxx','مستقبل','10:18','2026/02/12')">
             رابط البنك https://bank.com
         </div>
     </div>
@@ -162,27 +232,20 @@ function showSuggestions(){
     document.getElementById("suggestions").style.display="block";
 }
 
-function filterKeyword(word){
-    alert("تصفية حسب: "+word+" (واجهة فقط)");
-}
-
-function addToReport(cb,text,number,type,time,date){
-    if(!cb.checked) return;
-
-    const row=document.createElement("tr");
-    row.
-        innerHTML=`
+function addRow(text,number,type,time,date){
+    const tr=document.createElement("tr");
+    tr.innerHTML=`
         <td>${text}</td>
         <td>${number}</td>
         <td>${type}</td>
         <td>${time}</td>
         <td>${date}</td>
     `;
-    document.getElementById("reportTable").appendChild(row);
+    document.getElementById("reportBody").appendChild(tr);
 }
 </script>
 
 </body>
 </html>
 
-        
+            <span>بنك</span>
