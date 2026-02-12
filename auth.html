@@ -1,8 +1,454 @@
-<!doctype html>
-<html>
-<head><meta charset="utf-8"><title>Page</title></head>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Whisper-WA | Login</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary-dark:#1f5f3b;
+      --primary-mid:#3f9b5f;
+      --primary-light:#5fbf7a;
+      --accent-glow:#8fd9a8;
+
+      --bg-dark:#0e1a12;
+
+      --glass-bg: rgba(20, 40, 30, 0.62);
+      --glass-border: rgba(95, 191, 122, 0.28);
+
+      --text-white:#ffffff;
+      --text-muted:#c2dec9;
+
+      --danger:#ff6b6b;
+      --shadow: rgba(0,0,0,0.35);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    body{
+      font-family:'Tajawal',sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      height:100vh;
+      overflow:hidden;
+
+      background-image:
+        radial-gradient(1200px 700px at 20% 10%, rgba(95,191,122,0.12), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(143,217,168,0.10), transparent 55%),
+        linear-gradient(rgba(31,95,59,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,95,59,0.10) 1px, transparent 1px);
+      background-size: auto, auto, 40px 40px, 40px 40px;
+    }
+
+    /* Floating 3D blobs */
+    .fx-blob{
+      position: fixed;
+      inset: auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(95,191,122,0.35), rgba(0,0,0,0));
+      filter: blur(2px);
+      opacity: 0.45;
+      pointer-events:none;
+      z-index:-2;
+      transform: translateZ(0);
+      animation: floaty 10s ease-in-out infinite alternate;
+    }
+    .fx-blob.b1{ top: 8%; left: 6%; animation-duration: 12s; }
+    .fx-blob.b2{ bottom: 10%; right: 8%; width: 420px; height: 420px; opacity:0.35; animation-duration: 14s; }
+    @keyframes floaty{
+      0%{ transform: translate(0,0) scale(0.95); }
+      100%{ transform: translate(22px,-16px) scale(1.05); }
+    }
+
+    /* Background logo */
+    .animated-bg-logo{
+      position: fixed;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      z-index:-1;
+      width: 560px;
+      pointer-events:none;
+      opacity:0.16;
+      animation: cyberGlowPulse 8s ease-in-out infinite alternate;
+    }
+    .animated-bg-logo img{
+      width:100%;
+      filter: drop-shadow(0 0 30px rgba(63,155,95,0.55));
+    }
+    @keyframes cyberGlowPulse{
+      0%{ opacity:0.10; transform: translate(-50%,-50%) scale(0.96); }
+      100%{ opacity:0.26; transform: translate(-50%,-50%) scale(1.04); }
+    }
+
+    .main-container{
+      display:flex;
+      flex-direction:column;
+      height:100vh;
+      padding:24px;
+      gap:18px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* Top bar */
+    .topbar{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 12px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+    }
+    .brand img{
+      height:42px;
+      width:auto;
+      filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
+    }
+    .brand .title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand .title b{ font-size:1.15rem; }
+    .brand .title span{
+      color: var(--text-muted);
+      font-size:0.85rem;
+      margin-top:4px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .nav-link{
+      text-decoration:none;
+      color: var(--text-muted);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition:0.25s;
+      font-weight:700;
+    }
+    .nav-link:hover{
+      color: var(--accent-glow);
+      border-color: rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.14);
+    }
+    .lang-btn{
+      background: rgba(95,191,122,0.10);
+      border: 1px solid var(--glass-border);
+      color: var(--accent-glow);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:900;
+      transition:0.25s;
+      user-select:none;
+    }
+    .lang-btn:hover{
+      background: rgba(95,191,122,0.18);
+      transform: translateY(-1px);
+    }
+
+    /* Center stage with perspective (3D) */
+    .center{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      perspective: 1100px;
+    }
+
+    /* 3D card */
+    .card{
+      width:min(980px, 95vw);
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 14px 55px var(--shadow);
+
+      transform-style: preserve-3d;
+      transform: rotateX(0deg) rotateY(0deg);
+      transition: transform 0.12s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* glossy highlight layer */
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(800px 400px at var(--mx,50%) var(--my,50%), rgba(143,217,168,0.16), transparent 55%);
+      pointer-events:none;
+      transform: translateZ(40px);
+      opacity:0.9;
+    }
+
+    /* left and right panes */
+    .pane{
+      background: rgba(0,0,0,0.16);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 16px;
+      transform: translateZ(18px);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .hero{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      justify-content:space-between;
+      min-height: 380px;
+    }
+
+    .hero h1{
+      font-size: 1.75rem;
+      margin-bottom: 4px;
+      letter-spacing:0.2px;
+    }
+    .subtitle{
+      color: var(--text-muted);
+      line-height:1.65;
+      font-size: 0.98rem;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.16);
+      color: rgba(223,251,231,0.95);
+      font-weight:900;
+      width: fit-content;
+    }
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background: var(--accent-glow);
+      box-shadow: 0 0 18px rgba(143,217,168,0.75);
+    }
+
+    /* Tabs */
+    .tabs{
+      display:flex;
+      gap:0;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      overflow:hidden;
+      margin-bottom: 14px;
+      transform: translateZ(22px);
+    }
+    .tab-btn{
+      flex:1;
+      padding: 12px 14px;
+      cursor:pointer;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      font-weight:900;
+      transition:0.25s;
+    }
+    .tab-btn.active{
+      background: rgba(95,191,122,0.16);
+      color: var(--accent-glow);
+      box-shadow: inset 0 -3px 0 rgba(143,217,168,0.9);
+    }
+
+    .tab-content{ display:none; }
+    .tab-content.active{ display:block; }
+
+    /* Form */
+    label{
+      display:block;
+      color: var(--text-muted);
+      font-weight:800;
+      margin: 10px 0 8px;
+    }
+    input, textarea, select{
+      width:100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: rgba(0,0,0,0.24);
+      color: white;
+      outline:none;
+      font-size: 1rem;
+      transition: 0.2s;
+    }
+    textarea{ min-height: 110px; resize: vertical; }
+    input::placeholder, textarea::placeholder{ color: rgba(194,222,201,0.65); }
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(143,217,168,0.55);
+      box-shadow: 0 0 0 3px rgba(143,217,168,0.10);
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .tiny-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top: 10px;
+    }
+    .checkbox{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: rgba(223,251,231,0.92);
+      font-weight:800;
+      user-select:none;
+    }
+    .checkbox input{ width:auto; }
+    .link{
+      color: var(--accent-glow);
+      text-decoration:none;
+      font-weight:900;
+      opacity:0.9;
+    }
+    .link:hover{ opacity:1; text-decoration: underline; }
+
+    .actions{
+      display:flex;
+      gap: 12px;
+      margin-top: 14px;
+      transform: translateZ(26px);
+    }
+    .btn{
+      flex:1;
+      padding: 12px 14px;
+      border-radius: 14px;
+      cursor:pointer;
+      font-weight:900;
+      border: none;
+      transition:0.25s;
+      user-select:none;
+
+      transform: translateZ(10px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+    .btn-primary{
+      background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
+      color:white;
+    }
+    .btn-primary:hover{ filter: brightness(1.15); transform: translateY(-1px) translateZ(10px); }
+    .btn-ghost{
+      background: rgba(0,0,0,0.18);
+      color: var(--accent-glow);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .btn-ghost:hover{ background: rgba(95,191,122,0.12); transform: translateY(-1px) translateZ(10px); }
+
+    /* Alert */
+    .alert{
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      font-weight:900;
+      transform: translateZ(20px);
+    }
+    .alert.hidden{ display:none; }
+    .alert.info{ background: rgba(63,155,95,0.12); color: var(--accent-glow); }
+    .alert.success{ background: rgba(95,191,122,0.14); color: #dffbe7; }
+    .alert.danger{ background: rgba(255,107,107,0.12); border-color: rgba(255,107,107,0.30); color: #ffd1d1; }
+
+    /* Right pane content */
+    .side-title{
+      font-weight:900;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+    .side-list{
+      margin-top: 10px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      color: rgba(223,251,231,0.92);
+      line-height:1.6;
+      font-weight:700;
+    }
+    .chip{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.16);
+    }
+    .chip b{ color: var(--accent-glow); }
+    .chip .mini{
+      width:10px; height:10px; border-radius:999px;
+      background: rgba(143,217,168,0.9);
+      box-shadow: 0 0 16px rgba(143,217,168,0.55);
+      margin-top: 6px;
+      flex: 0 0 auto;
+    }
+
+    @media (max-width: 900px){
+      .card{ grid-template-columns: 1fr; }
+      .hero{ min-height:auto; }
+    }
+  </style>
+</head>
+
 <body>
-  <h2>Coming soon</h2>
-  <a href="index.html">Back</a>
-</body>
-</html>
+  <div class="fx-blob b1"></div>
+  <div class="fx-blob b2"></div>
+
+  <div class="animated-bg-logo">
+    <img src="logo.png" alt="Background Logo">
+  </div>
+
+  <div class="main-container">
+
+    <header class="topbar">
+      <div class="brand">
+        <img src="logo.png" alt="Whisper-WA Logo">
+        <div class="title">
+          <b>Whisper-WA</b>
+          <span id="top-subtitle">Digital Forensics Platform</span>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <a class="nav-link" href="index.html" id="nav-home">Home</a>
+        <a class="nav-link" href="connect.html" id="nav-connect">Connect</a>
+        <button class="lang-btn" id="btnLang"><span id="langText">AR</span></button>
+      </div>
+    </header>
+
+    <
