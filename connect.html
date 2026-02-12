@@ -1,3 +1,4 @@
+> H:
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -5,34 +6,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Whisper-WA | Connect</title>
 
-  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <style>
     :root{
       --primary-dark:#1f5f3b;
       --primary-mid:#3f9b5f;
+      --primary-light:#5fbf7a;
       --accent-glow:#8fd9a8;
+
       --bg-dark:#0e1a12;
+
       --glass-bg: rgba(20, 40, 30, 0.65);
       --glass-border: rgba(95, 191, 122, 0.3);
+
       --text-white:#ffffff;
       --text-muted:#c2dec9;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-
     body{
       font-family:'Tajawal',sans-serif;
-      background: var(--bg-dark);
+      background-color: var(--bg-dark);
       color: var(--text-white);
       height:100vh;
       overflow:hidden;
+
       background-image:
-        linear-gradient(rgba(31,95,59,0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(31,95,59,0.1) 1px, transparent 1px);
+        linear-gradient(rgba(31,95,59,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,95,59,0.10) 1px, transparent 1px);
       background-size: 40px 40px;
+    }
+
+    .animated-bg-logo{
+      position: fixed;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      z-index:-1;
+      width: 600px;
+      pointer-events:none;
+      opacity:0.18;
+      animation: cyberGlowPulse 8s ease-in-out infinite alternate;
+    }
+    .animated-bg-logo img{
+      width:100%;
+      filter: drop-shadow(0 0 30px var(--primary-mid));
+    }
+    @keyframes cyberGlowPulse{
+      0%{ opacity:0.12; transform: translate(-50%,-50%) scale(0.96); }
+      100%{ opacity:0.28; transform: translate(-50%,-50%) scale(1.04); }
     }
 
     .main-container{
@@ -41,193 +64,614 @@
       height:100vh;
       padding:24px;
       gap:18px;
+      position:relative;
+      z-index:1;
     }
 
+    /* Top bar */
+    .topbar{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 12px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 240px;
+    }
+    .brand img{
+      height:42px;
+      width:auto;
+      filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
+    }
+    .brand .title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand .title b{ font-size:1.15rem; }
+    .brand .title span{
+      color: var(--text-muted);
+      font-size:0.85rem;
+      margin-top:4px;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .nav-link{
+      text-decoration:none;
+      color: var(--text-muted);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition:0.25s;
+      font-weight:700;
+    }
+    .nav-link:hover{
+      color: var(--accent-glow);
+      border-color: rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.14);
+    }
+    .lang-btn{
+      background: rgba(95,191,122,0.10);
+      border: 1px solid var(--glass-border);
+      color: var(--accent-glow);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:900;
+      transition:0.25s;
+      user-select:none;
+    }
+    .lang-btn:hover{
+      background: rgba(95,191,122,0.18);
+      transform: translateY(-1px);
+    }
+
+    /* Center card */
     .center{
       flex:1;
       display:flex;
       align-items:center;
       justify-content:center;
     }
-
     .card{
-      width:min(900px, 95vw);
+      width:min(920px, 95vw);
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
       border-radius: 22px;
-      padding: 28px;
+      padding: 26px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.35);
     }
-
-    h1{ font-size:1.7rem; margin-bottom:6px; }
+    .card h1{
+      font-size: 1.7rem;
+      margin-bottom: 6px;
+    }
     .subtitle{
       color: var(--text-muted);
-      margin-bottom:20px;
+      margin-bottom: 18px;
+      line-height:1.6;
     }
 
+    /* Tabs like your example */
     .tabs{
       display:flex;
-      background: rgba(0,0,0,0.2);
-      border-radius: 14px;
-      overflow:hidden;
-      margin-bottom:16px;
-    }
+      gap:0;
+      background: rgba(0,0,0,0.
 
+> H:
+18);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      overflow:hidden;
+      margin-bottom: 14px;
+    }
     .tab-btn{
       flex:1;
-      padding:12px;
-      background:none;
-      border:none;
-      color: var(--text-muted);
-      font-weight:900;
+      padding: 12px 14px;
       cursor:pointer;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      font-weight:900;
+      transition:0.25s;
     }
-
     .tab-btn.active{
-      background: rgba(95,191,122,0.2);
+      background: rgba(95,191,122,0.16);
       color: var(--accent-glow);
+      box-shadow: inset 0 -3px 0 rgba(143,217,168,0.9);
     }
 
     .tab-content{ display:none; }
     .tab-content.active{ display:block; }
 
+    /* Panels */
     .panel{
-      background: rgba(0,0,0,0.18);
-      border-radius:16px;
-      padding:18px;
+      background: rgba(0,0,0,0.16);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 16px;
     }
 
     label{
       display:block;
-      margin-bottom:6px;
       color: var(--text-muted);
-      font-weight:700;
+      font-weight:800;
+      margin: 8px 0 8px;
     }
-
     input{
       width:100%;
-      padding:12px;
-      border-radius:12px;
-      border:1px solid var(--glass-border);
-      background: rgba(0,0,0,0.25);
-      color:white;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: rgba(0,0,0,0.24);
+      color: white;
+      outline:none;
+      font-size: 1rem;
     }
+    input::placeholder{ color: rgba(194,222,201,0.65); }
 
     .note{
-      margin-top:10px;
-      font-size:0.9rem;
-      color: var(--text-muted);
+      margin-top: 10px;
+      color: rgba(194,222,201,0.92);
+      font-size: 0.95rem;
+      line-height:1.55;
     }
 
+    /* Actions inside each tab */
     .actions{
       display:flex;
-      gap:12px;
-      margin-top:16px;
+      gap: 12px;
+      margin-top: 14px;
     }
-
     .btn{
       flex:1;
-      padding:12px;
-      border-radius:14px;
-      border:none;
-      font-weight:900;
+      padding: 12px 14px;
+      border-radius: 14px;
       cursor:pointer;
+      font-weight:900;
+      border: none;
+      transition:0.25s;
+      user-select:none;
     }
-
     .btn-primary{
       background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
       color:white;
     }
-
+    .btn-primary:hover{ filter: brightness(1.15); transform: translateY(-1px); }
     .btn-ghost{
-      background: rgba(0,0,0,0.25);
+      background: rgba(0,0,0,0.18);
       color: var(--accent-glow);
-      border:1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.10);
     }
+    .btn-ghost:hover{ background: rgba(95,191,122,0.12); transform: translateY(-1px); }
+
+    /* Alert */
+    .alert{
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      font-weight:900;
+    }
+    .alert.hidden{ display:none; }
+    .alert.info{ background: rgba(63,155,95,0.12); color: var(--accent-glow); }
+    .alert.success{ background: rgba(95,191,122,0.14); color: #dffbe7; }
+    .alert.danger{ background: rgba(255,107,107,0.12); border-color: rgba(255,107,107,0.30); color: #ffd1d1; }
+
+    /* Progress */
+    .pwrap{
+      margin-top: 12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .pwrap.hidden{ display:none; }
+    .pbar{
+      flex:1;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.20);
+      border: 1px solid rgba(255,255,255,0.10);
+      overflow:hidden;
+    }
+    .pfill{
+      height:100%;
+      width:0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary-mid), var(--accent-glow));
+      transition: width 0.3s ease;
+    }
+    .ptext{
+      color: var(--text-muted);
+      font-weight:900;
+      font-size:0.9rem;
+      min-width: 120px;
+      text-align:end;
+    }
+
+    /* Log box */
+    .logbox{
+      margin-top: 14px;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 14px;
+      height: 220px;
+      overflow-y:auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    .logbox.hidden{ display:none; }
+    .logline{ font-size: 0.9rem; line-height: 1.55; margin-bottom: 6px; color: rgba(234,247,240,0.92); }
+    .logline.success{ color:#8ff0b0; font-weight:900; }
+    .logline.danger{ color:#ffb3b3; font-weight:900; }
   </style>
 </head>
-
-<body>
-
-<div class="main-container">
-
-  <!-- ✅ HEADER -->
-  <div id="header-placeholder"></div>
-
-  <!-- ✅ CONTENT -->
-  <main class="center">
-    <section class="card">
-
-      <h1>Connect Device</h1>
-      <p class="subtitle">
-        Select a connection method, then continue.
-      </p>
-
-      <div class="tabs">
-        <button class="tab-btn active" data-tab="wifiTab">Wi-Fi</button>
-        <button class="tab-btn" data-tab="usbTab">USB</button>
-      </div>
-
-      <!-- WiFi -->
-      <div class="tab-content active" id="wifiTab">
-        <div class="panel">
-          <label>Device IP : PORT</label>
-          <input placeholder="192.168.1.10:5555">
-          <div class="note">Make sure USB debugging is enabled.</div>
-
-          <div class="actions">
-            <button class="btn btn-primary" onclick="goChat()">Connect</button>
-            <button class="btn btn-ghost" onclick="goChat()">View Chats</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- USB -->
-      <div class="tab-content" id="usbTab">
-        <div class="panel">
-          <div class="note">
-            1) Connect USB cable<br>
-            2) Enable USB Debugging<br>
-            3) Press Connect
-          </div>
-
-          <div class="actions">
-            <button class="btn btn-primary" onclick="goChat()">Connect</button>
-            <button class="btn btn-ghost" onclick="goChat()">View Chats</button>
-          </div>
-        </div>
-      </div>
-
-    </section>
-  </main>
-
-</div>
-
-<!-- HEADER LOAD -->
 <script>
   fetch("header.html")
-    .then(r => r.text())
-    .then(html => {
-      document.getElementById("header-placeholder").innerHTML = html;
-    });
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("header-placeholder").innerHTML = data;
+    })
+    .catch(err => console.error("Header load error:", err));
 </script>
+<body>
+  
 
-<!-- Tabs -->
-<script>
-  document.querySelectorAll(".tab-btn").forEach(btn=>{
-    btn.onclick = ()=>{
-      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-      document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
-      btn.classList.add("active");
-      document.getElementById(btn.dataset.tab).classList.add("active");
+  <div class="main-container">
+<div id="header-placeholder"></div>
+ 
+
+    <main class="center">
+      <section class="card">
+
+        <h1 id="title">Connect Device</h1>
+        <p class="subtitle" id="subtitle">
+          Select a connection method, then use the buttons inside the selected tab.
+        </p>
+
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="wifiTab" id="tabWifi">Wi-Fi (IP:PORT)</button>
+          <button class="tab-btn" data-tab="usbTab" id="tabUsb">USB</button>
+        </div>
+
+        <!-- Wi-Fi content -->
+        <div class="tab-content active" id="wifiTab">
+          <div class="panel">
+            <label for="ipInput" id="ipLabel">Device IP:PORT</label>
+            <input id="ipInput" type="text" placeholder="e.g. 192.168.1.20:5555" />
+            <div class="note" id="wifiNote">
+              Enter the device IP:PORT, then press Connect to start the workflow.
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" id="btnWifiConnect">Connect</button>
+              <button class="btn btn-ghost" id="btnWifiPrev">View Previous Chats</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- USB content -->
+        <div class="tab-content" id="usbTab">
+          <div class="panel">
+            <div class="note" id="usbNote">
+              1) Connect your device using a USB cable.<br>
+              2) Enable <b>USB Debugging</b> on the device.<br>
+              3) Press <b>Connect</b> to start the workflow.
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" id="btnUsbConnect">Connect</button>
+              <button class="btn btn-ghost" id="btnUsbPrev">View Previous Chats</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shared output -->
+        <div class="alert hidden" id="alertBox"></div>
+
+        <div class="pwrap hidden" id="pwrap">
+          <div class="pbar"><div class="pfill" id="pfill"></div></div>
+          <div class="ptext" id="ptext">0%</div>
+        </div>
+
+        <div class="logbox hidden" id="logbox"></div>
+
+      </section>
+    </main>
+
+  </div>
+
+  <script>
+    // ===== CONFIG =====
+    const CHAT_PAGE = "chat.html";
+    const SIM_ROOTED = true;       // set false for "not rooted"
+    const SIM_USB_FOUND = true;    // set false for "no USB device"
+
+    // ===== ELEMENTS =====
+    const tabBtns = document.querySelectorAll(".tab-btn");
+    const tabs = document.querySelectorAll(".tab-content");
+
+    const ipInput = document.getElementById("ipInput");
+
+    const alertBox = document.getElementById("alertBox");
+    const logbox = document.getElementById("logbox");
+    const pwrap = document.getElementById("pwrap");
+    const pfill = document.getElementById("pfill");
+    const ptext = document.getElementById("ptext");
+
+    const btnWifiConnect = document.getElementById("btnWifiConnect");
+    const btnWifiPrev = document.getElementById("btnWifiPrev");
+    const btnUsbConnect = document.getElementById("btnUsbConnect");
+    const btnUsbPrev = document.getElementById("btnUsbPrev");
+
+    // Language
+    const btnLang = document.getElementById("btnLang");
+    const langText = document.getElementById("langText");
+    let currentLang = "en";
+
+    const T = {
+      en: {
+        topSubtitle: "Digital Forensics Platform",
+        navHome: "Home",
+        navChats: "Chats",
+        title: "Connect Device",
+        subtitle: "Select a connection method, then use the buttons inside the selected tab.",
+        tabWifi: "Wi-Fi (IP:PORT)",
+        tabUsb: "USB",
+        ipLabel: "Device IP:PORT",
+        ipPH: "e.g. 192.168.1.20:5555",
+
+> H:
+wifiNote: "Enter the device IP:PORT, then press Connect to start the workflow.",
+        usbNote: "1) Connect your device using a USB cable.<br>2) Enable <b>USB Debugging</b> on the device.<br>3) Press <b>Connect</b> to start the workflow.",
+        viewPrev: "View Previous Chats",
+        connect: "Connect",
+
+        aNeedIp: "Please enter IP:PORT (example: 192.168.1.20:5555).",
+        aInfoWifi: "Connecting via Wi-Fi...",
+        aInfoUsb: "Checking USB connection...",
+        aNoUsb: "No USB device detected. Please connect the device and enable USB Debugging.",
+        aNotRoot: "Device is not rooted. Root access is required to continue.",
+        aStart: "Starting acquisition workflow...",
+        aDone: "Completed. Redirecting to chats...",
+
+        lWaitUsb: "[INFO] Waiting for USB device (ADB)...",
+        lDetect: "[INFO] Detecting device...",
+        lAdb: "[INFO] Establishing ADB connection...",
+        lConnOk: "[INFO] Connection established",
+        lExtract: "[INFO] Extracting WhatsApp data...",
+        lRead: "[INFO] Reading database files: msgstore.db",
+        lHash: "[INFO] Calculating SHA-256 hashes...",
+        lDecrypt: "[INFO] Decrypting database...",
+        lParse: "[INFO] Parsing messages and extracting artifacts...",
+        lSuccess1: "[SUCCESS] Extraction complete!",
+        lSuccess2: "[SUCCESS] Evidence integrity verified."
+      },
+      ar: {
+        topSubtitle: "منصة التحليل الجنائي الرقمي",
+        navHome: "الرئيسية",
+        navChats: "المحادثات",
+        title: "توصيل الجهاز",
+        subtitle: "اختاري طريقة الاتصال ثم استخدمي الأزرار داخل التبويب المختار.",
+        tabWifi: "واي فاي (IP:PORT)",
+        tabUsb: "USB",
+        ipLabel: "عنوان الجهاز IP:PORT",
+        ipPH: "مثال: 192.168.1.20:5555",
+        wifiNote: "أدخلي IP:PORT ثم اضغطي Connect لبدء الخطوات.",
+        usbNote: "1) وصّلي الجهاز بالكيبل.<br>2) فعّلي <b>USB Debugging</b>.<br>3) اضغطي <b>Connect</b> لبدء الخطوات.",
+        viewPrev: "عرض المحادثات السابقة",
+        connect: "Connect",
+
+        aNeedIp: "اكتبي IP:PORT (مثال: 192.168.1.20:5555).",
+        aInfoWifi: "جاري الاتصال عبر الواي فاي...",
+        aInfoUsb: "جاري التحقق من USB...",
+        aNoUsb: "لم يتم العثور على جهاز USB. تأكدي من التوصيل وتفعيل USB Debugging.",
+        aNotRoot: "الجهاز غير مروّت. يلزم روت للمتابعة.",
+        aStart: "بدء خطوات الاستخراج...",
+        aDone: "اكتملت العملية... جارٍ الانتقال للمحادثات...",
+
+        lWaitUsb: "[INFO] انتظار جهاز USB (ADB)...",
+        lDetect: "[INFO] جاري اكتشاف الجهاز...",
+        lAdb: "[INFO] جاري إنشاء اتصال ADB...",
+        lConnOk: "[INFO] تم إنشاء الاتصال",
+        lExtract: "[INFO] جاري استخراج بيانات واتساب...",
+        lRead: "[INFO] قراءة ملفات قاعدة البيانات: msgstore.db",
+        lHash: "[INFO] حساب SHA-256...",
+        lDecrypt: "[INFO] فك تشفير قاعدة البيانات...",
+        lParse: "[INFO] تحليل الرسائل واستخراج الأدلة...",
+        lSuccess1: "[SUCCESS] اكتمل الاستخراج!",
+        lSuccess2: "[SUCCESS] تم التحقق من سلامة الدليل."
+      }
     };
-  });
 
-  function goChat(){
-    window.location.href = "chat.html";
-  }
-</script>
+    // ===== Helpers =====
+    function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
+    function showAlert(type, text){
+      alertBox.classList.remove("hidden");
+      alertBox.className = "alert " + type;
+      alertBox.textContent = text;
+    }
+    function hideAlert(){
+      alertBox.classList.add("hidden");
+      alertBox.textContent = "";
+    }
+    function log(line, type=""){
+      logbox.classList.remove("hidden");
+      const d = document.createElement("div");
+      d.className = "logline " + type;
+      d.textContent = line;
+      logbox.appendChild(d);
+      logbox.scrollTop = logbox.scrollHeight;
+    }
+    function resetOutput(){
+      hideAlert();
+      logbox.classList.add("hidden");
+      logbox.innerHTML = "";
+      pwrap.classList.add("hidden");
+      pfill.style.width = "0%";
+      ptext.textContent = "0%";
+    }
+    function setProgress(p){
+      pwrap.classList.remove("hidden");
+      pfill.style.width = p + "%";
+      ptext.textContent = p + "%";
+    }
+
+    async function runWorkflow(){
+
+> H:
+setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
+      setProgress(20); log(T[currentLang].lAdb); await sleep(700);
+      setProgress(30); log(T[currentLang].lConnOk); await sleep(500);
+      setProgress(45); log(T[currentLang].lExtract); await sleep(700);
+      setProgress(55); log(T[currentLang].lRead); await sleep(650);
+      setProgress(70); log(T[currentLang].lHash); await sleep(650);
+      setProgress(85); log(T[currentLang].lDecrypt); await sleep(750);
+      setProgress(95); log(T[currentLang].lParse); await sleep(650);
+      setProgress(100); log(T[currentLang].lSuccess1, "success");
+      log(T[currentLang].lSuccess2, "success");
+    }
+
+    async function connectWifi(){
+      resetOutput();
+      const ip = ipInput.value.trim();
+      if (!ip){
+        showAlert("danger", T[currentLang].aNeedIp);
+        return;
+      }
+
+      showAlert("info", T[currentLang].aInfoWifi);
+      log(`[INFO] IP:PORT => ${ip}`);
+      await sleep(400);
+
+      if (!SIM_ROOTED){
+        showAlert("danger", T[currentLang].aNotRoot);
+        log("[ERROR] Root check failed.", "danger");
+        return;
+      }
+
+      showAlert("info", T[currentLang].aStart);
+      disableButtons(true);
+      try{
+        await runWorkflow();
+        await sleep(600);
+        showAlert("success", T[currentLang].aDone);
+        await sleep(650);
+        window.location.href = CHAT_PAGE;
+      } finally {
+        disableButtons(false);
+      }
+    }
+
+    async function connectUsb(){
+      resetOutput();
+      showAlert("info", T[currentLang].aInfoUsb);
+      log(T[currentLang].lWaitUsb);
+      await sleep(600);
+
+      if (!SIM_USB_FOUND){
+        showAlert("danger", T[currentLang].aNoUsb);
+        log("[ERROR] No USB device found.", "danger");
+        return;
+      }
+
+      if (!SIM_ROOTED){
+        showAlert("danger", T[currentLang].aNotRoot);
+        log("[ERROR] Root check failed.", "danger");
+        return;
+      }
+
+      showAlert("info", T[currentLang].aStart);
+      disableButtons(true);
+      try{
+        await runWorkflow();
+        await sleep(600);
+        showAlert("success", T[currentLang].aDone);
+        await sleep(650);
+        window.location.href = CHAT_PAGE;
+      } finally {
+        disableButtons(false);
+      }
+    }
+
+    function disableButtons(disabled){
+      btnWifiConnect.disabled = disabled;
+      btnWifiPrev.disabled = disabled;
+      btnUsbConnect.disabled = disabled;
+      btnUsbPrev.disabled = disabled;
+      btnLang.disabled = disabled;
+      tabBtns.forEach(b => b.disabled = disabled);
+    }
+
+    // ===== Tabs behavior =====
+    tabBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabBtns.forEach(b => b.classList.remove("active"));
+        tabs.forEach(t => t.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+        resetOutput();
+      });
+    });
+
+    // ===== Lang apply =====
+    function applyLang(lang){
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = (lang === "ar") ? "rtl" : "ltr";
+
+      document.getElementById("top-subtitle").textContent = T[lang].topSubtitle;
+      document.getElementById("nav-home").textContent = T[lang].navHome;
+      document.getElementById("nav-chats").textContent = T[lang].navChats;
+
+      document.getElementById("title").textContent = T[lang].title;
+      document.getElementById("subtitle").textContent = T[lang].subtitle;
+
+      document.getElementById("tabWifi").textContent = T[lang].tabWifi;
+      document.getElementById("tabUsb").textContent = T[lang].tabUsb;
+
+      document.getElementById("ipLabel").textContent = T[lang].ipLabel;
+      ipInput.placeholder = T[lang].ipPH;
+      document.getElementById("wifiNote").textContent = T[lang].wifiNote;
+      document.getElementById("usbNote").innerHTML = T[lang].usbNote;
+
+      btnWifiConnect.textContent = T[lang].connect;
+      btnUsbConnect.textContent = T[lang].connect;
+      btnWifiPrev.textContent = T[lang].viewPrev;
+      btnUsbPrev.textContent = T[lang].viewPrev;
+
+> H:
+langText.textContent = (lang === "en") ? "AR" : "EN";
+    }
+
+    btnLang.addEventListener("click", () => {
+      currentLang = (currentLang === "en") ? "ar" : "en";
+      applyLang(currentLang);
+      resetOutput();
+    });
+
+    // Buttons
+    btnWifiConnect.addEventListener("click", connectWifi);
+    btnUsbConnect.addEventListener("click", connectUsb);
+    btnWifiPrev.addEventListener("click", () => window.location.href = CHAT_PAGE);
+    btnUsbPrev.addEventListener("click", () => window.location.href = CHAT_PAGE);
+
+    // Init
+    applyLang(currentLang);
+  </script>
 </body>
 </html>
