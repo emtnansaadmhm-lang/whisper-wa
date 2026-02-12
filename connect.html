@@ -21,11 +21,9 @@
 
       --text-white:#ffffff;
       --text-muted:#c2dec9;
-      --danger:#ff6b6b;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
-
     body{
       font-family:'Tajawal',sans-serif;
       background-color: var(--bg-dark);
@@ -69,7 +67,7 @@
       z-index:1;
     }
 
-    /* Header bar */
+    /* Top bar */
     .topbar{
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -85,7 +83,7 @@
       display:flex;
       align-items:center;
       gap:12px;
-      min-width: 220px;
+      min-width: 240px;
     }
     .brand img{
       height:42px;
@@ -109,26 +107,6 @@
       align-items:center;
       gap:10px;
     }
-
-    .lang-btn{
-      background: rgba(95,191,122,0.10);
-      border: 1px solid var(--glass-border);
-      color: var(--accent-glow);
-      padding: 8px 14px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-weight:800;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      transition:0.25s;
-      user-select:none;
-    }
-    .lang-btn:hover{
-      background: rgba(95,191,122,0.18);
-      transform: translateY(-1px);
-    }
-
     .nav-link{
       text-decoration:none;
       color: var(--text-muted);
@@ -143,6 +121,21 @@
       border-color: rgba(255,255,255,0.10);
       background: rgba(0,0,0,0.14);
     }
+    .lang-btn{
+      background: rgba(95,191,122,0.10);
+      border: 1px solid var(--glass-border);
+      color: var(--accent-glow);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:900;
+      transition:0.25s;
+      user-select:none;
+    }
+    .lang-btn:hover{
+      background: rgba(95,191,122,0.18);
+      transform: translateY(-1px);
+    }
 
     /* Center card */
     .center{
@@ -151,7 +144,6 @@
       align-items:center;
       justify-content:center;
     }
-
     .card{
       width:min(920px, 95vw);
       background: var(--glass-bg);
@@ -161,7 +153,6 @@
       padding: 26px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.35);
     }
-
     .card h1{
       font-size: 1.7rem;
       margin-bottom: 6px;
@@ -172,50 +163,49 @@
       line-height:1.6;
     }
 
-    /* 2 sections */
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    /* Tabs like your example */
+    .tabs{
+      display:flex;
+      gap:0;
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 16px;
+      overflow:hidden;
+      margin-bottom: 14px;
     }
-    @media (max-width: 860px){
-      .grid{ grid-template-columns: 1fr; }
+    .tab-btn{
+      flex:1;
+      padding: 12px 14px;
+      cursor:pointer;
+      background: transparent;
+      color: var(--text-muted);
+      border: none;
+      font-weight:900;
+      transition:0.25s;
+    }
+    .tab-btn.active{
+      background: rgba(95,191,122,0.16);
+      color: var(--accent-glow);
+      box-shadow: inset 0 -3px 0 rgba(143,217,168,0.9);
     }
 
+    .tab-content{ display:none; }
+    .tab-content.active{ display:block; }
+
+    /* Panels */
     .panel{
       background: rgba(0,0,0,0.16);
       border: 1px solid rgba(255,255,255,0.10);
       border-radius: 18px;
       padding: 16px;
     }
-    .panel-title{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 10px;
-    }
-    .panel-title b{
-      font-size:1.05rem;
-      color: var(--accent-glow);
-    }
-    .badge{
-      font-size:0.8rem;
-      color: rgba(194,222,201,0.9);
-      background: rgba(63,155,95,0.12);
-      border: 1px solid rgba(95,191,122,0.20);
-      padding: 4px 10px;
-      border-radius: 999px;
-      white-space:nowrap;
-    }
 
     label{
       display:block;
       color: var(--text-muted);
-      font-weight:700;
+      font-weight:800;
       margin: 8px 0 8px;
     }
-
     input{
       width:100%;
       padding: 12px 14px;
@@ -235,7 +225,7 @@
       line-height:1.55;
     }
 
-    /* Actions */
+    /* Actions inside each tab */
     .actions{
       display:flex;
       gap: 12px;
@@ -255,20 +245,13 @@
       background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
       color:white;
     }
-    .btn-primary:hover{
-      filter: brightness(1.15);
-      transform: translateY(-1px);
-    }
-
+    .btn-primary:hover{ filter: brightness(1.15); transform: translateY(-1px); }
     .btn-ghost{
       background: rgba(0,0,0,0.18);
       color: var(--accent-glow);
       border: 1px solid rgba(255,255,255,0.10);
     }
-    .btn-ghost:hover{
-      background: rgba(95,191,122,0.12);
-      transform: translateY(-1px);
-    }
+    .btn-ghost:hover{ background: rgba(95,191,122,0.12); transform: translateY(-1px); }
 
     /* Alert */
     .alert{
@@ -276,30 +259,14 @@
       padding: 12px 14px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,0.10);
-      font-weight:800;
+      font-weight:900;
     }
     .alert.hidden{ display:none; }
     .alert.info{ background: rgba(63,155,95,0.12); color: var(--accent-glow); }
     .alert.success{ background: rgba(95,191,122,0.14); color: #dffbe7; }
     .alert.danger{ background: rgba(255,107,107,0.12); border-color: rgba(255,107,107,0.30); color: #ffd1d1; }
 
-    /* Log box */
-    .logbox{
-      margin-top: 14px;
-      background: rgba(0,0,0,0.22);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 18px;
-      padding: 14px;
-      height: 210px;
-      overflow-y:auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-    .logbox.hidden{ display:none; }
-    .logline{ font-size: 0.9rem; line-height: 1.55; margin-bottom: 6px; color: rgba(234,247,240,0.92); }
-    .logline.success{ color:#8ff0b0; font-weight:800; }
-    .logline.danger{ color:#ffb3b3; font-weight:800; }
-
-    /* Progress bar (optional but nice) */
+    /* Progress */
     .pwrap{
       margin-top: 12px;
       display:flex;
@@ -324,11 +291,27 @@
     }
     .ptext{
       color: var(--text-muted);
-      font-weight:800;
+      font-weight:900;
       font-size:0.9rem;
       min-width: 120px;
       text-align:end;
     }
+
+    /* Log box */
+    .logbox{
+      margin-top: 14px;
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 14px;
+      height: 220px;
+      overflow-y:auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    .logbox.hidden{ display:none; }
+    .logline{ font-size: 0.9rem; line-height: 1.55; margin-bottom: 6px; color: rgba(234,247,240,0.92); }
+    .logline.success{ color:#8ff0b0; font-weight:900; }
+    .logline.danger{ color:#ffb3b3; font-weight:900; }
   </style>
 </head>
 
@@ -339,7 +322,6 @@
 
   <div class="main-container">
 
-    <!-- TOP BAR -->
     <header class="topbar">
       <div class="brand">
         <img src="logo.png" alt="Whisper-WA Logo">
@@ -352,57 +334,57 @@
       <div class="top-actions">
         <a class="nav-link" href="index.html" id="nav-home">Home</a>
         <a class="nav-link" href="chat.html" id="nav-chats">Chats</a>
-        <button class="lang-btn" id="btnLang" aria-label="Toggle Language">
-          <span id="langText">AR</span>
-        </button>
+        <button class="lang-btn" id="btnLang"><span id="langText">AR</span></button>
       </div>
     </header>
 
-    <!-- CENTER -->
     <main class="center">
       <section class="card">
 
         <h1 id="title">Connect Device</h1>
         <p class="subtitle" id="subtitle">
-          Choose a connection method, then press Connect to start the acquisition workflow.
+          Select a connection method, then use the buttons inside the selected tab.
         </p>
 
-        <div class="grid">
-          <!-- Wi-Fi panel -->
-          <div class="panel" id="panelWifi">
-            <div class="panel-title">
-              <b id="wifiTitle">Wi-Fi (IP:PORT)</b>
-              <span class="badge" id="wifiBadge">Optional</span>
-            </div>
+        <!-- Tabs -->
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="wifiTab" id="tabWifi">Wi-Fi (IP:PORT)</button>
+          <button class="tab-btn" data-tab="usbTab" id="tabUsb">USB</button>
+        </div>
 
+        <!-- Wi-Fi content -->
+        <div class="tab-content active" id="wifiTab">
+          <div class="panel">
             <label for="ipInput" id="ipLabel">Device IP:PORT</label>
             <input id="ipInput" type="text" placeholder="e.g. 192.168.1.20:5555" />
-
             <div class="note" id="wifiNote">
-              This will run an ADB connection using the provided IP:PORT, then continue the workflow.
+              Enter the device IP:PORT, then press Connect to start the workflow.
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" id="btnWifiConnect">Connect</button>
+              <button class="btn btn-ghost" id="btnWifiPrev">View Previous Chats</button>
             </div>
           </div>
+        </div>
 
-          <!-- USB panel -->
-          <div class="panel" id="panelUsb">
-            <div class="panel-title">
-              <b id="usbTitle">USB</b>
-              <span class="badge" id="usbBadge">No input</span>
-            </div>
-
+        <!-- USB content -->
+        <div class="tab-content" id="usbTab">
+          <div class="panel">
             <div class="note" id="usbNote">
               1) Connect your device using a USB cable.<br>
               2) Enable <b>USB Debugging</b> on the device.<br>
-              3) Press <b>Connect</b> below.
+              3) Press <b>Connect</b> to start the workflow.
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" id="btnUsbConnect">Connect</button>
+              <button class="btn btn-ghost" id="btnUsbPrev">View Previous Chats</button>
             </div>
           </div>
         </div>
 
-        <div class="actions">
-          <button class="btn btn-primary" id="btnConnect">Connect</button>
-          <button class="btn btn-ghost" id="btnPrev">View Previous Chats</button>
-        </div>
-
+        <!-- Shared output -->
         <div class="alert hidden" id="alertBox"></div>
 
         <div class="pwrap hidden" id="pwrap">
@@ -420,48 +402,48 @@
   <script>
     // ===== CONFIG =====
     const CHAT_PAGE = "chat.html";
-
-    // Toggle to test behaviors in UI:
-    const SIM_ROOTED = true;        // set false to show "not rooted" stop
-    const SIM_USB_FOUND = true;     // set false to show "no USB device" error
+    const SIM_ROOTED = true;       // set false for "not rooted"
+    const SIM_USB_FOUND = true;    // set false for "no USB device"
 
     // ===== ELEMENTS =====
+    const tabBtns = document.querySelectorAll(".tab-btn");
+    const tabs = document.querySelectorAll(".tab-content");
+
     const ipInput = document.getElementById("ipInput");
-    const btnConnect = document.getElementById("btnConnect");
-    const btnPrev = document.getElementById("btnPrev");
+
     const alertBox = document.getElementById("alertBox");
     const logbox = document.getElementById("logbox");
     const pwrap = document.getElementById("pwrap");
     const pfill = document.getElementById("pfill");
     const ptext = document.getElementById("ptext");
 
+    const btnWifiConnect = document.getElementById("btnWifiConnect");
+    const btnWifiPrev = document.getElementById("btnWifiPrev");
+    const btnUsbConnect = document.getElementById("btnUsbConnect");
+    const btnUsbPrev = document.getElementById("btnUsbPrev");
+
     // Language
     const btnLang = document.getElementById("btnLang");
     const langText = document.getElementById("langText");
+    let currentLang = "en";
 
-    // UI texts
     const T = {
       en: {
         topSubtitle: "Digital Forensics Platform",
         navHome: "Home",
         navChats: "Chats",
         title: "Connect Device",
-        subtitle: "Choose a connection method, then press Connect to start the acquisition workflow.",
-
-        wifiTitle: "Wi-Fi (IP:PORT)",
-        wifiBadge: "Optional",
+        subtitle: "Select a connection method, then use the buttons inside the selected tab.",
+        tabWifi: "Wi-Fi (IP:PORT)",
+        tabUsb: "USB",
         ipLabel: "Device IP:PORT",
         ipPH: "e.g. 192.168.1.20:5555",
-        wifiNote: "This will run an ADB connection using the provided IP:PORT, then continue the workflow.",
+        wifiNote: "Enter the device IP:PORT, then press Connect to start the workflow.",
+        usbNote: "1) Connect your device using a USB cable.<br>2) Enable <b>USB Debugging</b> on the device.<br>3) Press <b>Connect</b> to start the workflow.",
+        viewPrev: "View Previous Chats",
+        connect: "Connect",
 
-        usbTitle: "USB",
-        usbBadge: "No input",
-        usbNote: "1) Connect your device using a USB cable.<br>2) Enable <b>USB Debugging</b> on the device.<br>3) Press <b>Connect</b> below.",
-
-        btnConnect: "Connect",
-        btnPrev: "View Previous Chats",
-
-        // Alerts
+        aNeedIp: "Please enter IP:PORT (example: 192.168.1.20:5555).",
         aInfoWifi: "Connecting via Wi-Fi...",
         aInfoUsb: "Checking USB connection...",
         aNoUsb: "No USB device detected. Please connect the device and enable USB Debugging.",
@@ -469,7 +451,7 @@
         aStart: "Starting acquisition workflow...",
         aDone: "Completed. Redirecting to chats...",
 
-        // Logs
+        lWaitUsb: "[INFO] Waiting for USB device (ADB)...",
         lDetect: "[INFO] Detecting device...",
         lAdb: "[INFO] Establishing ADB connection...",
         lConnOk: "[INFO] Connection established",
@@ -486,21 +468,17 @@
         navHome: "الرئيسية",
         navChats: "المحادثات",
         title: "توصيل الجهاز",
-        subtitle: "اختاري طريقة الاتصال، ثم اضغطي Connect لبدء خطوات الاستخراج.",
-
-        wifiTitle: "واي فاي (IP:PORT)",
-        wifiBadge: "اختياري",
+        subtitle: "اختاري طريقة الاتصال ثم استخدمي الأزرار داخل التبويب المختار.",
+        tabWifi: "واي فاي (IP:PORT)",
+        tabUsb: "USB",
         ipLabel: "عنوان الجهاز IP:PORT",
         ipPH: "مثال: 192.168.1.20:5555",
-        wifiNote: "سيتم إنشاء اتصال ADB عبر IP:PORT ثم متابعة الخطوات.",
+        wifiNote: "أدخلي IP:PORT ثم اضغطي Connect لبدء الخطوات.",
+        usbNote: "1) وصّلي الجهاز بالكيبل.<br>2) فعّلي <b>USB Debugging</b>.<br>3) اضغطي <b>Connect</b> لبدء الخطوات.",
+        viewPrev: "عرض المحادثات السابقة",
+        connect: "Connect",
 
-        usbTitle: "USB",
-        usbBadge: "بدون إدخال",
-        usbNote: "1) وصّلي الجهاز بالكيبل.<br>2) فعّلي <b>USB Debugging</b>.<br>3) اضغطي <b>Connect</b>.",
-
-        btnConnect: "Connect",
-        btnPrev: "عرض المحادثات السابقة",
-
+        aNeedIp: "اكتبي IP:PORT (مثال: 192.168.1.20:5555).",
         aInfoWifi: "جاري الاتصال عبر الواي فاي...",
         aInfoUsb: "جاري التحقق من USB...",
         aNoUsb: "لم يتم العثور على جهاز USB. تأكدي من التوصيل وتفعيل USB Debugging.",
@@ -508,6 +486,7 @@
         aStart: "بدء خطوات الاستخراج...",
         aDone: "اكتملت العملية... جارٍ الانتقال للمحادثات...",
 
+        lWaitUsb: "[INFO] انتظار جهاز USB (ADB)...",
         lDetect: "[INFO] جاري اكتشاف الجهاز...",
         lAdb: "[INFO] جاري إنشاء اتصال ADB...",
         lConnOk: "[INFO] تم إنشاء الاتصال",
@@ -521,9 +500,7 @@
       }
     };
 
-    let currentLang = "en";
-
-    // ===== HELPERS =====
+    // ===== Helpers =====
     function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
     function showAlert(type, text){
@@ -543,7 +520,7 @@
       logbox.appendChild(d);
       logbox.scrollTop = logbox.scrollHeight;
     }
-    function resetUI(){
+    function resetOutput(){
       hideAlert();
       logbox.classList.add("hidden");
       logbox.innerHTML = "";
@@ -557,20 +534,102 @@
       ptext.textContent = p + "%";
     }
 
-    async function runWorkflow(lang){
-      setProgress(5);  log(T[lang].lDetect); await sleep(600);
-      setProgress(20); log(T[lang].lAdb); await sleep(700);
-      setProgress(30); log(T[lang].lConnOk); await sleep(500);
-      setProgress(45); log(T[lang].lExtract); await sleep(700);
-      setProgress(55); log(T[lang].lRead); await sleep(650);
-      setProgress(70); log(T[lang].lHash); await sleep(650);
-      setProgress(85); log(T[lang].lDecrypt); await sleep(750);
-      setProgress(95); log(T[lang].lParse); await sleep(650);
-      setProgress(100); log(T[lang].lSuccess1, "success");
-      log(T[lang].lSuccess2, "success");
+    async function runWorkflow(){
+      setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
+      setProgress(20); log(T[currentLang].lAdb); await sleep(700);
+      setProgress(30); log(T[currentLang].lConnOk); await sleep(500);
+      setProgress(45); log(T[currentLang].lExtract); await sleep(700);
+      setProgress(55); log(T[currentLang].lRead); await sleep(650);
+      setProgress(70); log(T[currentLang].lHash); await sleep(650);
+      setProgress(85); log(T[currentLang].lDecrypt); await sleep(750);
+      setProgress(95); log(T[currentLang].lParse); await sleep(650);
+      setProgress(100); log(T[currentLang].lSuccess1, "success");
+      log(T[currentLang].lSuccess2, "success");
     }
 
-    // ===== LANGUAGE APPLY =====
+    async function connectWifi(){
+      resetOutput();
+      const ip = ipInput.value.trim();
+      if (!ip){
+        showAlert("danger", T[currentLang].aNeedIp);
+        return;
+      }
+
+      showAlert("info", T[currentLang].aInfoWifi);
+      log(`[INFO] IP:PORT => ${ip}`);
+      await sleep(400);
+
+      if (!SIM_ROOTED){
+        showAlert("danger", T[currentLang].aNotRoot);
+        log("[ERROR] Root check failed.", "danger");
+        return;
+      }
+
+      showAlert("info", T[currentLang].aStart);
+      disableButtons(true);
+      try{
+        await runWorkflow();
+        await sleep(600);
+        showAlert("success", T[currentLang].aDone);
+        await sleep(650);
+        window.location.href = CHAT_PAGE;
+      } finally {
+        disableButtons(false);
+      }
+    }
+
+    async function connectUsb(){
+      resetOutput();
+      showAlert("info", T[currentLang].aInfoUsb);
+      log(T[currentLang].lWaitUsb);
+      await sleep(600);
+
+      if (!SIM_USB_FOUND){
+        showAlert("danger", T[currentLang].aNoUsb);
+        log("[ERROR] No USB device found.", "danger");
+        return;
+      }
+
+      if (!SIM_ROOTED){
+        showAlert("danger", T[currentLang].aNotRoot);
+        log("[ERROR] Root check failed.", "danger");
+        return;
+      }
+
+      showAlert("info", T[currentLang].aStart);
+      disableButtons(true);
+      try{
+        await runWorkflow();
+        await sleep(600);
+        showAlert("success", T[currentLang].aDone);
+        await sleep(650);
+        window.location.href = CHAT_PAGE;
+      } finally {
+        disableButtons(false);
+      }
+    }
+
+    function disableButtons(disabled){
+      btnWifiConnect.disabled = disabled;
+      btnWifiPrev.disabled = disabled;
+      btnUsbConnect.disabled = disabled;
+      btnUsbPrev.disabled = disabled;
+      btnLang.disabled = disabled;
+      tabBtns.forEach(b => b.disabled = disabled);
+    }
+
+    // ===== Tabs behavior =====
+    tabBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabBtns.forEach(b => b.classList.remove("active"));
+        tabs.forEach(t => t.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+        resetOutput();
+      });
+    });
+
+    // ===== Lang apply =====
     function applyLang(lang){
       const html = document.documentElement;
       html.lang = lang;
@@ -583,81 +642,33 @@
       document.getElementById("title").textContent = T[lang].title;
       document.getElementById("subtitle").textContent = T[lang].subtitle;
 
-      document.getElementById("wifiTitle").textContent = T[lang].wifiTitle;
-      document.getElementById("wifiBadge").textContent = T[lang].wifiBadge;
+      document.getElementById("tabWifi").textContent = T[lang].tabWifi;
+      document.getElementById("tabUsb").textContent = T[lang].tabUsb;
+
       document.getElementById("ipLabel").textContent = T[lang].ipLabel;
       ipInput.placeholder = T[lang].ipPH;
       document.getElementById("wifiNote").textContent = T[lang].wifiNote;
-
-      document.getElementById("usbTitle").textContent = T[lang].usbTitle;
-      document.getElementById("usbBadge").textContent = T[lang].usbBadge;
       document.getElementById("usbNote").innerHTML = T[lang].usbNote;
 
-      btnConnect.textContent = T[lang].btnConnect;
-      btnPrev.textContent = T[lang].btnPrev;
+      btnWifiConnect.textContent = T[lang].connect;
+      btnUsbConnect.textContent = T[lang].connect;
+      btnWifiPrev.textContent = T[lang].viewPrev;
+      btnUsbPrev.textContent = T[lang].viewPrev;
 
-      // Button label shows the target language
       langText.textContent = (lang === "en") ? "AR" : "EN";
     }
 
     btnLang.addEventListener("click", () => {
       currentLang = (currentLang === "en") ? "ar" : "en";
       applyLang(currentLang);
+      resetOutput();
     });
 
-    // ===== ACTIONS =====
-    btnPrev.addEventListener("click", () => {
-      window.location.href = CHAT_PAGE;
-    });
-
-    btnConnect.addEventListener("click", async () => {
-      resetUI();
-
-      const ip = ipInput.value.trim();
-      const isWifi = ip.length > 0;
-
-      if (isWifi){
-        showAlert("info", T[currentLang].aInfoWifi);
-        log(`[INFO] IP:PORT => ${ip}`);
-        await sleep(400);
-      } else {
-        showAlert("info", T[currentLang].aInfoUsb);
-        log("[INFO] Waiting for USB device (ADB)...");
-        await sleep(600);
-
-        if (!SIM_USB_FOUND){
-          showAlert("danger", T[currentLang].aNoUsb);
-          log("[ERROR] No USB device found.", "danger");
-          return;
-        }
-      }
-
-      // Root check (placeholder)
-      await sleep(300);
-      if (!SIM_ROOTED){
-        showAlert("danger", T[currentLang].aNotRoot);
-        log("[ERROR] Root check failed.", "danger");
-        return;
-      }
-
-      showAlert("info", T[currentLang].aStart);
-
-      btnConnect.disabled = true;
-      btnPrev.disabled = true;
-      btnLang.disabled = true;
-
-      try{
-        await runWorkflow(currentLang);
-        await sleep(650);
-        showAlert("success", T[currentLang].aDone);
-        await sleep(650);
-        window.location.href = CHAT_PAGE;
-      } finally {
-        btnConnect.disabled = false;
-        btnPrev.disabled = false;
-        btnLang.disabled = false;
-      }
-    });
+    // Buttons
+    btnWifiConnect.addEventListener("click", connectWifi);
+    btnUsbConnect.addEventListener("click", connectUsb);
+    btnWifiPrev.addEventListener("click", () => window.location.href = CHAT_PAGE);
+    btnUsbPrev.addEventListener("click", () => window.location.href = CHAT_PAGE);
 
     // Init
     applyLang(currentLang);
