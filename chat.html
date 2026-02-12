@@ -19,82 +19,100 @@
 }
 
 *{box-sizing:border-box}
+
 body{
     margin:0;
     font-family:'Tajawal',sans-serif;
-    background:linear-gradient(135deg,var(--dark),var(--main));
+    background:linear-gradient(135deg,#061A13,#0F6B3A);
     color:var(--text);
     height:100vh;
     overflow:hidden;
 }
 
+/* subtle grid */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(155,227,180,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(155,227,180,0.05) 1px, transparent 1px);
+    background-size:80px 80px;
+    z-index:0;
+}
+
 /* HEADER */
 header{
+    position:relative;
+    z-index:1;
     height:64px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 25px;
-    background:rgba(0,0,0,0.25);
-    backdrop-filter:blur(10px);
+    padding:0 24px;
+    background:rgba(0,0,0,0.35);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
 }
 
-header img{
-    height:40px;
-}
-
-header h3{
-    margin:0 10px;
-}
-
-.header-left{
+header .left{
     display:flex;
     align-items:center;
 }
 
-/* MAIN GRID */
+header img{
+    height:40px;
+    margin-left:10px;
+}
+
+header h3{
+    margin:0;
+}
+
+/* MAIN */
 .main{
+    position:relative;
+    z-index:1;
     height:calc(100vh - 64px);
     display:grid;
     grid-template-columns: 65% 35%;
-    gap:15px;
-    padding:15px;
+    gap:16px;
+    padding:16px;
 }
 
-/* PANELS */
+/* GLASS PANEL */
 .panel{
     background:var(--glass);
-    backdrop-filter:blur(12px);
+    backdrop-filter:blur(14px);
     border:1px solid var(--border);
-    border-radius:16px;
-    padding:15px;
+    border-radius:18px;
+    padding:16px;
     display:flex;
     flex-direction:column;
 }
 
 /* REPORT */
-.report-header{
+.report-toolbar{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
-.report-actions button{
-    background:var(--accent);
-    border:none;
-    color:#062016;
+.report-toolbar button,
+.report-toolbar select{
+    background:rgba(15,107,58,0.6);
+    border:1px solid var(--border);
+    color:var(--text);
     padding:8px 14px;
-    border-radius:8px;
+    border-radius:10px;
     cursor:pointer;
-    font-weight:600;
-    margin-left:8px;
+    font-family:inherit;
 }
 
-.report-actions select{
-    padding:8px;
-    border-radius:8px;
-    border:none;
+.report-toolbar button:hover{
+    background:var(--accent);
+    color:#062016;
 }
 
 table{
@@ -110,7 +128,7 @@ th,td{
 }
 
 th{
-    background:rgba(0,0,0,0.3);
+    background:rgba(15,107,58,0.45);
 }
 
 tbody tr:hover{
@@ -125,48 +143,49 @@ tbody tr:hover{
 }
 
 .msg{
-    max-width:70%;
+    max-width:75%;
     padding:10px 14px;
-    border-radius:12px;
-    margin-bottom:10px;
+    border-radius:14px;
+    margin-bottom:12px;
     font-size:14px;
 }
 
 .sent{
-    background:var(--accent);
+    background:linear-gradient(135deg,#9BE3B4,#2FA66A);
     color:#062016;
-    align-self:flex-start;
+    margin-left:auto;
 }
 
 .received{
-    background:rgba(255,255,255,0.15);
-    align-self:flex-end;
+    background:rgba(255,255,255,0.18);
 }
 
 .chat-input{
     position:relative;
+    margin-top:10px;
 }
 
 .chat-input input{
     width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:none;
+    padding:14px;
+    border-radius:12px;
+    border:1px solid var(--border);
+    background:rgba(0,0,0,0.3);
+    color:var(--text);
     outline:none;
-    font-family:inherit;
 }
 
-/* SUGGESTIONS */
+/* suggestions */
 .suggestions{
     position:absolute;
-    bottom:48px;
+    bottom:56px;
     right:0;
+    width:100%;
     background:#0B3D2A;
     border:1px solid var(--border);
-    border-radius:10px;
-    width:100%;
+    border-radius:12px;
     display:none;
-    z-index:5;
+    z-index:10;
 }
 
 .suggestions div{
@@ -184,7 +203,7 @@ tbody tr:hover{
 <body>
 
 <header>
-    <div class="header-left">
+    <div class="left">
         <img src="logo.png">
         <h3>Whisper-WA</h3>
     </div>
@@ -195,24 +214,24 @@ tbody tr:hover{
 
     <!-- REPORT -->
     <div class="panel">
-        <div class="report-header">
-            <strong>Report</strong>
-            <div class="report-actions">
+        <div class="report-toolbar">
+            <div>
                 <select>
                     <option>Export</option>
                     <option>PDF</option>
                     <option>CSV</option>
                 </select>
-                <button>كل الأيام المحددة</button>
             </div>
+            <button>عرض كل التقارير المحددة</button>
         </div>
 
         <table>
+
             <thead>
                 <tr>
                     <th>نص الرسالة</th>
                     <th>رقم الجوال</th>
-                    <th>مرسل / مستقبل</th>
+                    <th>النوع</th>
                     <th>الوقت</th>
                     <th>التاريخ</th>
                 </tr>
@@ -222,7 +241,8 @@ tbody tr:hover{
                     <td>تم تحويل المبلغ</td>
                     <td>055xxxx</td>
                     <td>مرسل</td>
-                  <td>2026/02/12</td>
+                    <td>10:15</td>
+                    <td>2026/02/12</td>
                 </tr>
                 <tr>
                     <td>رمز التحقق</td>
@@ -251,28 +271,25 @@ tbody tr:hover{
 </div>
 
 <script>
-const keywords = ["بنك","سرقة","هجوم","حساب","رمز","كلمة مرور","تحويل","اختراق"];
-const input = document.getElementById("chatInput");
-const sugBox = document.getElementById("suggestions");
+const keywords=["بنك","سرقة","هجوم","حساب","رمز","كلمة مرور","تحويل","اختراق"];
+const input=document.getElementById("chatInput");
+const box=document.getElementById("suggestions");
 
-input.addEventListener("input", ()=>{
-    const val = input.value.trim();
-    sugBox.innerHTML = "";
-    if(val.length < 1){sugBox.style.display="none"; return;}
-
-    const matches = keywords.filter(k => k.includes(val));
-    if(matches.length===0){sugBox.style.display="none"; return;}
-
-    matches.forEach(m=>{
-        const div = document.createElement("div");
-        div.textContent = m;
-        div.onclick = ()=>{input.value = m; sugBox.style.display="none";}
-        sugBox.appendChild(div);
+input.addEventListener("input",()=>{
+    const v=input.value.trim();
+    box.innerHTML="";
+    if(!v){box.style.display="none";return;}
+    keywords.filter(k=>k.includes(v)).forEach(k=>{
+        const d=document.createElement("div");
+        d.textContent=k;
+        d.onclick=()=>{input.value=k;box.style.display="none";}
+        box.appendChild(d);
     });
-    sugBox.style.display="block";
+    box.style.display=box.children.length?"block":"none";
 });
 </script>
 
 </body>
 </html>
-                    <td>10:15</td>
+
+            
