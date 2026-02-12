@@ -142,7 +142,7 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     }
 
-    /* ✅ هيدر التقرير: Title + زرين */
+    /* ✅ هيدر التقرير */
     .sidebar-header {
       display: flex;
       justify-content: space-between;
@@ -159,6 +159,8 @@
       display: flex;
       gap: 10px;
       align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .btn-secondary {
@@ -254,10 +256,9 @@
     .badge-sent { background: rgba(63,155,95,0.22); color: #d8ffe4; }
     .badge-recv { background: rgba(44,62,80,0.35); color: #d7e6ff; }
 
-    /* ✅ الشات (يسار): نفس تصميمه بس أصغر */
+    /* ✅ الشات (يسار) */
     .chat-interface {
       flex: 1;
-
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(15px);
@@ -311,18 +312,19 @@
 
     .chat-split-view { display: flex; flex: 1; overflow: hidden; }
 
+    /* ✅ وسعنا قائمة الشات عشان "خالد (المشتبه به)" ما ينضغط */
     .chat-list {
-      width: 150px;
+      width: 210px; /* كان 150 */
       border-left: 1px solid rgba(255,255,255,0.1);
       overflow-y: auto;
       background: rgba(0,0,0,0.1);
     }
 
     .chat-item {
-      padding: 15px;
+      padding: 14px 14px;
       border-bottom: 1px solid rgba(255,255,255,0.05);
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: flex-start;
       cursor: pointer;
       transition: 0.2s;
@@ -333,8 +335,20 @@
       border-right: 4px solid var(--primary-light);
     }
 
-    .chat-info h4 { font-size: 0.95rem; margin-bottom: 5px; color: white; }
-    .chat-info p { font-size: 0.85rem; color: var(--text-muted); }
+    .chat-item input[type="checkbox"]{
+      margin-top: 4px;
+      accent-color: var(--primary-light);
+      cursor: pointer;
+    }
+
+    .chat-info h4 {
+      font-size: 0.98rem;
+      margin-bottom: 6px;
+      color: white;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .chat-info p { font-size: 0.83rem; color: var(--text-muted); }
     .time { font-size: 0.75rem; color: var(--text-muted); margin-right: auto; }
 
     .message-view {
@@ -352,10 +366,14 @@
     .msg {
       padding: 10px 15px;
       border-radius: 12px;
-      max-width: 70%;
+      max-width: 75%;
       font-size: 0.95rem;
       position: relative;
       line-height: 1.5;
+      cursor: pointer;
+      user-select: none;
+      transition: 0.2s;
+      border: 1px solid transparent;
     }
 
     .msg.received {
@@ -371,6 +389,13 @@
       border-bottom-left-radius: 2px;
       border: 1px solid var(--primary-mid);
       color: white;
+    }
+
+    /* ✅ تمييز الرسالة المختارة */
+    .msg.selected {
+      border-color: var(--accent-glow);
+      box-shadow: 0 0 0 2px rgba(143, 217, 168, 0.25);
+      transform: translateY(-1px);
     }
 
     .msg-time {
@@ -448,13 +473,18 @@
         <div class="sidebar-header">
           <h3 id="txt-draft-title"><i class="fa-solid fa-file-contract"></i> مسودة التقرير</h3>
 
-          <!-- ✅ زرين جنب Report Draft -->
           <div class="sidebar-actions">
+            <!-- ✅ Download -->
             <button class="btn-secondary" id="btn-export" type="button">
               <i class="fa-solid fa-file-arrow-down"></i> <span id="txt-export">تنزيل التقرير</span>
             </button>
 
-            <!-- ✅ View يروح لملف رهف reports.html -->
+            <!-- ✅ Analyze (الجديد) -->
+            <a class="btn-secondary" id="btn-analysis" href="analysis.html">
+              <i class="fa-solid fa-magnifying-glass-chart"></i> <span id="txt-analysis">تحليل</span>
+            </a>
+
+            <!-- ✅ View -->
             <a class="btn-secondary" id="btn-view" href="reports.html">
               <i class="fa-solid fa-eye"></i> <span id="txt-view">عرض التقرير</span>
             </a>
@@ -465,7 +495,6 @@
           <i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي
         </button>
 
-        <!-- ✅ الجدول -->
         <div class="report-table-wrap">
           <table class="report-table" id="reportTable">
             <thead>
@@ -509,18 +538,8 @@
 
           </div>
 
-          <div class="message-view">
-            <div class="msg received">
-              <p>وينك؟ تأخرت علي.</p>
-              <span class="msg-time">10:15</span>
-            </div>
-
-            <div class="msg sent">
-              <p>واصل قريب، لا تشيل هم.</p>
-              <span class="msg-time">10:16</span>
-              <i class="fa-solid fa-check-double read-receipt"></i>
-            </div>
-          </div>
+          <!-- ✅ بنبني الرسائل من الداتا -->
+          <div class="message-view" id="messageView"></div>
         </div>
       </section>
 
@@ -537,59 +556,115 @@
         number: "055xxxx",
         name: "خالد (المشتبه به)",
         messages: [
-          { text: "وينك؟ تأخرت علي.", type: "received", datetime: "2026-02-12 10:15" },
-          { text: "واصل قريب، لا تشيل هم.", type: "sent", datetime: "2026-02-12 10:16" }
+          { id: "m1", text: "وينك؟ تأخرت علي.", type: "received", datetime: "2026-02-12 10:15" },
+          { id: "m2", text: "واصل قريب، لا تشيل هم.", type: "sent", datetime: "2026-02-12 10:16" }
         ]
       }
     ];
 
     let selectedChatId = "chat1";
+    const selectedMessageIds = new Set(); // ✅ هنا نخزن الرسائل المحددة
+
+    const tbody = document.getElementById('reportTbody');
+    const addBtn = document.getElementById('txt-add-btn');
+    const messageView = document.getElementById('messageView');
+
+    function renderMessages(chatId) {
+      const chat = chatsData.find(c => c.id === chatId);
+      if (!chat) return;
+
+      selectedMessageIds.clear();
+      messageView.innerHTML = "";
+
+      chat.messages.forEach((m) => {
+        const box = document.createElement('div');
+        box.className = `msg ${m.type}`;
+        box.dataset.msgId = m.id;
+
+        box.innerHTML = `
+          <p>${m.text}</p>
+          <span class="msg-time">${m.datetime.split(" ")[1]}</span>
+        `;
+
+        // ✅ اختيار رسالة (نقر)
+        box.addEventListener('click', () => {
+          const id = box.dataset.msgId;
+          if (selectedMessageIds.has(id)) {
+            selectedMessageIds.delete(id);
+            box.classList.remove('selected');
+          } else {
+            selectedMessageIds.add(id);
+            box.classList.add('selected');
+          }
+        });
+
+        messageView.appendChild(box);
+      });
+    }
+
+    // أول تحميل
+    renderMessages(selectedChatId);
 
     // ✅ تحديد محادثة
     document.querySelectorAll('.chat-item').forEach((item) => {
-      item.addEventListener('click', () => {
+      item.addEventListener('click', (e) => {
+        // لو ضغط على 체크بوكس لا تغيّر الشات بالغلط
+        if (e.target && e.target.tagName === "INPUT") return;
+
         document.querySelectorAll('.chat-item').forEach(x => x.classList.remove('active'));
         item.classList.add('active');
         selectedChatId = item.dataset.chatId;
+
+        renderMessages(selectedChatId);
       });
     });
 
-    // ✅ Add to Current Report => يعبّي الجدول
-    const addBtn = document.getElementById('txt-add-btn');
-    const tbody = document.getElementById('reportTbody');
+    // ✅ دالة إضافة صف للتقرير
+    function appendRow({ text, type, number, datetime }) {
+      const tr = document.createElement('tr');
 
+      const tdMsg = document.createElement('td');
+      tdMsg.className = "cell-msg";
+      tdMsg.textContent = text;
+
+      const tdType = document.createElement('td');
+      const badge = document.createElement('span');
+      badge.className = `badge-type ${type === "sent" ? "badge-sent" : "badge-recv"}`;
+      badge.textContent = (type === "sent") ? "Sent" : "Received";
+      tdType.appendChild(badge);
+
+      const tdNum = document.createElement('td');
+      tdNum.textContent = number;
+
+      const tdTime = document.createElement('td');
+      tdTime.textContent = datetime;
+
+      tr.appendChild(tdMsg);
+      tr.appendChild(tdType);
+      tr.appendChild(tdNum);
+      tr.appendChild(tdTime);
+
+      tbody.appendChild(tr);
+    }
+
+    // ✅ Add to Current Report:
+    // - إذا محدد رسائل => يضيف المحدد فقط
+    // - إذا ما محدد => يضيف الشات كامل (نفس القديم)
     addBtn.addEventListener('click', () => {
       const chat = chatsData.find(c => c.id === selectedChatId);
       if (!chat) return;
 
       tbody.innerHTML = "";
 
-      chat.messages.forEach((m) => {
-        const tr = document.createElement('tr');
+      const hasSelected = selectedMessageIds.size > 0;
 
-        const tdMsg = document.createElement('td');
-        tdMsg.className = "cell-msg";
-        tdMsg.textContent = m.text;
-
-        const tdType = document.createElement('td');
-        const badge = document.createElement('span');
-        badge.className = `badge-type ${m.type === "sent" ? "badge-sent" : "badge-recv"}`;
-        badge.textContent = (m.type === "sent") ? "Sent" : "Received";
-        tdType.appendChild(badge);
-
-        const tdNum = document.createElement('td');
-        tdNum.textContent = chat.number;
-
-        const tdTime = document.createElement('td');
-        tdTime.textContent = m.datetime;
-
-        tr.appendChild(tdMsg);
-        tr.appendChild(tdType);
-        tr.appendChild(tdNum);
-        tr.appendChild(tdTime);
-
-        tbody.appendChild(tr);
-      });
+      if (hasSelected) {
+        chat.messages
+          .filter(m => selectedMessageIds.has(m.id))
+          .forEach(m => appendRow({ text: m.text, type: m.type, number: chat.number, datetime: m.datetime }));
+      } else {
+        chat.messages.forEach(m => appendRow({ text: m.text, type: m.type, number: chat.number, datetime: m.datetime }));
+      }
     });
 
     // ✅ Download Report (CSV بسيط مؤقت)
@@ -622,7 +697,7 @@
     });
 
     // ---------------------------
-    // ✅ Language Toggle (نفس حقك بس مع نصوص الأزرار والجدول)
+    // ✅ Language Toggle
     // ---------------------------
     let currentLang = 'ar';
 
@@ -645,6 +720,7 @@
 
         document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> Report Draft';
         document.getElementById('txt-export').textContent = "Download Report";
+        document.getElementById('txt-analysis').textContent = "Analysis";
         document.getElementById('txt-view').textContent = "View Report";
         document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> Add to Current Report';
 
@@ -669,6 +745,7 @@
 
         document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> مسودة التقرير';
         document.getElementById('txt-export').textContent = "تنزيل التقرير";
+        document.getElementById('txt-analysis').textContent = "تحليل";
         document.getElementById('txt-view').textContent = "عرض التقرير";
         document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي';
 
