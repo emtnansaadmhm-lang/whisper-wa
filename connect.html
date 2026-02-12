@@ -315,7 +315,13 @@
     .logline.danger{ color:#ffb3b3; font-weight:900; }
   </style>
 </head>
-
+<script>
+  fetch("header.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("header-placeholder").innerHTML = data;
+    });
+</script>
 <body>
   <div class="animated-bg-logo">
     <img src="logo.png" alt="Background Logo">
@@ -323,31 +329,7 @@
 
   <div class="main-container">
 
-    <header class="topbar">
-      <div class="brand">
-        <img src="logo.png" alt="Whisper-WA Logo">
-        <div class="title">
-          <b>Whisper-WA</b>
-          <span id="top-subtitle">Digital Forensics Platform</span>
-        </div>
-      </div>
-
-    <div class="top-actions">
-  <!-- Account (بدل Home) -->
-  <a class="nav-link" href="account.html" id="nav-account" title="Account">
-    <i class="fa-solid fa-user"></i>
-  </a>
-
-  <!-- Chats (نفسه) -->
-  <a class="nav-link" href="chat.html" id="nav-chats">Chats</a>
-
-  <!-- Language (نفسه) -->
-  <button class="lang-btn" id="btnLang">
-    <span id="langText">AR</span>
-  </button>
-</div>
-
-    </header>
+    <div id="header-placeholder"></div>
 
     <main class="center">
       <section class="card">
