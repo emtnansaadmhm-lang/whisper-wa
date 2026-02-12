@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,9 +21,11 @@
 
       --text-white:#ffffff;
       --text-muted:#c2dec9;
+      --danger:#ff6b6b;
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
+
     body{
       font-family:'Tajawal',sans-serif;
       background-color: var(--bg-dark);
@@ -45,215 +47,620 @@
       z-index:-1;
       width: 600px;
       pointer-events:none;
-      opacity:0.2;
+      opacity:0.18;
       animation: cyberGlowPulse 8s ease-in-out infinite alternate;
     }
     .animated-bg-logo img{
       width:100%;
       filter: drop-shadow(0 0 30px var(--primary-mid));
     }
+    @keyframes cyberGlowPulse{
+      0%{ opacity:0.12; transform: translate(-50%,-50%) scale(0.96); }
+      100%{ opacity:0.28; transform: translate(-50%,-50%) scale(1.04); }
+    }
 
     .main-container{
       display:flex;
       flex-direction:column;
       height:100vh;
-      padding:25px;
-      gap:20px;
+      padding:24px;
+      gap:18px;
       position:relative;
       z-index:1;
     }
 
-    .glass-header{
+    /* Header bar */
+    .topbar{
       background: var(--glass-bg);
-      backdrop-filter: blur(12px);
       border: 1px solid var(--glass-border);
-      padding: 12px 25px;
+      backdrop-filter: blur(12px);
       border-radius: 16px;
+      padding: 12px 18px;
       display:flex;
-      justify-content:space-between;
       align-items:center;
+      justify-content:space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 220px;
+    }
+    .brand img{
+      height:42px;
+      width:auto;
+      filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
+    }
+    .brand .title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand .title b{ font-size:1.15rem; }
+    .brand .title span{
+      color: var(--text-muted);
+      font-size:0.85rem;
+      margin-top:4px;
     }
 
-    .center-area{
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .lang-btn{
+      background: rgba(95,191,122,0.10);
+      border: 1px solid var(--glass-border);
+      color: var(--accent-glow);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      transition:0.25s;
+      user-select:none;
+    }
+    .lang-btn:hover{
+      background: rgba(95,191,122,0.18);
+      transform: translateY(-1px);
+    }
+
+    .nav-link{
+      text-decoration:none;
+      color: var(--text-muted);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition:0.25s;
+      font-weight:700;
+    }
+    .nav-link:hover{
+      color: var(--accent-glow);
+      border-color: rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.14);
+    }
+
+    /* Center card */
+    .center{
       flex:1;
       display:flex;
       align-items:center;
       justify-content:center;
     }
 
-    .glass-card{
-      width:min(760px, 92vw);
+    .card{
+      width:min(920px, 95vw);
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(14px);
       border-radius: 22px;
       padding: 26px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
     }
 
-    .field-input{
+    .card h1{
+      font-size: 1.7rem;
+      margin-bottom: 6px;
+    }
+    .subtitle{
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      line-height:1.6;
+    }
+
+    /* 2 sections */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      background: rgba(0,0,0,0.16);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 16px;
+    }
+    .panel-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .panel-title b{
+      font-size:1.05rem;
+      color: var(--accent-glow);
+    }
+    .badge{
+      font-size:0.8rem;
+      color: rgba(194,222,201,0.9);
+      background: rgba(63,155,95,0.12);
+      border: 1px solid rgba(95,191,122,0.20);
+      padding: 4px 10px;
+      border-radius: 999px;
+      white-space:nowrap;
+    }
+
+    label{
+      display:block;
+      color: var(--text-muted);
+      font-weight:700;
+      margin: 8px 0 8px;
+    }
+
+    input{
       width:100%;
-      padding:12px 14px;
+      padding: 12px 14px;
       border-radius: 12px;
       border: 1px solid var(--glass-border);
-      background: rgba(0,0,0,0.28);
+      background: rgba(0,0,0,0.24);
       color: white;
+      outline:none;
+      font-size: 1rem;
+    }
+    input::placeholder{ color: rgba(194,222,201,0.65); }
+
+    .note{
+      margin-top: 10px;
+      color: rgba(194,222,201,0.92);
+      font-size: 0.95rem;
+      line-height:1.55;
     }
 
-    .actions-row{
+    /* Actions */
+    .actions{
       display:flex;
-      gap:12px;
-      margin-top: 18px;
+      gap: 12px;
+      margin-top: 14px;
     }
-
-    .btn-primary{
+    .btn{
       flex:1;
-      background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
-      color:white;
-      border:none;
-      padding: 12px;
+      padding: 12px 14px;
       border-radius: 14px;
       cursor:pointer;
+      font-weight:900;
+      border: none;
+      transition:0.25s;
+      user-select:none;
+    }
+    .btn-primary{
+      background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
+      color:white;
+    }
+    .btn-primary:hover{
+      filter: brightness(1.15);
+      transform: translateY(-1px);
     }
 
     .btn-ghost{
-      flex:1;
       background: rgba(0,0,0,0.18);
       color: var(--accent-glow);
       border: 1px solid rgba(255,255,255,0.10);
-      padding: 12px;
-      border-radius: 14px;
-      cursor:pointer;
+    }
+    .btn-ghost:hover{
+      background: rgba(95,191,122,0.12);
+      transform: translateY(-1px);
     }
 
+    /* Alert */
     .alert{
       margin-top: 16px;
-      padding: 12px;
+      padding: 12px 14px;
       border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      font-weight:800;
     }
-
     .alert.hidden{ display:none; }
-    .alert.info{ background: rgba(63,155,95,0.12); }
-    .alert.success{ background: rgba(95,191,122,0.15); }
-    .alert.danger{ background: rgba(255,107,107,0.14); }
+    .alert.info{ background: rgba(63,155,95,0.12); color: var(--accent-glow); }
+    .alert.success{ background: rgba(95,191,122,0.14); color: #dffbe7; }
+    .alert.danger{ background: rgba(255,107,107,0.12); border-color: rgba(255,107,107,0.30); color: #ffd1d1; }
 
-    .log-box{
+    /* Log box */
+    .logbox{
       margin-top: 14px;
-      padding: 14px;
-      border-radius: 16px;
       background: rgba(0,0,0,0.22);
-      height: 190px;
-      overflow-y: auto;
-      font-family: monospace;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      padding: 14px;
+      height: 210px;
+      overflow-y:auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
+    .logbox.hidden{ display:none; }
+    .logline{ font-size: 0.9rem; line-height: 1.55; margin-bottom: 6px; color: rgba(234,247,240,0.92); }
+    .logline.success{ color:#8ff0b0; font-weight:800; }
+    .logline.danger{ color:#ffb3b3; font-weight:800; }
 
-    .log-line.success{ color:#8ff0b0; }
-    .log-line.danger{ color:#ffb3b3; }
+    /* Progress bar (optional but nice) */
+    .pwrap{
+      margin-top: 12px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .pwrap.hidden{ display:none; }
+    .pbar{
+      flex:1;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.20);
+      border: 1px solid rgba(255,255,255,0.10);
+      overflow:hidden;
+    }
+    .pfill{
+      height:100%;
+      width:0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary-mid), var(--accent-glow));
+      transition: width 0.3s ease;
+    }
+    .ptext{
+      color: var(--text-muted);
+      font-weight:800;
+      font-size:0.9rem;
+      min-width: 120px;
+      text-align:end;
+    }
   </style>
 </head>
 
 <body>
+  <div class="animated-bg-logo">
+    <img src="logo.png" alt="Background Logo">
+  </div>
 
-<div class="main-container">
+  <div class="main-container">
 
-  <main class="center-area">
-
-    <section class="glass-card">
-
-      <h2>Connect Device</h2>
-
-      <label>IP:PORT (اختياري)</label>
-      <input class="field-input" id="ipInput" placeholder="192.168.1.20:5555" />
-
-      <div class="hint">
-        لو تبين USB: اشبكي الجوال بالكيبل + فعّلي USB Debugging ثم اضغطي Connect
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <div class="brand">
+        <img src="logo.png" alt="Whisper-WA Logo">
+        <div class="title">
+          <b>Whisper-WA</b>
+          <span id="top-subtitle">Digital Forensics Platform</span>
+        </div>
       </div>
 
-      <div class="actions-row">
-        <button class="btn-primary" id="btnConnect">Connect</button>
-        <button class="btn-ghost" id="btnViewPrev">View Previous Chats</button>
+      <div class="top-actions">
+        <a class="nav-link" href="index.html" id="nav-home">Home</a>
+        <a class="nav-link" href="chat.html" id="nav-chats">Chats</a>
+        <button class="lang-btn" id="btnLang" aria-label="Toggle Language">
+          <span id="langText">AR</span>
+        </button>
       </div>
+    </header>
 
-      <div class="alert hidden" id="alertBox"></div>
+    <!-- CENTER -->
+    <main class="center">
+      <section class="card">
 
-      <div class="log-box hidden" id="logBox"></div>
+        <h1 id="title">Connect Device</h1>
+        <p class="subtitle" id="subtitle">
+          Choose a connection method, then press Connect to start the acquisition workflow.
+        </p>
 
-    </section>
+        <div class="grid">
+          <!-- Wi-Fi panel -->
+          <div class="panel" id="panelWifi">
+            <div class="panel-title">
+              <b id="wifiTitle">Wi-Fi (IP:PORT)</b>
+              <span class="badge" id="wifiBadge">Optional</span>
+            </div>
 
-  </main>
-</div>
+            <label for="ipInput" id="ipLabel">Device IP:PORT</label>
+            <input id="ipInput" type="text" placeholder="e.g. 192.168.1.20:5555" />
 
-<script>
-const CHAT_PAGE = "chat.html";
+            <div class="note" id="wifiNote">
+              This will run an ADB connection using the provided IP:PORT, then continue the workflow.
+            </div>
+          </div>
 
-const DEMO_IS_ROOTED = true;
-const DEMO_USB_DEVICE_FOUND = true;
+          <!-- USB panel -->
+          <div class="panel" id="panelUsb">
+            <div class="panel-title">
+              <b id="usbTitle">USB</b>
+              <span class="badge" id="usbBadge">No input</span>
+            </div>
 
-const alertBox = document.getElementById("alertBox");
-const logBox = document.getElementById("logBox");
+            <div class="note" id="usbNote">
+              1) Connect your device using a USB cable.<br>
+              2) Enable <b>USB Debugging</b> on the device.<br>
+              3) Press <b>Connect</b> below.
+            </div>
+          </div>
+        </div>
 
-function showAlert(type, text) {
-  alertBox.className = "alert " + type;
-  alertBox.textContent = text;
-}
+        <div class="actions">
+          <button class="btn btn-primary" id="btnConnect">Connect</button>
+          <button class="btn btn-ghost" id="btnPrev">View Previous Chats</button>
+        </div>
 
-function addLog(text, type="") {
-  logBox.classList.remove("hidden");
-  const d = document.createElement("div");
-  d.className = "log-line " + type;
-  d.textContent = text;
-  logBox.appendChild(d);
-}
+        <div class="alert hidden" id="alertBox"></div>
 
-function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+        <div class="pwrap hidden" id="pwrap">
+          <div class="pbar"><div class="pfill" id="pfill"></div></div>
+          <div class="ptext" id="ptext">0%</div>
+        </div>
 
-async function pipeline(){
-  addLog("[INFO] Detecting device...");
-  await sleep(500);
+        <div class="logbox hidden" id="logbox"></div>
 
-  addLog("[INFO] ADB connection established");
-  await sleep(500);
+      </section>
+    </main>
 
-  addLog("[INFO] Extracting WhatsApp data...");
-  await sleep(600);
+  </div>
 
-  addLog("[INFO] Calculating SHA-256 hashes...");
-  await sleep(600);
+  <script>
+    // ===== CONFIG =====
+    const CHAT_PAGE = "chat.html";
 
-  addLog("[INFO] Decrypting database...");
-  await sleep(700);
+    // Toggle to test behaviors in UI:
+    const SIM_ROOTED = true;        // set false to show "not rooted" stop
+    const SIM_USB_FOUND = true;     // set false to show "no USB device" error
 
-  addLog("[SUCCESS] Extraction complete!", "success");
-}
+    // ===== ELEMENTS =====
+    const ipInput = document.getElementById("ipInput");
+    const btnConnect = document.getElementById("btnConnect");
+    const btnPrev = document.getElementById("btnPrev");
+    const alertBox = document.getElementById("alertBox");
+    const logbox = document.getElementById("logbox");
+    const pwrap = document.getElementById("pwrap");
+    const pfill = document.getElementById("pfill");
+    const ptext = document.getElementById("ptext");
 
-document.getElementById("btnConnect").onclick = async () => {
+    // Language
+    const btnLang = document.getElementById("btnLang");
+    const langText = document.getElementById("langText");
 
-  const ip = document.getElementById("ipInput").value.trim();
+    // UI texts
+    const T = {
+      en: {
+        topSubtitle: "Digital Forensics Platform",
+        navHome: "Home",
+        navChats: "Chats",
+        title: "Connect Device",
+        subtitle: "Choose a connection method, then press Connect to start the acquisition workflow.",
 
-  if (!ip && !DEMO_USB_DEVICE_FOUND) {
-    showAlert("danger", "لم يتم العثور على جهاز USB");
-    addLog("[ERROR] No USB device found", "danger");
-    return;
-  }
+        wifiTitle: "Wi-Fi (IP:PORT)",
+        wifiBadge: "Optional",
+        ipLabel: "Device IP:PORT",
+        ipPH: "e.g. 192.168.1.20:5555",
+        wifiNote: "This will run an ADB connection using the provided IP:PORT, then continue the workflow.",
 
-  if (!DEMO_IS_ROOTED) {
-    showAlert("danger", "الجهاز غير مروّت ولا يمكن المتابعة");
-    addLog("[ERROR] Device not rooted", "danger");
-    return;
-  }
+        usbTitle: "USB",
+        usbBadge: "No input",
+        usbNote: "1) Connect your device using a USB cable.<br>2) Enable <b>USB Debugging</b> on the device.<br>3) Press <b>Connect</b> below.",
 
-  showAlert("info", "بدء العمليات...");
-  await pipeline();
+        btnConnect: "Connect",
+        btnPrev: "View Previous Chats",
 
-  showAlert("success", "تم الانتهاء... الانتقال لصفحة الشات");
+        // Alerts
+        aInfoWifi: "Connecting via Wi-Fi...",
+        aInfoUsb: "Checking USB connection...",
+        aNoUsb: "No USB device detected. Please connect the device and enable USB Debugging.",
+        aNotRoot: "Device is not rooted. Root access is required to continue.",
+        aStart: "Starting acquisition workflow...",
+        aDone: "Completed. Redirecting to chats...",
 
-  await sleep(700);
-  window.location.href = CHAT_PAGE;
-};
+        // Logs
+        lDetect: "[INFO] Detecting device...",
+        lAdb: "[INFO] Establishing ADB connection...",
+        lConnOk: "[INFO] Connection established",
+        lExtract: "[INFO] Extracting WhatsApp data...",
+        lRead: "[INFO] Reading database files: msgstore.db",
+        lHash: "[INFO] Calculating SHA-256 hashes...",
+        lDecrypt: "[INFO] Decrypting database...",
+        lParse: "[INFO] Parsing messages and extracting artifacts...",
+        lSuccess1: "[SUCCESS] Extraction complete!",
+        lSuccess2: "[SUCCESS] Evidence integrity verified."
+      },
+      ar: {
+        topSubtitle: "منصة التحليل الجنائي الرقمي",
+        navHome: "الرئيسية",
+        navChats: "المحادثات",
+        title: "توصيل الجهاز",
+        subtitle: "اختاري طريقة الاتصال، ثم اضغطي Connect لبدء خطوات الاستخراج.",
 
-document.getElementById("btnViewPrev").onclick = () => {
-  window.location.href = CHAT_PAGE;
-};
-</script>
+        wifiTitle: "واي فاي (IP:PORT)",
+        wifiBadge: "اختياري",
+        ipLabel: "عنوان الجهاز IP:PORT",
+        ipPH: "مثال: 192.168.1.20:5555",
+        wifiNote: "سيتم إنشاء اتصال ADB عبر IP:PORT ثم متابعة الخطوات.",
 
+        usbTitle: "USB",
+        usbBadge: "بدون إدخال",
+        usbNote: "1) وصّلي الجهاز بالكيبل.<br>2) فعّلي <b>USB Debugging</b>.<br>3) اضغطي <b>Connect</b>.",
+
+        btnConnect: "Connect",
+        btnPrev: "عرض المحادثات السابقة",
+
+        aInfoWifi: "جاري الاتصال عبر الواي فاي...",
+        aInfoUsb: "جاري التحقق من USB...",
+        aNoUsb: "لم يتم العثور على جهاز USB. تأكدي من التوصيل وتفعيل USB Debugging.",
+        aNotRoot: "الجهاز غير مروّت. يلزم روت للمتابعة.",
+        aStart: "بدء خطوات الاستخراج...",
+        aDone: "اكتملت العملية... جارٍ الانتقال للمحادثات...",
+
+        lDetect: "[INFO] جاري اكتشاف الجهاز...",
+        lAdb: "[INFO] جاري إنشاء اتصال ADB...",
+        lConnOk: "[INFO] تم إنشاء الاتصال",
+        lExtract: "[INFO] جاري استخراج بيانات واتساب...",
+        lRead: "[INFO] قراءة ملفات قاعدة البيانات: msgstore.db",
+        lHash: "[INFO] حساب SHA-256...",
+        lDecrypt: "[INFO] فك تشفير قاعدة البيانات...",
+        lParse: "[INFO] تحليل الرسائل واستخراج الأدلة...",
+        lSuccess1: "[SUCCESS] اكتمل الاستخراج!",
+        lSuccess2: "[SUCCESS] تم التحقق من سلامة الدليل."
+      }
+    };
+
+    let currentLang = "en";
+
+    // ===== HELPERS =====
+    function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+    function showAlert(type, text){
+      alertBox.classList.remove("hidden");
+      alertBox.className = "alert " + type;
+      alertBox.textContent = text;
+    }
+    function hideAlert(){
+      alertBox.classList.add("hidden");
+      alertBox.textContent = "";
+    }
+    function log(line, type=""){
+      logbox.classList.remove("hidden");
+      const d = document.createElement("div");
+      d.className = "logline " + type;
+      d.textContent = line;
+      logbox.appendChild(d);
+      logbox.scrollTop = logbox.scrollHeight;
+    }
+    function resetUI(){
+      hideAlert();
+      logbox.classList.add("hidden");
+      logbox.innerHTML = "";
+      pwrap.classList.add("hidden");
+      pfill.style.width = "0%";
+      ptext.textContent = "0%";
+    }
+    function setProgress(p){
+      pwrap.classList.remove("hidden");
+      pfill.style.width = p + "%";
+      ptext.textContent = p + "%";
+    }
+
+    async function runWorkflow(lang){
+      setProgress(5);  log(T[lang].lDetect); await sleep(600);
+      setProgress(20); log(T[lang].lAdb); await sleep(700);
+      setProgress(30); log(T[lang].lConnOk); await sleep(500);
+      setProgress(45); log(T[lang].lExtract); await sleep(700);
+      setProgress(55); log(T[lang].lRead); await sleep(650);
+      setProgress(70); log(T[lang].lHash); await sleep(650);
+      setProgress(85); log(T[lang].lDecrypt); await sleep(750);
+      setProgress(95); log(T[lang].lParse); await sleep(650);
+      setProgress(100); log(T[lang].lSuccess1, "success");
+      log(T[lang].lSuccess2, "success");
+    }
+
+    // ===== LANGUAGE APPLY =====
+    function applyLang(lang){
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = (lang === "ar") ? "rtl" : "ltr";
+
+      document.getElementById("top-subtitle").textContent = T[lang].topSubtitle;
+      document.getElementById("nav-home").textContent = T[lang].navHome;
+      document.getElementById("nav-chats").textContent = T[lang].navChats;
+
+      document.getElementById("title").textContent = T[lang].title;
+      document.getElementById("subtitle").textContent = T[lang].subtitle;
+
+      document.getElementById("wifiTitle").textContent = T[lang].wifiTitle;
+      document.getElementById("wifiBadge").textContent = T[lang].wifiBadge;
+      document.getElementById("ipLabel").textContent = T[lang].ipLabel;
+      ipInput.placeholder = T[lang].ipPH;
+      document.getElementById("wifiNote").textContent = T[lang].wifiNote;
+
+      document.getElementById("usbTitle").textContent = T[lang].usbTitle;
+      document.getElementById("usbBadge").textContent = T[lang].usbBadge;
+      document.getElementById("usbNote").innerHTML = T[lang].usbNote;
+
+      btnConnect.textContent = T[lang].btnConnect;
+      btnPrev.textContent = T[lang].btnPrev;
+
+      // Button label shows the target language
+      langText.textContent = (lang === "en") ? "AR" : "EN";
+    }
+
+    btnLang.addEventListener("click", () => {
+      currentLang = (currentLang === "en") ? "ar" : "en";
+      applyLang(currentLang);
+    });
+
+    // ===== ACTIONS =====
+    btnPrev.addEventListener("click", () => {
+      window.location.href = CHAT_PAGE;
+    });
+
+    btnConnect.addEventListener("click", async () => {
+      resetUI();
+
+      const ip = ipInput.value.trim();
+      const isWifi = ip.length > 0;
+
+      if (isWifi){
+        showAlert("info", T[currentLang].aInfoWifi);
+        log(`[INFO] IP:PORT => ${ip}`);
+        await sleep(400);
+      } else {
+        showAlert("info", T[currentLang].aInfoUsb);
+        log("[INFO] Waiting for USB device (ADB)...");
+        await sleep(600);
+
+        if (!SIM_USB_FOUND){
+          showAlert("danger", T[currentLang].aNoUsb);
+          log("[ERROR] No USB device found.", "danger");
+          return;
+        }
+      }
+
+      // Root check (placeholder)
+      await sleep(300);
+      if (!SIM_ROOTED){
+        showAlert("danger", T[currentLang].aNotRoot);
+        log("[ERROR] Root check failed.", "danger");
+        return;
+      }
+
+      showAlert("info", T[currentLang].aStart);
+
+      btnConnect.disabled = true;
+      btnPrev.disabled = true;
+      btnLang.disabled = true;
+
+      try{
+        await runWorkflow(currentLang);
+        await sleep(650);
+        showAlert("success", T[currentLang].aDone);
+        await sleep(650);
+        window.location.href = CHAT_PAGE;
+      } finally {
+        btnConnect.disabled = false;
+        btnPrev.disabled = false;
+        btnLang.disabled = false;
+      }
+    });
+
+    // Init
+    applyLang(currentLang);
+  </script>
 </body>
 </html>
