@@ -178,7 +178,7 @@ body {
 .search-area { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.1); }
 .search-input-wrapper { position: relative; margin-bottom: 15px; }
 .search-input-wrapper input {
-    width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); 
+    width: 80%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); 
     padding: 10px 40px 10px 15px; border-radius: 10px; color: white; outline: none;
     font-family: 'Tajawal'; font-size: 0.95rem;
 }
@@ -195,7 +195,7 @@ body {
 
 /* قائمة الشات (وسط) */
 .chat-list {
-    width: 350px;
+    width: 150px;
     border-left: 1px solid rgba(255,255,255,0.1);
     overflow-y: auto;
     background: rgba(0,0,0,0.1);
