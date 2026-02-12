@@ -5,15 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Whisper-WA | Connect</title>
 
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
   <style>
-    /* ====== كل الستايل كما هو بدون تغيير ====== */
     :root{
       --primary-dark:#1f5f3b;
       --primary-mid:#3f9b5f;
-      --primary-light:#5fbf7a;
       --accent-glow:#8fd9a8;
       --bg-dark:#0e1a12;
       --glass-bg: rgba(20, 40, 30, 0.65);
@@ -26,24 +25,14 @@
 
     body{
       font-family:'Tajawal',sans-serif;
-      background-color: var(--bg-dark);
+      background: var(--bg-dark);
       color: var(--text-white);
       height:100vh;
       overflow:hidden;
       background-image:
-        linear-gradient(rgba(31,95,59,0.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(31,95,59,0.10) 1px, transparent 1px);
+        linear-gradient(rgba(31,95,59,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,95,59,0.1) 1px, transparent 1px);
       background-size: 40px 40px;
-    }
-
-    .animated-bg-logo{
-      position: fixed;
-      top:50%;
-      left:50%;
-      transform: translate(-50%,-50%);
-      z-index:-1;
-      width: 600px;
-      opacity:0.18;
     }
 
     .main-container{
@@ -62,34 +51,41 @@
     }
 
     .card{
-      width:min(920px, 95vw);
+      width:min(900px, 95vw);
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
       border-radius: 22px;
-      padding: 26px;
+      padding: 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+    }
+
+    h1{ font-size:1.7rem; margin-bottom:6px; }
+    .subtitle{
+      color: var(--text-muted);
+      margin-bottom:20px;
     }
 
     .tabs{
       display:flex;
-      background: rgba(0,0,0,0.18);
-      border-radius: 16px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 14px;
       overflow:hidden;
-      margin-bottom: 14px;
+      margin-bottom:16px;
     }
 
     .tab-btn{
       flex:1;
-      padding: 12px;
-      cursor:pointer;
-      background: transparent;
+      padding:12px;
+      background:none;
+      border:none;
       color: var(--text-muted);
-      border: none;
       font-weight:900;
+      cursor:pointer;
     }
 
     .tab-btn.active{
-      background: rgba(95,191,122,0.16);
+      background: rgba(95,191,122,0.2);
       color: var(--accent-glow);
     }
 
@@ -97,24 +93,46 @@
     .tab-content.active{ display:block; }
 
     .panel{
-      background: rgba(0,0,0,0.16);
-      border-radius: 18px;
-      padding: 16px;
+      background: rgba(0,0,0,0.18);
+      border-radius:16px;
+      padding:18px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:6px;
+      color: var(--text-muted);
+      font-weight:700;
+    }
+
+    input{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid var(--glass-border);
+      background: rgba(0,0,0,0.25);
+      color:white;
+    }
+
+    .note{
+      margin-top:10px;
+      font-size:0.9rem;
+      color: var(--text-muted);
     }
 
     .actions{
       display:flex;
-      gap: 12px;
-      margin-top: 14px;
+      gap:12px;
+      margin-top:16px;
     }
 
     .btn{
       flex:1;
-      padding: 12px;
-      border-radius: 14px;
-      cursor:pointer;
+      padding:12px;
+      border-radius:14px;
+      border:none;
       font-weight:900;
-      border: none;
+      cursor:pointer;
     }
 
     .btn-primary{
@@ -123,86 +141,93 @@
     }
 
     .btn-ghost{
-      background: rgba(0,0,0,0.18);
+      background: rgba(0,0,0,0.25);
       color: var(--accent-glow);
-      border: 1px solid rgba(255,255,255,0.10);
+      border:1px solid rgba(255,255,255,0.1);
     }
   </style>
 </head>
 
 <body>
 
-  <div class="animated-bg-logo">
-    <img src="logo.png" alt="Background Logo">
-  </div>
+<div class="main-container">
 
-  <div class="main-container">
+  <!-- ✅ HEADER -->
+  <div id="header-placeholder"></div>
 
-    <!-- ✅ Header -->
-    <div id="header-placeholder"></div>
+  <!-- ✅ CONTENT -->
+  <main class="center">
+    <section class="card">
 
-    <script>
-      fetch("header.html")
-        .then(res => res.text())
-        .then(html => {
-          document.getElementById("header-placeholder").innerHTML = html;
-        });
-    </script>
+      <h1>Connect Device</h1>
+      <p class="subtitle">
+        Select a connection method, then continue.
+      </p>
 
-    <main class="center">
-      <section class="card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="wifiTab">Wi-Fi</button>
+        <button class="tab-btn" data-tab="usbTab">USB</button>
+      </div>
 
-        <h1>Connect Device</h1>
-        <p>Select a connection method</p>
+      <!-- WiFi -->
+      <div class="tab-content active" id="wifiTab">
+        <div class="panel">
+          <label>Device IP : PORT</label>
+          <input placeholder="192.168.1.10:5555">
+          <div class="note">Make sure USB debugging is enabled.</div>
 
-        <div class="tabs">
-          <button class="tab-btn active" data-tab="wifiTab">Wi-Fi</button>
-          <button class="tab-btn" data-tab="usbTab">USB</button>
-        </div>
-
-        <div class="tab-content active" id="wifiTab">
-          <div class="panel">
-            <input id="ipInput" placeholder="192.168.1.20:5555">
-            <div class="actions">
-              <button class="btn btn-primary" id="btnWifiConnect">Connect</button>
-              <button class="btn btn-ghost" id="btnWifiPrev">View Previous Chats</button>
-            </div>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="goChat()">Connect</button>
+            <button class="btn btn-ghost" onclick="goChat()">View Chats</button>
           </div>
         </div>
+      </div>
 
-        <div class="tab-content" id="usbTab">
-          <div class="panel">
-            <div class="actions">
-              <button class="btn btn-primary" id="btnUsbConnect">Connect</button>
-              <button class="btn btn-ghost" id="btnUsbPrev">View Previous Chats</button>
-            </div>
+      <!-- USB -->
+      <div class="tab-content" id="usbTab">
+        <div class="panel">
+          <div class="note">
+            1) Connect USB cable<br>
+            2) Enable USB Debugging<br>
+            3) Press Connect
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" onclick="goChat()">Connect</button>
+            <button class="btn btn-ghost" onclick="goChat()">View Chats</button>
           </div>
         </div>
+      </div>
 
-      </section>
-    </main>
+    </section>
+  </main>
 
-  </div>
+</div>
 
-  <script>
-    const CHAT_PAGE = "chat.html";
-
-    document.getElementById("btnWifiPrev").onclick = () => {
-      window.location.href = CHAT_PAGE;
-    };
-    document.getElementById("btnUsbPrev").onclick = () => {
-      window.location.href = CHAT_PAGE;
-    };
-
-    document.querySelectorAll(".tab-btn").forEach(btn=>{
-      btn.onclick = ()=>{
-        document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
-        document.querySelectorAll(".tab-content").forEach(t=>t.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById(btn.dataset.tab).classList.add("active");
-      };
+<!-- HEADER LOAD -->
+<script>
+  fetch("header.html")
+    .then(r => r.text())
+    .then(html => {
+      document.getElementById("header-placeholder").innerHTML = html;
     });
-  </script>
+</script>
+
+<!-- Tabs -->
+<script>
+  document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.onclick = ()=>{
+      document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+    };
+  });
+
+  function goChat(){
+    window.location.href = "chat.html";
+  }
+</script>
 
 </body>
 </html>
