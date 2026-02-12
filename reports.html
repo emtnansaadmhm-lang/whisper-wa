@@ -1,156 +1,187 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" id="htmlTag">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whisper-WA | بناء التقرير</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Reports - Whisper-WA</title>
+
+<style>
+:root {
+    --green-dark: #0B3D2A;
+    --green-main: #0F6B3A;
+    --green-light: #9BE3B4;
+    --green-accent: #2FA66A;
+    --text-light: #EAF7F0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #071F16, #0F6B3A);
+    color: var(--text-light);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 85%;
+    max-width: 900px;
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+h1 {
+    margin: 0;
+    color: var(--green-light);
+    letter-spacing: 1px;
+}
+
+.lang-btn {
+    background: var(--green-accent);
+    border: none;
+    padding: 8px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th, td {
+    padding: 14px;
+}
+
+th {
+    background: var(--green-dark);
+    color: var(--green-light);
+}
+
+tr {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.action-btn {
+    background: linear-gradient(135deg, #9BE3B4, #2FA66A);
+    border: none;
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+}
+</style>
 </head>
+
 <body>
 
-    <div class="animated-bg-logo">
-    <img src="logo.png" alt="Background Logo">
-</div>
+<div class="container">
 
-    <div class="main-container">
-        
-        <header class="glass-header small-header">
-            <div class="logo-section">
-                <img src="logo.png" alt="Logo" class="logo-img">
-                <div class="logo-text">
-                    <h3>Whisper-WA</h3>
-                    <span class="case-badge" id="txt-case">قضية رقم: #055xxx</span>
-                </div>
-            </div>
-            <div class="header-actions">
-                <button class="lang-switch-btn" onclick="toggleLanguage()">
-                    <i class="fa-solid fa-globe"></i> <span id="lang-label">English</span>
-                </button>
-
-                <a href="index.html" class="icon-btn highlight" id="txt-home">الرئيسية</a>
-                <button class="icon-btn" id="txt-stats"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
-                <button class="icon-btn" id="txt-account"><i class="fa-solid fa-user"></i> حسابي</button>
-            </div>
-        </header>
-
-        <div class="workspace-grid">
-            
-            <aside class="glass-panel report-sidebar">
-                <div class="sidebar-header">
-                    <h3 id="txt-draft-title"><i class="fa-solid fa-file-contract"></i> مسودة التقرير</h3>
-                    <button class="btn-small"><i class="fa-solid fa-plus"></i></button>
-                </div>
-                
-                <button class="btn-primary full-width mb-10" id="txt-add-btn">
-                    <i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي
-                </button>
-
-                <div class="report-items-list">
-                    <div class="report-card">
-                        <div class="card-content">
-                            <span class="sender">خالد (055xxxx)</span>
-                            <span class="preview">بيانات الموقع الجغرافي...</span>
-                        </div>
-                        <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                </div>
-
-                <div class="sidebar-footer">
-                    <button class="btn-download" id="txt-download">
-                        تصدير التقرير (PDF) <i class="fa-solid fa-file-arrow-down"></i>
-                    </button>
-                </div>
-            </aside>
-
-            <section class="glass-panel chat-interface">
-                <div class="search-area">
-                    <div class="search-input-wrapper">
-                        <i class="fa-solid fa-search"></i>
-                        <input type="text" id="inp-search" placeholder="بحث في المحادثات (كلمة، رقم، رابط)...">
-                    </div>
-                    <div class="tags-row">
-                        <span class="tag">#Location</span>
-                        <span class="tag">#URL</span>
-                        <span class="tag">#Images</span>
-                    </div>
-                </div>
-
-                <div class="chat-split-view">
-                    <div class="chat-list">
-                        <div class="chat-item active">
-                            <input type="checkbox" checked>
-                            <div class="chat-info">
-                                <h4>خالد (المشتبه به)</h4>
-                                <p>وينك؟ تأخرت...</p>
-                            </div>
-                            <span class="time">10:15</span>
-                        </div>
-                    </div>
-
-                    <div class="message-view">
-                        <div class="msg received">
-                            <p>وينك؟ تأخرت علي.</p>
-                            <span class="msg-time">10:15</span>
-                        </div>
-                        <div class="msg sent">
-                            <p>واصل قريب، لا تشيل هم.</p>
-                            <span class="msg-time">10:16</span>
-                            <i class="fa-solid fa-check-double read-receipt"></i>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </div>
+    <div class="header">
+        <h1 id="pageTitle">All Reports</h1>
+        <button class="lang-btn" onclick="toggleLanguage()">AR</button>
     </div>
 
-    <script>
-        let currentLang = 'ar';
+    <table>
+        <thead>
+            <tr>
+                <th id="dateHeader">Date</th>
+                <th id="timeHeader">Time</th>
+                <th id="caseHeader">Case #</th>
+                <th id="investigatorHeader">Investigator</th>
+                <th id="actionHeader">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>11-03</td>
+                <td>11:00</td>
+                <td>055xxx</td>
+                <td>Rahaf</td>
+                <td>
+                    <button class="action-btn" id="downloadBtn1">Download</button>
+                    <button class="action-btn" id="openBtn1">Open</button>
+                </td>
+            </tr>
 
-        function toggleLanguage() {
-            const htmlTag = document.documentElement;
-            const langLabel = document.getElementById('lang-label');
-            const searchInput = document.getElementById('inp-search');
+            <tr>
+                <td>09-21</td>
+                <td>10:30</td>
+                <td>052xxx</td>
+                <td>Hanin</td>
+                <td>
+                    <button class="action-btn" id="downloadBtn2">Download</button>
+                    <button class="action-btn" id="openBtn2">Open</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-            if (currentLang === 'ar') {
-                // تحويل إلى إنجليزي
-                currentLang = 'en';
-                htmlTag.setAttribute('lang', 'en');
-                htmlTag.setAttribute('dir', 'ltr'); // يقلب الصفحة يسار
-                langLabel.textContent = "العربية"; // يغير اسم الزر
+</div>
 
-                // تغيير النصوص
-                document.title = "Whisper-WA | Report Builder";
-                document.getElementById('txt-case').textContent = "Case #: 055xxx";
-                document.getElementById('txt-home').textContent = "Home";
-                document.getElementById('txt-stats').innerHTML = '<i class="fa-solid fa-chart-pie"></i> Statistics';
-                document.getElementById('txt-account').innerHTML = '<i class="fa-solid fa-user"></i> My Account';
-                document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> Report Draft';
-                document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> Add to Current Report';
-                document.getElementById('txt-download').innerHTML = 'Export Report (PDF) <i class="fa-solid fa-file-arrow-down"></i>';
-                searchInput.placeholder = "Search chats (keyword, number, url)...";
+<script>
+let currentLang = "en";
 
-            } else {
-                // تحويل إلى عربي
-                currentLang = 'ar';
-                htmlTag.setAttribute('lang', 'ar');
-                htmlTag.setAttribute('dir', 'rtl'); // يقلب الصفحة يمين
-                langLabel.textContent = "English";
+function toggleLanguage() {
+    const htmlTag = document.getElementById("htmlTag");
 
-                // استرجاع النصوص العربية
-                document.title = "Whisper-WA | بناء التقرير";
-                document.getElementById('txt-case').textContent = "قضية رقم: #055xxx";
-                document.getElementById('txt-home').textContent = "الرئيسية";
-                document.getElementById('txt-stats').innerHTML = '<i class="fa-solid fa-chart-pie"></i> الإحصائيات';
-                document.getElementById('txt-account').innerHTML = '<i class="fa-solid fa-user"></i> حسابي';
-                document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> مسودة التقرير';
-                document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي';
-                document.getElementById('txt-download').innerHTML = 'تصدير التقرير (PDF) <i class="fa-solid fa-file-arrow-down"></i>';
-                searchInput.placeholder = "بحث في المحادثات (كلمة، رقم، رابط)...";
-            }
-        }
-    </script>
+    if (currentLang === "en") {
+        currentLang = "ar";
+        htmlTag.lang = "ar";
+        htmlTag.dir = "rtl";
+
+        document.getElementById("pageTitle").innerText = "جميع التقارير";
+        document.getElementById("dateHeader").innerText = "التاريخ";
+        document.getElementById("timeHeader").innerText = "الوقت";
+        document.getElementById("caseHeader").innerText = "رقم القضية";
+        document.getElementById("investigatorHeader").innerText = "المحقق";
+        document.getElementById("actionHeader").innerText = "الإجراءات";
+
+        document.getElementById("downloadBtn1").innerText = "تحميل";
+        document.getElementById("openBtn1").innerText = "عرض";
+        document.getElementById("downloadBtn2").innerText = "تحميل";
+        document.getElementById("openBtn2").innerText = "عرض";
+
+    } else {
+        currentLang = "en";
+        htmlTag.lang = "en";
+        htmlTag.dir = "ltr";
+
+        document.getElementById("pageTitle").innerText = "All Reports";
+        document.getElementById("dateHeader").innerText = "Date";
+        document.getElementById("timeHeader").innerText = "Time";
+        document.getElementById("caseHeader").innerText = "Case #";
+        document.getElementById("investigatorHeader").innerText = "Investigator";
+        document.getElementById("actionHeader").innerText = "Actions";
+
+        document.getElementById("downloadBtn1").innerText = "Download";
+        document.getElementById("openBtn1").innerText = "Open";
+        document.getElementById("downloadBtn2").innerText = "Download";
+        document.getElementById("openBtn2").innerText = "Open";
+    }
+}
+</script>
+
 </body>
 </html>
+
