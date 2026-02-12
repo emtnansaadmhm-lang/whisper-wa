@@ -1,109 +1,156 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whisper-WA | Case Reports</title>
-    <link rel="stylesheet" href="static/style.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Whisper-WA | بناء التقرير</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="background-glow" style="right: -100px; left: auto; top: 20%;"></div>
+    <div class="animated-bg-logo">
+    <img src="logo.png" alt="Background Logo">
+</div>
 
     <div class="main-container">
         
-        <header class="glass-header">
+        <header class="glass-header small-header">
             <div class="logo-section">
-                <i class="fa-solid fa-file-shield logo-icon"></i>
-                <h2>Whisper-WA <span style="font-size: 0.6em; opacity: 0.7;">| Reports Center</span></h2>
+                <img src="logo.png" alt="Logo" class="logo-img">
+                <div class="logo-text">
+                    <h3>Whisper-WA</h3>
+                    <span class="case-badge" id="txt-case">قضية رقم: #055xxx</span>
+                </div>
             </div>
-            
-            <nav class="nav-links">
-                <a href="index.html" class="nav-item">Home</a>
-                <a href="connect.html" class="nav-item">Acquisition</a>
-                <a href="chat.html" class="nav-item">Analysis</a>
-                <a href="reports.html" class="nav-item active">Reports</a>
-            </nav>
+            <div class="header-actions">
+                <button class="lang-switch-btn" onclick="toggleLanguage()">
+                    <i class="fa-solid fa-globe"></i> <span id="lang-label">English</span>
+                </button>
 
-            <div class="user-profile">
-                <div class="avatar-small">E</div>
+                <a href="index.html" class="icon-btn highlight" id="txt-home">الرئيسية</a>
+                <button class="icon-btn" id="txt-stats"><i class="fa-solid fa-chart-pie"></i> الإحصائيات</button>
+                <button class="icon-btn" id="txt-account"><i class="fa-solid fa-user"></i> حسابي</button>
             </div>
         </header>
 
-        <section class="glass-panel full-height-panel">
-            <div class="panel-header">
-                <div class="header-title">
-                    <h3><i class="fa-solid fa-folder-open"></i> Case Archive</h3>
-                    <p>Manage and export forensic reports</p>
+        <div class="workspace-grid">
+            
+            <aside class="glass-panel report-sidebar">
+                <div class="sidebar-header">
+                    <h3 id="txt-draft-title"><i class="fa-solid fa-file-contract"></i> مسودة التقرير</h3>
+                    <button class="btn-small"><i class="fa-solid fa-plus"></i></button>
                 </div>
                 
-                <div class="action-buttons">
-                    <div class="search-box">
-                        <i class="fa-solid fa-search"></i>
-                        <input type="text" placeholder="Search Case ID or Name...">
+                <button class="btn-primary full-width mb-10" id="txt-add-btn">
+                    <i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي
+                </button>
+
+                <div class="report-items-list">
+                    <div class="report-card">
+                        <div class="card-content">
+                            <span class="sender">خالد (055xxxx)</span>
+                            <span class="preview">بيانات الموقع الجغرافي...</span>
+                        </div>
+                        <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                    <button class="btn-primary small">
-                        <i class="fa-solid fa-plus"></i> New Report
+                </div>
+
+                <div class="sidebar-footer">
+                    <button class="btn-download" id="txt-download">
+                        تصدير التقرير (PDF) <i class="fa-solid fa-file-arrow-down"></i>
                     </button>
                 </div>
-            </div>
+            </aside>
 
-            <div class="table-container">
-                <table class="glass-table">
-                    <thead>
-                        <tr>
-                            <th>Case ID</th>
-                            <th>Target Device</th>
-                            <th>Investigator</th>
-                            <th>Date & Time</th>
-                            <th>Status</th>
-                            <th>Evidence Count</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="case-id">#CASE-2026-001</td>
-                            <td>Samsung S21 (Rooted)</td>
-                            <td>Emtnan</td>
-                            <td>2026-02-12 <span class="time">10:30 AM</span></td>
-                            <td><span class="status-badge complete">Completed</span></td>
-                            <td>145 Messages</td>
-                            <td>
-                                <button class="btn-icon" title="Download PDF"><i class="fa-solid fa-file-arrow-down"></i></button>
-                                <button class="btn-icon" title="View Details"><i class="fa-solid fa-eye"></i></button>
-                            </td>
-                        </tr>
+            <section class="glass-panel chat-interface">
+                <div class="search-area">
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" id="inp-search" placeholder="بحث في المحادثات (كلمة، رقم، رابط)...">
+                    </div>
+                    <div class="tags-row">
+                        <span class="tag">#Location</span>
+                        <span class="tag">#URL</span>
+                        <span class="tag">#Images</span>
+                    </div>
+                </div>
 
-                        <tr>
-                            <td class="case-id">#CASE-2026-002</td>
-                            <td>Pixel 6 Pro</td>
-                            <td>Sarah</td>
-                            <td>2026-02-11 <span class="time">02:15 PM</span></td>
-                            <td><span class="status-badge processing">Processing</span></td>
-                            <td>--</td>
-                            <td>
-                                <button class="btn-icon disabled"><i class="fa-solid fa-spinner fa-spin"></i></button>
-                            </td>
-                        </tr>
+                <div class="chat-split-view">
+                    <div class="chat-list">
+                        <div class="chat-item active">
+                            <input type="checkbox" checked>
+                            <div class="chat-info">
+                                <h4>خالد (المشتبه به)</h4>
+                                <p>وينك؟ تأخرت...</p>
+                            </div>
+                            <span class="time">10:15</span>
+                        </div>
+                    </div>
 
-                        <tr>
-                            <td class="case-id">#CASE-2025-089</td>
-                            <td>Huawei P30</td>
-                            <td>Emtnan</td>
-                            <td>2025-12-20 <span class="time">09:00 AM</span></td>
-                            <td><span class="status-badge complete">Completed</span></td>
-                            <td>22 Files</td>
-                            <td>
-                                <button class="btn-icon" title="Download PDF"><i class="fa-solid fa-file-arrow-down"></i></button>
-                                <button class="btn-icon" title="View Details"><i class="fa-solid fa-eye"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                    <div class="message-view">
+                        <div class="msg received">
+                            <p>وينك؟ تأخرت علي.</p>
+                            <span class="msg-time">10:15</span>
+                        </div>
+                        <div class="msg sent">
+                            <p>واصل قريب، لا تشيل هم.</p>
+                            <span class="msg-time">10:16</span>
+                            <i class="fa-solid fa-check-double read-receipt"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
+        </div>
     </div>
+
+    <script>
+        let currentLang = 'ar';
+
+        function toggleLanguage() {
+            const htmlTag = document.documentElement;
+            const langLabel = document.getElementById('lang-label');
+            const searchInput = document.getElementById('inp-search');
+
+            if (currentLang === 'ar') {
+                // تحويل إلى إنجليزي
+                currentLang = 'en';
+                htmlTag.setAttribute('lang', 'en');
+                htmlTag.setAttribute('dir', 'ltr'); // يقلب الصفحة يسار
+                langLabel.textContent = "العربية"; // يغير اسم الزر
+
+                // تغيير النصوص
+                document.title = "Whisper-WA | Report Builder";
+                document.getElementById('txt-case').textContent = "Case #: 055xxx";
+                document.getElementById('txt-home').textContent = "Home";
+                document.getElementById('txt-stats').innerHTML = '<i class="fa-solid fa-chart-pie"></i> Statistics';
+                document.getElementById('txt-account').innerHTML = '<i class="fa-solid fa-user"></i> My Account';
+                document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> Report Draft';
+                document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> Add to Current Report';
+                document.getElementById('txt-download').innerHTML = 'Export Report (PDF) <i class="fa-solid fa-file-arrow-down"></i>';
+                searchInput.placeholder = "Search chats (keyword, number, url)...";
+
+            } else {
+                // تحويل إلى عربي
+                currentLang = 'ar';
+                htmlTag.setAttribute('lang', 'ar');
+                htmlTag.setAttribute('dir', 'rtl'); // يقلب الصفحة يمين
+                langLabel.textContent = "English";
+
+                // استرجاع النصوص العربية
+                document.title = "Whisper-WA | بناء التقرير";
+                document.getElementById('txt-case').textContent = "قضية رقم: #055xxx";
+                document.getElementById('txt-home').textContent = "الرئيسية";
+                document.getElementById('txt-stats').innerHTML = '<i class="fa-solid fa-chart-pie"></i> الإحصائيات';
+                document.getElementById('txt-account').innerHTML = '<i class="fa-solid fa-user"></i> حسابي';
+                document.getElementById('txt-draft-title').innerHTML = '<i class="fa-solid fa-file-contract"></i> مسودة التقرير';
+                document.getElementById('txt-add-btn').innerHTML = '<i class="fa-solid fa-plus-circle"></i> إضافة للتقرير الحالي';
+                document.getElementById('txt-download').innerHTML = 'تصدير التقرير (PDF) <i class="fa-solid fa-file-arrow-down"></i>';
+                searchInput.placeholder = "بحث في المحادثات (كلمة، رقم، رابط)...";
+            }
+        }
+    </script>
 </body>
 </html>
