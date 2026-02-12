@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Whisper-WA | Portal</title>
+  <title>Whisper-WA | Login</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
@@ -24,6 +24,7 @@
     }
 
     *{ box-sizing:border-box; margin:0; padding:0; }
+
     body{
       font-family:'Tajawal',sans-serif;
       background-color: var(--bg-dark);
@@ -45,7 +46,7 @@
       left:50%;
       transform: translate(-50%,-50%);
       z-index:-1;
-      width: 600px;
+      width: 620px;
       pointer-events:none;
       opacity:0.18;
       animation: cyberGlowPulse 8s ease-in-out infinite alternate;
@@ -55,8 +56,8 @@
       filter: drop-shadow(0 0 30px var(--primary-mid));
     }
     @keyframes cyberGlowPulse{
-      0%{ opacity:0.12; transform: translate(-50%,-50%) scale(0.96); }
-      100%{ opacity:0.28; transform: translate(-50%,-50%) scale(1.04); }
+      0%{ opacity:0.10; transform: translate(-50%,-50%) scale(0.96); }
+      100%{ opacity:0.26; transform: translate(-50%,-50%) scale(1.04); }
     }
 
     .main-container{
@@ -139,6 +140,28 @@
       transform: translateY(-1px);
     }
 
+    /* Back arrow like your screenshot */
+    .back-btn{
+      position: fixed;
+      top: 120px;
+      left: 18px;
+      z-index: 3;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.18);
+      color: var(--accent-glow);
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 20px;
+      transition: 0.2s;
+    }
+    .back-btn:hover{ background: rgba(95,191,122,0.12); transform: translateY(-1px); }
+
+    /* Center card */
     .center{
       flex:1;
       display:flex;
@@ -146,7 +169,7 @@
       justify-content:center;
     }
     .card{
-      width:min(980px, 95vw);
+      width:min(820px, 95vw);
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
@@ -154,8 +177,7 @@
       padding: 26px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.35);
     }
-
-    h1{
+    .card h1{
       font-size: 1.7rem;
       margin-bottom: 6px;
     }
@@ -165,36 +187,7 @@
       line-height:1.6;
     }
 
-    /* Main tabs (Login / Request / Connect) */
-    .main-tabs{
-      display:flex;
-      gap:0;
-      background: rgba(0,0,0,0.18);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 16px;
-      overflow:hidden;
-      margin-bottom: 14px;
-    }
-    .main-tab-btn{
-      flex:1;
-      padding: 12px 14px;
-      cursor:pointer;
-      background: transparent;
-      color: var(--text-muted);
-      border: none;
-      font-weight:900;
-      transition:0.25s;
-    }
-    .main-tab-btn.active{
-      background: rgba(95,191,122,0.16);
-      color: var(--accent-glow);
-      box-shadow: inset 0 -3px 0 rgba(143,217,168,0.9);
-    }
-
-    .main-tab-content{ display:none; }
-    .main-tab-content.active{ display:block; }
-
-    /* Inner tabs (Wi-Fi / USB) */
+    /* Tabs */
     .tabs{
       display:flex;
       gap:0;
@@ -219,7 +212,6 @@
       color: var(--accent-glow);
       box-shadow: inset 0 -3px 0 rgba(143,217,168,0.9);
     }
-
     .tab-content{ display:none; }
     .tab-content.active{ display:block; }
 
@@ -234,7 +226,7 @@
       display:block;
       color: var(--text-muted);
       font-weight:800;
-      margin: 8px 0 8px;
+      margin: 10px 0 8px;
     }
     input, select, textarea{
       width:100%;
@@ -249,21 +241,39 @@
     textarea{ min-height: 110px; resize: vertical; }
     input::placeholder, textarea::placeholder{ color: rgba(194,222,201,0.65); }
 
-    .note{
-      margin-top: 10px;
-      color: rgba(194,222,201,0.92);
-      font-size: 0.95rem;
-      line-height:1.55;
-    }
-
     .row{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
     }
-    @media (max-width: 740px){
+    @media (max-width: 720px){
       .row{ grid-template-columns: 1fr; }
     }
+
+    .tiny-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-top: 10px;
+      flex-wrap:wrap;
+    }
+    .checkbox{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color: rgba(223,251,231,0.92);
+      font-weight:900;
+      user-select:none;
+    }
+    .checkbox input{ width:auto; }
+    .link{
+      color: var(--accent-glow);
+      text-decoration:none;
+      font-weight:900;
+      opacity:0.9;
+    }
+    .link:hover{ opacity:1; text-decoration: underline; }
 
     .actions{
       display:flex;
@@ -292,32 +302,6 @@
     }
     .btn-ghost:hover{ background: rgba(95,191,122,0.12); transform: translateY(-1px); }
 
-    .tiny-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-top: 10px;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .checkbox{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:900;
-      color: rgba(223,251,231,0.92);
-      user-select:none;
-    }
-    .checkbox input{ width:auto; }
-
-    .link{
-      color: var(--accent-glow);
-      text-decoration:none;
-      font-weight:900;
-      opacity:0.9;
-    }
-    .link:hover{ opacity:1; text-decoration: underline; }
-
     .alert{
       margin-top: 16px;
       padding: 12px 14px;
@@ -329,61 +313,17 @@
     .alert.info{ background: rgba(63,155,95,0.12); color: var(--accent-glow); }
     .alert.success{ background: rgba(95,191,122,0.14); color: #dffbe7; }
     .alert.danger{ background: rgba(255,107,107,0.12); border-color: rgba(255,107,107,0.30); color: #ffd1d1; }
-
-    .pwrap{
-      margin-top: 12px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .pwrap.hidden{ display:none; }
-    .pbar{
-      flex:1;
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.20);
-      border: 1px solid rgba(255,255,255,0.10);
-      overflow:hidden;
-    }
-    .pfill{
-      height:100%;
-      width:0%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--primary-mid), var(--accent-glow));
-      transition: width 0.3s ease;
-    }
-    .ptext{
-      color: var(--text-muted);
-      font-weight:900;
-      font-size:0.9rem;
-      min-width: 120px;
-      text-align:end;
-    }
-
-    .logbox{
-      margin-top: 14px;
-      background: rgba(0,0,0,0.22);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 18px;
-      padding: 14px;
-      height: 220px;
-      overflow-y:auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-    .logbox.hidden{ display:none; }
-    .logline{ font-size: 0.9rem; line-height: 1.55; margin-bottom: 6px; color: rgba(234,247,240,0.92); }
-    .logline.success{ color:#8ff0b0; font-weight:900; }
-    .logline.danger{ color:#ffb3b3; font-weight:900; }
   </style>
 </head>
 
 <body>
+  <button class="back-btn" id="btnBack" title="Back">‹</button>
+
   <div class="animated-bg-logo">
     <img src="logo.png" alt="Background Logo">
   </div>
 
   <div class="main-container">
-
     <header class="topbar">
       <div class="brand">
         <img src="logo.png" alt="Whisper-WA Logo">
@@ -395,7 +335,7 @@
 
       <div class="top-actions">
         <a class="nav-link" href="index.html" id="nav-home">Home</a>
-        <a class="nav-link" href="chat.html" id="nav-chats">Chats</a>
+        <a class="nav-link" href="connect.html" id="nav-connect">Connect</a>
         <button class="lang-btn" id="btnLang"><span id="langText">AR</span></button>
       </div>
     </header>
@@ -403,61 +343,59 @@
     <main class="center">
       <section class="card">
 
-        <h1 id="title">Portal</h1>
+        <h1 id="title">Access</h1>
         <p class="subtitle" id="subtitle">
-          Login, request an account, or connect a device.
+          Login to continue, or request an account if you don’t have access.
         </p>
 
-        <!-- MAIN Tabs -->
-        <div class="main-tabs">
-          <button class="main-tab-btn active" data-maintab="loginMain" id="mainLogin">Login</button>
-          <button class="main-tab-btn" data-maintab="requestMain" id="mainRequest">Request Account</button>
-          <button class="main-tab-btn" data-maintab="connectMain" id="mainConnect">Connect Device</button>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="loginTab" id="tabLogin">Login</button>
+          <button class="tab-btn" data-tab="requestTab" id="tabRequest">Request Account</button>
         </div>
 
-        <!-- ========== LOGIN ========== -->
-        <div class="main-tab-content active" id="loginMain">
+        <!-- LOGIN -->
+        <div class="tab-content active" id="loginTab">
           <div class="panel">
             <label for="loginUser" id="lUser">Email / Username</label>
-            <input id="loginUser" type="text" placeholder="e.g. analyst@domain.com" autocomplete="username" />
+            <input id="loginUser" type="text" placeholder="e.g. analyst@domain.com" autocomplete="username"/>
 
             <label for="loginPass" id="lPass">Password</label>
-            <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" />
+            <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"/>
 
             <div class="tiny-row">
               <label class="checkbox">
-                <input type="checkbox" id="rememberMe" />
+                <input type="checkbox" id="rememberMe"/>
                 <span id="lRemember">Remember me</span>
               </label>
-
               <a class="link" href="#" id="forgotLink">Forgot password?</a>
             </div>
 
             <div class="actions">
               <button class="btn btn-primary" id="btnLogin">Sign In</button>
-              <button class="btn btn-ghost" id="btnGoConnect1">Go to Connect</button>
+              <button class="btn btn-ghost" id="btnGoConnect">Go to Connect</button>
             </div>
           </div>
         </div>
 
-        <!-- ========== REQUEST ACCOUNT ========== -->
-        <div class="main-tab-content" id="requestMain">
+        <!-- REQUEST ACCOUNT -->
+        <div class="tab-content" id="requestTab">
           <div class="panel">
-            <div class="row">
-              <div>
-                <label for="reqName" id="rName">Full Name</label>
-                <input id="reqName" type="text" placeholder="e.g. Emtnan Saad" />
-              </div>
-              <div>
-                <label for="reqEmail" id="rEmail">Email</label>
-                <input id="reqEmail" type="email" placeholder="e.g. name@domain.com" />
-              </div>
-            </div>
 
             <div class="row">
               <div>
+                <label for="reqName" id="rName">Full Name</label>
+                <input id="reqName" type="text" placeholder="e.g. Emtnan Saad"/>
+              </div>
+              <div>
+                <label for="reqEmail" id="rEmail">Email</label>
+                <input id="reqEmail" type="email" placeholder="e.g. name@domain.com"/>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+              <div>
                 <label for="reqOrg" id="rOrg">Organization</label>
-                <input id="reqOrg" type="text" placeholder="e.g. University / Company" />
+                <input id="reqOrg" type="text" placeholder="e.g. University / Company"/>
               </div>
               <div>
                 <label for="reqRole" id="rRole">Role</label>
@@ -472,8 +410,8 @@
               </div>
             </div>
 
-            <label for="reqReason" id="rReason">Reason / Use Case</label>
-            <textarea id="reqReason" placeholder="Write a short reason (e.g. academic project, SOC workflow, etc.)"></textarea>
+            <label for="reqReason" id="rReason" style="margin-top:10px;">Reason / Use Case</label>
+            <textarea id="reqReason" placeholder="Write a short reason..."></textarea>
 
             <div class="actions">
               <button class="btn btn-primary" id="btnRequest">Submit Request</button>
@@ -482,55 +420,7 @@
           </div>
         </div>
 
-        <!-- ========== CONNECT DEVICE (YOUR ORIGINAL UI) ========== -->
-        <div class="main-tab-content" id="connectMain">
-
-          <div class="tabs">
-            <button class="tab-btn active" data-tab="wifiTab" id="tabWifi">Wi-Fi (IP:PORT)</button>
-            <button class="tab-btn" data-tab="usbTab" id="tabUsb">USB</button>
-          </div>
-
-          <div class="tab-content active" id="wifiTab">
-            <div class="panel">
-              <label for="ipInput" id="ipLabel">Device IP:PORT</label>
-              <input id="ipInput" type="text" placeholder="e.g. 192.168.1.20:5555" />
-              <div class="note" id="wifiNote">
-                Enter the device IP:PORT, then press Connect to start the workflow.
-              </div>
-
-              <div class="actions">
-                <button class="btn btn-primary" id="btnWifiConnect">Connect</button>
-                <button class="btn btn-ghost" id="btnWifiPrev">View Previous Chats</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="tab-content" id="usbTab">
-            <div class="panel">
-              <div class="note" id="usbNote">
-                1) Connect your device using a USB cable.<br>
-                2) Enable <b>USB Debugging</b> on the device.<br>
-                3) Press <b>Connect</b> to start the workflow.
-              </div>
-
-              <div class="actions">
-                <button class="btn btn-primary" id="btnUsbConnect">Connect</button>
-                <button class="btn btn-ghost" id="btnUsbPrev">View Previous Chats</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- Shared output -->
         <div class="alert hidden" id="alertBox"></div>
-
-        <div class="pwrap hidden" id="pwrap">
-          <div class="pbar"><div class="pfill" id="pfill"></div></div>
-          <div class="ptext" id="ptext">0%</div>
-        </div>
-
-        <div class="logbox hidden" id="logbox"></div>
 
       </section>
     </main>
@@ -538,54 +428,32 @@
 
   <script>
     // ===== CONFIG =====
-    const CHAT_PAGE = "chat.html";
-    const CONNECT_MAIN_ID = "connectMain";
-
-    // Demo login creds (frontend only)
+    const CONNECT_PAGE = "connect.html";
     const DEMO_USER = "admin";
     const DEMO_PASS = "admin123";
 
-    // Simulated connect workflow
-    const SIM_ROOTED = true;       // set false for "not rooted"
-    const SIM_USB_FOUND = true;    // set false for "no USB device"
-
     // ===== ELEMENTS =====
-    const mainTabBtns = document.querySelectorAll(".main-tab-btn");
-    const mainTabs = document.querySelectorAll(".main-tab-content");
-
     const tabBtns = document.querySelectorAll(".tab-btn");
     const tabs = document.querySelectorAll(".tab-content");
-
-    const ipInput = document.getElementById("ipInput");
-
     const alertBox = document.getElementById("alertBox");
-    const logbox = document.getElementById("logbox");
-    const pwrap = document.getElementById("pwrap");
-    const pfill = document.getElementById("pfill");
-    const ptext = document.getElementById("ptext");
 
-    // Login
     const loginUser = document.getElementById("loginUser");
     const loginPass = document.getElementById("loginPass");
     const rememberMe = document.getElementById("rememberMe");
-    const btnLogin = document.getElementById("btnLogin");
-    const btnGoConnect1 = document.getElementById("btnGoConnect1");
-    const forgotLink = document.getElementById("forgotLink");
 
-    // Request
     const reqName = document.getElementById("reqName");
     const reqEmail = document.getElementById("reqEmail");
     const reqOrg = document.getElementById("reqOrg");
     const reqRole = document.getElementById("reqRole");
     const reqReason = document.getElementById("reqReason");
+
+    const btnLogin = document.getElementById("btnLogin");
+    const btnGoConnect = document.getElementById("btnGoConnect");
     const btnRequest = document.getElementById("btnRequest");
     const btnClear = document.getElementById("btnClear");
+    const forgotLink = document.getElementById("forgotLink");
 
-    // Connect buttons
-    const btnWifiConnect = document.getElementById("btnWifiConnect");
-    const btnWifiPrev = document.getElementById("btnWifiPrev");
-    const btnUsbConnect = document.getElementById("btnUsbConnect");
-    const btnUsbPrev = document.getElementById("btnUsbPrev");
+    const btnBack = document.getElementById("btnBack");
 
     // Language
     const btnLang = document.getElementById("btnLang");
@@ -594,17 +462,14 @@
 
     const T = {
       en: {
-        topSubtitle: "Digital Forensics Platform",
-        navHome: "Home",
-        navChats: "Chats",
-        title: "Portal",
-        subtitle: "Login, request an account, or connect a device.",
+        topSubtitle:"Digital Forensics Platform",
+        navHome:"Home",
+        navConnect:"Connect",
+        title:"Access",
+        subtitle:"Login to continue, or request an account if you don’t have access.",
+        tabLogin:"Login",
+        tabRequest:"Request Account",
 
-        mainLogin:"Login",
-        mainRequest:"Request Account",
-        mainConnect:"Connect Device",
-
-        // Login
         lUser:"Email / Username",
         lUserPH:"e.g. analyst@domain.com",
         lPass:"Password",
@@ -613,68 +478,33 @@
         forgot:"Forgot password?",
         signIn:"Sign In",
         goConnect:"Go to Connect",
-        aNeedLogin:"Please enter your email/username and password.",
-        aBadLogin:"Invalid credentials (demo: admin / admin123).",
-        aOkLogin:"Login successful. Opening Connect…",
-        aForgot:"Demo: add reset flow later (backend).",
 
-        // Request
         rName:"Full Name",
-        rNamePH:"e.g. Emtnan Saad",
         rEmail:"Email",
-        rEmailPH:"e.g. name@domain.com",
         rOrg:"Organization",
-        rOrgPH:"e.g. University / Company",
         rRole:"Role",
         rReason:"Reason / Use Case",
-        rReasonPH:"Write a short reason (e.g. academic project, SOC workflow, etc.)",
+        rReasonPH:"Write a short reason...",
+
         submitReq:"Submit Request",
         clear:"Clear",
+
+        aNeedLogin:"Please enter your email/username and password.",
+        aBadLogin:"Invalid credentials (demo: admin / admin123).",
+        aOkLogin:"Login successful. Redirecting…",
+        aForgot:"Demo: add reset flow later (backend).",
         aNeedReq:"Please fill Full Name, Email, and Reason.",
-        aReqSent:"Request submitted (frontend demo). We’ll review it and get back to you.",
-
-        // Connect (your original)
-        tabWifi:"Wi-Fi (IP:PORT)",
-        tabUsb:"USB",
-        ipLabel:"Device IP:PORT",
-        ipPH:"e.g. 192.168.1.20:5555",
-        wifiNote:"Enter the device IP:PORT, then press Connect to start the workflow.",
-        usbNote:"1) Connect your device using a USB cable.<br>2) Enable <b>USB Debugging</b> on the device.<br>3) Press <b>Connect</b> to start the workflow.",
-        viewPrev:"View Previous Chats",
-        connect:"Connect",
-
-        aNeedIp:"Please enter IP:PORT (example: 192.168.1.20:5555).",
-        aInfoWifi:"Connecting via Wi-Fi...",
-        aInfoUsb:"Checking USB connection...",
-        aNoUsb:"No USB device detected. Please connect the device and enable USB Debugging.",
-        aNotRoot:"Device is not rooted. Root access is required to continue.",
-        aStart:"Starting acquisition workflow...",
-        aDone:"Completed. Redirecting to chats...",
-
-        lWaitUsb:"[INFO] Waiting for USB device (ADB)...",
-        lDetect:"[INFO] Detecting device...",
-        lAdb:"[INFO] Establishing ADB connection...",
-        lConnOk:"[INFO] Connection established",
-        lExtract:"[INFO] Extracting WhatsApp data...",
-        lRead:"[INFO] Reading database files: msgstore.db",
-        lHash:"[INFO] Calculating SHA-256 hashes...",
-        lDecrypt:"[INFO] Decrypting database...",
-        lParse:"[INFO] Parsing messages and extracting artifacts...",
-        lSuccess1:"[SUCCESS] Extraction complete!",
-        lSuccess2:"[SUCCESS] Evidence integrity verified."
+        aReqSent:"Request submitted (frontend demo)."
       },
       ar: {
-        topSubtitle: "منصة التحليل الجنائي الرقمي",
-        navHome: "الرئيسية",
-        navChats: "المحادثات",
-        title: "البوابة",
-        subtitle: "سجّلي الدخول أو قدّمي طلب حساب أو وصّلي جهاز.",
+        topSubtitle:"منصة التحليل الجنائي الرقمي",
+        navHome:"الرئيسية",
+        navConnect:"الاتصال",
+        title:"الدخول",
+        subtitle:"سجّلي الدخول للمتابعة، أو قدّمي طلب حساب إذا ما عندك صلاحية.",
+        tabLogin:"تسجيل الدخول",
+        tabRequest:"طلب حساب",
 
-        mainLogin:"تسجيل الدخول",
-        mainRequest:"طلب حساب",
-        mainConnect:"توصيل الجهاز",
-
-        // Login
         lUser:"البريد / اسم المستخدم",
         lUserPH:"مثال: analyst@domain.com",
         lPass:"كلمة المرور",
@@ -682,61 +512,26 @@
         lRemember:"تذكرني",
         forgot:"نسيت كلمة المرور؟",
         signIn:"دخول",
-        goConnect:"اذهبي للتوصيل",
-        aNeedLogin:"اكتبي البريد/اسم المستخدم وكلمة المرور.",
-        aBadLogin:"بيانات الدخول غير صحيحة (الديمو: admin / admin123).",
-        aOkLogin:"تم تسجيل الدخول. فتح التوصيل…",
-        aForgot:"ديمو: ضيفي مسار الاستعادة لاحقاً (باك-إند).",
+        goConnect:"اذهبي للاتصال",
 
-        // Request
         rName:"الاسم الكامل",
-        rNamePH:"مثال: امتنان سعد",
         rEmail:"البريد الإلكتروني",
-        rEmailPH:"مثال: name@domain.com",
         rOrg:"الجهة",
-        rOrgPH:"مثال: جامعة / شركة",
         rRole:"الدور",
         rReason:"السبب / الاستخدام",
-        rReasonPH:"اكتبي سبب مختصر (مثال: مشروع، عمل SOC، إلخ)",
+        rReasonPH:"اكتبي سبب مختصر...",
+
         submitReq:"إرسال الطلب",
         clear:"مسح",
+
+        aNeedLogin:"اكتبي البريد/اسم المستخدم وكلمة المرور.",
+        aBadLogin:"بيانات الدخول غير صحيحة (الديمو: admin / admin123).",
+        aOkLogin:"تم تسجيل الدخول. جارٍ التحويل…",
+        aForgot:"ديمو: ضيفي الاستعادة لاحقاً (باك-إند).",
         aNeedReq:"كمّلي الاسم والبريد والسبب.",
-        aReqSent:"تم إرسال الطلب (ديمو فورنت). بنراجعه ونتواصل معك.",
-
-        // Connect
-        tabWifi:"واي فاي (IP:PORT)",
-        tabUsb:"USB",
-        ipLabel:"عنوان الجهاز IP:PORT",
-        ipPH:"مثال: 192.168.1.20:5555",
-        wifiNote:"اكتبي IP:PORT ثم اضغطي Connect لبدء الخطوات.",
-        usbNote:"1) وصّلي الجهاز بالكيبل.<br>2) فعّلي <b>USB Debugging</b>.<br>3) اضغطي <b>Connect</b> لبدء الخطوات.",
-        viewPrev:"عرض المحادثات السابقة",
-        connect:"Connect",
-
-        aNeedIp:"اكتبي IP:PORT (مثال: 192.168.1.20:5555).",
-        aInfoWifi:"جاري الاتصال عبر الواي فاي...",
-        aInfoUsb:"جاري التحقق من USB...",
-        aNoUsb:"لم يتم العثور على جهاز USB. تأكدي من التوصيل وتفعيل USB Debugging.",
-        aNotRoot:"الجهاز غير مروّت. يلزم روت للمتابعة.",
-        aStart:"بدء خطوات الاستخراج...",
-        aDone:"اكتملت العملية... جارٍ الانتقال للمحادثات...",
-
-        lWaitUsb:"[INFO] انتظار جهاز USB (ADB)...",
-        lDetect:"[INFO] جاري اكتشاف الجهاز...",
-        lAdb:"[INFO] جاري إنشاء اتصال ADB...",
-        lConnOk:"[INFO] تم إنشاء الاتصال",
-        lExtract:"[INFO] جاري استخراج بيانات واتساب...",
-        lRead:"[INFO] قراءة ملفات قاعدة البيانات: msgstore.db",
-        lHash:"[INFO] حساب SHA-256...",
-        lDecrypt:"[INFO] فك تشفير قاعدة البيانات...",
-        lParse:"[INFO] تحليل الرسائل واستخراج الأدلة...",
-        lSuccess1:"[SUCCESS] اكتمل الاستخراج!",
-        lSuccess2:"[SUCCESS] تم التحقق من سلامة الدليل."
+        aReqSent:"تم إرسال الطلب (ديمو فورنت)."
       }
     };
-
-    // ===== Helpers =====
-    function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
     function showAlert(type, text){
       alertBox.classList.remove("hidden");
@@ -747,90 +542,23 @@
       alertBox.classList.add("hidden");
       alertBox.textContent = "";
     }
-    function log(line, type=""){
-      logbox.classList.remove("hidden");
-      const d = document.createElement("div");
-      d.className = "logline " + type;
-      d.textContent = line;
-      logbox.appendChild(d);
-      logbox.scrollTop = logbox.scrollHeight;
-    }
-    function resetOutput(){
-      hideAlert();
-      logbox.classList.add("hidden");
-      logbox.innerHTML = "";
-      pwrap.classList.add("hidden");
-      pfill.style.width = "0%";
-      ptext.textContent = "0%";
-    }
-    function setProgress(p){
-      pwrap.classList.remove("hidden");
-      pfill.style.width = p + "%";
-      ptext.textContent = p + "%";
-    }
 
-    async function runWorkflow(){
-      setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
-      setProgress(20); log(T[currentLang].lAdb); await sleep(700);
-      setProgress(30); log(T[currentLang].lConnOk); await sleep(500);
-      setProgress(45); log(T[currentLang].lExtract); await sleep(700);
-      setProgress(55); log(T[currentLang].lRead); await sleep(650);
-      setProgress(70); log(T[currentLang].lHash); await sleep(650);
-      setProgress(85); log(T[currentLang].lDecrypt); await sleep(750);
-      setProgress(95); log(T[currentLang].lParse); await sleep(650);
-      setProgress(100); log(T[currentLang].lSuccess1, "success");
-      log(T[currentLang].lSuccess2, "success");
-    }
-
-    function disableButtons(disabled){
-      btnLogin.disabled = disabled;
-      btnGoConnect1.disabled = disabled;
-      btnRequest.disabled = disabled;
-      btnClear.disabled = disabled;
-      btnWifiConnect.disabled = disabled;
-      btnWifiPrev.disabled = disabled;
-      btnUsbConnect.disabled = disabled;
-      btnUsbPrev.disabled = disabled;
-      btnLang.disabled = disabled;
-
-      mainTabBtns.forEach(b => b.disabled = disabled);
-      tabBtns.forEach(b => b.disabled = disabled);
-    }
-
-    // ===== Main tabs behavior =====
-    mainTabBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        mainTabBtns.forEach(b => b.classList.remove("active"));
-        mainTabs.forEach(t => t.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById(btn.dataset.maintab).classList.add("active");
-        resetOutput();
-      });
-    });
-
-    // ===== Inner tabs behavior (Wi-Fi/USB) =====
+    // Tabs
     tabBtns.forEach(btn => {
       btn.addEventListener("click", () => {
         tabBtns.forEach(b => b.classList.remove("active"));
         tabs.forEach(t => t.classList.remove("active"));
         btn.classList.add("active");
         document.getElementById(btn.dataset.tab).classList.add("active");
-        resetOutput();
+        hideAlert();
       });
     });
 
-    function openConnectMain(){
-      // Activate "Connect Device" main tab
-      mainTabBtns.forEach(b => b.classList.remove("active"));
-      mainTabs.forEach(t => t.classList.remove("active"));
-      document.querySelector('[data-maintab="connectMain"]').classList.add("active");
-      document.getElementById("connectMain").classList.add("active");
-      resetOutput();
-    }
+    // Actions
+    btnGoConnect.addEventListener("click", () => window.location.href = CONNECT_PAGE);
 
-    // ===== Login actions =====
     btnLogin.addEventListener("click", () => {
-      resetOutput();
+      hideAlert();
       const u = loginUser.value.trim();
       const p = loginPass.value.trim();
 
@@ -839,6 +567,7 @@
         return;
       }
 
+      // demo auth
       const ok = (u.toLowerCase() === DEMO_USER && p === DEMO_PASS);
       if(!ok){
         showAlert("danger", T[currentLang].aBadLogin);
@@ -847,24 +576,21 @@
 
       if(rememberMe.checked){
         try{ localStorage.setItem("whisperwa_user", u); }catch(e){}
-      }else{
+      } else {
         try{ localStorage.removeItem("whisperwa_user"); }catch(e){}
       }
 
       showAlert("success", T[currentLang].aOkLogin);
-      setTimeout(openConnectMain, 600);
+      setTimeout(() => window.location.href = CONNECT_PAGE, 700);
     });
-
-    btnGoConnect1.addEventListener("click", openConnectMain);
 
     forgotLink.addEventListener("click", (e) => {
       e.preventDefault();
       showAlert("info", T[currentLang].aForgot);
     });
 
-    // ===== Request actions =====
     btnRequest.addEventListener("click", () => {
-      resetOutput();
+      hideAlert();
       const name = reqName.value.trim();
       const email = reqEmail.value.trim();
       const reason = reqReason.value.trim();
@@ -874,6 +600,7 @@
         return;
       }
 
+      // frontend demo store
       try{
         localStorage.setItem("whisperwa_request", JSON.stringify({
           name, email,
@@ -893,78 +620,13 @@
       reqOrg.value = "";
       reqRole.value = "";
       reqReason.value = "";
-      resetOutput();
+      hideAlert();
     });
 
-    // ===== Connect actions (your original logic) =====
-    async function connectWifi(){
-      resetOutput();
-      const ip = ipInput.value.trim();
-      if (!ip){
-        showAlert("danger", T[currentLang].aNeedIp);
-        return;
-      }
+    // Back button
+    btnBack.addEventListener("click", () => history.back());
 
-      showAlert("info", T[currentLang].aInfoWifi);
-      log(`[INFO] IP:PORT => ${ip}`);
-      await sleep(400);
-
-      if (!SIM_ROOTED){
-        showAlert("danger", T[currentLang].aNotRoot);
-        log("[ERROR] Root check failed.", "danger");
-        return;
-      }
-
-      showAlert("info", T[currentLang].aStart);
-      disableButtons(true);
-      try{
-        await runWorkflow();
-        await sleep(600);
-        showAlert("success", T[currentLang].aDone);
-        await sleep(650);
-        window.location.href = CHAT_PAGE;
-      } finally {
-        disableButtons(false);
-      }
-    }
-
-    async function connectUsb(){
-      resetOutput();
-      showAlert("info", T[currentLang].aInfoUsb);
-      log(T[currentLang].lWaitUsb);
-      await sleep(600);
-
-      if (!SIM_USB_FOUND){
-        showAlert("danger", T[currentLang].aNoUsb);
-        log("[ERROR] No USB device found.", "danger");
-        return;
-      }
-
-      if (!SIM_ROOTED){
-        showAlert("danger", T[currentLang].aNotRoot);
-        log("[ERROR] Root check failed.", "danger");
-        return;
-      }
-
-      showAlert("info", T[currentLang].aStart);
-      disableButtons(true);
-      try{
-        await runWorkflow();
-        await sleep(600);
-        showAlert("success", T[currentLang].aDone);
-        await sleep(650);
-        window.location.href = CHAT_PAGE;
-      } finally {
-        disableButtons(false);
-      }
-    }
-
-    btnWifiConnect.addEventListener("click", connectWifi);
-    btnUsbConnect.addEventListener("click", connectUsb);
-    btnWifiPrev.addEventListener("click", () => window.location.href = CHAT_PAGE);
-    btnUsbPrev.addEventListener("click", () => window.location.href = CHAT_PAGE);
-
-    // ===== Lang apply =====
+    // Language
     function applyLang(lang){
       const html = document.documentElement;
       html.lang = lang;
@@ -972,61 +634,44 @@
 
       document.getElementById("top-subtitle").textContent = T[lang].topSubtitle;
       document.getElementById("nav-home").textContent = T[lang].navHome;
-      document.getElementById("nav-chats").textContent = T[lang].navChats;
+      document.getElementById("nav-connect").textContent = T[lang].navConnect;
 
       document.getElementById("title").textContent = T[lang].title;
       document.getElementById("subtitle").textContent = T[lang].subtitle;
 
-      document.getElementById("mainLogin").textContent = T[lang].mainLogin;
-      document.getElementById("mainRequest").textContent = T[lang].mainRequest;
-      document.getElementById("mainConnect").textContent = T[lang].mainConnect;
+      document.getElementById("tabLogin").textContent = T[lang].tabLogin;
+      document.getElementById("tabRequest").textContent = T[lang].tabRequest;
 
-      // Login
       document.getElementById("lUser").textContent = T[lang].lUser;
       loginUser.placeholder = T[lang].lUserPH;
       document.getElementById("lPass").textContent = T[lang].lPass;
       loginPass.placeholder = T[lang].lPassPH;
       document.getElementById("lRemember").textContent = T[lang].lRemember;
       forgotLink.textContent = T[lang].forgot;
-      btnLogin.textContent = T[lang].signIn;
-      btnGoConnect1.textContent = T[lang].goConnect;
 
-      // Request
+      btnLogin.textContent = T[lang].signIn;
+      btnGoConnect.textContent = T[lang].goConnect;
+
       document.getElementById("rName").textContent = T[lang].rName;
-      reqName.placeholder = T[lang].rNamePH;
       document.getElementById("rEmail").textContent = T[lang].rEmail;
-      reqEmail.placeholder = T[lang].rEmailPH;
       document.getElementById("rOrg").textContent = T[lang].rOrg;
-      reqOrg.placeholder = T[lang].rOrgPH;
       document.getElementById("rRole").textContent = T[lang].rRole;
       document.getElementById("rReason").textContent = T[lang].rReason;
       reqReason.placeholder = T[lang].rReasonPH;
+
       btnRequest.textContent = T[lang].submitReq;
       btnClear.textContent = T[lang].clear;
 
-      // Connect
-      document.getElementById("tabWifi").textContent = T[lang].tabWifi;
-      document.getElementById("tabUsb").textContent = T[lang].tabUsb;
-      document.getElementById("ipLabel").textContent = T[lang].ipLabel;
-      ipInput.placeholder = T[lang].ipPH;
-      document.getElementById("wifiNote").textContent = T[lang].wifiNote;
-      document.getElementById("usbNote").innerHTML = T[lang].usbNote;
-
-      btnWifiConnect.textContent = T[lang].connect;
-      btnUsbConnect.textContent = T[lang].connect;
-      btnWifiPrev.textContent = T[lang].viewPrev;
-      btnUsbPrev.textContent = T[lang].viewPrev;
-
       langText.textContent = (lang === "en") ? "AR" : "EN";
+      hideAlert();
     }
 
     btnLang.addEventListener("click", () => {
       currentLang = (currentLang === "en") ? "ar" : "en";
       applyLang(currentLang);
-      resetOutput();
     });
 
-    // Init
+    // init
     try{
       const saved = localStorage.getItem("whisperwa_user");
       if(saved) loginUser.value = saved;
