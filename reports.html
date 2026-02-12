@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="htmlTag">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,169 +19,231 @@
 body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
+    height: 100vh;
     background: linear-gradient(135deg, #071F16, #0F6B3A);
     color: var(--text-light);
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow: hidden;
 }
 
+/* Background grid */
+.background-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(155, 227, 180, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(155, 227, 180, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+}
+
+/* Container */
 .container {
-    width: 85%;
-    max-width: 900px;
-    background: rgba(0,0,0,0.25);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 1;
+    padding: 60px;
 }
 
+/* Header */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 
-h1 {
+.header h1 {
     margin: 0;
+    font-size: 32px;
     color: var(--green-light);
-    letter-spacing: 1px;
 }
 
-.lang-btn {
-    background: var(--green-accent);
-    border: none;
-    padding: 8px 18px;
-    border-radius: 30px;
+/* Buttons */
+.top-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background: transparent;
+    border: 1px solid var(--green-light);
+    color: var(--green-light);
+    padding: 8px 20px;
+    border-radius: 25px;
     cursor: pointer;
+    transition: 0.3s;
     font-weight: 600;
+}
+
+.btn:hover {
+    background: var(--green-light);
+    color: #062016;
+}
+
+/* Table box */
+.table-box {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    max-height: 450px;
+    overflow-y: auto;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    text-align: center;
 }
 
 th, td {
-    padding: 14px;
+    padding: 15px;
+    text-align: left;
 }
 
 th {
-    background: var(--green-dark);
     color: var(--green-light);
+    font-weight: 600;
+    border-bottom: 2px solid rgba(155,227,180,0.2);
 }
 
-tr {
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+td {
+    border-bottom: 1px solid rgba(155,227,180,0.1);
 }
 
+tbody tr:hover {
+    background: rgba(155, 227, 180, 0.08);
+    transition: 0.3s;
+}
+
+/* Action buttons */
 .action-btn {
     background: linear-gradient(135deg, #9BE3B4, #2FA66A);
     border: none;
     padding: 6px 16px;
     border-radius: 20px;
-    cursor: pointer;
+    font-size: 13px;
     font-weight: 600;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: 0.3s;
 }
 
 .action-btn:hover {
     transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Footer */
+.footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: #BFE8D5;
 }
 </style>
 </head>
 
 <body>
 
+<div class="background-grid"></div>
+
 <div class="container">
 
     <div class="header">
-        <h1 id="pageTitle">All Reports</h1>
-        <button class="lang-btn" onclick="toggleLanguage()">AR</button>
+        <h1 id="title">All Reports</h1>
+
+        <div class="top-buttons">
+            <button class="btn" onclick="goBack()">← Back</button>
+            <button class="btn" onclick="toggleLanguage()">🌐 عربي</button>
+        </div>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th id="dateHeader">Date</th>
-                <th id="timeHeader">Time</th>
-                <th id="caseHeader">Case #</th>
-                <th id="investigatorHeader">Investigator</th>
-                <th id="actionHeader">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>11-03</td>
-                <td>11:00</td>
-                <td>055xxx</td>
-                <td>Rahaf</td>
-                <td>
-                    <button class="action-btn" id="downloadBtn1">Download</button>
-                    <button class="action-btn" id="openBtn1">Open</button>
-                </td>
-            </tr>
-
-            <tr>
-                <td>09-21</td>
-                <td>10:30</td>
-                <td>052xxx</td>
-                <td>Hanin</td>
-                <td>
-                    <button class="action-btn" id="downloadBtn2">Download</button>
-                    <button class="action-btn" id="openBtn2">Open</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-box">
+        <table>
+            <thead>
+                <tr>
+                    <th id="thDate">Date</th>
+                    <th id="thTime">Time</th>
+                    <th id="thCase">Case #</th>
+                    <th id="thInvestigator">Investigator</th>
+                    <th id="thActions">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>11-03</td>
+                    <td>11:00</td>
+                    <td>05XXX</td>
+                    <td>R. Alruwaisan</td>
+                    <td>
+                        <button class="action-btn">⬇ Download</button>
+                        <button class="action-btn">📂 Open</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>09-21</td>
+                    <td>10:30</td>
+                    <td>07XXX</td>
+                    <td>R. Alruwaisan</td>
+                    <td>
+                        <button class="action-btn">⬇ Download</button>
+                        <button class="action-btn">📂 Open</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
+<div class="footer" id="footerText">
+    ©️ 2026 Whisper-WA • Digital Forensics Platform
+</div>
+
 <script>
-let currentLang = "en";
+let isArabic = false;
+
+function goBack() {
+    window.location.href = "dashboard.html";
+}
 
 function toggleLanguage() {
-    const htmlTag = document.getElementById("htmlTag");
+    isArabic = !isArabic;
 
-    if (currentLang === "en") {
-        currentLang = "ar";
-        htmlTag.lang = "ar";
-        htmlTag.dir = "rtl";
+    if (isArabic) {
+        document.documentElement.lang = "ar";
+        document.body.style.direction = "rtl";
 
-        document.getElementById("pageTitle").innerText = "جميع التقارير";
-        document.getElementById("dateHeader").innerText = "التاريخ";
-        document.getElementById("timeHeader").innerText = "الوقت";
-        document.getElementById("caseHeader").innerText = "رقم القضية";
-        document.getElementById("investigatorHeader").innerText = "المحقق";
-        document.getElementById("actionHeader").innerText = "الإجراءات";
-
-        document.getElementById("downloadBtn1").innerText = "تحميل";
-        document.getElementById("openBtn1").innerText = "عرض";
-        document.getElementById("downloadBtn2").innerText = "تحميل";
-        document.getElementById("openBtn2").innerText = "عرض";
+        document.getElementById("title").innerText = "جميع التقارير";
+        document.getElementById("thDate").innerText = "التاريخ";
+        document.getElementById("thTime").innerText = "الوقت";
+        document.getElementById("thCase").innerText = "رقم القضية";
+        document.getElementById("thInvestigator").innerText = "المحقق";
+        document.getElementById("thActions").innerText = "الإجراءات";
+        document.getElementById("footerText").innerText = "©️ 2026 منصة Whisper-WA • الأدلة الجنائية الرقمية";
 
     } else {
-        currentLang = "en";
-        htmlTag.lang = "en";
-        htmlTag.dir = "ltr";
+        document.documentElement.lang = "en";
+        document.body.style.direction = "ltr";
 
-        document.getElementById("pageTitle").innerText = "All Reports";
-        document.getElementById("dateHeader").innerText = "Date";
-        document.getElementById("timeHeader").innerText = "Time";
-        document.getElementById("caseHeader").innerText = "Case #";
-        document.getElementById("investigatorHeader").innerText = "Investigator";
-        document.getElementById("actionHeader").innerText = "Actions";
-
-        document.getElementById("downloadBtn1").innerText = "Download";
-        document.getElementById("openBtn1").innerText = "Open";
-        document.getElementById("downloadBtn2").innerText = "Download";
-        document.getElementById("openBtn2").innerText = "Open";
+        document.getElementById("title").innerText = "All Reports";
+        document.getElementById("thDate").innerText = "Date";
+        document.getElementById("thTime").innerText = "Time";
+        document.getElementById("thCase").innerText = "Case #";
+        document.getElementById("thInvestigator").innerText = "Investigator";
+        document.getElementById("thActions").innerText = "Actions";
+        document.getElementById("footerText").innerText = "©️ 2026 Whisper-WA • Digital Forensics Platform";
     }
 }
 </script>
 
 </body>
 </html>
-
