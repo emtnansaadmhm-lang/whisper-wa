@@ -1,21 +1,59 @@
-<header class="topbar">
-  <div class="brand">
-    <img src="logo.png" alt="Whisper-WA Logo">
-    <div class="title">
-      <b>Whisper-WA</b>
-      <span id="top-subtitle">Digital Forensics Platform</span>
+<header class="topbar" style="
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 25px;
+  border-radius:16px;
+  background:rgba(20,40,30,0.65);
+  border:1px solid rgba(95,191,122,0.3);
+  backdrop-filter:blur(12px);
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+">
+
+  <div style="display:flex;align-items:center;gap:15px;">
+    <img src="logo.png" style="height:45px;filter:drop-shadow(0 0 5px #3f9b5f);" />
+    <div>
+      <b style="color:white;font-size:1.2rem;">Whisper-WA</b><br>
+      <span id="top-subtitle" style="color:#c2dec9;font-size:0.85rem;">
+        Digital Forensics Platform
+      </span>
     </div>
   </div>
 
-  <div class="top-actions">
-    <!-- أيقونة الحساب -->
-    <a class="nav-link" href="account.html" title="Account">
-      <i class="fa-solid fa-user"></i>
+  <div style="display:flex;align-items:center;gap:18px;">
+
+    <a href="index.html" id="navHome" style="color:#c2dec9;text-decoration:none;">
+      <i class="fa-solid fa-house"></i>
+      <span id="navHomeText">الرئيسية</span>
     </a>
 
-    <!-- اللغة -->
-    <button class="lang-btn" id="btnLang">
+    <a href="chat.html" id="navChat" style="color:#c2dec9;text-decoration:none;">
+      <i class="fa-solid fa-comments"></i>
+      <span id="navChatText">الشات</span>
+    </a>
+
+    <a href="reports.html" id="navReports" style="color:#c2dec9;text-decoration:none;">
+      <i class="fa-solid fa-file-lines"></i>
+      <span id="navReportsText">التقارير</span>
+    </a>
+
+    <a href="account.html" id="navAccount" style="color:#c2dec9;text-decoration:none;">
+      <i class="fa-solid fa-user"></i>
+      <span id="navAccountText">حسابي</span>
+    </a>
+
+    <button id="btnLang" style="
+      background:rgba(95,191,122,0.1);
+      border:1px solid #3f9b5f;
+      color:#8fd9a8;
+      padding:6px 14px;
+      border-radius:20px;
+      cursor:pointer;
+      font-weight:bold;
+    ">
+      <i class="fa-solid fa-globe"></i>
       <span id="langText">AR</span>
     </button>
+
   </div>
 </header>
