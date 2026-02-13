@@ -39,10 +39,8 @@
       background-size: 40px 40px;
 
       direction: rtl;
-      position: relative;
     }
 
-    /* ✅ FIX: خلي المحتوى فوق كل شيء */
     .main-container {
       display: flex;
       flex-direction: column;
@@ -50,7 +48,7 @@
       padding: 25px;
       gap: 20px;
       position: relative;
-      z-index: 10 !important; /* ✅ مهم */
+      z-index: 1;
     }
 
     .workspace-grid {
@@ -58,8 +56,6 @@
       flex: 1;
       gap: 20px;
       overflow: hidden;
-      position: relative;
-      z-index: 10;
     }
 
     /* ✅ يمين: أكبر من الشات */
@@ -78,6 +74,7 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     }
 
+    /* ✅ هيدر التقرير */
     .sidebar-header {
       display: flex;
       justify-content: space-between;
@@ -140,6 +137,7 @@
     .btn-primary:hover { filter: brightness(1.2); transform: scale(1.02); }
     .mb-10 { margin-bottom: 20px; }
 
+    /* ✅ جدول التقرير */
     .report-table-wrap {
       flex: 1;
       overflow: auto;
@@ -338,13 +336,12 @@
       text-align: left;
     }
 
-    /* ✅ FIX: اللوغو بالخلف دايم */
     .animated-bg-logo {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: -5 !important; /* ✅ أهم سطر */
+      z-index: -1;
       width: 600px;
       pointer-events: none;
       opacity: 0.2;
@@ -358,8 +355,16 @@
     }
 
     @keyframes cyberGlowPulse {
-      0% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.95); }
-      100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.05); }
+      0% {
+        opacity: 0.15;
+        transform: translate(-50%, -50%) scale(0.95);
+        filter: drop-shadow(0 0 20px var(--primary-dark));
+      }
+      100% {
+        opacity: 0.35;
+        transform: translate(-50%, -50%) scale(1.05);
+        filter: drop-shadow(0 0 70px var(--accent-glow)) brightness(1.2);
+      }
     }
   </style>
 </head>
@@ -377,6 +382,7 @@
 
       <!-- ✅ Report (يمين) -->
       <aside class="glass-panel report-sidebar">
+
         <div class="sidebar-header">
           <h3 id="txt-draft-title"><i class="fa-solid fa-file-contract"></i> مسودة التقرير</h3>
 
@@ -448,87 +454,9 @@
   </div>
 
   <script>
-    // =========================
-    // ✅ تفعيل الهيدر (Dropdown + Back + Logout)
-    // =========================
-    function initHeaderForPage(pageName){
-      const backBtn = document.getElementById("btnBack");
-      const btnAccount = document.getElementById("btnAccount");
-      const menu = document.getElementById("accountMenu");
-      const logoutBtn = document.getElementById("menuLogout");
-
-      if (!backBtn || !btnAccount || !menu) return;
-
-      function setMenu(open){
-        menu.classList.toggle("open", open);
-        btnAccount.setAttribute("aria-expanded", open ? "true" : "false");
-        menu.setAttribute("aria-hidden", open ? "false" : "true");
-      }
-
-      btnAccount.onclick = (e) => {
-        e.stopPropagation();
-        setMenu(!menu.classList.contains("open"));
-      };
-
-      document.addEventListener("click", () => setMenu(false));
-      menu.addEventListener("click", (e) => e.stopPropagation());
-
-      if (logoutBtn){
-        logoutBtn.onclick = () => window.location.href = "index.html";
-      }
-
-      // ✅ قواعد السهم:
-      // chat.html يرجع connect.html
-      if (pageName === "chat.html"){
-        backBtn.style.display = "inline-flex";
-        backBtn.onclick = () => window.location.href = "connect.html";
-        return;
-      }
-
-      backBtn.style.display = "none";
-    }
-
-    // =========================
-    // ✅ لغة الهيدر + الصفحة
-    // =========================
-    function applyLang(lang){
-      document.documentElement.lang = lang;
-      document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
-      localStorage.setItem("lang", lang);
-
-      const isAr = (lang === "ar");
-
-      const topSubtitle = document.getElementById("top-subtitle");
-      const langText = document.getElementById("langText");
-
-      if (topSubtitle) topSubtitle.textContent = isAr ? "منصة التحليل الجنائي الرقمي" : "Digital Forensics Platform";
-      if (langText) langText.textContent = isAr ? "AR" : "EN";
-
-      document.title = isAr ? "Whisper-WA | بناء التقرير" : "Whisper-WA | Report Builder";
-      setText("txt-export", isAr ? "تنزيل التقرير" : "Download Report");
-      setText("txt-analysis", isAr ? "تحليل" : "Analysis");
-      setText("txt-view", isAr ? "عرض التقرير" : "View Report");
-      setText("th-msg", isAr ? "الرسالة" : "Message");
-      setText("th-type", isAr ? "النوع" : "Type");
-      setText("th-num", isAr ? "الرقم" : "Number");
-      setText("th-time", isAr ? "التاريخ والوقت" : "Date & Time");
-
-      const inp = document.getElementById("inp-search");
-      if (inp){
-        inp.placeholder = isAr
-          ? "بحث في المحادثات (كلمة، رقم، رابط)..."
-          : "Search chats (keyword, number, url)...";
-      }
-    }
-
-    function setText(id, text) {
-      const el = document.getElementById(id);
-      if (el) el.textContent = text;
-    }
-
-    // =========================
+    // ---------------------------
     // ✅ داتا ديمو (بدون باك-إند)
-    // =========================
+    // ---------------------------
     const chatsData = [
       {
         id: "chat1",
@@ -665,33 +593,69 @@
       a.remove();
       URL.revokeObjectURL(url);
     });
+  </script>
 
-    // =========================
-    // ✅ تحميل الهيدر + تفعيل (Back/Dropdown/Lang)
-    // =========================
+  <!-- ✅ تحميل الهيدر + زر اللغة الموحد -->
+  <script>
     window.addEventListener("DOMContentLoaded", async () => {
       try {
         const res = await fetch("header.html");
-        const headerHtml = await res.text();
+        const html = await res.text();
         const holder = document.getElementById("header-placeholder");
-        if (holder) holder.innerHTML = headerHtml;
+        if (holder) holder.innerHTML = html;
 
-        initHeaderForPage("chat.html");
-
-        const saved = localStorage.getItem("lang") || "ar";
-        applyLang(saved);
-
-        const btnLang = document.getElementById("btnLang");
-        if (btnLang) {
-          btnLang.addEventListener("click", () => {
-            const next = (document.documentElement.lang === "ar") ? "en" : "ar";
-            applyLang(next);
-          });
-        }
+        initHeaderLanguage();
       } catch (e) {
         console.error("Header load error:", e);
       }
     });
+
+    function initHeaderLanguage() {
+      const saved = localStorage.getItem("lang") || "ar";
+      applyLang(saved);
+
+      const btn = document.getElementById("btnLang");
+      if (btn) {
+        btn.addEventListener("click", () => {
+          const next = (document.documentElement.lang === "ar") ? "en" : "ar";
+          applyLang(next);
+        });
+      }
+    }
+
+    function applyLang(lang) {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
+      localStorage.setItem("lang", lang);
+
+      const isAr = lang === "ar";
+
+      setText("top-subtitle", isAr ? "منصة الأدلة الجنائية الرقمية" : "Digital Forensics Platform");
+      setText("navHomeText", isAr ? "الرئيسية" : "Home");
+      setText("navChatText", isAr ? "الشات" : "Chat");
+      setText("navReportsText", isAr ? "التقارير" : "Reports");
+      setText("navAccountText", isAr ? "حسابي" : "My Account");
+      setText("langText", isAr ? "AR" : "EN");
+
+      // ترجمة بسيطة داخل الصفحة (اختياري)
+      document.title = isAr ? "Whisper-WA | بناء التقرير" : "Whisper-WA | Report Builder";
+      setText("txt-export", isAr ? "تنزيل التقرير" : "Download Report");
+      setText("txt-analysis", isAr ? "تحليل" : "Analysis");
+      setText("txt-view", isAr ? "عرض التقرير" : "View Report");
+      setText("th-msg", isAr ? "الرسالة" : "Message");
+      setText("th-type", isAr ? "النوع" : "Type");
+      setText("th-num", isAr ? "الرقم" : "Number");
+      setText("th-time", isAr ? "التاريخ والوقت" : "Date & Time");
+      document.getElementById("inp-search").placeholder = isAr
+        ? "بحث في المحادثات (كلمة، رقم، رابط)..."
+        : "Search chats (keyword, number, url)...";
+    }
+
+    function setText(id, text) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    }
   </script>
+
 </body>
 </html>
