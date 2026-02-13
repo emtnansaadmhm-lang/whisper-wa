@@ -31,7 +31,6 @@
       color: var(--text-white);
       height:100vh;
       overflow:hidden;
-
       background-image:
         linear-gradient(rgba(31,95,59,0.10) 1px, transparent 1px),
         linear-gradient(90deg, rgba(31,95,59,0.10) 1px, transparent 1px);
@@ -80,6 +79,11 @@
       justify-content:space-between;
       box-shadow: 0 4px 20px rgba(0,0,0,0.22);
     }
+    .left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
     .brand{
       display:flex;
       align-items:center;
@@ -108,23 +112,7 @@
       align-items:center;
       gap:10px;
     }
-    .nav-link{
-      text-decoration:none;
-      color: var(--text-muted);
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      transition:0.25s;
-      font-weight:700;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .nav-link:hover{
-      color: var(--accent-glow);
-      border-color: rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.14);
-    }
+
     .lang-btn{
       background: rgba(95,191,122,0.10);
       border: 1px solid var(--glass-border);
@@ -139,6 +127,85 @@
     .lang-btn:hover{
       background: rgba(95,191,122,0.18);
       transform: translateY(-1px);
+    }
+
+    /* back button */
+    .icon-btn{
+      width:40px; height:40px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.14);
+      color:#c2dec9;
+      cursor:pointer;
+      transition:0.25s;
+    }
+    .icon-btn:hover{
+      background: rgba(95,191,122,0.12);
+      color:#8fd9a8;
+      transform: translateY(-1px);
+    }
+
+    /* dropdown */
+    .dropdown{ position:relative; }
+    .avatar-btn{
+      width:42px; height:42px;
+      border-radius:999px;
+      border:1px solid rgba(95,191,122,0.35);
+      background: rgba(0,0,0,0.14);
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:0.25s;
+      padding:0;
+    }
+    .avatar-btn:hover{
+      background: rgba(95,191,122,0.12);
+      transform: translateY(-1px);
+    }
+    .avatar-fallback{
+      width:100%; height:100%;
+      border-radius:999px;
+      display:flex; align-items:center; justify-content:center;
+      color:#8fd9a8;
+    }
+    .menu{
+      position:absolute;
+      top:52px;
+      inset-inline-end: 0;
+      min-width: 180px;
+      background: rgba(20,40,30,0.92);
+      border: 1px solid rgba(95,191,122,0.30);
+      border-radius: 14px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      padding: 8px;
+      display:none;
+      z-index: 9999;
+    }
+    .menu.open{ display:block; }
+
+    .menu-item{
+      width:100%;
+      border:0;
+      background: transparent;
+      color:#c2dec9;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      transition:0.2s;
+      font-family: inherit;
+      font-weight: 800;
+      text-align: start;
+    }
+    .menu-item:hover{
+      background: rgba(95,191,122,0.14);
+      color:#8fd9a8;
     }
 
     /* Center card */
@@ -171,7 +238,7 @@
     .tabs{
       display:flex;
       gap:0;
-      background: rgba(0,0,0,0.18); /* ✅ FIXED */
+      background: rgba(0,0,0,0.18);
       border: 1px solid rgba(255,255,255,0.10);
       border-radius: 16px;
       overflow:hidden;
@@ -321,7 +388,7 @@
 
   <div class="main-container">
 
-    <!-- ✅ header.html loads here -->
+    <!-- header.html loads here -->
     <div id="header-placeholder"></div>
 
     <main class="center">
@@ -384,15 +451,68 @@
   <script>
     // ===== CONFIG =====
     const CHAT_PAGE = "chat.html";
-    const SIM_ROOTED = true;       // set false for "not rooted"
-    const SIM_USB_FOUND = true;    // set false for "no USB device"
+    const SIM_ROOTED = true;
+    const SIM_USB_FOUND = true;
+
+    // ===== HEADER INIT (FIX) =====
+    function initHeaderForPage(pageName){
+      const backBtn = document.getElementById("btnBack");
+      const btnAccount = document.getElementById("btnAccount");
+      const menu = document.getElementById("accountMenu");
+      const logoutBtn = document.getElementById("menuLogout");
+
+      if (!backBtn || !btnAccount || !menu) return;
+
+      function setMenu(open){
+        menu.classList.toggle("open", open);
+        btnAccount.setAttribute("aria-expanded", open ? "true" : "false");
+        menu.setAttribute("aria-hidden", open ? "false" : "true");
+      }
+
+      btnAccount.onclick = (e) => {
+        e.stopPropagation();
+        setMenu(!menu.classList.contains("open"));
+      };
+
+      document.addEventListener("click", () => setMenu(false));
+      menu.addEventListener("click", (e) => e.stopPropagation());
+
+      if (logoutBtn){
+        logoutBtn.onclick = () => window.location.href = "index.html";
+      }
+
+      // connect.html بدون سهم
+      if (pageName === "connect.html"){
+        backBtn.style.display = "none";
+        return;
+      }
+
+      if (pageName === "chat.html"){
+        backBtn.style.display = "inline-flex";
+        backBtn.onclick = () => window.location.href = "connect.html";
+        return;
+      }
+
+      if (pageName === "analysis.html"){
+        backBtn.style.display = "inline-flex";
+        backBtn.onclick = () => window.location.href = "chat.html";
+        return;
+      }
+
+      if (pageName === "reports.html"){
+        backBtn.style.display = "inline-flex";
+        backBtn.onclick = () => window.location.href = "chat.html";
+        return;
+      }
+
+      backBtn.style.display = "none";
+    }
 
     // ===== ELEMENTS =====
     const tabBtns = document.querySelectorAll(".tab-btn");
     const tabs = document.querySelectorAll(".tab-content");
 
     const ipInput = document.getElementById("ipInput");
-
     const alertBox = document.getElementById("alertBox");
     const logbox = document.getElementById("logbox");
     const pwrap = document.getElementById("pwrap");
@@ -409,8 +529,6 @@
     const T = {
       en: {
         topSubtitle: "Digital Forensics Platform",
-        navHome: "Home",
-        navChats: "Chats",
         title: "Connect Device",
         subtitle: "Select a connection method, then use the buttons inside the selected tab.",
         tabWifi: "Wi-Fi (IP:PORT)",
@@ -444,8 +562,6 @@
       },
       ar: {
         topSubtitle: "منصة التحليل الجنائي الرقمي",
-        navHome: "الرئيسية",
-        navChats: "المحادثات",
         title: "توصيل الجهاز",
         subtitle: "اختاري طريقة الاتصال ثم استخدمي الأزرار داخل التبويب المختار.",
         tabWifi: "واي فاي (IP:PORT)",
@@ -532,7 +648,6 @@
       btnUsbPrev.disabled = disabled;
       tabBtns.forEach(b => b.disabled = disabled);
 
-      // زر اللغة موجود في الهيدر بعد التحميل، فنتأكد قبل التعطيل
       const btnLang = document.getElementById("btnLang");
       if (btnLang) btnLang.disabled = disabled;
     }
@@ -562,7 +677,7 @@
         await sleep(600);
         showAlert("success", T[currentLang].aDone);
         await sleep(350);
-        window.location.assign(CHAT_PAGE); // ✅ FIXED redirect
+        window.location.assign(CHAT_PAGE);
       } finally {
         disableButtons(false);
       }
@@ -593,13 +708,12 @@
         await sleep(600);
         showAlert("success", T[currentLang].aDone);
         await sleep(350);
-        window.location.assign(CHAT_PAGE); // ✅ FIXED redirect
+        window.location.assign(CHAT_PAGE);
       } finally {
         disableButtons(false);
       }
     }
 
-    // Tabs behavior
     tabBtns.forEach(btn => {
       btn.addEventListener("click", () => {
         tabBtns.forEach(b => b.classList.remove("active"));
@@ -610,7 +724,6 @@
       });
     });
 
-    // Apply language (page + header if exists)
     function applyLang(lang){
       currentLang = lang;
       localStorage.setItem("lang", lang);
@@ -619,18 +732,12 @@
       html.lang = lang;
       html.dir = (lang === "ar") ? "rtl" : "ltr";
 
-      // Header text if header is loaded
       const topSubtitle = document.getElementById("top-subtitle");
-      const navHome = document.getElementById("nav-home");
-      const navChats = document.getElementById("nav-chats");
       const langText = document.getElementById("langText");
 
       if (topSubtitle) topSubtitle.textContent = T[lang].topSubtitle;
-      if (navHome) navHome.textContent = T[lang].navHome;
-      if (navChats) navChats.textContent = T[lang].navChats;
       if (langText) langText.textContent = (lang === "en") ? "AR" : "EN";
 
-      // Page text
       document.getElementById("title").textContent = T[lang].title;
       document.getElementById("subtitle").textContent = T[lang].subtitle;
 
@@ -652,22 +759,24 @@
       resetOutput();
     }
 
-    // Buttons
     btnWifiConnect.addEventListener("click", connectWifi);
     btnUsbConnect.addEventListener("click", connectUsb);
 
-    // ✅ FIX: View Previous Chats must always navigate
     btnWifiPrev.addEventListener("click", () => window.location.assign(CHAT_PAGE));
     btnUsbPrev.addEventListener("click", () => window.location.assign(CHAT_PAGE));
 
-    // ===== Load header.html and wire language button =====
+    // ===== Load header.html + wire buttons (IMPORTANT) =====
     window.addEventListener("DOMContentLoaded", async () => {
       try{
         const res = await fetch("header.html");
-        const html = await res.text();
-        document.getElementById("header-placeholder").innerHTML = html;
+        const headerHtml = await res.text();
+        document.getElementById("header-placeholder").innerHTML = headerHtml;
 
-        // after header loads:
+        // ✅ بعد تحميل الهيدر: فعّل dropdown + back
+        const currentPage = (location.pathname.split("/").pop() || "connect.html").toLowerCase();
+        initHeaderForPage(currentPage);
+
+        // زر اللغة بعد تحميل الهيدر
         const btnLang = document.getElementById("btnLang");
         if (btnLang){
           btnLang.addEventListener("click", () => {
@@ -676,11 +785,9 @@
           });
         }
 
-        // init language
         applyLang(currentLang);
       } catch(e){
         console.error("Header load failed:", e);
-        // still apply language to page even if header fails
         applyLang(currentLang);
       }
     });
