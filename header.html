@@ -1,40 +1,149 @@
-<header class="topbar">
-  <div class="left">
+<!-- header.html -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+  /* ✅ كل ستايل للهيدر بس — ما يلمس body ولا html */
+  .ww-topbar{
+    background: rgba(20, 40, 30, 0.65);
+    border: 1px solid rgba(95, 191, 122, 0.3);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 12px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+    position: relative;
+    z-index: 9999; /* ✅ فوق كل شيء */
+  }
+
+  .ww-left{ display:flex; align-items:center; gap:12px; min-width: 240px; }
+
+  .ww-brand{ display:flex; align-items:center; gap:12px; }
+  .ww-logo{ height:42px; width:auto; filter: drop-shadow(0 0 6px rgba(63,155,95,0.5)); }
+
+  .ww-title{ display:flex; flex-direction:column; line-height:1.1; }
+  .ww-title b{ font-size:1.15rem; color:#fff; }
+  .ww-title span{ color:#c2dec9; font-size:0.85rem; margin-top:4px; }
+
+  .ww-actions{ display:flex; align-items:center; gap:10px; }
+
+  .ww-icon-btn{
+    border:none;
+    background: rgba(0,0,0,0.18);
+    color:#c2dec9;
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:0.2s;
+  }
+  .ww-icon-btn:hover{ background: rgba(95,191,122,0.14); color:#8fd9a8; transform: translateY(-1px); }
+
+  .ww-lang-btn{
+    background: rgba(95,191,122,0.10);
+    border: 1px solid rgba(95, 191, 122, 0.3);
+    color:#8fd9a8;
+    padding: 8px 14px;
+    border-radius: 999px;
+    cursor:pointer;
+    font-weight:900;
+    transition:0.25s;
+    user-select:none;
+  }
+  .ww-lang-btn:hover{ background: rgba(95,191,122,0.18); transform: translateY(-1px); }
+
+  .ww-dropdown{ position:relative; }
+
+  .ww-avatar-btn{
+    border:none;
+    background: rgba(0,0,0,0.18);
+    width:38px;
+    height:38px;
+    border-radius:12px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#c2dec9;
+    transition:0.2s;
+  }
+  .ww-avatar-btn:hover{ background: rgba(95,191,122,0.14); color:#8fd9a8; transform: translateY(-1px); }
+
+  .ww-menu{
+    position:absolute;
+    top: 46px;
+    right: 0;
+    min-width: 180px;
+    background: rgba(20, 40, 30, 0.92);
+    border: 1px solid rgba(95, 191, 122, 0.3);
+    backdrop-filter: blur(12px);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    display:none;
+    z-index: 10000;
+  }
+  .ww-menu.open{ display:block; }
+
+  .ww-menu-item{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding: 10px 10px;
+    border-radius: 12px;
+    color:#fff;
+    text-decoration:none;
+    background: transparent;
+    border:none;
+    cursor:pointer;
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.92rem;
+    text-align: start;
+  }
+  .ww-menu-item i{ color:#8fd9a8; }
+  .ww-menu-item:hover{ background: rgba(95,191,122,0.14); }
+</style>
+
+<header class="ww-topbar" id="wwTopbar">
+  <div class="ww-left">
     <!-- Back button -->
-    <button class="icon-btn" id="btnBack" type="button" title="Back">
+    <button class="ww-icon-btn" id="btnBack" type="button" title="Back">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
 
-    <div class="brand">
-      <img src="logo.png" class="logo" alt="Whisper-WA Logo" />
-      <div class="title">
+    <div class="ww-brand">
+      <img src="logo.png" class="ww-logo" alt="Whisper-WA Logo" />
+      <div class="ww-title">
         <b>Whisper-WA</b>
         <span id="top-subtitle">Digital Forensics Platform</span>
       </div>
     </div>
   </div>
 
-  <div class="top-actions">
+  <div class="ww-actions">
     <!-- Language -->
-    <button class="lang-btn" id="btnLang" type="button">
+    <button class="ww-lang-btn" id="btnLang" type="button">
       <span id="langText">AR</span>
     </button>
 
     <!-- Account -->
-    <div class="dropdown" id="accountDropdown">
-      <button class="avatar-btn" id="btnAccount" type="button" aria-haspopup="menu" aria-expanded="false" title="Account">
-        <div class="avatar-fallback">
-          <i class="fa-solid fa-user"></i>
-        </div>
+    <div class="ww-dropdown" id="accountDropdown">
+      <button class="ww-avatar-btn" id="btnAccount" type="button" aria-haspopup="menu" aria-expanded="false" title="Account">
+        <i class="fa-solid fa-user"></i>
       </button>
 
-      <div class="menu" id="accountMenu" role="menu" aria-hidden="true">
-        <a class="menu-item" href="settings.html" role="menuitem">
+      <div class="ww-menu" id="accountMenu" role="menu" aria-hidden="true">
+        <a class="ww-menu-item" href="settings.html" role="menuitem">
           <i class="fa-solid fa-gear"></i>
           <span>Settings</span>
         </a>
 
-        <button class="menu-item" id="menuLogout" type="button" role="menuitem">
+        <button class="ww-menu-item" id="menuLogout" type="button" role="menuitem">
           <i class="fa-solid fa-right-from-bracket"></i>
           <span>Logout</span>
         </button>
@@ -42,3 +151,28 @@
     </div>
   </div>
 </header>
+
+<script>
+  // ✅ dropdown ثابت ومضمون يشتغل بكل الصفحات
+  (function(){
+    const btnAccount = document.getElementById("btnAccount");
+    const menu = document.getElementById("accountMenu");
+    const logoutBtn = document.getElementById("menuLogout");
+
+    if(btnAccount && menu){
+      function setMenu(open){
+        menu.classList.toggle("open", open);
+        btnAccount.setAttribute("aria-expanded", open ? "true" : "false");
+        menu.setAttribute("aria-hidden", open ? "false" : "true");
+      }
+
+      btnAccount.addEventListener("click", (e)=>{ e.stopPropagation(); setMenu(!menu.classList.contains("open")); });
+      document.addEventListener("click", ()=> setMenu(false));
+      menu.addEventListener("click", (e)=> e.stopPropagation());
+    }
+
+    if(logoutBtn){
+      logoutBtn.addEventListener("click", ()=> window.location.href="index.html");
+    }
+  })();
+</script>
