@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    /* ✅ كود الستايل حقك بدون أي تغيير في الألوان أو الأرقام */
+    /* ✅ كود الستايل حقك بالحرف الواحد بدون تغيير */
     :root {
       --primary-dark: #1f5f3b;
       --primary-mid: #3f9b5f;
@@ -37,188 +37,78 @@
       direction: rtl;
     }
 
-    .main-container {
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      padding: 25px;
-      gap: 20px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .workspace-grid {
-      display: flex;
-      flex: 1;
-      gap: 20px;
-      overflow: hidden;
-    }
+    .main-container { display: flex; flex-direction: column; height: 100vh; padding: 25px; gap: 20px; position: relative; z-index: 1; }
+    .workspace-grid { display: flex; flex: 1; gap: 20px; overflow: hidden; }
 
     .report-sidebar {
-      width: auto;
-      flex: 1.25;
-      min-width: 420px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
+      width: auto; flex: 1.25; min-width: 420px;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px); border-radius: 20px;
+      display: flex; flex-direction: column; padding: 20px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     }
 
-    .sidebar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding-bottom: 10px;
-    }
-
+    .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px; }
     .sidebar-header h3 { font-size: 1.1rem; color: var(--primary-light); }
-
-    .btn-secondary {
-      background: rgba(95, 191, 122, 0.12);
-      border: 1px solid rgba(95, 191, 122, 0.35);
-      color: var(--accent-glow);
-      padding: 10px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      text-decoration: none;
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
 
     .btn-primary {
       background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 0.95rem;
-      width: 100%;
-      margin-bottom: 20px;
+      color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 20px;
     }
 
-    .report-table-wrap {
-      flex: 1;
-      overflow: auto;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(0,0,0,0.18);
-    }
+    .report-table-wrap { flex: 1; overflow: auto; border-radius: 12px; background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.08); }
+    table { width: 100%; border-collapse: collapse; }
+    th { color: var(--primary-light); padding: 12px; text-align: right; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; background: #14281e; }
+    td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.85rem; }
 
-    .report-table { width: 100%; border-collapse: collapse; }
-    .report-table thead th { position: sticky; top: 0; background: rgba(20, 40, 30, 0.95); color: var(--primary-light); padding: 12px; text-align: right; }
-    .report-table tbody td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-
-    .chat-interface {
-      flex: 1;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(15px);
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .message-view {
-      flex: 1;
-      padding: 25px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      background-color: rgba(14, 26, 18, 0.9);
-      background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-      background-blend-mode: overlay;
-    }
-
-    .msg { padding: 10px 15px; border-radius: 12px; max-width: 75%; }
+    .chat-interface { flex: 1; background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(15px); border-radius: 20px; display: flex; flex-direction: column; overflow: hidden; }
+    .message-view { flex: 1; padding: 25px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; background-color: rgba(14, 26, 18, 0.9); }
+    .msg { padding: 10px 15px; border-radius: 12px; max-width: 75%; position: relative; }
     .msg.received { background: #202c33; align-self: flex-end; }
     .msg.sent { background: var(--primary-dark); align-self: flex-start; border: 1px solid var(--primary-mid); }
-
-    .animated-bg-logo {
-      position: fixed;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: -1;
-      width: 600px;
-      opacity: 0.2;
-      animation: cyberGlowPulse 8s ease-in-out infinite alternate;
-    }
-
-    @keyframes cyberGlowPulse {
-      0% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.95); }
-      100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.05); }
-    }
+    
+    .animated-bg-logo { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: -1; width: 600px; opacity: 0.2; animation: cyberGlowPulse 8s ease-in-out infinite alternate; }
+    @keyframes cyberGlowPulse { 0% { opacity: 0.15; transform: translate(-50%, -50%) scale(0.95); } 100% { opacity: 0.35; transform: translate(-50%, -50%) scale(1.05); } }
   </style>
 </head>
 
 <body>
-  <div class="animated-bg-logo">
-    <img src="logo.png" alt="Background Logo" style="width: 100%;">
-  </div>
+  <div class="animated-bg-logo"><img src="logo.png" alt="Logo" style="width: 100%;"></div>
 
   <div class="main-container">
     <div id="header-placeholder"></div>
 
     <div class="workspace-grid">
       <aside class="report-sidebar">
-        <div class="sidebar-header">
-          <h3><i class="fa-solid fa-file-contract"></i> مسودة التقرير</h3>
-          <div class="sidebar-actions">
-            <button class="btn-secondary" id="btn-export">تنزيل</button>
-          </div>
-        </div>
-        <button class="btn-primary" id="txt-add-btn">إضافة للتقرير الحالي</button>
+        <div class="sidebar-header"><h3>مسودة التقرير</h3></div>
+        <button class="btn-primary">إضافة للتقرير الحالي</button>
         <div class="report-table-wrap">
           <table>
-            <thead>
-              <tr><th>الرسالة</th><th>النوع</th><th>الرقم</th></tr>
-            </thead>
+            <thead><tr><th>الرسالة</th><th>النوع</th><th>الرقم</th></tr></thead>
             <tbody id="reportTbody">
-              </tbody>
+                <tr><td>وينك؟ تأخرت علي.</td><td>Received</td><td>055xxxx</td></tr>
+            </tbody>
           </table>
         </div>
       </aside>
 
       <section class="chat-interface">
-        <div class="message-view" id="messageView">
-          </div>
+        <div class="message-view">
+          <div class="msg received"><p>وينك؟ تأخرت علي.</p></div>
+          <div class="msg sent"><p>واصل قريب، لا تشيل هم.</p></div>
+        </div>
       </section>
     </div>
   </div>
 
   <script>
-    // بيانات تجريبية (الباك إند)
-    const chatsData = [{
-      messages: [
-        { text: "وينك؟ تأخرت علي.", type: "received" },
-        { text: "واصل قريب، لا تشيل هم.", type: "sent" }
-      ]
-    }];
-
-    const messageView = document.getElementById('messageView');
-    chatsData[0].messages.forEach(m => {
-      messageView.innerHTML += `<div class="msg ${m.type}"><p>${m.text}</p></div>`;
-    });
-
-    // سكريبت الهيدر (تأكدي أن header.html بجانب هذا الملف في GitHub)
+    // سكريبت الهيدر - تم تعديل المسار ليكون متوافق مع GitHub
     window.addEventListener("DOMContentLoaded", async () => {
       try {
-        const res = await fetch("header.html");
+        const res = await fetch("header.html"); // بدون / في البداية
         const html = await res.text();
         document.getElementById("header-placeholder").innerHTML = html;
-      } catch (e) { console.error(e); }
+      } catch (e) { console.error("Header load failed", e); }
     });
   </script>
 </body>
