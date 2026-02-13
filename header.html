@@ -2,7 +2,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
-  /* ✅ كل ستايل للهيدر بس — ما يلمس body ولا html */
   .ww-topbar{
     background: rgba(20, 40, 30, 0.65);
     border: 1px solid rgba(95, 191, 122, 0.3);
@@ -14,11 +13,10 @@
     justify-content:space-between;
     box-shadow: 0 4px 20px rgba(0,0,0,0.22);
     position: relative;
-    z-index: 9999; /* ✅ فوق كل شيء */
+    z-index: 9999;
   }
 
   .ww-left{ display:flex; align-items:center; gap:12px; min-width: 240px; }
-
   .ww-brand{ display:flex; align-items:center; gap:12px; }
   .ww-logo{ height:42px; width:auto; filter: drop-shadow(0 0 6px rgba(63,155,95,0.5)); }
 
@@ -73,15 +71,11 @@
   }
   .ww-avatar-btn:hover{ background: rgba(95,191,122,0.14); color:#8fd9a8; transform: translateY(-1px); }
 
-  /* ✅ FIX: تموضع القائمة حسب اتجاه الصفحة (RTL/LTR) */
+  /* ✅ أهم شي: z-index عالي عشان ما تندفن */
   .ww-menu{
     position:absolute;
     top: 46px;
-
-    /* بدل right:0 */
-    inset-inline-end: 0;   /* يمين في RTL ويسار في LTR */
-    inset-inline-start: auto;
-
+    right: 0;
     min-width: 180px;
     background: rgba(20, 40, 30, 0.92);
     border: 1px solid rgba(95, 191, 122, 0.3);
@@ -90,7 +84,7 @@
     padding: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.35);
     display:none;
-    z-index: 10000;
+    z-index: 20000;
   }
   .ww-menu.open{ display:block; }
 
@@ -116,7 +110,6 @@
 
 <header class="ww-topbar" id="wwTopbar">
   <div class="ww-left">
-    <!-- Back button -->
     <button class="ww-icon-btn" id="btnBack" type="button" title="Back">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
@@ -131,12 +124,10 @@
   </div>
 
   <div class="ww-actions">
-    <!-- Language -->
     <button class="ww-lang-btn" id="btnLang" type="button">
       <span id="langText">AR</span>
     </button>
 
-    <!-- Account -->
     <div class="ww-dropdown" id="accountDropdown">
       <button class="ww-avatar-btn" id="btnAccount" type="button" aria-haspopup="menu" aria-expanded="false" title="Account">
         <i class="fa-solid fa-user"></i>
@@ -158,25 +149,42 @@
 </header>
 
 <script>
-  // ✅ dropdown ثابت ومضمون يشتغل بكل الصفحات
   (function(){
     const btnAccount = document.getElementById("btnAccount");
     const menu = document.getElementById("accountMenu");
     const logoutBtn = document.getElementById("menuLogout");
 
-    if(btnAccount && menu){
-      function setMenu(open){
-        menu.classList.toggle("open", open);
-        btnAccount.setAttribute("aria-expanded", open ? "true" : "false");
-        menu.setAttribute("aria-hidden", open ? "false" : "true");
-      }
+    if (!btnAccount || !menu) return;
 
-      btnAccount.addEventListener("click", (e)=>{ e.stopPropagation(); setMenu(!menu.classList.contains("open")); });
-      document.addEventListener("click", ()=> setMenu(false));
-      menu.addEventListener("click", (e)=> e.stopPropagation());
+    function openMenu(){
+      menu.classList.add("open");
+      btnAccount.setAttribute("aria-expanded", "true");
+      menu.setAttribute("aria-hidden", "false");
+    }
+    function closeMenu(){
+      menu.classList.remove("open");
+      btnAccount.setAttribute("aria-expanded", "false");
+      menu.setAttribute("aria-hidden", "true");
+    }
+    function toggleMenu(){
+      if (menu.classList.contains("open")) closeMenu();
+      else openMenu();
     }
 
-    if(logoutBtn){
+    // ✅ زر الرجل
+    btnAccount.addEventListener("click", (e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMenu();
+    });
+
+    // ✅ لا تقفل إذا ضغطتي داخل القائمة
+    menu.addEventListener("click", (e)=> e.stopPropagation());
+
+    // ✅ قفل فقط إذا ضغطتي خارج الهيدر
+    document.addEventListener("click", ()=> closeMenu());
+
+    if (logoutBtn){
       logoutBtn.addEventListener("click", ()=> window.location.href="index.html");
     }
   })();
