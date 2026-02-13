@@ -1,4 +1,3 @@
-> H:
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -6,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Whisper-WA | Connect</title>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -68,7 +68,7 @@
       z-index:1;
     }
 
-    /* Top bar */
+    /* ===== Header (shared) ===== */
     .topbar{
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -116,6 +116,9 @@
       border: 1px solid transparent;
       transition:0.25s;
       font-weight:700;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
     }
     .nav-link:hover{
       color: var(--accent-glow);
@@ -164,14 +167,11 @@
       line-height:1.6;
     }
 
-    /* Tabs like your example */
+    /* Tabs */
     .tabs{
       display:flex;
       gap:0;
-      background: rgba(0,0,0,0.
-
-> H:
-18);
+      background: rgba(0,0,0,0.18); /* ✅ FIXED */
       border: 1px solid rgba(255,255,255,0.10);
       border-radius: 16px;
       overflow:hidden;
@@ -196,7 +196,6 @@
     .tab-content{ display:none; }
     .tab-content.active{ display:block; }
 
-    /* Panels */
     .panel{
       background: rgba(0,0,0,0.16);
       border: 1px solid rgba(255,255,255,0.10);
@@ -229,7 +228,6 @@
       line-height:1.55;
     }
 
-    /* Actions inside each tab */
     .actions{
       display:flex;
       gap: 12px;
@@ -257,7 +255,6 @@
     }
     .btn-ghost:hover{ background: rgba(95,191,122,0.12); transform: translateY(-1px); }
 
-    /* Alert */
     .alert{
       margin-top: 16px;
       padding: 12px 14px;
@@ -270,7 +267,6 @@
     .alert.success{ background: rgba(95,191,122,0.14); color: #dffbe7; }
     .alert.danger{ background: rgba(255,107,107,0.12); border-color: rgba(255,107,107,0.30); color: #ffd1d1; }
 
-    /* Progress */
     .pwrap{
       margin-top: 12px;
       display:flex;
@@ -301,7 +297,6 @@
       text-align:end;
     }
 
-    /* Log box */
     .logbox{
       margin-top: 14px;
       background: rgba(0,0,0,0.22);
@@ -326,23 +321,8 @@
 
   <div class="main-container">
 
-    <header class="topbar">
-      <div class="brand">
-        <img src="logo.png" alt="Whisper-WA Logo">
-        <div class="title">
-
-> H:
-<b>Whisper-WA</b>
-          <span id="top-subtitle">Digital Forensics Platform</span>
-        </div>
-      </div>
-
-      <div class="top-actions">
-        <a class="nav-link" href="index.html" id="nav-home">Home</a>
-        <a class="nav-link" href="chat.html" id="nav-chats">Chats</a>
-        <button class="lang-btn" id="btnLang"><span id="langText">AR</span></button>
-      </div>
-    </header>
+    <!-- ✅ header.html loads here -->
+    <div id="header-placeholder"></div>
 
     <main class="center">
       <section class="card">
@@ -352,13 +332,11 @@
           Select a connection method, then use the buttons inside the selected tab.
         </p>
 
-        <!-- Tabs -->
         <div class="tabs">
           <button class="tab-btn active" data-tab="wifiTab" id="tabWifi">Wi-Fi (IP:PORT)</button>
           <button class="tab-btn" data-tab="usbTab" id="tabUsb">USB</button>
         </div>
 
-        <!-- Wi-Fi content -->
         <div class="tab-content active" id="wifiTab">
           <div class="panel">
             <label for="ipInput" id="ipLabel">Device IP:PORT</label>
@@ -368,13 +346,12 @@
             </div>
 
             <div class="actions">
-              <button class="btn btn-primary" id="btnWifiConnect">Connect</button>
-              <button class="btn btn-ghost" id="btnWifiPrev">View Previous Chats</button>
+              <button class="btn btn-primary" id="btnWifiConnect" type="button">Connect</button>
+              <button class="btn btn-ghost" id="btnWifiPrev" type="button">View Previous Chats</button>
             </div>
           </div>
         </div>
 
-        <!-- USB content -->
         <div class="tab-content" id="usbTab">
           <div class="panel">
             <div class="note" id="usbNote">
@@ -384,13 +361,12 @@
             </div>
 
             <div class="actions">
-              <button class="btn btn-primary" id="btnUsbConnect">Connect</button>
-              <button class="btn btn-ghost" id="btnUsbPrev">View Previous Chats</button>
+              <button class="btn btn-primary" id="btnUsbConnect" type="button">Connect</button>
+              <button class="btn btn-ghost" id="btnUsbPrev" type="button">View Previous Chats</button>
             </div>
           </div>
         </div>
 
-        <!-- Shared output -->
         <div class="alert hidden" id="alertBox"></div>
 
         <div class="pwrap hidden" id="pwrap">
@@ -428,10 +404,7 @@
     const btnUsbConnect = document.getElementById("btnUsbConnect");
     const btnUsbPrev = document.getElementById("btnUsbPrev");
 
-    // Language
-    const btnLang = document.getElementById("btnLang");
-    const langText = document.getElementById("langText");
-    let currentLang = "en";
+    let currentLang = localStorage.getItem("lang") || "en";
 
     const T = {
       en: {
@@ -444,9 +417,7 @@
         tabUsb: "USB",
         ipLabel: "Device IP:PORT",
         ipPH: "e.g. 192.168.1.20:5555",
-
-> H:
-wifiNote: "Enter the device IP:PORT, then press Connect to start the workflow.",
+        wifiNote: "Enter the device IP:PORT, then press Connect to start the workflow.",
         usbNote: "1) Connect your device using a USB cable.<br>2) Enable <b>USB Debugging</b> on the device.<br>3) Press <b>Connect</b> to start the workflow.",
         viewPrev: "View Previous Chats",
         connect: "Connect",
@@ -508,7 +479,6 @@ wifiNote: "Enter the device IP:PORT, then press Connect to start the workflow.",
       }
     };
 
-    // ===== Helpers =====
     function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
 
     function showAlert(type, text){
@@ -543,9 +513,7 @@ wifiNote: "Enter the device IP:PORT, then press Connect to start the workflow.",
     }
 
     async function runWorkflow(){
-
-> H:
-setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
+      setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
       setProgress(20); log(T[currentLang].lAdb); await sleep(700);
       setProgress(30); log(T[currentLang].lConnOk); await sleep(500);
       setProgress(45); log(T[currentLang].lExtract); await sleep(700);
@@ -555,6 +523,18 @@ setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
       setProgress(95); log(T[currentLang].lParse); await sleep(650);
       setProgress(100); log(T[currentLang].lSuccess1, "success");
       log(T[currentLang].lSuccess2, "success");
+    }
+
+    function disableButtons(disabled){
+      btnWifiConnect.disabled = disabled;
+      btnWifiPrev.disabled = disabled;
+      btnUsbConnect.disabled = disabled;
+      btnUsbPrev.disabled = disabled;
+      tabBtns.forEach(b => b.disabled = disabled);
+
+      // زر اللغة موجود في الهيدر بعد التحميل، فنتأكد قبل التعطيل
+      const btnLang = document.getElementById("btnLang");
+      if (btnLang) btnLang.disabled = disabled;
     }
 
     async function connectWifi(){
@@ -581,8 +561,8 @@ setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
         await runWorkflow();
         await sleep(600);
         showAlert("success", T[currentLang].aDone);
-        await sleep(650);
-        window.location.href = CHAT_PAGE;
+        await sleep(350);
+        window.location.assign(CHAT_PAGE); // ✅ FIXED redirect
       } finally {
         disableButtons(false);
       }
@@ -612,23 +592,14 @@ setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
         await runWorkflow();
         await sleep(600);
         showAlert("success", T[currentLang].aDone);
-        await sleep(650);
-        window.location.href = CHAT_PAGE;
+        await sleep(350);
+        window.location.assign(CHAT_PAGE); // ✅ FIXED redirect
       } finally {
         disableButtons(false);
       }
     }
 
-    function disableButtons(disabled){
-      btnWifiConnect.disabled = disabled;
-      btnWifiPrev.disabled = disabled;
-      btnUsbConnect.disabled = disabled;
-      btnUsbPrev.disabled = disabled;
-      btnLang.disabled = disabled;
-      tabBtns.forEach(b => b.disabled = disabled);
-    }
-
-    // ===== Tabs behavior =====
+    // Tabs behavior
     tabBtns.forEach(btn => {
       btn.addEventListener("click", () => {
         tabBtns.forEach(b => b.classList.remove("active"));
@@ -639,16 +610,27 @@ setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
       });
     });
 
-    // ===== Lang apply =====
+    // Apply language (page + header if exists)
     function applyLang(lang){
+      currentLang = lang;
+      localStorage.setItem("lang", lang);
+
       const html = document.documentElement;
       html.lang = lang;
       html.dir = (lang === "ar") ? "rtl" : "ltr";
 
-      document.getElementById("top-subtitle").textContent = T[lang].topSubtitle;
-      document.getElementById("nav-home").textContent = T[lang].navHome;
-      document.getElementById("nav-chats").textContent = T[lang].navChats;
+      // Header text if header is loaded
+      const topSubtitle = document.getElementById("top-subtitle");
+      const navHome = document.getElementById("nav-home");
+      const navChats = document.getElementById("nav-chats");
+      const langText = document.getElementById("langText");
 
+      if (topSubtitle) topSubtitle.textContent = T[lang].topSubtitle;
+      if (navHome) navHome.textContent = T[lang].navHome;
+      if (navChats) navChats.textContent = T[lang].navChats;
+      if (langText) langText.textContent = (lang === "en") ? "AR" : "EN";
+
+      // Page text
       document.getElementById("title").textContent = T[lang].title;
       document.getElementById("subtitle").textContent = T[lang].subtitle;
 
@@ -657,32 +639,51 @@ setProgress(5);  log(T[currentLang].lDetect); await sleep(600);
 
       document.getElementById("ipLabel").textContent = T[lang].ipLabel;
       ipInput.placeholder = T[lang].ipPH;
+
       document.getElementById("wifiNote").textContent = T[lang].wifiNote;
       document.getElementById("usbNote").innerHTML = T[lang].usbNote;
 
       btnWifiConnect.textContent = T[lang].connect;
       btnUsbConnect.textContent = T[lang].connect;
+
       btnWifiPrev.textContent = T[lang].viewPrev;
       btnUsbPrev.textContent = T[lang].viewPrev;
 
-> H:
-langText.textContent = (lang === "en") ? "AR" : "EN";
-    }
-
-    btnLang.addEventListener("click", () => {
-      currentLang = (currentLang === "en") ? "ar" : "en";
-      applyLang(currentLang);
       resetOutput();
-    });
+    }
 
     // Buttons
     btnWifiConnect.addEventListener("click", connectWifi);
     btnUsbConnect.addEventListener("click", connectUsb);
-    btnWifiPrev.addEventListener("click", () => window.location.href = CHAT_PAGE);
-    btnUsbPrev.addEventListener("click", () => window.location.href = CHAT_PAGE);
 
-    // Init
-    applyLang(currentLang);
+    // ✅ FIX: View Previous Chats must always navigate
+    btnWifiPrev.addEventListener("click", () => window.location.assign(CHAT_PAGE));
+    btnUsbPrev.addEventListener("click", () => window.location.assign(CHAT_PAGE));
+
+    // ===== Load header.html and wire language button =====
+    window.addEventListener("DOMContentLoaded", async () => {
+      try{
+        const res = await fetch("header.html");
+        const html = await res.text();
+        document.getElementById("header-placeholder").innerHTML = html;
+
+        // after header loads:
+        const btnLang = document.getElementById("btnLang");
+        if (btnLang){
+          btnLang.addEventListener("click", () => {
+            const next = (currentLang === "en") ? "ar" : "en";
+            applyLang(next);
+          });
+        }
+
+        // init language
+        applyLang(currentLang);
+      } catch(e){
+        console.error("Header load failed:", e);
+        // still apply language to page even if header fails
+        applyLang(currentLang);
+      }
+    });
   </script>
 </body>
 </html>
