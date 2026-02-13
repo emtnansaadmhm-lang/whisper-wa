@@ -69,91 +69,6 @@
       gap: 18px;
     }
 
-    /* ===== Unified Top Header ===== */
-    .topbar{
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(12px);
-      border-radius: 18px;
-      padding: 12px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.22);
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 260px;
-    }
-    .brand img{
-      height: 42px;
-      width:auto;
-      filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
-    }
-    .brand .title{
-      display:flex;
-      flex-direction:column;
-      line-height:1.1;
-    }
-    .brand .title b{ font-size:1.15rem; }
-    .brand .title span{
-      color: var(--text-muted);
-      font-size:0.85rem;
-      margin-top:4px;
-    }
-
-    .top-actions{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content:flex-end;
-    }
-
-    .nav-link{
-      text-decoration:none;
-      color: var(--text-muted);
-      padding: 9px 12px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      transition: 0.25s;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      font-weight: 800;
-      background: rgba(0,0,0,0.12);
-    }
-    .nav-link:hover{
-      color: var(--accent-glow);
-      border-color: rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.18);
-      transform: translateY(-1px);
-    }
-
-    .lang-btn{
-      background: rgba(95,191,122,0.12);
-      border: 1px solid rgba(95,191,122,0.35);
-      color: var(--accent-glow);
-      padding: 9px 12px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-weight: 900;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      transition: 0.25s;
-      user-select:none;
-    }
-    .lang-btn:hover{
-      background: rgba(95,191,122,0.18);
-      transform: translateY(-1px);
-    }
-
     /* ===== Content Cards ===== */
     .grid{
       display:grid;
@@ -273,38 +188,8 @@
 
   <div class="main-container">
 
-    <!-- ✅ Unified Header -->
-    <header class="topbar">
-      <div class="brand">
-        <img src="logo.png" alt="Whisper-WA Logo">
-        <div class="title">
-          <b>Whisper-WA</b>
-          <span id="top-subtitle">Digital Forensics Platform</span>
-        </div>
-      </div>
-
-      <div class="top-actions">
-        <button class="lang-btn" id="btnLang" type="button" title="Language">
-          <span id="langText">AR</span> <i class="fa-solid fa-globe"></i>
-        </button>
-
-        <a class="nav-link" href="account.html" id="nav-account" title="Account">
-          <i class="fa-solid fa-user"></i> <span id="txt-account">حسابي</span>
-        </a>
-
-        <a class="nav-link" href="reports.html" id="nav-reports" title="Reports">
-          <i class="fa-solid fa-file-lines"></i> <span id="txt-reports">التقارير</span>
-        </a>
-
-        <a class="nav-link" href="chat.html" id="nav-chats" title="Chats">
-          <i class="fa-solid fa-comments"></i> <span id="txt-chats">الشات</span>
-        </a>
-
-        <a class="nav-link" href="index.html" id="nav-home" title="Home">
-          <i class="fa-solid fa-house"></i> <span id="txt-home">الرئيسية</span>
-        </a>
-      </div>
-    </header>
+    <!-- ✅ الهيدر الموحد (نفس باقي الصفحات) -->
+    <div id="header-placeholder"></div>
 
     <div class="grid">
 
@@ -366,7 +251,7 @@
     // =========================
     // ✅ Language + UI Text
     // =========================
-    let currentLang = "ar";
+    let currentLang = localStorage.getItem("lang") || "ar";
 
     const UI = {
       ar: {
@@ -382,7 +267,6 @@
         keywordsTitle: "كلمات مهمة",
         keywordsNote: "Hits",
 
-        // Summary labels
         s_total: "عدد الرسائل",
         s_first: "أول تواصل",
         s_last: "آخر تواصل",
@@ -390,19 +274,16 @@
         s_sent: "مرسل",
         s_recv: "مستلم",
 
-        // Pills/units
         times: "مرة",
         links: "روابط",
         numbers: "أرقام",
         hits: "Hits",
 
-        // Activity labels
         a_peak_hour: "أكثر ساعة نشاط",
         a_peak_day: "أكثر يوم نشاط",
         a_duration: "مدة التواصل",
         a_ratio: "نسبة مرسل/مستلم",
 
-        // Flags pill text
         p_important: "مهم",
         p_warn: "تنبيه",
         p_ok: "مقبول"
@@ -421,7 +302,6 @@
         keywordsTitle: "Important Keywords",
         keywordsNote: "Hits",
 
-        // Summary labels
         s_total: "Total Messages",
         s_first: "First Contact",
         s_last: "Last Contact",
@@ -429,19 +309,16 @@
         s_sent: "Sent",
         s_recv: "Received",
 
-        // Pills/units
         times: "times",
         links: "URLs",
         numbers: "Numbers",
         hits: "Hits",
 
-        // Activity labels
         a_peak_hour: "Most active hour",
         a_peak_day: "Most active day",
         a_duration: "Communication span",
         a_ratio: "Sent / Received ratio",
 
-        // Flags pill text
         p_important: "Important",
         p_warn: "Warning",
         p_ok: "OK"
@@ -510,9 +387,6 @@
       ]
     };
 
-    // =========================
-    // ✅ Render helpers (use currentLang everywhere)
-    // =========================
     function setPill(el, text){ el.textContent = text; }
 
     function renderSummary(s){
@@ -521,26 +395,10 @@
       wrap.innerHTML = "";
 
       const cards = [
-        {
-          label: t.s_total,
-          value: s.total_messages,
-          sub: `${t.s_sent}: ${s.sent} | ${t.s_recv}: ${s.received}`
-        },
-        {
-          label: t.s_first,
-          value: s.first_contact.split(" ")[0],
-          sub: s.first_contact
-        },
-        {
-          label: t.s_last,
-          value: s.last_contact.split(" ")[0],
-          sub: s.last_contact
-        },
-        {
-          label: t.s_artifacts,
-          value: `${s.urls_count} ${t.links}`,
-          sub: `${s.numbers_count} ${t.numbers} | ${s.keyword_hits_total} ${t.hits}`
-        }
+        { label: t.s_total, value: s.total_messages, sub: `${t.s_sent}: ${s.sent} | ${t.s_recv}: ${s.received}` },
+        { label: t.s_first, value: s.first_contact.split(" ")[0], sub: s.first_contact },
+        { label: t.s_last, value: s.last_contact.split(" ")[0], sub: s.last_contact },
+        { label: t.s_artifacts, value: `${s.urls_count} ${t.links}`, sub: `${s.numbers_count} ${t.numbers} | ${s.keyword_hits_total} ${t.hits}` }
       ];
 
       cards.forEach(c=>{
@@ -690,25 +548,21 @@
       renderKeywords(raw.keywords);
     }
 
-    // =========================
-    // ✅ Apply language to ALL UI + rerender content
-    // =========================
-    function applyLang(){
+    function applyLangToHeaderAndPage(){
       const t = UI[currentLang];
       const html = document.documentElement;
 
       html.lang = currentLang;
       html.dir  = (currentLang === "ar") ? "rtl" : "ltr";
-
       document.title = t.title;
 
-      document.getElementById("top-subtitle").textContent = t.topSubtitle;
+      // header text
+      const topSubtitle = document.getElementById("top-subtitle");
+      const langText = document.getElementById("langText");
+      if (topSubtitle) topSubtitle.textContent = t.topSubtitle;
+      if (langText) langText.textContent = (currentLang === "en") ? "AR" : "EN";
 
-      document.getElementById("txt-home").textContent = t.nav.home;
-      document.getElementById("txt-chats").textContent = t.nav.chats;
-      document.getElementById("txt-reports").textContent = t.nav.reports;
-      document.getElementById("txt-account").textContent = t.nav.account;
-
+      // page text
       document.getElementById("txt-summary-title").textContent = t.summaryTitle;
       document.getElementById("txt-activity-title").textContent = t.activityTitle;
       document.getElementById("txt-flags-title").textContent = t.flagsTitle;
@@ -717,21 +571,45 @@
       document.getElementById("txt-keywords-title").textContent = t.keywordsTitle;
       document.getElementById("txt-keywords-note").textContent = t.keywordsNote;
 
-      // Button shows opposite label like your other pages
-      document.getElementById("langText").textContent = (currentLang === "en") ? "AR" : "EN";
-
-      // ✅ IMPORTANT: rerender everything inside cards
       renderAll();
     }
 
-    // Language button
-    document.getElementById("btnLang").addEventListener("click", ()=>{
-      currentLang = (currentLang === "ar") ? "en" : "ar";
-      applyLang();
-    });
+    // =========================
+    // ✅ Load header.html + Back button for analysis
+    // =========================
+    window.addEventListener("DOMContentLoaded", async () => {
+      try{
+        const res = await fetch("header.html");
+        const headerHtml = await res.text();
+        const holder = document.getElementById("header-placeholder");
+        if(holder) holder.innerHTML = headerHtml;
 
-    // Init
-    applyLang();
+        // ✅ Back: analysis -> chat
+        const backBtn = document.getElementById("btnBack");
+        if(backBtn){
+          backBtn.style.display = "inline-flex";
+          backBtn.onclick = () => window.location.href = "chat.html";
+        }
+
+        // ✅ Language button
+        const btnLang = document.getElementById("btnLang");
+        if(btnLang){
+          btnLang.addEventListener("click", () => {
+            currentLang = (currentLang === "ar") ? "en" : "ar";
+            localStorage.setItem("lang", currentLang);
+            applyLangToHeaderAndPage();
+          });
+        }
+
+        // init
+        applyLangToHeaderAndPage();
+
+      }catch(e){
+        console.error("Header load failed:", e);
+        // still render page content
+        applyLangToHeaderAndPage();
+      }
+    });
   </script>
 </body>
 </html>
