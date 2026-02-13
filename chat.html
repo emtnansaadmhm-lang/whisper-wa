@@ -39,8 +39,10 @@
       background-size: 40px 40px;
 
       direction: rtl;
+      position: relative;
     }
 
+    /* ✅ FIX: خلي المحتوى فوق كل شيء */
     .main-container {
       display: flex;
       flex-direction: column;
@@ -48,7 +50,7 @@
       padding: 25px;
       gap: 20px;
       position: relative;
-      z-index: 1;
+      z-index: 10 !important; /* ✅ مهم */
     }
 
     .workspace-grid {
@@ -56,6 +58,8 @@
       flex: 1;
       gap: 20px;
       overflow: hidden;
+      position: relative;
+      z-index: 10;
     }
 
     /* ✅ يمين: أكبر من الشات */
@@ -334,12 +338,13 @@
       text-align: left;
     }
 
+    /* ✅ FIX: اللوغو بالخلف دايم */
     .animated-bg-logo {
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: -1;
+      z-index: -5 !important; /* ✅ أهم سطر */
       width: 600px;
       pointer-events: none;
       opacity: 0.2;
@@ -480,7 +485,6 @@
         return;
       }
 
-      // باقي الصفحات (احتياط)
       backBtn.style.display = "none";
     }
 
@@ -500,7 +504,6 @@
       if (topSubtitle) topSubtitle.textContent = isAr ? "منصة التحليل الجنائي الرقمي" : "Digital Forensics Platform";
       if (langText) langText.textContent = isAr ? "AR" : "EN";
 
-      // ترجمة بسيطة داخل الصفحة (اختياري)
       document.title = isAr ? "Whisper-WA | بناء التقرير" : "Whisper-WA | Report Builder";
       setText("txt-export", isAr ? "تنزيل التقرير" : "Download Report");
       setText("txt-analysis", isAr ? "تحليل" : "Analysis");
@@ -673,10 +676,8 @@
         const holder = document.getElementById("header-placeholder");
         if (holder) holder.innerHTML = headerHtml;
 
-        // ✅ فعّل الهيدر (سهم + حساب + لوق اوت)
         initHeaderForPage("chat.html");
 
-        // ✅ لغة
         const saved = localStorage.getItem("lang") || "ar";
         applyLang(saved);
 
