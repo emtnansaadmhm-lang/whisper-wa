@@ -79,77 +79,9 @@
       gap: 18px;
     }
 
-    /* Header */
-    .small-header {
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--glass-border);
-      padding: 12px 18px;
-      border-radius: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .logo-section { display: flex; align-items: center; gap: 14px; }
-    .logo-img { height: 42px; width: auto; filter: drop-shadow(0 0 5px var(--primary-mid)); }
-    .logo-text h3 { color: var(--text-white); font-size: 1.25rem; margin-bottom: 2px; }
-
-    .case-badge {
-      background: var(--primary-dark);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      color: var(--accent-glow);
-      border: 1px solid var(--primary-mid);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-
-    .btn-secondary {
-      background: rgba(95, 191, 122, 0.12);
-      border: 1px solid rgba(95, 191, 122, 0.35);
-      color: var(--accent-glow);
-      padding: 10px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: 'Tajawal';
-      font-size: 0.9rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      transition: 0.25s;
-      white-space: nowrap;
-    }
-    .btn-secondary:hover {
-      background: rgba(63, 155, 95, 0.35);
-      border-color: rgba(95, 191, 122, 0.6);
-      transform: translateY(-1px);
-    }
-
-    .lang-switch-btn {
-      background: rgba(95, 191, 122, 0.1);
-      border: 1px solid var(--primary-mid);
-      color: var(--accent-glow);
-      padding: 10px 12px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-family: 'Tajawal', sans-serif;
-      font-weight: bold;
-      display: inline-flex; align-items: center; gap: 8px;
-      transition: 0.3s;
-    }
-    .lang-switch-btn:hover {
-      background: var(--primary-mid);
-      color: white;
-      box-shadow: 0 0 10px var(--primary-mid);
+    /* ✅ مكان الهيدر الموحد */
+    #header-placeholder{
+      width: 100%;
     }
 
     /* Cards grid */
@@ -305,6 +237,37 @@
       font-size: 0.9rem;
     }
     .loader.show { display: inline-flex; }
+
+    /* ✅ أدوات الصفحة بدل هيدر داخلي */
+    .page-tools{
+      display:flex;
+      align-items:center;
+      justify-content:flex-end;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: -6px;
+    }
+    .btn-secondary {
+      background: rgba(95, 191, 122, 0.12);
+      border: 1px solid rgba(95, 191, 122, 0.35);
+      color: var(--accent-glow);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Tajawal';
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: 0.25s;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover {
+      background: rgba(63, 155, 95, 0.35);
+      border-color: rgba(95, 191, 122, 0.6);
+      transform: translateY(-1px);
+    }
   </style>
 </head>
 
@@ -315,42 +278,27 @@
 
   <div class="main-container">
 
-    <!-- Header -->
-    <header class="small-header">
-      <div class="logo-section">
-        <img src="logo.png" alt="Logo" class="logo-img">
-        <div class="logo-text">
-          <h3>Whisper-WA</h3>
-          <span class="case-badge">
-            <i class="fa-solid fa-briefcase"></i>
-            <span id="txt-case">قضية رقم: #055xxx</span>
-          </span>
-          <span class="case-badge">
-            <i class="fa-solid fa-user-secret"></i>
-            <span id="txt-suspect">المشتبه: 055xxxx</span>
-          </span>
-        </div>
+    <!-- ✅ الهيدر الموحد -->
+    <div id="header-placeholder"></div>
+
+    <!-- ✅ أدوات التحليل (بدل ما كانت داخل الهيدر القديم) -->
+    <div class="page-tools">
+      <div class="loader" id="loader">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <span id="txt-loading">جاري تحميل التحليل...</span>
       </div>
 
-      <div class="header-actions">
-        <div class="loader" id="loader">
-          <i class="fa-solid fa-circle-notch fa-spin"></i>
-          <span id="txt-loading">جاري تحميل التحليل...</span>
-        </div>
+      <a class="btn-secondary" id="btn-back" href="chat.html">
+        <i class="fa-solid fa-arrow-right"></i> <span id="txt-back">رجوع للشات</span>
+      </a>
 
-        <button class="lang-switch-btn" onclick="toggleLanguage()">
-          <i class="fa-solid fa-globe"></i> <span id="lang-label">English</span>
-        </button>
+      <button class="btn-secondary" id="btn-refresh" type="button">
+        <i class="fa-solid fa-rotate"></i> <span id="txt-refresh">تحديث</span>
+      </button>
 
-        <a class="btn-secondary" id="btn-back" href="chat.html">
-          <i class="fa-solid fa-arrow-right"></i> <span id="txt-back">رجوع للشات</span>
-        </a>
-
-        <button class="btn-secondary" id="btn-refresh" type="button">
-          <i class="fa-solid fa-rotate"></i> <span id="txt-refresh">تحديث</span>
-        </button>
-      </div>
-    </header>
+      <span class="pill" id="casePill"><i class="fa-solid fa-briefcase"></i> <span id="txt-case">قضية رقم: #055xxx</span></span>
+      <span class="pill" id="suspectPill"><i class="fa-solid fa-user-secret"></i> <span id="txt-suspect">المشتبه: 055xxxx</span></span>
+    </div>
 
     <div class="grid">
 
@@ -363,9 +311,7 @@
           </div>
         </div>
 
-        <div class="stat-grid" id="summaryStats">
-          <!-- injected -->
-        </div>
+        <div class="stat-grid" id="summaryStats"></div>
       </section>
 
       <!-- Activity -->
@@ -374,9 +320,7 @@
           <h4><i class="fa-solid fa-clock"></i> <span id="txt-activity-title">نمط النشاط</span></h4>
         </div>
 
-        <div class="list" id="activityList">
-          <!-- injected -->
-        </div>
+        <div class="list" id="activityList"></div>
       </section>
 
       <!-- Flags -->
@@ -385,9 +329,7 @@
           <h4><i class="fa-solid fa-triangle-exclamation"></i> <span id="txt-flags-title">مؤشرات مبدئية</span></h4>
         </div>
 
-        <div class="list" id="flagsList">
-          <!-- injected -->
-        </div>
+        <div class="list" id="flagsList"></div>
       </section>
 
       <!-- URLs -->
@@ -397,9 +339,7 @@
           <span class="pill" id="urlsCountPill">0</span>
         </div>
 
-        <div class="list" id="urlsList">
-          <!-- injected -->
-        </div>
+        <div class="list" id="urlsList"></div>
       </section>
 
       <!-- Numbers -->
@@ -409,9 +349,7 @@
           <span class="pill" id="numbersCountPill">0</span>
         </div>
 
-        <div class="list" id="numbersList">
-          <!-- injected -->
-        </div>
+        <div class="list" id="numbersList"></div>
       </section>
 
       <!-- Keywords -->
@@ -421,15 +359,35 @@
           <span class="muted" id="txt-keywords-note">قائمة كلمات ثابتة الآن — لاحقًا من الباك إند/الإعدادات</span>
         </div>
 
-        <div class="list" id="keywordsList">
-          <!-- injected -->
-        </div>
+        <div class="list" id="keywordsList"></div>
       </section>
 
     </div>
   </div>
 
   <script>
+    // ==========================================
+    // ✅ 0) تحميل الهيدر الموحد + ربط زر اللغة
+    // ==========================================
+    fetch("header.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("header-placeholder").innerHTML = html;
+
+        // ✅ ربط زر اللغة الموجود داخل header.html
+        const btnLang = document.getElementById("btnLang");
+        if (btnLang) btnLang.addEventListener("click", toggleLanguage);
+
+        // ✅ تحديث رابط الحساب لو تبين تمرير باراميتر
+        // (اختياري) مثال:
+        // const acc = document.querySelector('a[href="account.html"]');
+        // if (acc) acc.href = `account.html?case=${encodeURIComponent(caseId)}&suspect=${encodeURIComponent(suspect)}`;
+      })
+      .catch(() => {
+        // لو ما انوجد header.html لا توقف الصفحة
+        document.getElementById("header-placeholder").innerHTML = "";
+      });
+
     // ==========================================
     // ✅ 1) قراءة باراميترات الرابط (case / suspect)
     // ==========================================
@@ -487,9 +445,7 @@
     // ==========================================
     // ✅ 3) Rendering helpers
     // ==========================================
-    function setPill(el, text) {
-      el.textContent = text;
-    }
+    function setPill(el, text) { el.textContent = text; }
 
     function renderSummary(data) {
       const wrap = document.getElementById("summaryStats");
@@ -626,15 +582,11 @@
     // ==========================================
     // ✅ 4) تجهيز للباك اند لاحقًا (API)
     // ==========================================
-    // لما تسوون الباك اند: خلوه يرجع JSON بنفس شكل demoAnalysis
-    // مثال endpoint:
-    // GET /api/analysis?case=055xxx&suspect=055xxxx
     async function loadFromBackend() {
       const loader = document.getElementById("loader");
       loader.classList.add("show");
 
       try {
-        // ✅ غيّري الرابط لاحقًا حسب الباك اند عندكم
         const url = `/api/analysis?case=${encodeURIComponent(caseId)}&suspect=${encodeURIComponent(suspect)}`;
         const res = await fetch(url, { headers: { "Accept": "application/json" } });
 
@@ -644,7 +596,6 @@
         renderAll(data);
         document.getElementById("txt-note").textContent = "تم تحميل البيانات من الباك إند ✅";
       } catch (e) {
-        // fallback to demo
         renderAll(demoAnalysis);
         document.getElementById("txt-note").textContent = "البيانات الآن ديمو — لاحقًا بتجي من الباك إند";
       } finally {
@@ -653,24 +604,20 @@
     }
 
     document.getElementById("btn-refresh").addEventListener("click", loadFromBackend);
-
-    // أول تحميل
     loadFromBackend();
 
     // ==========================================
-    // ✅ 5) تبديل اللغة (نفس فكرة شغلكم)
+    // ✅ 5) تبديل اللغة
     // ==========================================
     let currentLang = 'ar';
 
     function toggleLanguage() {
       const htmlTag = document.documentElement;
-      const langLabel = document.getElementById('lang-label');
 
       if (currentLang === 'ar') {
         currentLang = 'en';
         htmlTag.setAttribute('lang', 'en');
         htmlTag.setAttribute('dir', 'ltr');
-        langLabel.textContent = "العربية";
 
         document.title = "Whisper-WA | Analysis";
         document.getElementById("txt-case").textContent = `Case #: ${caseId}`;
@@ -688,11 +635,14 @@
         document.getElementById("txt-keywords-title").textContent = "Important Keywords (Hits)";
         document.getElementById("txt-keywords-note").textContent = "Static list now — later from backend/settings";
 
+        // ✅ زر الهيدر (AR/EN)
+        const langText = document.getElementById("langText");
+        if (langText) langText.textContent = "AR";
+
       } else {
         currentLang = 'ar';
         htmlTag.setAttribute('lang', 'ar');
         htmlTag.setAttribute('dir', 'rtl');
-        langLabel.textContent = "English";
 
         document.title = "Whisper-WA | التحليل";
         document.getElementById("txt-case").textContent = `قضية رقم: #${caseId}`;
@@ -709,6 +659,9 @@
         document.getElementById("txt-numbers-title").textContent = "الأرقام المستخرجة";
         document.getElementById("txt-keywords-title").textContent = "كلمات مهمة (Hits)";
         document.getElementById("txt-keywords-note").textContent = "قائمة كلمات ثابتة الآن — لاحقًا من الباك إند/الإعدادات";
+
+        const langText = document.getElementById("langText");
+        if (langText) langText.textContent = "EN";
       }
     }
   </script>
