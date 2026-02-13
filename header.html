@@ -73,10 +73,15 @@
   }
   .ww-avatar-btn:hover{ background: rgba(95,191,122,0.14); color:#8fd9a8; transform: translateY(-1px); }
 
+  /* ✅ FIX: تموضع القائمة حسب اتجاه الصفحة (RTL/LTR) */
   .ww-menu{
     position:absolute;
     top: 46px;
-    right: 0;
+
+    /* بدل right:0 */
+    inset-inline-end: 0;   /* يمين في RTL ويسار في LTR */
+    inset-inline-start: auto;
+
     min-width: 180px;
     background: rgba(20, 40, 30, 0.92);
     border: 1px solid rgba(95, 191, 122, 0.3);
