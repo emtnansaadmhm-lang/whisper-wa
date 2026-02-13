@@ -1,59 +1,213 @@
-<header class="topbar" style="
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 25px;
-  border-radius:16px;
-  background:rgba(20,40,30,0.65);
-  border:1px solid rgba(95,191,122,0.3);
-  backdrop-filter:blur(12px);
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
-">
+<!-- Header -->
+<header class="topbar">
+  <div class="left">
+    <!-- Back button (optional) -->
+    <button class="icon-btn" id="btnBack" type="button" title="Back">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
 
-  <div style="display:flex;align-items:center;gap:15px;">
-    <img src="logo.png" style="height:45px;filter:drop-shadow(0 0 5px #3f9b5f);" />
-    <div>
-      <b style="color:white;font-size:1.2rem;">Whisper-WA</b><br>
-      <span id="top-subtitle" style="color:#c2dec9;font-size:0.85rem;">
-        Digital Forensics Platform
-      </span>
+    <div class="brand">
+      <img src="logo.png" class="logo" alt="Whisper-WA Logo" />
+      <div class="brand-text">
+        <b>Whisper-WA</b>
+        <span id="top-subtitle">Digital Forensics Platform</span>
+      </div>
     </div>
   </div>
 
-  <div style="display:flex;align-items:center;gap:18px;">
+  <div class="right">
+    <!-- Profile / Account dropdown -->
+    <div class="dropdown" id="accountDropdown">
+      <button class="avatar-btn" id="btnAccount" type="button" aria-haspopup="menu" aria-expanded="false" title="Account">
+        <!-- لو عندك صورة حقيقية للحساب: -->
+        <!-- <img src="avatar.png" class="avatar" alt="Account" /> -->
 
-    <a href="index.html" id="navHome" style="color:#c2dec9;text-decoration:none;">
-      <i class="fa-solid fa-house"></i>
-      <span id="navHomeText">الرئيسية</span>
-    </a>
+        <!-- لو ماعندك صورة، خليه أيقونة: -->
+        <div class="avatar-fallback">
+          <i class="fa-solid fa-user"></i>
+        </div>
+      </button>
 
-    <a href="chat.html" id="navChat" style="color:#c2dec9;text-decoration:none;">
-      <i class="fa-solid fa-comments"></i>
-      <span id="navChatText">الشات</span>
-    </a>
+      <div class="menu" id="accountMenu" role="menu" aria-hidden="true">
+        <a class="menu-item" href="settings.html" id="menuSettings" role="menuitem">
+          <i class="fa-solid fa-gear"></i>
+          <span>Settings</span>
+        </a>
 
-    <a href="reports.html" id="navReports" style="color:#c2dec9;text-decoration:none;">
-      <i class="fa-solid fa-file-lines"></i>
-      <span id="navReportsText">التقارير</span>
-    </a>
-
-    <a href="account.html" id="navAccount" style="color:#c2dec9;text-decoration:none;">
-      <i class="fa-solid fa-user"></i>
-      <span id="navAccountText">حسابي</span>
-    </a>
-
-    <button id="btnLang" style="
-      background:rgba(95,191,122,0.1);
-      border:1px solid #3f9b5f;
-      color:#8fd9a8;
-      padding:6px 14px;
-      border-radius:20px;
-      cursor:pointer;
-      font-weight:bold;
-    ">
-      <i class="fa-solid fa-globe"></i>
-      <span id="langText">AR</span>
-    </button>
-
+        <button class="menu-item" id="menuLang" type="button" role="menuitem">
+          <i class="fa-solid fa-globe"></i>
+          <span id="menuLangText">AR</span>
+        </button>
+      </div>
+    </div>
   </div>
 </header>
+
+<style>
+  .topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 18px;
+    border-radius:16px;
+    background:rgba(20,40,30,0.65);
+    border:1px solid rgba(95,191,122,0.3);
+    backdrop-filter: blur(12px);
+    box-shadow:0 4px 20px rgba(0,0,0,0.22);
+    gap:14px;
+  }
+
+  .left{ display:flex; align-items:center; gap:12px; }
+  .right{ display:flex; align-items:center; gap:10px; }
+
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .logo{ height:42px; width:auto; filter: drop-shadow(0 0 6px rgba(63,155,95,0.5)); }
+
+  .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
+  .brand-text b{ color:#fff; font-size:1.1rem; }
+  .brand-text span{ color:#c2dec9; font-size:0.85rem; margin-top:4px; }
+
+  .icon-btn{
+    width:40px; height:40px;
+    display:inline-flex; align-items:center; justify-content:center;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,0.10);
+    background: rgba(0,0,0,0.14);
+    color:#c2dec9;
+    cursor:pointer;
+    transition:0.25s;
+  }
+  .icon-btn:hover{
+    background: rgba(95,191,122,0.12);
+    color:#8fd9a8;
+    transform: translateY(-1px);
+  }
+
+  /* Dropdown */
+  .dropdown{ position:relative; }
+  .avatar-btn{
+    width:42px; height:42px;
+    border-radius:999px;
+    border:1px solid rgba(95,191,122,0.35);
+    background: rgba(0,0,0,0.14);
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    transition:0.25s;
+    padding:0;
+  }
+  .avatar-btn:hover{
+    background: rgba(95,191,122,0.12);
+    transform: translateY(-1px);
+  }
+
+  .avatar{ width:100%; height:100%; border-radius:999px; object-fit:cover; }
+  .avatar-fallback{
+    width:100%; height:100%;
+    border-radius:999px;
+    display:flex; align-items:center; justify-content:center;
+    color:#8fd9a8;
+  }
+
+  .menu{
+    position:absolute;
+    top:52px;
+    inset-inline-end: 0; /* RTL/LTR friendly */
+    min-width: 180px;
+    background: rgba(20,40,30,0.92);
+    border: 1px solid rgba(95,191,122,0.30);
+    border-radius: 14px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    padding: 8px;
+    display:none;
+    z-index: 50;
+  }
+  .menu.open{ display:block; }
+
+  .menu-item{
+    width:100%;
+    border:0;
+    background: transparent;
+    color:#c2dec9;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 10px;
+    border-radius: 12px;
+    cursor:pointer;
+    transition:0.2s;
+    font-family: inherit;
+    font-weight: 800;
+    text-align: start;
+  }
+  .menu-item:hover{
+    background: rgba(95,191,122,0.14);
+    color:#8fd9a8;
+  }
+
+  /* small screens */
+  @media (max-width: 520px){
+    .brand-text span{ display:none; }
+  }
+</style>
+
+<script>
+  // ===== Back button (optional) =====
+  document.getElementById("btnBack").addEventListener("click", () => history.back());
+
+  // ===== Dropdown open/close =====
+  const btnAccount = document.getElementById("btnAccount");
+  const menu = document.getElementById("accountMenu");
+
+  function setMenu(open){
+    menu.classList.toggle("open", open);
+    btnAccount.setAttribute("aria-expanded", open ? "true" : "false");
+    menu.setAttribute("aria-hidden", open ? "false" : "true");
+  }
+
+  btnAccount.addEventListener("click", (e) => {
+    e.stopPropagation();
+    setMenu(!menu.classList.contains("open"));
+  });
+
+  document.addEventListener("click", () => setMenu(false));
+  menu.addEventListener("click", (e) => e.stopPropagation());
+
+  // ===== Language toggle (ربطيه مع نظامك) =====
+  // إذا عندك function applyLang أو toggleLanguage في الصفحة، استدعيها هنا.
+  const menuLang = document.getElementById("menuLang");
+  const menuLangText = document.getElementById("menuLangText");
+
+  // مثال بسيط: يعتمد على documentElement.lang
+  menuLang.addEventListener("click", () => {
+    const html = document.documentElement;
+    const current = html.lang || "ar";
+    const next = (current === "ar") ? "en" : "ar";
+
+    html.lang = next;
+    html.dir = (next === "ar") ? "rtl" : "ltr";
+
+    // اللي مكتوب في القائمة (يعرض اللغة اللي بتروحين لها)
+    menuLangText.textContent = (next === "ar") ? "AR" : "EN";
+
+    // 🔥 مهم: هنا استدعي دالة الترجمة حقك عشان تترجم كل الصفحة
+    // إذا دالتك اسمها applyLang(next) استخدمي:
+    // applyLang(next);
+
+    // أو إذا عندك toggleLanguage():
+    // toggleLanguage();
+
+    setMenu(false);
+  });
+
+  // Init label
+  (() => {
+    const html = document.documentElement;
+    const current = html.lang || "ar";
+    const next = (current === "ar") ? "en" : "ar";
+    menuLangText.textContent = (next === "ar") ? "AR" : "EN";
+  })();
+</script>
