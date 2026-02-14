@@ -7,11 +7,11 @@
 
 <style>
 :root {
-    --green-dark: #0B3D2A;
-    --green-main: #0F6B3A;
-    --green-light: #9BE3B4;
-    --green-accent: #2FA66A;
+    --bg-main: #0b1f17;
+    --card-bg: rgba(15, 35, 25, 0.85);
+    --border-soft: rgba(95,191,122,0.15);
     --text-light: #EAF7F0;
+    --accent-soft: #7ed6a3;
 }
 
 * { box-sizing: border-box; }
@@ -19,162 +19,93 @@
 body {
     margin: 0;
     font-family: "Segoe UI", Arial, sans-serif;
-    height: 100vh;
-    background: linear-gradient(180deg, #0b1f17, #0f2b20);
+    background: var(--bg-main);
     color: var(--text-light);
-    overflow: hidden;
 }
 
-/* Background grid */
-.background-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(155, 227, 180, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(155, 227, 180, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-    z-index: 0;
+/* مساحة تحت الهيدر */
+.page-wrapper{
+    padding: 120px 60px 60px 60px;
 }
 
-/* Container */
-.container {
-    position: relative;
-    z-index: 1;
-    padding: 60px;
+/* Title */
+.page-title{
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: var(--accent-soft);
 }
 
-/* Header */
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 32px;
-    color: #7ed6a3;
-}
-
-/* Buttons */
-.top-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.btn {
-    background: transparent;
-    border: 1px solid var(--green-light);
-    color: var(--green-light);
-    padding: 8px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: 600;
-}
-
-.btn:hover {
-    background: var(--green-light);
-    color: #062016;
-}
-
-/* Table box */
+/* Table Box */
 .table-box {
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(8px);
-    border-radius: 15px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
     padding: 30px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-    max-height: 450px;
-    overflow-y: auto;
-    animation: fadeIn 0.8s ease-in-out;
+    backdrop-filter: blur(10px);
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+/* Table */
 table {
     width: 100%;
     border-collapse: collapse;
 }
 
 th, td {
-    padding: 15px;
+    padding: 14px;
     text-align: left;
 }
 
 th {
-    color: var(--green-light);
-    font-weight: 600;
-    border-bottom: 2px solid rgba(155,227,180,0.2);
+    color: var(--accent-soft);
+    border-bottom: 1px solid var(--border-soft);
 }
 
 td {
-    border-bottom: 1px solid rgba(155,227,180,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 tbody tr:hover {
-    background: rgba(155, 227, 180, 0.08);
-    transition: 0.3s;
+    background: rgba(95,191,122,0.06);
+    transition: 0.2s;
 }
 
-/* Action buttons */
+/* Buttons */
 .action-btn {
-    background: linear-gradient(135deg, #9BE3B4, #2FA66A);
+    background: #1f5f3b;
     border: none;
-    padding: 6px 16px;
-    border-radius: 20px;
+    color: #eaf7f0;
+    padding: 6px 14px;
+    border-radius: 12px;
     font-size: 13px;
-    font-weight: 600;
     cursor: pointer;
     margin-right: 5px;
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
 .action-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-
-/* Footer */
-.footer {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    font-size: 13px;
-    color: #BFE8D5;
+    background: #267a4b;
 }
 </style>
 </head>
 
 <body>
 
-<div class="background-grid"></div>
 
-<div class="container">
+<div id="header-container"></div>
 
-    <div class="header">
-        <h1 id="title">All Reports</h1>
+<div class="page-wrapper">
 
-        <div class="top-buttons">
-            <button class="btn" onclick="goBack()">← Back</button>
-            <button class="btn" onclick="toggleLanguage()">🌐 عربي</button>
-        </div>
-    </div>
+    <h1 class="page-title">All Reports</h1>
 
     <div class="table-box">
         <table>
             <thead>
                 <tr>
-                    <th id="thDate">Date</th>
-                    <th id="thTime">Time</th>
-                    <th id="thCase">Case #</th>
-                    <th id="thInvestigator">Investigator</th>
-                    <th id="thActions">Actions</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Case #</th>
+                    <th>Investigator</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -184,8 +115,12 @@ tbody tr:hover {
                     <td>05XXX</td>
                     <td>R. Alruwaisan</td>
                     <td>
-                        <button class="action-btn">⬇ Download</button>
-                        <button class="action-btn">📂 Open</button>
+                        <button class="action-btn" onclick="downloadReport('report1.pdf')">
+                            ⬇ Download
+                        </button>
+                        <button class="action-btn" onclick="openReport('report1.pdf')">
+                            📂 Open
+                        </button>
                     </td>
                 </tr>
                 <tr>
@@ -194,8 +129,12 @@ tbody tr:hover {
                     <td>07XXX</td>
                     <td>R. Alruwaisan</td>
                     <td>
-                        <button class="action-btn">⬇ Download</button>
-                        <button class="action-btn">📂 Open</button>
+                        <button class="action-btn" onclick="downloadReport('report2.pdf')">
+                            ⬇ Download
+                        </button>
+                        <button class="action-btn" onclick="openReport('report2.pdf')">
+                            📂 Open
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -204,46 +143,30 @@ tbody tr:hover {
 
 </div>
 
-<div class="footer" id="footerText">
-    ©️ 2026 Whisper-WA • Digital Forensics Platform
-</div>
-
 <script>
-let isArabic = false;
 
-function goBack() {
-    window.location.href = "dashboard.html";
+fetch("header.html")
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById("header-container").innerHTML = data;
+  });
+
+
+function downloadReport(fileName) {
+    const link = document.createElement("a");
+    link.href = "reports/" + fileName;  // حطي ملفاتك داخل مجلد reports
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
-function toggleLanguage() {
-    isArabic = !isArabic;
 
-    if (isArabic) {
-        document.documentElement.lang = "ar";
-        document.body.style.direction = "rtl";
-
-        document.getElementById("title").innerText = "جميع التقارير";
-        document.getElementById("thDate").innerText = "التاريخ";
-        document.getElementById("thTime").innerText = "الوقت";
-        document.getElementById("thCase").innerText = "رقم القضية";
-        document.getElementById("thInvestigator").innerText = "المحقق";
-        document.getElementById("thActions").innerText = "الإجراءات";
-        document.getElementById("footerText").innerText = "©️ 2026 منصة Whisper-WA • الأدلة الجنائية الرقمية";
-
-    } else {
-        document.documentElement.lang = "en";
-        document.body.style.direction = "ltr";
-
-        document.getElementById("title").innerText = "All Reports";
-        document.getElementById("thDate").innerText = "Date";
-        document.getElementById("thTime").innerText = "Time";
-        document.getElementById("thCase").innerText = "Case #";
-        document.getElementById("thInvestigator").innerText = "Investigator";
-        document.getElementById("thActions").innerText = "Actions";
-        document.getElementById("footerText").innerText = "©️ 2026 Whisper-WA • Digital Forensics Platform";
-    }
+function openReport(fileName) {
+    window.open("reports/" + fileName, "_blank");
 }
 </script>
 
 </body>
 </html>
+
