@@ -21,6 +21,7 @@ body {
     font-family: "Segoe UI", Arial, sans-serif;
     background: var(--bg-main);
     color: var(--text-light);
+    transition: 0.3s;
 }
 
 /* مساحة تحت الهيدر */
@@ -85,12 +86,18 @@ tbody tr:hover {
 .action-btn:hover {
     background: #267a4b;
 }
+
+/* RTL تعديل الجدول */
+body[dir="rtl"] th,
+body[dir="rtl"] td {
+    text-align: right;
+}
 </style>
 </head>
 
 <body>
 
-
+<!-- مكان تحميل الهيدر -->
 <div id="header-container"></div>
 
 <div class="page-wrapper">
@@ -101,11 +108,11 @@ tbody tr:hover {
         <table>
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Case #</th>
-                    <th>Investigator</th>
-                    <th>Actions</th>
+                    <th data-en="Date" data-ar="التاريخ">Date</th>
+                    <th data-en="Time" data-ar="الوقت">Time</th>
+                    <th data-en="Case #" data-ar="رقم القضية">Case #</th>
+                    <th data-en="Investigator" data-ar="المحقق">Investigator</th>
+                    <th data-en="Actions" data-ar="الإجراءات">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -115,24 +122,16 @@ tbody tr:hover {
                     <td>05XXX</td>
                     <td>R. Alruwaisan</td>
                     <td>
-                        <button class="action-btn" onclick="downloadReport('report1.pdf')">
+                        <button class="action-btn"
+                                data-en="⬇ Download"
+                                data-ar="⬇ تحميل"
+                                onclick="downloadReport('report1.pdf')">
                             ⬇ Download
                         </button>
-                        <button class="action-btn" onclick="openReport('report1.pdf')">
-                            📂 Open
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>09-21</td>
-                    <td>10:30</td>
-                    <td>07XXX</td>
-                    <td>R. Alruwaisan</td>
-                    <td>
-                        <button class="action-btn" onclick="downloadReport('report2.pdf')">
-                            ⬇ Download
-                        </button>
-                        <button class="action-btn" onclick="openReport('report2.pdf')">
+                        <button class="action-btn"
+                                data-en="📂 Open"
+                                data-ar="📂 فتح"
+                                onclick="openReport('report1.pdf')">
                             📂 Open
                         </button>
                     </td>
@@ -144,24 +143,65 @@ tbody tr:hover {
 </div>
 
 <script>
-
+/* تحميل الهيدر */
 fetch("header.html")
   .then(res => res.text())
   .then(data => {
       document.getElementById("header-container").innerHTML = data;
+
+      const btnBack = document.getElementById("btnBack");
+      const btnLang = document.getElementById("btnLang");
+      const langText = document.getElementById("langText");
+
+      // زر الرجوع
+      if (btnBack) {
+          btnBack.addEventListener("click", () => {
+              window.history.back();
+          });
+      }
+
+      let isArabic = false;
+
+      // زر تغيير اللغة
+      if (btnLang) {
+          btnLang.addEventListener("click", () => {
+              isArabic = !isArabic;
+
+              if (isArabic) {
+                  document.documentElement.lang = "ar";
+                  document.body.setAttribute("dir", "rtl");
+                  document.querySelector(".page-title").innerText = "جميع التقارير";
+                  if (langText) langText.innerText = "EN";
+                  switchLanguage("ar");
+              } else {
+                  document.documentElement.lang = "en";
+                  document.body.setAttribute("dir", "ltr");
+                  document.querySelector(".page-title").innerText = "All Reports";
+                  if (langText) langText.innerText = "AR";
+                  switchLanguage("en");
+              }
+          });
+      }
   });
 
+/* تبديل النصوص */
+function switchLanguage(lang) {
+    document.querySelectorAll("[data-en]").forEach(el => {
+        el.innerText = el.getAttribute("data-" + lang);
+    });
+}
 
+/* تحميل التقرير */
 function downloadReport(fileName) {
     const link = document.createElement("a");
-    link.href = "reports/" + fileName;  // حطي ملفاتك داخل مجلد reports
+    link.href = "reports/" + fileName;
     link.download = fileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
 }
 
-
+/* فتح التقرير */
 function openReport(fileName) {
     window.open("reports/" + fileName, "_blank");
 }
@@ -169,4 +209,3 @@ function openReport(fileName) {
 
 </body>
 </html>
-
