@@ -1,211 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Reports - Whisper-WA</title>
+  <meta charset="UTF-8">
+  <title>All Reports</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root {
-    --bg-main: #0b1f17;
-    --card-bg: rgba(15, 35, 25, 0.85);
-    --border-soft: rgba(95,191,122,0.15);
-    --text-light: #EAF7F0;
-    --accent-soft: #7ed6a3;
-}
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 
-* { box-sizing: border-box; }
+  <style>
+    body{
+      margin:0;
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg,#0f1f17,#13261d);
+      color:white;
+      min-height:100vh;
+    }
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--bg-main);
-    color: var(--text-light);
-    transition: 0.3s;
-}
+    #header-container{
+      padding:20px;
+    }
 
-/* مساحة تحت الهيدر */
-.page-wrapper{
-    padding: 120px 60px 60px 60px;
-}
+    .page-content{
+      padding:30px;
+    }
 
-/* Title */
-.page-title{
-    font-size: 28px;
-    margin-bottom: 30px;
-    color: var(--accent-soft);
-}
+    .page-title{
+      font-size:1.8rem;
+      font-weight:900;
+      margin-bottom:20px;
+    }
 
-/* Table Box */
-.table-box {
-    background: var(--card-bg);
-    border: 1px solid var(--border-soft);
-    border-radius: 16px;
-    padding: 30px;
-    backdrop-filter: blur(10px);
-}
+    .report-card{
+      background: rgba(95,191,122,0.08);
+      border:1px solid rgba(95,191,122,0.2);
+      padding:18px;
+      border-radius:14px;
+      margin-bottom:15px;
+      transition:0.25s;
+    }
 
-/* Table */
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    .report-card:hover{
+      background: rgba(95,191,122,0.15);
+      transform:translateY(-3px);
+    }
 
-th, td {
-    padding: 14px;
-    text-align: left;
-}
-
-th {
-    color: var(--accent-soft);
-    border-bottom: 1px solid var(--border-soft);
-}
-
-td {
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-
-tbody tr:hover {
-    background: rgba(95,191,122,0.06);
-    transition: 0.2s;
-}
-
-/* Buttons */
-.action-btn {
-    background: #1f5f3b;
-    border: none;
-    color: #eaf7f0;
-    padding: 6px 14px;
-    border-radius: 12px;
-    font-size: 13px;
-    cursor: pointer;
-    margin-right: 5px;
-    transition: 0.2s;
-}
-
-.action-btn:hover {
-    background: #267a4b;
-}
-
-/* RTL تعديل الجدول */
-body[dir="rtl"] th,
-body[dir="rtl"] td {
-    text-align: right;
-}
-</style>
+  </style>
 </head>
 
 <body>
 
-<!-- مكان تحميل الهيدر -->
-<div id="header-container"></div>
+  <!-- الهيدر يتحمل هنا -->
+  <div id="header-container"></div>
 
-<div class="page-wrapper">
+  <div class="page-content">
+    <div class="page-title" id="reportsTitle">All Reports</div>
 
-    <h1 class="page-title">All Reports</h1>
+    <div class="report-card">Report #001 - WhatsApp Extraction</div>
+    <div class="report-card">Report #002 - Media Analysis</div>
+    <div class="report-card">Report #003 - Deleted Messages Recovery</div>
+  </div>
 
-    <div class="table-box">
-        <table>
-            <thead>
-                <tr>
-                    <th data-en="Date" data-ar="التاريخ">Date</th>
-                    <th data-en="Time" data-ar="الوقت">Time</th>
-                    <th data-en="Case #" data-ar="رقم القضية">Case #</th>
-                    <th data-en="Investigator" data-ar="المحقق">Investigator</th>
-                    <th data-en="Actions" data-ar="الإجراءات">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>11-03</td>
-                    <td>11:00</td>
-                    <td>05XXX</td>
-                    <td>R. Alruwaisan</td>
-                    <td>
-                        <button class="action-btn"
-                                data-en="⬇ Download"
-                                data-ar="⬇ تحميل"
-                                onclick="downloadReport('report1.pdf')">
-                            ⬇ Download
-                        </button>
-                        <button class="action-btn"
-                                data-en="📂 Open"
-                                data-ar="📂 فتح"
-                                onclick="openReport('report1.pdf')">
-                            📂 Open
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-</div>
 
 <script>
-/* تحميل الهيدر */
-fetch("header.html")
+/* ==========================
+   تحميل الهيدر
+========================== */
+fetch("./header.html", { cache: "no-store" })
   .then(res => res.text())
   .then(data => {
-      document.getElementById("header-container").innerHTML = data;
-
-      const btnBack = document.getElementById("btnBack");
-      const btnLang = document.getElementById("btnLang");
-      const langText = document.getElementById("langText");
-
-      // زر الرجوع
-      if (btnBack) {
-          btnBack.addEventListener("click", () => {
-              window.history.back();
-          });
-      }
-
-      let isArabic = false;
-
-      // زر تغيير اللغة
-      if (btnLang) {
-          btnLang.addEventListener("click", () => {
-              isArabic = !isArabic;
-
-              if (isArabic) {
-                  document.documentElement.lang = "ar";
-                  document.body.setAttribute("dir", "rtl");
-                  document.querySelector(".page-title").innerText = "جميع التقارير";
-                  if (langText) langText.innerText = "EN";
-                  switchLanguage("ar");
-              } else {
-                  document.documentElement.lang = "en";
-                  document.body.setAttribute("dir", "ltr");
-                  document.querySelector(".page-title").innerText = "All Reports";
-                  if (langText) langText.innerText = "AR";
-                  switchLanguage("en");
-              }
-          });
-      }
+    document.getElementById("header-container").innerHTML = data;
+    activateHeaderButtons();
   });
 
-/* تبديل النصوص */
-function switchLanguage(lang) {
-    document.querySelectorAll("[data-en]").forEach(el => {
-        el.innerText = el.getAttribute("data-" + lang);
+
+/* ==========================
+   تفعيل الأزرار من صفحة الريپورتس
+========================== */
+function activateHeaderButtons(){
+
+  const btnBack = document.getElementById("btnBack");
+  const btnLang = document.getElementById("btnLang");
+  const langText = document.getElementById("langText");
+  const subtitle = document.getElementById("top-subtitle");
+  const reportsTitle = document.getElementById("reportsTitle");
+
+  /* ===== زر الرجوع ===== */
+  if (btnBack){
+    btnBack.addEventListener("click", ()=>{
+      if (window.history.length > 1){
+        window.history.back();
+      } else {
+        window.location.href = "index.html";
+      }
     });
-}
+  }
 
-/* تحميل التقرير */
-function downloadReport(fileName) {
-    const link = document.createElement("a");
-    link.href = "reports/" + fileName;
-    link.download = fileName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+  /* ===== اللغة ===== */
+  function applyLanguage(lang){
 
-/* فتح التقرير */
-function openReport(fileName) {
-    window.open("reports/" + fileName, "_blank");
+    if (lang === "ar"){
+      document.documentElement.lang = "ar";
+      document.body.setAttribute("dir","rtl");
+
+      if (langText) langText.innerText = "EN";
+      if (subtitle) subtitle.innerText = "منصة الأدلة الجنائية الرقمية";
+      if (reportsTitle) reportsTitle.innerText = "جميع التقارير";
+
+    } else {
+      document.documentElement.lang = "en";
+      document.body.setAttribute("dir","ltr");
+
+      if (langText) langText.innerText = "AR";
+      if (subtitle) subtitle.innerText = "Digital Forensics Platform";
+      if (reportsTitle) reportsTitle.innerText = "All Reports";
+    }
+
+    localStorage.setItem("siteLang", lang);
+  }
+
+  // تحميل اللغة المحفوظة
+  const savedLang = localStorage.getItem("siteLang") || "en";
+  applyLanguage(savedLang);
+
+  // عند الضغط
+  if (btnLang){
+    btnLang.addEventListener("click", ()=>{
+      const current = localStorage.getItem("siteLang") || "en";
+      const newLang = current === "en" ? "ar" : "en";
+      applyLanguage(newLang);
+    });
+  }
+
 }
 </script>
 
 </body>
 </html>
+
