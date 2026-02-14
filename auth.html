@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Whisper-WA | System Login</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -25,7 +25,6 @@
       background:var(--bg-dark);
       color:#fff;
       height:100vh;
-      overflow:hidden;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -37,12 +36,12 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      opacity:.15;
+      opacity:.12;
       z-index:-1;
     }
     .animated-bg-logo img{
       width:520px;
-      filter:drop-shadow(0 0 30px var(--primary-mid));
+      filter:drop-shadow(0 0 40px var(--primary-mid));
     }
 
     .card{
@@ -51,29 +50,33 @@
       backdrop-filter:blur(14px);
       border:1px solid var(--glass-border);
       border-radius:22px;
-      padding:28px;
-      box-shadow:0 10px 40px rgba(0,0,0,.35);
+      padding:32px;
+      box-shadow:0 10px 40px rgba(0,0,0,.45);
     }
 
     h1{
-      font-size:1.8rem;
-      margin-bottom:6px;
+      font-size:2rem;
+      font-weight:900;
+      margin-bottom:8px;
+      text-shadow:0 0 12px rgba(143,217,168,.55);
     }
+
     .subtitle{
       color:var(--text-muted);
-      margin-bottom:18px;
+      margin-bottom:22px;
+      font-size:1rem;
     }
 
     .tabs{
       display:flex;
-      background:rgba(0,0,0,.18);
+      background:rgba(0,0,0,.2);
       border-radius:16px;
       overflow:hidden;
-      margin-bottom:16px;
+      margin-bottom:18px;
     }
     .tab-btn{
       flex:1;
-      padding:12px;
+      padding:14px;
       border:none;
       background:none;
       color:var(--text-muted);
@@ -81,7 +84,7 @@
       cursor:pointer;
     }
     .tab-btn.active{
-      background:rgba(95,191,122,.16);
+      background:rgba(95,191,122,.18);
       color:var(--accent-glow);
     }
 
@@ -90,55 +93,57 @@
 
     label{
       display:block;
-      margin:12px 0 6px;
+      margin:14px 0 8px;
       color:var(--text-muted);
       font-weight:800;
     }
 
     input,textarea{
       width:100%;
-      padding:12px;
+      padding:13px;
       border-radius:12px;
       border:1px solid var(--glass-border);
       background:rgba(0,0,0,.25);
       color:#fff;
+      font-size:1rem;
     }
 
     textarea{min-height:110px}
 
     .actions{
       display:flex;
-      gap:12px;
-      margin-top:16px;
+      gap:14px;
+      margin-top:20px;
     }
 
     .btn{
       flex:1;
-      padding:12px;
+      padding:14px;
       border-radius:14px;
       font-weight:900;
       cursor:pointer;
       border:none;
+      font-size:1rem;
     }
     .btn-primary{
       background:linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
       color:#fff;
     }
     .btn-ghost{
-      background:rgba(0,0,0,.2);
+      background:rgba(0,0,0,.22);
       color:var(--accent-glow);
-      border:1px solid rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.12);
     }
 
     .alert{
-      margin-top:16px;
-      padding:12px;
+      margin-top:18px;
+      padding:14px;
       border-radius:14px;
       font-weight:900;
       display:none;
     }
-    .alert.success{background:rgba(95,191,122,.14)}
-    .alert.danger{background:rgba(255,107,107,.14)}
+    .alert.success{background:rgba(95,191,122,.16)}
+    .alert.danger{background:rgba(255,107,107,.16)}
   </style>
 </head>
 
@@ -150,6 +155,7 @@
 
 <section class="card">
 
+  <!-- ✅ العنوان واضح -->
   <h1>System Login</h1>
   <p class="subtitle">Login to continue, or request an account.</p>
 
@@ -158,7 +164,6 @@
     <button class="tab-btn" data-tab="request">Request Account</button>
   </div>
 
-  <!-- LOGIN -->
   <div class="tab-content active" id="login">
     <label>Email / Username</label>
     <input id="loginUser" placeholder="analyst@domain.com">
@@ -171,7 +176,6 @@
     </div>
   </div>
 
-  <!-- REQUEST -->
   <div class="tab-content" id="request">
     <label>Full Name</label>
     <input>
