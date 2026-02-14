@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Whisper-WA | System Login</title>
+  <title>Whisper-WA | Login</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -15,9 +15,11 @@
       --accent-glow:#8fd9a8;
 
       --bg-dark:#0e1a12;
+
       --glass-bg: rgba(20, 40, 30, 0.65);
       --glass-border: rgba(95, 191, 122, 0.3);
 
+      --text-white:#ffffff;
       --text-muted:#c2dec9;
     }
 
@@ -25,12 +27,11 @@
 
     body{
       font-family:'Tajawal',sans-serif;
-      color:#fff;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
       height:100vh;
       overflow:hidden;
 
-      /* ✅ نفس الخلفية السابقة */
-      background-color: var(--bg-dark);
       background-image:
         radial-gradient(1200px 700px at 20% 10%, rgba(95,191,122,0.12), transparent 55%),
         radial-gradient(900px 600px at 85% 20%, rgba(143,217,168,0.10), transparent 55%),
@@ -58,130 +59,133 @@
       to{ opacity:0.26; transform:translate(-50%,-50%) scale(1.04); }
     }
 
-    .container{
-      height:100vh;
+    .main-container{
       display:flex;
       align-items:center;
       justify-content:center;
+      height:100vh;
       padding:24px;
     }
 
+    .back-btn{
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.18);
+      color: var(--accent-glow);
+      cursor:pointer;
+      font-size:20px;
+    }
+
     .card{
-      width:min(760px,95vw);
+      width:min(820px,95vw);
       background: var(--glass-bg);
-      border:1px solid var(--glass-border);
+      border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
-      border-radius:22px;
-      padding:32px;
-      box-shadow:0 10px 40px rgba(0,0,0,0.45);
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
     }
 
-    h1{
-      font-size:2rem;
-      font-weight:900;
-      margin-bottom:6px;
-      text-shadow:0 0 10px rgba(143,217,168,0.45);
-    }
-
-    .subtitle{
-      color:var(--text-muted);
-      margin-bottom:20px;
-    }
+    h1{ font-size:1.7rem; margin-bottom:6px; }
+    .subtitle{ color:var(--text-muted); margin-bottom:18px; }
 
     .tabs{
       display:flex;
-      background:rgba(0,0,0,0.18);
-      border-radius:16px;
+      background: rgba(0,0,0,0.18);
+      border-radius: 16px;
       overflow:hidden;
-      margin-bottom:16px;
+      margin-bottom:14px;
     }
-
     .tab-btn{
       flex:1;
-      padding:14px;
+      padding:12px;
       border:none;
       background:none;
       color:var(--text-muted);
       font-weight:900;
       cursor:pointer;
     }
-
     .tab-btn.active{
-      background:rgba(95,191,122,0.18);
-      color:var(--accent-glow);
+      background: rgba(95,191,122,0.16);
+      color: var(--accent-glow);
     }
 
     .tab-content{ display:none; }
     .tab-content.active{ display:block; }
 
-    label{
-      display:block;
-      margin:14px 0 8px;
-      color:var(--text-muted);
-      font-weight:800;
-    }
+    label{ display:block; margin:10px 0 6px; color:var(--text-muted); font-weight:800; }
 
-    input, textarea{
+    input,select,textarea{
       width:100%;
-      padding:13px;
+      padding:12px;
       border-radius:12px;
       border:1px solid var(--glass-border);
-      background:rgba(0,0,0,0.25);
-      color:#fff;
-      font-size:1rem;
+      background: rgba(0,0,0,0.25);
+      color:white;
     }
 
     textarea{ min-height:110px; }
 
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media(max-width:720px){ .row{ grid-template-columns:1fr; } }
+
     .actions{
       display:flex;
-      gap:14px;
-      margin-top:20px;
+      gap:12px;
+      margin-top:14px;
     }
 
     .btn{
       flex:1;
-      padding:14px;
+      padding:12px;
       border-radius:14px;
       font-weight:900;
       cursor:pointer;
       border:none;
-      font-size:1rem;
     }
-
     .btn-primary{
-      background:linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
-      color:#fff;
+      background: linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
+      color:white;
     }
-
     .btn-ghost{
-      background:rgba(0,0,0,0.22);
-      color:var(--accent-glow);
-      border:1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.2);
+      color: var(--accent-glow);
+      border:1px solid rgba(255,255,255,0.1);
     }
 
     .alert{
-      margin-top:18px;
-      padding:14px;
+      margin-top:16px;
+      padding:12px;
       border-radius:14px;
       font-weight:900;
-      display:none;
     }
-    .alert.success{ background:rgba(95,191,122,0.16); }
-    .alert.danger{ background:rgba(255,107,107,0.16); }
+    .hidden{ display:none; }
+    .success{ background: rgba(95,191,122,0.14); }
+    .danger{ background: rgba(255,107,107,0.14); }
   </style>
 </head>
 
 <body>
 
+<button class="back-btn" onclick="history.back()">‹</button>
+
 <div class="animated-bg-logo">
   <img src="logo.png" alt="">
 </div>
 
-<div class="container">
+<div class="main-container">
   <section class="card">
 
-    <h1>System Login</h1>
+    <h1>Access</h1>
     <p class="subtitle">Login to continue, or request an account.</p>
 
     <div class="tabs">
@@ -189,35 +193,35 @@
       <button class="tab-btn" data-tab="request">Request Account</button>
     </div>
 
+    <!-- LOGIN -->
     <div class="tab-content active" id="login">
       <label>Email / Username</label>
-      <input id="loginUser" placeholder="analyst@domain.com">
+      <input id="loginUser">
 
       <label>Password</label>
-      <input id="loginPass" type="password" placeholder="••••••••">
+      <input id="loginPass" type="password">
 
       <div class="actions">
         <button class="btn btn-primary" id="btnLogin">Sign In</button>
       </div>
     </div>
 
+    <!-- REQUEST -->
     <div class="tab-content" id="request">
-      <label>Full Name</label>
-      <input>
+      <div class="row">
+        <input id="reqName" placeholder="Full Name">
+        <input id="reqEmail" placeholder="Email">
+      </div>
 
-      <label>Email</label>
-      <input>
-
-      <label>Reason / Use Case</label>
-      <textarea placeholder="Write a short reason..."></textarea>
+      <textarea id="reqReason" placeholder="Reason"></textarea>
 
       <div class="actions">
-        <button class="btn btn-primary">Submit Request</button>
+        <button class="btn btn-primary">Submit</button>
         <button class="btn btn-ghost">Clear</button>
       </div>
     </div>
 
-    <div id="alert" class="alert"></div>
+    <div id="alert" class="alert hidden"></div>
 
   </section>
 </div>
@@ -225,7 +229,6 @@
 <script>
   const tabs = document.querySelectorAll(".tab-btn");
   const contents = document.querySelectorAll(".tab-content");
-  const alertBox = document.getElementById("alert");
 
   tabs.forEach(btn=>{
     btn.onclick=()=>{
@@ -233,19 +236,21 @@
       contents.forEach(c=>c.classList.remove("active"));
       btn.classList.add("active");
       document.getElementById(btn.dataset.tab).classList.add("active");
-      alertBox.style.display="none";
     }
   });
 
-  btnLogin.onclick=()=>{
-    if(loginUser.value==="admin" && loginPass.value==="admin123"){
-      alertBox.textContent="Login successful";
-      alertBox.className="alert success";
+  document.getElementById("btnLogin").onclick=()=>{
+    const u=loginUser.value,p=loginPass.value;
+    const alert=document.getElementById("alert");
+    if(u==="admin" && p==="admin123"){
+      alert.className="alert success";
+      alert.textContent="Login successful";
+      alert.classList.remove("hidden");
     }else{
-      alertBox.textContent="Invalid credentials";
-      alertBox.className="alert danger";
+      alert.className="alert danger";
+      alert.textContent="Invalid credentials";
+      alert.classList.remove("hidden");
     }
-    alertBox.style.display="block";
   }
 </script>
 
