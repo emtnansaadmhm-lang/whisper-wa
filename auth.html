@@ -47,129 +47,42 @@
       transform: translate(-50%,-50%);
       z-index:-1;
       width: 620px;
-      pointer-events:none;
       opacity:0.18;
-      animation: cyberGlowPulse 8s ease-in-out infinite alternate;
+      animation: glow 8s ease-in-out infinite alternate;
     }
     .animated-bg-logo img{
       width:100%;
       filter: drop-shadow(0 0 30px var(--primary-mid));
     }
-    @keyframes cyberGlowPulse{
-      0%{ opacity:0.10; transform: translate(-50%,-50%) scale(0.96); }
-      100%{ opacity:0.26; transform: translate(-50%,-50%) scale(1.04); }
+    @keyframes glow{
+      from{ opacity:0.1; transform:translate(-50%,-50%) scale(0.96); }
+      to{ opacity:0.26; transform:translate(-50%,-50%) scale(1.04); }
     }
 
     .main-container{
       display:flex;
-      flex-direction:column;
+      align-items:center;
+      justify-content:center;
       height:100vh;
       padding:24px;
-      gap:18px;
-      position:relative;
-      z-index:1;
     }
 
-    /* Top bar */
-    .topbar{
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
-      padding: 12px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
-    }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      min-width: 240px;
-    }
-    .brand img{
-      height:42px;
-      width:auto;
-      filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
-    }
-    .brand .title{
-      display:flex;
-      flex-direction:column;
-      line-height:1.1;
-    }
-    .brand .title b{ font-size:1.15rem; }
-    .brand .title span{
-      color: var(--text-muted);
-      font-size:0.85rem;
-      margin-top:4px;
-    }
-
-    .top-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .nav-link{
-      text-decoration:none;
-      color: var(--text-muted);
-      padding: 8px 10px;
-      border-radius: 12px;
-      border: 1px solid transparent;
-      transition:0.25s;
-      font-weight:700;
-    }
-    .nav-link:hover{
-      color: var(--accent-glow);
-      border-color: rgba(255,255,255,0.10);
-      background: rgba(0,0,0,0.14);
-    }
-    .lang-btn{
-      background: rgba(95,191,122,0.10);
-      border: 1px solid var(--glass-border);
-      color: var(--accent-glow);
-      padding: 8px 14px;
-      border-radius: 999px;
-      cursor:pointer;
-      font-weight:900;
-      transition:0.25s;
-      user-select:none;
-    }
-    .lang-btn:hover{
-      background: rgba(95,191,122,0.18);
-      transform: translateY(-1px);
-    }
-
-    /* Back arrow like your screenshot */
     .back-btn{
       position: fixed;
-      top: 120px;
-      left: 18px;
-      z-index: 3;
+      top: 20px;
+      left: 20px;
       width: 38px;
       height: 38px;
       border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.1);
       background: rgba(0,0,0,0.18);
       color: var(--accent-glow);
       cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 20px;
-      transition: 0.2s;
+      font-size:20px;
     }
-    .back-btn:hover{ background: rgba(95,191,122,0.12); transform: translateY(-1px); }
 
-    /* Center card */
-    .center{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
     .card{
-      width:min(820px, 95vw);
+      width:min(820px,95vw);
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
@@ -177,506 +90,169 @@
       padding: 26px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.35);
     }
-    .card h1{
-      font-size: 1.7rem;
-      margin-bottom: 6px;
-    }
-    .subtitle{
-      color: var(--text-muted);
-      margin-bottom: 18px;
-      line-height:1.6;
-    }
 
-    /* Tabs */
+    h1{ font-size:1.7rem; margin-bottom:6px; }
+    .subtitle{ color:var(--text-muted); margin-bottom:18px; }
+
     .tabs{
       display:flex;
-      gap:0;
       background: rgba(0,0,0,0.18);
-      border: 1px solid rgba(255,255,255,0.10);
       border-radius: 16px;
       overflow:hidden;
-      margin-bottom: 14px;
+      margin-bottom:14px;
     }
     .tab-btn{
       flex:1;
-      padding: 12px 14px;
-      cursor:pointer;
-      background: transparent;
-      color: var(--text-muted);
-      border: none;
+      padding:12px;
+      border:none;
+      background:none;
+      color:var(--text-muted);
       font-weight:900;
-      transition:0.25s;
+      cursor:pointer;
     }
     .tab-btn.active{
       background: rgba(95,191,122,0.16);
       color: var(--accent-glow);
-      box-shadow: inset 0 -3px 0 rgba(143,217,168,0.9);
     }
+
     .tab-content{ display:none; }
     .tab-content.active{ display:block; }
 
-    .panel{
-      background: rgba(0,0,0,0.16);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 18px;
-      padding: 16px;
+    label{ display:block; margin:10px 0 6px; color:var(--text-muted); font-weight:800; }
+
+    input,select,textarea{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid var(--glass-border);
+      background: rgba(0,0,0,0.25);
+      color:white;
     }
 
-    label{
-      display:block;
-      color: var(--text-muted);
-      font-weight:800;
-      margin: 10px 0 8px;
-    }
-    input, select, textarea{
-      width:100%;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--glass-border);
-      background: rgba(0,0,0,0.24);
-      color: white;
-      outline:none;
-      font-size: 1rem;
-    }
-    textarea{ min-height: 110px; resize: vertical; }
-    input::placeholder, textarea::placeholder{ color: rgba(194,222,201,0.65); }
+    textarea{ min-height:110px; }
 
     .row{
       display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    @media (max-width: 720px){
-      .row{ grid-template-columns: 1fr; }
-    }
-
-    .tiny-row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
+      grid-template-columns:1fr 1fr;
       gap:12px;
-      margin-top: 10px;
-      flex-wrap:wrap;
     }
-    .checkbox{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color: rgba(223,251,231,0.92);
-      font-weight:900;
-      user-select:none;
-    }
-    .checkbox input{ width:auto; }
-    .link{
-      color: var(--accent-glow);
-      text-decoration:none;
-      font-weight:900;
-      opacity:0.9;
-    }
-    .link:hover{ opacity:1; text-decoration: underline; }
+    @media(max-width:720px){ .row{ grid-template-columns:1fr; } }
 
     .actions{
       display:flex;
-      gap: 12px;
-      margin-top: 14px;
+      gap:12px;
+      margin-top:14px;
     }
+
     .btn{
       flex:1;
-      padding: 12px 14px;
-      border-radius: 14px;
-      cursor:pointer;
+      padding:12px;
+      border-radius:14px;
       font-weight:900;
-      border: none;
-      transition:0.25s;
-      user-select:none;
+      cursor:pointer;
+      border:none;
     }
     .btn-primary{
-      background: linear-gradient(45deg, var(--primary-dark), var(--primary-mid));
+      background: linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
       color:white;
     }
-    .btn-primary:hover{ filter: brightness(1.15); transform: translateY(-1px); }
     .btn-ghost{
-      background: rgba(0,0,0,0.18);
+      background: rgba(0,0,0,0.2);
       color: var(--accent-glow);
-      border: 1px solid rgba(255,255,255,0.10);
+      border:1px solid rgba(255,255,255,0.1);
     }
-    .btn-ghost:hover{ background: rgba(95,191,122,0.12); transform: translateY(-1px); }
 
     .alert{
-      margin-top: 16px;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.10);
+      margin-top:16px;
+      padding:12px;
+      border-radius:14px;
       font-weight:900;
     }
-    .alert.hidden{ display:none; }
-    .alert.info{ background: rgba(63,155,95,0.12); color: var(--accent-glow); }
-    .alert.success{ background: rgba(95,191,122,0.14); color: #dffbe7; }
-    .alert.danger{ background: rgba(255,107,107,0.12); border-color: rgba(255,107,107,0.30); color: #ffd1d1; }
+    .hidden{ display:none; }
+    .success{ background: rgba(95,191,122,0.14); }
+    .danger{ background: rgba(255,107,107,0.14); }
   </style>
 </head>
 
 <body>
-  <button class="back-btn" id="btnBack" title="Back">‹</button>
 
-  <div class="animated-bg-logo">
-    <img src="logo.png" alt="Background Logo">
-  </div>
+<button class="back-btn" onclick="history.back()">‹</button>
 
-  <div class="main-container">
-    <header class="topbar">
-      <div class="brand">
-        <img src="logo.png" alt="Whisper-WA Logo">
-        <div class="title">
-          <b>Whisper-WA</b>
-          <span id="top-subtitle">Digital Forensics Platform</span>
-        </div>
+<div class="animated-bg-logo">
+  <img src="logo.png" alt="">
+</div>
+
+<div class="main-container">
+  <section class="card">
+
+    <h1>Access</h1>
+    <p class="subtitle">Login to continue, or request an account.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="login">Login</button>
+      <button class="tab-btn" data-tab="request">Request Account</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="tab-content active" id="login">
+      <label>Email / Username</label>
+      <input id="loginUser">
+
+      <label>Password</label>
+      <input id="loginPass" type="password">
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btnLogin">Sign In</button>
+      </div>
+    </div>
+
+    <!-- REQUEST -->
+    <div class="tab-content" id="request">
+      <div class="row">
+        <input id="reqName" placeholder="Full Name">
+        <input id="reqEmail" placeholder="Email">
       </div>
 
-      <div class="top-actions">
-        <a class="nav-link" href="index.html" id="nav-home">Home</a>
-        <a class="nav-link" href="connect.html" id="nav-connect">Connect</a>
-        <button class="lang-btn" id="btnLang"><span id="langText">AR</span></button>
+      <textarea id="reqReason" placeholder="Reason"></textarea>
+
+      <div class="actions">
+        <button class="btn btn-primary">Submit</button>
+        <button class="btn btn-ghost">Clear</button>
       </div>
-    </header>
+    </div>
 
-    <main class="center">
-      <section class="card">
+    <div id="alert" class="alert hidden"></div>
 
-        <h1 id="title">System Login</h1>
-        <p class="subtitle" id="subtitle">
-          Login to continue, or request an account if you don’t have access.
-        </p>
+  </section>
+</div>
 
-        <div class="tabs">
-          <button class="tab-btn active" data-tab="loginTab" id="tabLogin">Login</button>
-          <button class="tab-btn" data-tab="requestTab" id="tabRequest">Request Account</button>
-        </div>
+<script>
+  const tabs = document.querySelectorAll(".tab-btn");
+  const contents = document.querySelectorAll(".tab-content");
 
-        <!-- LOGIN -->
-        <div class="tab-content active" id="loginTab">
-          <div class="panel">
-            <label for="loginUser" id="lUser">Email / Username</label>
-            <input id="loginUser" type="text" placeholder="e.g. analyst@domain.com" autocomplete="username"/>
-
-            <label for="loginPass" id="lPass">Password</label>
-            <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"/>
-
-            <div class="tiny-row">
-              <label class="checkbox">
-                <input type="checkbox" id="rememberMe"/>
-                <span id="lRemember">Remember me</span>
-              </label>
-              <a class="link" href="#" id="forgotLink">Forgot password?</a>
-            </div>
-
-            <div class="actions">
-              <button class="btn btn-primary" id="btnLogin">Sign In</button>
-              <button class="btn btn-ghost" id="btnGoConnect">Go to Connect</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- REQUEST ACCOUNT -->
-        <div class="tab-content" id="requestTab">
-          <div class="panel">
-
-            <div class="row">
-              <div>
-                <label for="reqName" id="rName">Full Name</label>
-                <input id="reqName" type="text" placeholder="e.g. Emtnan Saad"/>
-              </div>
-              <div>
-                <label for="reqEmail" id="rEmail">Email</label>
-                <input id="reqEmail" type="email" placeholder="e.g. name@domain.com"/>
-              </div>
-            </div>
-
-            <div class="row" style="margin-top:10px;">
-              <div>
-                <label for="reqOrg" id="rOrg">Organization</label>
-                <input id="reqOrg" type="text" placeholder="e.g. University / Company"/>
-              </div>
-              <div>
-                <label for="reqRole" id="rRole">Role</label>
-                <select id="reqRole">
-                  <option value="" selected>Choose…</option>
-                  <option>SOC Analyst</option>
-                  <option>DFIR Analyst</option>
-                  <option>Investigator</option>
-                  <option>Student</option>
-                  <option>Other</option>
-                </select>
-              </div>
-            </div>
-
-            <label for="reqReason" id="rReason" style="margin-top:10px;">Reason / Use Case</label>
-            <textarea id="reqReason" placeholder="Write a short reason..."></textarea>
-
-            <div class="actions">
-              <button class="btn btn-primary" id="btnRequest">Submit Request</button>
-              <button class="btn btn-ghost" id="btnClear">Clear</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="alert hidden" id="alertBox"></div>
-
-      </section>
-    </main>
-  </div>
-
-  <script>
-    // ===== CONFIG =====
-    const CONNECT_PAGE = "connect.html";
-    const DEMO_USER = "admin";
-    const DEMO_PASS = "admin123";
-
-    // ===== ELEMENTS =====
-    const tabBtns = document.querySelectorAll(".tab-btn");
-    const tabs = document.querySelectorAll(".tab-content");
-    const alertBox = document.getElementById("alertBox");
-
-    const loginUser = document.getElementById("loginUser");
-    const loginPass = document.getElementById("loginPass");
-    const rememberMe = document.getElementById("rememberMe");
-
-    const reqName = document.getElementById("reqName");
-    const reqEmail = document.getElementById("reqEmail");
-    const reqOrg = document.getElementById("reqOrg");
-    const reqRole = document.getElementById("reqRole");
-    const reqReason = document.getElementById("reqReason");
-
-    const btnLogin = document.getElementById("btnLogin");
-    const btnGoConnect = document.getElementById("btnGoConnect");
-    const btnRequest = document.getElementById("btnRequest");
-    const btnClear = document.getElementById("btnClear");
-    const forgotLink = document.getElementById("forgotLink");
-
-    const btnBack = document.getElementById("btnBack");
-
-    // Language
-    const btnLang = document.getElementById("btnLang");
-    const langText = document.getElementById("langText");
-    let currentLang = "en";
-
-    const T = {
-      en: {
-        topSubtitle:"Digital Forensics Platform",
-        navHome:"Home",
-        navConnect:"Connect",
-        title:"Access",
-        subtitle:"Login to continue, or request an account if you don’t have access.",
-        tabLogin:"Login",
-        tabRequest:"Request Account",
-
-        lUser:"Email / Username",
-        lUserPH:"e.g. analyst@domain.com",
-        lPass:"Password",
-        lPassPH:"••••••••",
-        lRemember:"Remember me",
-        forgot:"Forgot password?",
-        signIn:"Sign In",
-        goConnect:"Go to Connect",
-
-        rName:"Full Name",
-        rEmail:"Email",
-        rOrg:"Organization",
-        rRole:"Role",
-        rReason:"Reason / Use Case",
-        rReasonPH:"Write a short reason...",
-
-        submitReq:"Submit Request",
-        clear:"Clear",
-
-        aNeedLogin:"Please enter your email/username and password.",
-        aBadLogin:"Invalid credentials (demo: admin / admin123).",
-        aOkLogin:"Login successful. Redirecting…",
-        aForgot:"Demo: add reset flow later (backend).",
-        aNeedReq:"Please fill Full Name, Email, and Reason.",
-        aReqSent:"Request submitted (frontend demo)."
-      },
-      ar: {
-        topSubtitle:"منصة التحليل الجنائي الرقمي",
-        navHome:"الرئيسية",
-        navConnect:"الاتصال",
-        title:"الدخول",
-        subtitle:"سجّلي الدخول للمتابعة، أو قدّمي طلب حساب إذا ما عندك صلاحية.",
-        tabLogin:"تسجيل الدخول",
-        tabRequest:"طلب حساب",
-
-        lUser:"البريد / اسم المستخدم",
-        lUserPH:"مثال: analyst@domain.com",
-        lPass:"كلمة المرور",
-        lPassPH:"••••••••",
-        lRemember:"تذكرني",
-        forgot:"نسيت كلمة المرور؟",
-        signIn:"دخول",
-        goConnect:"اذهبي للاتصال",
-
-        rName:"الاسم الكامل",
-        rEmail:"البريد الإلكتروني",
-        rOrg:"الجهة",
-        rRole:"الدور",
-        rReason:"السبب / الاستخدام",
-        rReasonPH:"اكتبي سبب مختصر...",
-
-        submitReq:"إرسال الطلب",
-        clear:"مسح",
-
-        aNeedLogin:"اكتبي البريد/اسم المستخدم وكلمة المرور.",
-        aBadLogin:"بيانات الدخول غير صحيحة (الديمو: admin / admin123).",
-        aOkLogin:"تم تسجيل الدخول. جارٍ التحويل…",
-        aForgot:"ديمو: ضيفي الاستعادة لاحقاً (باك-إند).",
-        aNeedReq:"كمّلي الاسم والبريد والسبب.",
-        aReqSent:"تم إرسال الطلب (ديمو فورنت)."
-      }
-    };
-
-    function showAlert(type, text){
-      alertBox.classList.remove("hidden");
-      alertBox.className = "alert " + type;
-      alertBox.textContent = text;
+  tabs.forEach(btn=>{
+    btn.onclick=()=>{
+      tabs.forEach(b=>b.classList.remove("active"));
+      contents.forEach(c=>c.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
     }
-    function hideAlert(){
-      alertBox.classList.add("hidden");
-      alertBox.textContent = "";
+  });
+
+  document.getElementById("btnLogin").onclick=()=>{
+    const u=loginUser.value,p=loginPass.value;
+    const alert=document.getElementById("alert");
+    if(u==="admin" && p==="admin123"){
+      alert.className="alert success";
+      alert.textContent="Login successful";
+      alert.classList.remove("hidden");
+    }else{
+      alert.className="alert danger";
+      alert.textContent="Invalid credentials";
+      alert.classList.remove("hidden");
     }
+  }
+</script>
 
-    // Tabs
-    tabBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        tabBtns.forEach(b => b.classList.remove("active"));
-        tabs.forEach(t => t.classList.remove("active"));
-        btn.classList.add("active");
-        document.getElementById(btn.dataset.tab).classList.add("active");
-        hideAlert();
-      });
-    });
-
-    // Actions
-    btnGoConnect.addEventListener("click", () => window.location.href = CONNECT_PAGE);
-
-    btnLogin.addEventListener("click", () => {
-      hideAlert();
-      const u = loginUser.value.trim();
-      const p = loginPass.value.trim();
-
-      if(!u || !p){
-        showAlert("danger", T[currentLang].aNeedLogin);
-        return;
-      }
-
-      // demo auth
-      const ok = (u.toLowerCase() === DEMO_USER && p === DEMO_PASS);
-      if(!ok){
-        showAlert("danger", T[currentLang].aBadLogin);
-        return;
-      }
-
-      if(rememberMe.checked){
-        try{ localStorage.setItem("whisperwa_user", u); }catch(e){}
-      } else {
-        try{ localStorage.removeItem("whisperwa_user"); }catch(e){}
-      }
-
-      showAlert("success", T[currentLang].aOkLogin);
-      setTimeout(() => window.location.href = CONNECT_PAGE, 700);
-    });
-
-    forgotLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      showAlert("info", T[currentLang].aForgot);
-    });
-
-    btnRequest.addEventListener("click", () => {
-      hideAlert();
-      const name = reqName.value.trim();
-      const email = reqEmail.value.trim();
-      const reason = reqReason.value.trim();
-
-      if(!name || !email || !reason){
-        showAlert("danger", T[currentLang].aNeedReq);
-        return;
-      }
-
-      // frontend demo store
-      try{
-        localStorage.setItem("whisperwa_request", JSON.stringify({
-          name, email,
-          org: reqOrg.value.trim(),
-          role: reqRole.value,
-          reason,
-          ts: new Date().toISOString()
-        }));
-      }catch(e){}
-
-      showAlert("success", T[currentLang].aReqSent);
-    });
-
-    btnClear.addEventListener("click", () => {
-      reqName.value = "";
-      reqEmail.value = "";
-      reqOrg.value = "";
-      reqRole.value = "";
-      reqReason.value = "";
-      hideAlert();
-    });
-
-    // Back button
-    btnBack.addEventListener("click", () => history.back());
-
-    // Language
-    function applyLang(lang){
-      const html = document.documentElement;
-      html.lang = lang;
-      html.dir = (lang === "ar") ? "rtl" : "ltr";
-
-      document.getElementById("top-subtitle").textContent = T[lang].topSubtitle;
-      document.getElementById("nav-home").textContent = T[lang].navHome;
-      document.getElementById("nav-connect").textContent = T[lang].navConnect;
-
-      document.getElementById("title").textContent = T[lang].title;
-      document.getElementById("subtitle").textContent = T[lang].subtitle;
-
-      document.getElementById("tabLogin").textContent = T[lang].tabLogin;
-      document.getElementById("tabRequest").textContent = T[lang].tabRequest;
-
-      document.getElementById("lUser").textContent = T[lang].lUser;
-      loginUser.placeholder = T[lang].lUserPH;
-      document.getElementById("lPass").textContent = T[lang].lPass;
-      loginPass.placeholder = T[lang].lPassPH;
-      document.getElementById("lRemember").textContent = T[lang].lRemember;
-      forgotLink.textContent = T[lang].forgot;
-
-      btnLogin.textContent = T[lang].signIn;
-      btnGoConnect.textContent = T[lang].goConnect;
-
-      document.getElementById("rName").textContent = T[lang].rName;
-      document.getElementById("rEmail").textContent = T[lang].rEmail;
-      document.getElementById("rOrg").textContent = T[lang].rOrg;
-      document.getElementById("rRole").textContent = T[lang].rRole;
-      document.getElementById("rReason").textContent = T[lang].rReason;
-      reqReason.placeholder = T[lang].rReasonPH;
-
-      btnRequest.textContent = T[lang].submitReq;
-      btnClear.textContent = T[lang].clear;
-
-      langText.textContent = (lang === "en") ? "AR" : "EN";
-      hideAlert();
-    }
-
-    btnLang.addEventListener("click", () => {
-      currentLang = (currentLang === "en") ? "ar" : "en";
-      applyLang(currentLang);
-    });
-
-    // init
-    try{
-      const saved = localStorage.getItem("whisperwa_user");
-      if(saved) loginUser.value = saved;
-    }catch(e){}
-    applyLang(currentLang);
-  </script>
 </body>
 </html>
