@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Whisper-WA | Login</title>
+  <title>Whisper-WA | System Login</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
@@ -11,95 +11,65 @@
     :root{
       --primary-dark:#1f5f3b;
       --primary-mid:#3f9b5f;
-      --primary-light:#5fbf7a;
       --accent-glow:#8fd9a8;
-
       --bg-dark:#0e1a12;
-
-      --glass-bg: rgba(20, 40, 30, 0.65);
-      --glass-border: rgba(95, 191, 122, 0.3);
-
-      --text-white:#ffffff;
+      --glass-bg: rgba(20,40,30,.65);
+      --glass-border: rgba(95,191,122,.3);
       --text-muted:#c2dec9;
     }
 
-    *{ box-sizing:border-box; margin:0; padding:0; }
+    *{margin:0;padding:0;box-sizing:border-box}
 
     body{
       font-family:'Tajawal',sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-white);
+      background:var(--bg-dark);
+      color:#fff;
       height:100vh;
       overflow:hidden;
-
-      background-image:
-        radial-gradient(1200px 700px at 20% 10%, rgba(95,191,122,0.12), transparent 55%),
-        radial-gradient(900px 600px at 85% 20%, rgba(143,217,168,0.10), transparent 55%),
-        linear-gradient(rgba(31,95,59,0.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(31,95,59,0.10) 1px, transparent 1px);
-      background-size: auto, auto, 40px 40px, 40px 40px;
-    }
-
-    .animated-bg-logo{
-      position: fixed;
-      top:50%;
-      left:50%;
-      transform: translate(-50%,-50%);
-      z-index:-1;
-      width: 620px;
-      opacity:0.18;
-      animation: glow 8s ease-in-out infinite alternate;
-    }
-    .animated-bg-logo img{
-      width:100%;
-      filter: drop-shadow(0 0 30px var(--primary-mid));
-    }
-    @keyframes glow{
-      from{ opacity:0.1; transform:translate(-50%,-50%) scale(0.96); }
-      to{ opacity:0.26; transform:translate(-50%,-50%) scale(1.04); }
-    }
-
-    .main-container{
       display:flex;
       align-items:center;
       justify-content:center;
-      height:100vh;
-      padding:24px;
     }
 
-    .back-btn{
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(0,0,0,0.18);
-      color: var(--accent-glow);
-      cursor:pointer;
-      font-size:20px;
+    .animated-bg-logo{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      opacity:.15;
+      z-index:-1;
+    }
+    .animated-bg-logo img{
+      width:520px;
+      filter:drop-shadow(0 0 30px var(--primary-mid));
     }
 
     .card{
-      width:min(820px,95vw);
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(14px);
-      border-radius: 22px;
-      padding: 26px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+      width:min(760px,95vw);
+      background:var(--glass-bg);
+      backdrop-filter:blur(14px);
+      border:1px solid var(--glass-border);
+      border-radius:22px;
+      padding:28px;
+      box-shadow:0 10px 40px rgba(0,0,0,.35);
     }
 
-    h1{ font-size:1.7rem; margin-bottom:6px; }
-    .subtitle{ color:var(--text-muted); margin-bottom:18px; }
+    h1{
+      font-size:1.8rem;
+      margin-bottom:6px;
+    }
+    .subtitle{
+      color:var(--text-muted);
+      margin-bottom:18px;
+    }
 
     .tabs{
       display:flex;
-      background: rgba(0,0,0,0.18);
-      border-radius: 16px;
+      background:rgba(0,0,0,.18);
+      border-radius:16px;
       overflow:hidden;
-      margin-bottom:14px;
+      margin-bottom:16px;
     }
     .tab-btn{
       flex:1;
@@ -111,37 +81,35 @@
       cursor:pointer;
     }
     .tab-btn.active{
-      background: rgba(95,191,122,0.16);
-      color: var(--accent-glow);
+      background:rgba(95,191,122,.16);
+      color:var(--accent-glow);
     }
 
-    .tab-content{ display:none; }
-    .tab-content.active{ display:block; }
+    .tab-content{display:none}
+    .tab-content.active{display:block}
 
-    label{ display:block; margin:10px 0 6px; color:var(--text-muted); font-weight:800; }
+    label{
+      display:block;
+      margin:12px 0 6px;
+      color:var(--text-muted);
+      font-weight:800;
+    }
 
-    input,select,textarea{
+    input,textarea{
       width:100%;
       padding:12px;
       border-radius:12px;
       border:1px solid var(--glass-border);
-      background: rgba(0,0,0,0.25);
-      color:white;
+      background:rgba(0,0,0,.25);
+      color:#fff;
     }
 
-    textarea{ min-height:110px; }
-
-    .row{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    @media(max-width:720px){ .row{ grid-template-columns:1fr; } }
+    textarea{min-height:110px}
 
     .actions{
       display:flex;
       gap:12px;
-      margin-top:14px;
+      margin-top:16px;
     }
 
     .btn{
@@ -153,13 +121,13 @@
       border:none;
     }
     .btn-primary{
-      background: linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
-      color:white;
+      background:linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
+      color:#fff;
     }
     .btn-ghost{
-      background: rgba(0,0,0,0.2);
-      color: var(--accent-glow);
-      border:1px solid rgba(255,255,255,0.1);
+      background:rgba(0,0,0,.2);
+      color:var(--accent-glow);
+      border:1px solid rgba(255,255,255,.1);
     }
 
     .alert{
@@ -167,68 +135,67 @@
       padding:12px;
       border-radius:14px;
       font-weight:900;
+      display:none;
     }
-    .hidden{ display:none; }
-    .success{ background: rgba(95,191,122,0.14); }
-    .danger{ background: rgba(255,107,107,0.14); }
+    .alert.success{background:rgba(95,191,122,.14)}
+    .alert.danger{background:rgba(255,107,107,.14)}
   </style>
 </head>
 
 <body>
 
-<button class="back-btn" onclick="history.back()">‹</button>
-
 <div class="animated-bg-logo">
   <img src="logo.png" alt="">
 </div>
 
-<div class="main-container">
-  <section class="card">
+<section class="card">
 
-   <title>Whisper-WA | System Login</title>
-    <p class="subtitle">Login to continue, or request an account.</p>
+  <h1>System Login</h1>
+  <p class="subtitle">Login to continue, or request an account.</p>
 
-    <div class="tabs">
-      <button class="tab-btn active" data-tab="login">Login</button>
-      <button class="tab-btn" data-tab="request">Request Account</button>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="login">Login</button>
+    <button class="tab-btn" data-tab="request">Request Account</button>
+  </div>
+
+  <!-- LOGIN -->
+  <div class="tab-content active" id="login">
+    <label>Email / Username</label>
+    <input id="loginUser" placeholder="analyst@domain.com">
+
+    <label>Password</label>
+    <input id="loginPass" type="password" placeholder="••••••••">
+
+    <div class="actions">
+      <button class="btn btn-primary" id="btnLogin">Sign In</button>
     </div>
+  </div>
 
-    <!-- LOGIN -->
-    <div class="tab-content active" id="login">
-      <label>Email / Username</label>
-      <input id="loginUser">
+  <!-- REQUEST -->
+  <div class="tab-content" id="request">
+    <label>Full Name</label>
+    <input>
 
-      <label>Password</label>
-      <input id="loginPass" type="password">
+    <label>Email</label>
+    <input>
 
-      <div class="actions">
-        <button class="btn btn-primary" id="btnLogin">Sign In</button>
-      </div>
+    <label>Reason / Use Case</label>
+    <textarea placeholder="Write a short reason..."></textarea>
+
+    <div class="actions">
+      <button class="btn btn-primary">Submit Request</button>
+      <button class="btn btn-ghost">Clear</button>
     </div>
+  </div>
 
-    <!-- REQUEST -->
-    <div class="tab-content" id="request">
-      <div class="row">
-        <input id="reqName" placeholder="Full Name">
-        <input id="reqEmail" placeholder="Email">
-      </div>
+  <div id="alert" class="alert"></div>
 
-      <textarea id="reqReason" placeholder="Reason"></textarea>
-
-      <div class="actions">
-        <button class="btn btn-primary">Submit</button>
-        <button class="btn btn-ghost">Clear</button>
-      </div>
-    </div>
-
-    <div id="alert" class="alert hidden"></div>
-
-  </section>
-</div>
+</section>
 
 <script>
-  const tabs = document.querySelectorAll(".tab-btn");
-  const contents = document.querySelectorAll(".tab-content");
+  const tabs=document.querySelectorAll(".tab-btn");
+  const contents=document.querySelectorAll(".tab-content");
+  const alertBox=document.getElementById("alert");
 
   tabs.forEach(btn=>{
     btn.onclick=()=>{
@@ -236,21 +203,19 @@
       contents.forEach(c=>c.classList.remove("active"));
       btn.classList.add("active");
       document.getElementById(btn.dataset.tab).classList.add("active");
+      alertBox.style.display="none";
     }
   });
 
-  document.getElementById("btnLogin").onclick=()=>{
-    const u=loginUser.value,p=loginPass.value;
-    const alert=document.getElementById("alert");
-    if(u==="admin" && p==="admin123"){
-      alert.className="alert success";
-      alert.textContent="Login successful";
-      alert.classList.remove("hidden");
+  btnLogin.onclick=()=>{
+    if(loginUser.value==="admin" && loginPass.value==="admin123"){
+      alertBox.textContent="Login successful";
+      alertBox.className="alert success";
     }else{
-      alert.className="alert danger";
-      alert.textContent="Invalid credentials";
-      alert.classList.remove("hidden");
+      alertBox.textContent="Invalid credentials";
+      alertBox.className="alert danger";
     }
+    alertBox.style.display="block";
   }
 </script>
 
