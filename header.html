@@ -16,15 +16,47 @@
     z-index: 9999;
   }
 
-  .ww-left{ display:flex; align-items:center; gap:12px; min-width: 240px; }
-  .ww-brand{ display:flex; align-items:center; gap:12px; }
-  .ww-logo{ height:42px; width:auto; filter: drop-shadow(0 0 6px rgba(63,155,95,0.5)); }
+  .ww-left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    min-width: 240px;
+  }
 
-  .ww-title{ display:flex; flex-direction:column; line-height:1.1; }
-  .ww-title b{ font-size:1.15rem; color:#fff; }
-  .ww-title span{ color:#c2dec9; font-size:0.85rem; margin-top:4px; }
+  .ww-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
 
-  .ww-actions{ display:flex; align-items:center; gap:10px; }
+  .ww-logo{
+    height:42px;
+    width:auto;
+    filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
+  }
+
+  .ww-title{
+    display:flex;
+    flex-direction:column;
+    line-height:1.1;
+  }
+
+  .ww-title b{
+    font-size:1.15rem;
+    color:#fff;
+  }
+
+  .ww-title span{
+    color:#c2dec9;
+    font-size:0.85rem;
+    margin-top:4px;
+  }
+
+  .ww-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
 
   .ww-icon-btn{
     border:none;
@@ -33,13 +65,18 @@
     width:38px;
     height:38px;
     border-radius:12px;
-    display:inline-flex;
+    display:flex;
     align-items:center;
     justify-content:center;
     cursor:pointer;
     transition:0.2s;
   }
-  .ww-icon-btn:hover{ background: rgba(95,191,122,0.14); color:#8fd9a8; transform: translateY(-1px); }
+
+  .ww-icon-btn:hover{
+    background: rgba(95,191,122,0.14);
+    color:#8fd9a8;
+    transform: translateY(-1px);
+  }
 
   .ww-lang-btn{
     background: rgba(95,191,122,0.10);
@@ -52,9 +89,15 @@
     transition:0.25s;
     user-select:none;
   }
-  .ww-lang-btn:hover{ background: rgba(95,191,122,0.18); transform: translateY(-1px); }
 
-  .ww-dropdown{ position:relative; }
+  .ww-lang-btn:hover{
+    background: rgba(95,191,122,0.18);
+    transform: translateY(-1px);
+  }
+
+  .ww-dropdown{
+    position: relative; /* مهم جدًا */
+  }
 
   .ww-avatar-btn{
     border:none;
@@ -69,13 +112,20 @@
     color:#c2dec9;
     transition:0.2s;
   }
-  .ww-avatar-btn:hover{ background: rgba(95,191,122,0.14); color:#8fd9a8; transform: translateY(-1px); }
 
-  /* ✅ أهم شي: z-index عالي عشان ما تندفن */
+  .ww-avatar-btn:hover{
+    background: rgba(95,191,122,0.14);
+    color:#8fd9a8;
+    transform: translateY(-1px);
+  }
+
+  /* ✅ التعديل المهم هنا */
   .ww-menu{
     position:absolute;
-    top: 46px;
-    right: 0;
+    top: calc(100% + 10px);     /* بدل رقم ثابت */
+    inset-inline-end: 0;        /* يمين تلقائي مع RTL/LTR */
+    inset-inline-start: auto;
+
     min-width: 180px;
     background: rgba(20, 40, 30, 0.92);
     border: 1px solid rgba(95, 191, 122, 0.3);
@@ -83,17 +133,21 @@
     border-radius: 14px;
     padding: 8px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+
     display:none;
     z-index: 20000;
   }
-  .ww-menu.open{ display:block; }
+
+  .ww-menu.open{
+    display:block;
+  }
 
   .ww-menu-item{
     width:100%;
     display:flex;
     align-items:center;
     gap:10px;
-    padding: 10px 10px;
+    padding: 10px;
     border-radius: 12px;
     color:#fff;
     text-decoration:none;
@@ -104,8 +158,14 @@
     font-size: 0.92rem;
     text-align: start;
   }
-  .ww-menu-item i{ color:#8fd9a8; }
-  .ww-menu-item:hover{ background: rgba(95,191,122,0.14); }
+
+  .ww-menu-item i{
+    color:#8fd9a8;
+  }
+
+  .ww-menu-item:hover{
+    background: rgba(95,191,122,0.14);
+  }
 </style>
 
 <header class="ww-topbar" id="wwTopbar">
@@ -129,7 +189,7 @@
     </button>
 
     <div class="ww-dropdown" id="accountDropdown">
-      <button class="ww-avatar-btn" id="btnAccount" type="button" aria-haspopup="menu" aria-expanded="false" title="Account">
+      <button class="ww-avatar-btn" id="btnAccount" type="button" aria-haspopup="menu" aria-expanded="false">
         <i class="fa-solid fa-user"></i>
       </button>
 
@@ -149,43 +209,37 @@
 </header>
 
 <script>
-  (function(){
-    const btnAccount = document.getElementById("btnAccount");
-    const menu = document.getElementById("accountMenu");
-    const logoutBtn = document.getElementById("menuLogout");
+(function(){
+  const btnAccount = document.getElementById("btnAccount");
+  const menu = document.getElementById("accountMenu");
+  const logoutBtn = document.getElementById("menuLogout");
 
-    if (!btnAccount || !menu) return;
+  if (!btnAccount || !menu) return;
 
-    function openMenu(){
-      menu.classList.add("open");
-      btnAccount.setAttribute("aria-expanded", "true");
-      menu.setAttribute("aria-hidden", "false");
-    }
-    function closeMenu(){
-      menu.classList.remove("open");
-      btnAccount.setAttribute("aria-expanded", "false");
-      menu.setAttribute("aria-hidden", "true");
-    }
-    function toggleMenu(){
-      if (menu.classList.contains("open")) closeMenu();
-      else openMenu();
-    }
+  function openMenu(){
+    menu.classList.add("open");
+    btnAccount.setAttribute("aria-expanded", "true");
+    menu.setAttribute("aria-hidden", "false");
+  }
 
-    // ✅ زر الرجل
-    btnAccount.addEventListener("click", (e)=>{
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
+  function closeMenu(){
+    menu.classList.remove("open");
+    btnAccount.setAttribute("aria-expanded", "false");
+    menu.setAttribute("aria-hidden", "true");
+  }
+
+  btnAccount.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    menu.classList.contains("open") ? closeMenu() : openMenu();
+  });
+
+  menu.addEventListener("click", (e)=> e.stopPropagation());
+  document.addEventListener("click", closeMenu);
+
+  if (logoutBtn){
+    logoutBtn.addEventListener("click", ()=> {
+      window.location.href = "index.html";
     });
-
-    // ✅ لا تقفل إذا ضغطتي داخل القائمة
-    menu.addEventListener("click", (e)=> e.stopPropagation());
-
-    // ✅ قفل فقط إذا ضغطتي خارج الهيدر
-    document.addEventListener("click", ()=> closeMenu());
-
-    if (logoutBtn){
-      logoutBtn.addEventListener("click", ()=> window.location.href="index.html");
-    }
-  })();
+  }
+})();
 </script>
