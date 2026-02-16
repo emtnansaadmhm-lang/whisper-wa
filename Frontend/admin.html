@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whisper-WA | Admin Dashboard</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary-dark:#1f5f3b;
+      --primary-mid:#3f9b5f;
+      --primary-light:#5fbf7a;
+      --accent-glow:#8fd9a8;
+
+      --bg-dark:#0e1a12;
+
+      --glass-bg: rgba(20, 40, 30, 0.65);
+      --glass-border: rgba(95, 191, 122, 0.3);
+
+      --text-white:#ffffff;
+      --text-muted:#c2dec9;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+
+    body{
+      font-family:'Tajawal',sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height:100vh;
+      overflow-x:hidden;
+
+      background-image:
+        linear-gradient(rgba(31, 95, 59, 0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31, 95, 59, 0.10) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .animated-bg-logo{
+      position: fixed;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      z-index:-1;
+      width: 650px;
+      pointer-events:none;
+      opacity:0.15;
+      animation: cyberGlowPulse 8s ease-in-out infinite alternate;
+    }
+    .animated-bg-logo img{
+      width:100%;
+      height:auto;
+      filter: drop-shadow(0 0 30px var(--primary-mid));
+    }
+    @keyframes cyberGlowPulse{
+      0%{ opacity:0.10; transform: translate(-50%,-50%) scale(0.95); }
+      100%{ opacity:0.25; transform: translate(-50%,-50%) scale(1.05); }
+    }
+
+    .main-container{
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+      display:flex;
+      flex-direction:column;
+      gap: 20px;
+    }
+
+    /* ========== HEADER ========== */
+    .page-header{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .header-left h1{
+      font-size: 1.8rem;
+      margin-bottom: 4px;
+      color: var(--primary-light);
+    }
+
+    .header-left p{
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .header-actions{
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn{
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      font-family: inherit;
+      transition: 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ghost{
+      background: rgba(0,0,0,0.18);
+      color: var(--accent-glow);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-ghost:hover{
+      background: rgba(95,191,122,0.12);
+      transform: translateY(-1px);
+    }
+
+    /* ========== STATS CARDS ========== */
+    .stats-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    .stat-card .icon{
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(95,191,122,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-glow);
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+
+    .stat-card .value{
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 4px;
+    }
+
+    .stat-card .label{
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ========== PANELS ========== */
+    .panel{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      border-radius: 18px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .panel-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .panel-header h3{
+      font-size: 1.3rem;
+      color: var(--primary-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      background: rgba(255,193,7,0.2);
+      color: #ffe7a6;
+      border: 1px solid rgba(255,193,7,0.3);
+    }
+
+    /* ========== REQUEST CARD ========== */
+    .request-card{
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+      transition: 0.25s;
+    }
+
+    .request-card:hover{
+      background: rgba(95,191,122,0.08);
+      border-color: rgba(95,191,122,0.2);
+    }
+
+    .request-header{
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .request-info h4{
+      font-size: 1.05rem;
+      margin-bottom: 4px;
+      color: white;
+    }
+
+    .request-info .email{
+      color: var(--accent-glow);
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .request-info .meta{
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .request-reason{
+      background: rgba(0,0,0,0.2);
+      border-left: 3px solid var(--primary-mid);
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .request-actions{
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn-small{
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+      font-family: inherit;
+      font-size: 0.85rem;
+      transition: 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-approve{
+      background: rgba(95,191,122,0.2);
+      color: #d8ffe4;
+      border: 1px solid rgba(95,191,122,0.3);
+    }
+    .btn-approve:hover{
+      background: rgba(95,191,122,0.35);
+      transform: translateY(-1px);
+    }
+
+    .btn-reject{
+      background: rgba(255,107,107,0.2);
+      color: #ffd1d1;
+      border: 1px solid rgba(255,107,107,0.3);
+    }
+    .btn-reject:hover{
+      background: rgba(255,107,107,0.35);
+      transform: translateY(-1px);
+    }
+
+    /* ========== USER TABLE ========== */
+    .user-table-wrap{
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+    }
+
+    .user-table{
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    .user-table thead th{
+      background: rgba(20, 40, 30, 0.95);
+      color: var(--primary-light);
+      font-size: 0.9rem;
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .user-table tbody td{
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--text-white);
+    }
+
+    .user-table tbody tr:hover{
+      background: rgba(95, 191, 122, 0.08);
+    }
+
+    .btn-revoke{
+      background: rgba(255,107,107,0.15);
+      color: #ffd1d1;
+      border: 1px solid rgba(255,107,107,0.25);
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 800;
+      transition: 0.2s;
+    }
+    .btn-revoke:hover{
+      background: rgba(255,107,107,0.3);
+    }
+
+    .empty-state{
+      padding: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .empty-state i{
+      font-size: 3rem;
+      margin-bottom: 12px;
+      opacity: 0.3;
+    }
+
+    .alert{
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      font-weight: 800;
+      display: none;
+    }
+    .alert.show{ display: block; }
+    .alert.success{
+      background: rgba(95,191,122,0.2);
+      color: #d8ffe4;
+      border: 1px solid rgba(95,191,122,0.3);
+    }
+    .alert.info{
+      background: rgba(99,179,237,0.2);
+      color: #d1e7ff;
+      border: 1px solid rgba(99,179,237,0.3);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="animated-bg-logo">
+    <img src="logo.png" alt="Background Logo">
+  </div>
+
+  <div class="main-container">
+
+    <!-- ========== HEADER ========== -->
+    <header class="page-header">
+      <div class="header-left">
+        <h1><i class="fa-solid fa-shield-halved"></i> Admin Dashboard</h1>
+        <p>Manage user access requests and active accounts</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-ghost" onclick="window.location.href='connect.html'">
+          <i class="fa-solid fa-arrow-left"></i> Back to App
+        </button>
+      </div>
+    </header>
+
+    <!-- ========== ALERT ========== -->
+    <div id="alertBox" class="alert"></div>
+
+    <!-- ========== STATS ========== -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="icon"><i class="fa-solid fa-clock"></i></div>
+        <div class="value" id="statPending">0</div>
+        <div class="label">Pending Requests</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="icon"><i class="fa-solid fa-user-check"></i></div>
+        <div class="value" id="statActive">0</div>
+        <div class="label">Active Users</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="icon"><i class="fa-solid fa-user-xmark"></i></div>
+        <div class="value" id="statRejected">0</div>
+        <div class="label">Rejected Requests</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
+        <div class="value" id="statTotal">0</div>
+        <div class="label">Total Requests</div>
+      </div>
+    </div>
+
+    <!-- ========== PENDING REQUESTS ========== -->
+    <section class="panel">
+      <div class="panel-header">
+        <h3>
+          <i class="fa-solid fa-hourglass-half"></i> 
+          Pending Requests 
+          <span class="badge" id="badgePending">0</span>
+        </h3>
+      </div>
+      <div id="pendingRequestsContainer"></div>
+    </section>
+
+    <!-- ========== ACTIVE USERS ========== -->
+    <section class="panel">
+      <div class="panel-header">
+        <h3>
+          <i class="fa-solid fa-users"></i> 
+          Active Users
+        </h3>
+      </div>
+      <div class="user-table-wrap">
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Job Title</th>
+              <th>Approved On</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="activeUsersTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // ========== DATA MANAGEMENT ==========
+    function getRequests(){
+      return JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    }
+
+    function saveRequests(requests){
+      localStorage.setItem("accountRequests", JSON.stringify(requests));
+    }
+
+    function getActiveUsers(){
+      return JSON.parse(localStorage.getItem("activeUsers") || "[]");
+    }
+
+    function saveActiveUsers(users){
+      localStorage.setItem("activeUsers", JSON.stringify(users));
+    }
+
+    // ========== ALERT ==========
+    function showAlert(type, message){
+      const alertBox = document.getElementById("alertBox");
+      alertBox.className = `alert ${type} show`;
+      alertBox.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i> ${message}`;
+      setTimeout(() => alertBox.classList.remove("show"), 4000);
+    }
+
+    // ========== UPDATE STATS ==========
+    function updateStats(){
+      const requests = getRequests();
+      const activeUsers = getActiveUsers();
+
+      const pending = requests.filter(r => r.status === "pending").length;
+      const rejected = requests.filter(r => r.status === "rejected").length;
+
+      document.getElementById("statPending").textContent = pending;
+      document.getElementById("statActive").textContent = activeUsers.length;
+      document.getElementById("statRejected").textContent = rejected;
+      document.getElementById("statTotal").textContent = requests.length;
+      document.getElementById("badgePending").textContent = pending;
+    }
+
+    // ========== RENDER PENDING REQUESTS ==========
+    function renderPendingRequests(){
+      const container = document.getElementById("pendingRequestsContainer");
+      const requests = getRequests().filter(r => r.status === "pending");
+
+      if(requests.length === 0){
+        container.innerHTML = `
+          <div class="empty-state">
+            <i class="fa-solid fa-inbox"></i>
+            <p>No pending requests at the moment.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = requests.map(req => `
+        <div class="request-card" data-id="${req.id}">
+          <div class="request-header">
+            <div class="request-info">
+              <h4>${req.name}</h4>
+              <div class="email"><i class="fa-solid fa-envelope"></i> ${req.email}</div>
+              <div class="meta">
+                <i class="fa-solid fa-briefcase"></i> ${req.job} 
+                ${req.department !== "Not specified" ? `• ${req.department}` : ""}
+                <br>
+                <i class="fa-solid fa-clock"></i> Submitted: ${new Date(req.timestamp).toLocaleString()}
+              </div>
+            </div>
+          </div>
+          <div class="request-reason">
+            <strong>Reason for Access:</strong><br>
+            ${req.reason}
+          </div>
+          <div class="request-actions">
+            <button class="btn-small btn-approve" onclick="approveRequest(${req.id})">
+              <i class="fa-solid fa-check"></i> Approve
+            </button>
+            <button class="btn-small btn-reject" onclick="rejectRequest(${req.id})">
+              <i class="fa-solid fa-xmark"></i> Reject
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    // ========== RENDER ACTIVE USERS ==========
+    function renderActiveUsers(){
+      const tbody = document.getElementById("activeUsersTable");
+      const users = getActiveUsers();
+
+      if(users.length === 0){
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" style="text-align:center; padding:40px; color:var(--text-muted);">
+              <i class="fa-solid fa-users-slash" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>
+              No active users yet.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = users.map(user => `
+        <tr>
+          <td><strong>${user.name}</strong></td>
+          <td>${user.email}</td>
+          <td>${user.job}</td>
+          <td>${new Date(user.approvedOn).toLocaleDateString()}</td>
+          <td>
+            <button class="btn-revoke" onclick="revokeUser('${user.email}')">
+              <i class="fa-solid fa-ban"></i> Revoke
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    // ========== APPROVE REQUEST ==========
+    function approveRequest(id){
+      const requests = getRequests();
+      const request = requests.find(r => r.id === id);
+      
+      if(!request) return;
+
+      // Update request status
+      request.status = "approved";
+      saveRequests(requests);
+
+      // Add to active users
+      const activeUsers = getActiveUsers();
+      activeUsers.push({
+        name: request.name,
+        email: request.email,
+        job: request.job,
+        department: request.department,
+        approvedOn: new Date().toISOString()
+      });
+      saveActiveUsers(activeUsers);
+
+      showAlert("success", `✓ ${request.name}'s request has been approved!`);
+      refresh();
+    }
+
+    // ========== REJECT REQUEST ==========
+    function rejectRequest(id){
+      const requests = getRequests();
+      const request = requests.find(r => r.id === id);
+      
+      if(!request) return;
+
+      request.status = "rejected";
+      saveRequests(requests);
+
+      showAlert("info", `${request.name}'s request has been rejected.`);
+      refresh();
+    }
+
+    // ========== REVOKE USER ==========
+    function revokeUser(email){
+      if(!confirm(`Are you sure you want to revoke access for ${email}?`)) return;
+
+      const activeUsers = getActiveUsers();
+      const filtered = activeUsers.filter(u => u.email !== email);
+      saveActiveUsers(filtered);
+
+      showAlert("info", `Access revoked for ${email}.`);
+      refresh();
+    }
+
+    // ========== REFRESH DATA ==========
+    function refresh(){
+      updateStats();
+      renderPendingRequests();
+      renderActiveUsers();
+    }
+
+    // ========== INIT ==========
+    window.onload = refresh;
+  </script>
+</body>
+</html>
