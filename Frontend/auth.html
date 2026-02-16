@@ -1,245 +1,448 @@
-<!-- header.html -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whisper-WA | Login</title>
 
-<style>
-  .ww-topbar{
-    background: rgba(20, 40, 30, 0.65);
-    border: 1px solid rgba(95, 191, 122, 0.3);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 12px 18px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.22);
-    position: relative;
-    z-index: 9999;
-  }
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
-  .ww-left{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    min-width: 240px;
-  }
+  <style>
+    :root{
+      --primary-dark:#1f5f3b;
+      --primary-mid:#3f9b5f;
+      --primary-light:#5fbf7a;
+      --accent-glow:#8fd9a8;
 
-  .ww-brand{
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
+      --bg-dark:#0e1a12;
 
-  .ww-logo{
-    height:42px;
-    width:auto;
-    filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
-  }
+      --glass-bg: rgba(20, 40, 30, 0.65);
+      --glass-border: rgba(95, 191, 122, 0.3);
 
-  .ww-title{
-    display:flex;
-    flex-direction:column;
-    line-height:1.1;
-  }
+      --text-white:#ffffff;
+      --text-muted:#c2dec9;
+    }
 
-  .ww-title b{
-    font-size:1.15rem;
-    color:#fff;
-  }
+    *{ box-sizing:border-box; margin:0; padding:0; }
 
-  .ww-title span{
-    color:#c2dec9;
-    font-size:0.85rem;
-    margin-top:4px;
-  }
+    body{
+      font-family:'Tajawal',sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      height:100vh;
+      overflow:hidden;
 
-  .ww-actions{
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
+      background-image:
+        radial-gradient(1200px 700px at 20% 10%, rgba(95,191,122,0.12), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(143,217,168,0.10), transparent 55%),
+        linear-gradient(rgba(31,95,59,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,95,59,0.10) 1px, transparent 1px);
+      background-size: auto, auto, 40px 40px, 40px 40px;
+    }
 
-  .ww-icon-btn{
-    border:none;
-    background: rgba(0,0,0,0.18);
-    color:#c2dec9;
-    width:38px;
-    height:38px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    transition:0.2s;
-  }
+    .animated-bg-logo{
+      position: fixed;
+      top:50%;
+      left:50%;
+      transform: translate(-50%,-50%);
+      z-index:-1;
+      width: 620px;
+      opacity:0.18;
+      animation: glow 8s ease-in-out infinite alternate;
+    }
+    .animated-bg-logo img{
+      width:100%;
+      filter: drop-shadow(0 0 30px var(--primary-mid));
+    }
+    @keyframes glow{
+      from{ opacity:0.1; transform:translate(-50%,-50%) scale(0.96); }
+      to{ opacity:0.26; transform:translate(-50%,-50%) scale(1.04); }
+    }
 
-  .ww-icon-btn:hover{
-    background: rgba(95,191,122,0.14);
-    color:#8fd9a8;
-    transform: translateY(-1px);
-  }
+    .main-container{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+      padding:24px;
+    }
 
-  .ww-lang-btn{
-    background: rgba(95,191,122,0.10);
-    border: 1px solid rgba(95, 191, 122, 0.3);
-    color:#8fd9a8;
-    padding: 8px 14px;
-    border-radius: 999px;
-    cursor:pointer;
-    font-weight:900;
-    transition:0.25s;
-    user-select:none;
-  }
+    .back-btn{
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.18);
+      color: var(--accent-glow);
+      cursor:pointer;
+      font-size:20px;
+    }
 
-  .ww-lang-btn:hover{
-    background: rgba(95,191,122,0.18);
-    transform: translateY(-1px);
-  }
+    .card{
+      width:min(820px,95vw);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+    }
 
-  .ww-dropdown{
-    position: relative; /* مهم جدًا */
-  }
+    h1{ font-size:1.7rem; margin-bottom:6px; }
+    .subtitle{ color:var(--text-muted); margin-bottom:18px; }
 
-  .ww-avatar-btn{
-    border:none;
-    background: rgba(0,0,0,0.18);
-    width:38px;
-    height:38px;
-    border-radius:12px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#c2dec9;
-    transition:0.2s;
-  }
+    .tabs{
+      display:flex;
+      background: rgba(0,0,0,0.18);
+      border-radius: 16px;
+      overflow:hidden;
+      margin-bottom:14px;
+    }
+    .tab-btn{
+      flex:1;
+      padding:12px;
+      border:none;
+      background:none;
+      color:var(--text-muted);
+      font-weight:900;
+      cursor:pointer;
+    }
+    .tab-btn.active{
+      background: rgba(95,191,122,0.16);
+      color: var(--accent-glow);
+    }
 
-  .ww-avatar-btn:hover{
-    background: rgba(95,191,122,0.14);
-    color:#8fd9a8;
-    transform: translateY(-1px);
-  }
+    .tab-content{ display:none; }
+    .tab-content.active{ display:block; }
 
-  /* ✅ التعديل المهم هنا */
-  .ww-menu{
-    position:absolute;
-    top: calc(100% + 10px);     /* بدل رقم ثابت */
-    inset-inline-end: 0;        /* يمين تلقائي مع RTL/LTR */
-    inset-inline-start: auto;
+    label{ 
+      display:block; 
+      margin:10px 0 6px; 
+      color:var(--text-muted); 
+      font-weight:800; 
+    }
+    label .required{
+      color: #ff6b6b;
+      margin-left: 4px;
+    }
 
-    min-width: 180px;
-    background: rgba(20, 40, 30, 0.92);
-    border: 1px solid rgba(95, 191, 122, 0.3);
-    backdrop-filter: blur(12px);
-    border-radius: 14px;
-    padding: 8px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    input,select,textarea{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid var(--glass-border);
+      background: rgba(0,0,0,0.25);
+      color:white;
+      font-family: inherit;
+    }
+    input::placeholder, textarea::placeholder{
+      color: rgba(194,222,201,0.5);
+    }
 
-    display:none;
-    z-index: 20000;
-  }
+    textarea{ min-height:110px; resize: vertical; }
 
-  .ww-menu.open{
-    display:block;
-  }
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media(max-width:720px){ .row{ grid-template-columns:1fr; } }
 
-  .ww-menu-item{
-    width:100%;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding: 10px;
-    border-radius: 12px;
-    color:#fff;
-    text-decoration:none;
-    background: transparent;
-    border:none;
-    cursor:pointer;
-    font-family: 'Tajawal', sans-serif;
-    font-size: 0.92rem;
-    text-align: start;
-  }
+    .actions{
+      display:flex;
+      gap:12px;
+      margin-top:14px;
+    }
 
-  .ww-menu-item i{
-    color:#8fd9a8;
-  }
+    .btn{
+      flex:1;
+      padding:12px;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      border:none;
+      transition: 0.25s;
+    }
+    .btn:disabled{
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-primary{
+      background: linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
+      color:white;
+    }
+    .btn-primary:hover:not(:disabled){
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
+    .btn-ghost{
+      background: rgba(0,0,0,0.2);
+      color: var(--accent-glow);
+      border:1px solid rgba(255,255,255,0.1);
+    }
+    .btn-ghost:hover:not(:disabled){
+      background: rgba(95,191,122,0.12);
+      transform: translateY(-1px);
+    }
 
-  .ww-menu-item:hover{
-    background: rgba(95,191,122,0.14);
-  }
-</style>
+    .alert{
+      margin-top:16px;
+      padding:12px;
+      border-radius:14px;
+      font-weight:900;
+    }
+    .hidden{ display:none; }
+    .success{ 
+      background: rgba(95,191,122,0.14); 
+      color: #dffbe7;
+      border: 1px solid rgba(95,191,122,0.3);
+    }
+    .danger{ 
+      background: rgba(255,107,107,0.14); 
+      color: #ffd1d1;
+      border: 1px solid rgba(255,107,107,0.3);
+    }
+    .info{
+      background: rgba(99,179,237,0.14);
+      color: #d1e7ff;
+      border: 1px solid rgba(99,179,237,0.3);
+    }
 
-<header class="ww-topbar" id="wwTopbar">
-  <div class="ww-left">
-    <button class="ww-icon-btn" id="btnBack" type="button" title="Back">
-      <i class="fa-solid fa-arrow-left"></i>
-    </button>
+    .note{
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(99,179,237,0.08);
+      border: 1px solid rgba(99,179,237,0.2);
+      border-radius: 10px;
+      color: rgba(209,231,255,0.9);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
 
-    <div class="ww-brand">
-      <img src="logo.png" class="ww-logo" alt="Whisper-WA Logo" />
-      <div class="ww-title">
-        <b>Whisper-WA</b>
-        <span id="top-subtitle">Digital Forensics Platform</span>
+<body>
+
+<button class="back-btn" onclick="window.location.href='index.html'">‹</button>
+
+<div class="animated-bg-logo">
+  <img src="logo.png" alt="">
+</div>
+
+<div class="main-container">
+  <section class="card">
+
+    <h1>Access Control</h1>
+    <p class="subtitle">Login to continue, or request an account for approval.</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="login">Login</button>
+      <button class="tab-btn" data-tab="request">Request Account</button>
+    </div>
+
+    <!-- ========== LOGIN TAB ========== -->
+    <div class="tab-content active" id="login">
+      <label>Email / Username</label>
+      <input id="loginUser" type="text" placeholder="Enter your email or username">
+
+      <label>Password</label>
+      <input id="loginPass" type="password" placeholder="Enter your password">
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btnLogin">Sign In</button>
+      </div>
+
+      <div class="note">
+        <strong>Demo Credentials:</strong><br>
+        Username: <code>admin</code> | Password: <code>admin123</code>
       </div>
     </div>
-  </div>
 
-  <div class="ww-actions">
-    <button class="ww-lang-btn" id="btnLang" type="button">
-      <span id="langText">AR</span>
-    </button>
+    <!-- ========== REQUEST TAB ========== -->
+    <div class="tab-content" id="request">
+      <div class="row">
+        <div>
+          <label>Full Name <span class="required">*</span></label>
+          <input id="reqName" type="text" placeholder="e.g. Sara Al-Zahrani">
+        </div>
+        <div>
+          <label>Email <span class="required">*</span></label>
+          <input id="reqEmail" type="email" placeholder="e.g. sara@company.sa">
+        </div>
+      </div>
 
-    <div class="ww-dropdown" id="accountDropdown">
-      <button class="ww-avatar-btn" id="btnAccount" type="button" aria-haspopup="menu" aria-expanded="false">
-        <i class="fa-solid fa-user"></i>
-      </button>
+      <div class="row">
+        <div>
+          <label>Job Title <span class="required">*</span></label>
+          <input id="reqJob" type="text" placeholder="e.g. Digital Forensics Analyst">
+        </div>
+        <div>
+          <label>Department</label>
+          <select id="reqDept">
+            <option value="">-- Select --</option>
+            <option value="forensics">Digital Forensics</option>
+            <option value="investigations">Investigations</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="legal">Legal/Compliance</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
 
-      <div class="ww-menu" id="accountMenu" role="menu" aria-hidden="true">
-        <a class="ww-menu-item" href="settings.html" role="menuitem">
-          <i class="fa-solid fa-gear"></i>
-          <span>Settings</span>
-        </a>
+      <label>Reason for Access <span class="required">*</span></label>
+      <textarea id="reqReason" placeholder="Briefly explain why you need access to this platform (e.g., case number, project details, team assignment)"></textarea>
 
-        <button class="ww-menu-item" id="menuLogout" type="button" role="menuitem">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <span>Logout</span>
-        </button>
+      <div class="note">
+        <strong>Note:</strong> Your request will be reviewed by the administrator. 
+        You will receive an email notification once your account is approved or if additional information is needed.
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="btnSubmitRequest">Submit Request</button>
+        <button class="btn btn-ghost" id="btnClearRequest">Clear Form</button>
       </div>
     </div>
-  </div>
-</header>
+
+    <div id="alert" class="alert hidden"></div>
+
+  </section>
+</div>
 
 <script>
-(function(){
-  const btnAccount = document.getElementById("btnAccount");
-  const menu = document.getElementById("accountMenu");
-  const logoutBtn = document.getElementById("menuLogout");
+  // ========== TAB SWITCHING ==========
+  const tabs = document.querySelectorAll(".tab-btn");
+  const contents = document.querySelectorAll(".tab-content");
 
-  if (!btnAccount || !menu) return;
-
-  function openMenu(){
-    menu.classList.add("open");
-    btnAccount.setAttribute("aria-expanded", "true");
-    menu.setAttribute("aria-hidden", "false");
-  }
-
-  function closeMenu(){
-    menu.classList.remove("open");
-    btnAccount.setAttribute("aria-expanded", "false");
-    menu.setAttribute("aria-hidden", "true");
-  }
-
-  btnAccount.addEventListener("click", (e)=>{
-    e.stopPropagation();
-    menu.classList.contains("open") ? closeMenu() : openMenu();
+  tabs.forEach(btn => {
+    btn.onclick = () => {
+      tabs.forEach(b => b.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+      hideAlert();
+    }
   });
 
-  menu.addEventListener("click", (e)=> e.stopPropagation());
-  document.addEventListener("click", closeMenu);
+  // ========== ALERT HELPER ==========
+  const alertBox = document.getElementById("alert");
 
-  if (logoutBtn){
-    logoutBtn.addEventListener("click", ()=> {
-      window.location.href = "index.html";
-    });
+  function showAlert(type, message){
+    alertBox.className = `alert ${type}`;
+    alertBox.textContent = message;
+    alertBox.classList.remove("hidden");
   }
-})();
+
+  function hideAlert(){
+    alertBox.classList.add("hidden");
+    alertBox.textContent = "";
+  }
+
+  // ========== LOGIN LOGIC ==========
+  document.getElementById("btnLogin").onclick = () => {
+    const user = document.getElementById("loginUser").value.trim();
+    const pass = document.getElementById("loginPass").value.trim();
+
+    if(!user || !pass){
+      showAlert("danger", "Please enter both username and password.");
+      return;
+    }
+
+    // Check if user is in active users list (for approved users)
+    const activeUsers = JSON.parse(localStorage.getItem("activeUsers") || "[]");
+    const approvedUser = activeUsers.find(u => u.email === user);
+
+    // Admin login
+    if(user === "admin" && pass === "admin123"){
+      localStorage.setItem("userRole", "admin");
+      localStorage.setItem("currentUser", JSON.stringify({
+        name: "Admin User",
+        email: "admin@whisper-wa.local",
+        role: "admin"
+      }));
+      showAlert("success", "✓ Admin login successful! Redirecting...");
+      setTimeout(() => {
+        window.location.href = "connect.html";
+      }, 1200);
+    } 
+    // Approved user login (demo - in production you'd check against a real database)
+    else if(approvedUser && pass === "demo123"){
+      localStorage.setItem("userRole", "user");
+      localStorage.setItem("currentUser", JSON.stringify({
+        name: approvedUser.name,
+        email: approvedUser.email,
+        role: "user"
+      }));
+      showAlert("success", `✓ Welcome back, ${approvedUser.name}! Redirecting...`);
+      setTimeout(() => {
+        window.location.href = "connect.html";
+      }, 1200);
+    }
+    // Invalid credentials
+    else {
+      showAlert("danger", "Invalid credentials or account not approved yet.");
+    }
+  };
+
+  // ========== REQUEST LOGIC ==========
+  document.getElementById("btnSubmitRequest").onclick = () => {
+    const name = document.getElementById("reqName").value.trim();
+    const email = document.getElementById("reqEmail").value.trim();
+    const job = document.getElementById("reqJob").value.trim();
+    const dept = document.getElementById("reqDept").value;
+    const reason = document.getElementById("reqReason").value.trim();
+
+    // Validation
+    if(!name || !email || !job || !reason){
+      showAlert("danger", "Please fill in all required fields (marked with *).");
+      return;
+    }
+
+    // Simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(email)){
+      showAlert("danger", "Please enter a valid email address.");
+      return;
+    }
+
+    // Create request object
+    const request = {
+      id: Date.now(),
+      name,
+      email,
+      job,
+      department: dept || "Not specified",
+      reason,
+      status: "pending",
+      timestamp: new Date().toISOString()
+    };
+
+    // Save to localStorage (demo)
+    const existingRequests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    existingRequests.push(request);
+    localStorage.setItem("accountRequests", JSON.stringify(existingRequests));
+
+    // Success message
+    showAlert("success", "✓ Request submitted successfully! Redirecting...");
+
+    // Redirect to pending page after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = "pending.html";
+    }, 1500);
+  };
+
+  // ========== CLEAR FORM ==========
+  document.getElementById("btnClearRequest").onclick = () => {
+    document.getElementById("reqName").value = "";
+    document.getElementById("reqEmail").value = "";
+    document.getElementById("reqJob").value = "";
+    document.getElementById("reqDept").value = "";
+    document.getElementById("reqReason").value = "";
+    hideAlert();
+  };
 </script>
+
+</body>
+</html>
