@@ -118,7 +118,16 @@
     .tab-content{ display:none; }
     .tab-content.active{ display:block; }
 
-    label{ display:block; margin:10px 0 6px; color:var(--text-muted); font-weight:800; }
+    label{ 
+      display:block; 
+      margin:10px 0 6px; 
+      color:var(--text-muted); 
+      font-weight:800; 
+    }
+    label .required{
+      color: #ff6b6b;
+      margin-left: 4px;
+    }
 
     input,select,textarea{
       width:100%;
@@ -127,9 +136,13 @@
       border:1px solid var(--glass-border);
       background: rgba(0,0,0,0.25);
       color:white;
+      font-family: inherit;
+    }
+    input::placeholder, textarea::placeholder{
+      color: rgba(194,222,201,0.5);
     }
 
-    textarea{ min-height:110px; }
+    textarea{ min-height:110px; resize: vertical; }
 
     .row{
       display:grid;
@@ -151,15 +164,28 @@
       font-weight:900;
       cursor:pointer;
       border:none;
+      transition: 0.25s;
+    }
+    .btn:disabled{
+      opacity: 0.5;
+      cursor: not-allowed;
     }
     .btn-primary{
       background: linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
       color:white;
     }
+    .btn-primary:hover:not(:disabled){
+      filter: brightness(1.15);
+      transform: translateY(-1px);
+    }
     .btn-ghost{
       background: rgba(0,0,0,0.2);
       color: var(--accent-glow);
       border:1px solid rgba(255,255,255,0.1);
+    }
+    .btn-ghost:hover:not(:disabled){
+      background: rgba(95,191,122,0.12);
+      transform: translateY(-1px);
     }
 
     .alert{
@@ -169,14 +195,38 @@
       font-weight:900;
     }
     .hidden{ display:none; }
-    .success{ background: rgba(95,191,122,0.14); }
-    .danger{ background: rgba(255,107,107,0.14); }
+    .success{ 
+      background: rgba(95,191,122,0.14); 
+      color: #dffbe7;
+      border: 1px solid rgba(95,191,122,0.3);
+    }
+    .danger{ 
+      background: rgba(255,107,107,0.14); 
+      color: #ffd1d1;
+      border: 1px solid rgba(255,107,107,0.3);
+    }
+    .info{
+      background: rgba(99,179,237,0.14);
+      color: #d1e7ff;
+      border: 1px solid rgba(99,179,237,0.3);
+    }
+
+    .note{
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(99,179,237,0.08);
+      border: 1px solid rgba(99,179,237,0.2);
+      border-radius: 10px;
+      color: rgba(209,231,255,0.9);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
   </style>
 </head>
 
 <body>
 
-<button class="back-btn" onclick="history.back()">‹</button>
+<button class="back-btn" onclick="window.location.href='index.html'">‹</button>
 
 <div class="animated-bg-logo">
   <img src="logo.png" alt="">
@@ -185,39 +235,74 @@
 <div class="main-container">
   <section class="card">
 
-    <h1>Access</h1>
-    <p class="subtitle">Login to continue, or request an account.</p>
+    <h1>Access Control</h1>
+    <p class="subtitle">Login to continue, or request an account for approval.</p>
 
     <div class="tabs">
       <button class="tab-btn active" data-tab="login">Login</button>
       <button class="tab-btn" data-tab="request">Request Account</button>
     </div>
 
-    <!-- LOGIN -->
+    <!-- ========== LOGIN TAB ========== -->
     <div class="tab-content active" id="login">
       <label>Email / Username</label>
-      <input id="loginUser">
+      <input id="loginUser" type="text" placeholder="Enter your email or username">
 
       <label>Password</label>
-      <input id="loginPass" type="password">
+      <input id="loginPass" type="password" placeholder="Enter your password">
 
       <div class="actions">
         <button class="btn btn-primary" id="btnLogin">Sign In</button>
       </div>
+
+      <div class="note">
+        <strong>Demo Credentials:</strong><br>
+        Username: <code>admin</code> | Password: <code>admin123</code>
+      </div>
     </div>
 
-    <!-- REQUEST -->
+    <!-- ========== REQUEST TAB ========== -->
     <div class="tab-content" id="request">
       <div class="row">
-        <input id="reqName" placeholder="Full Name">
-        <input id="reqEmail" placeholder="Email">
+        <div>
+          <label>Full Name <span class="required">*</span></label>
+          <input id="reqName" type="text" placeholder="e.g. Sara Al-Zahrani">
+        </div>
+        <div>
+          <label>Email <span class="required">*</span></label>
+          <input id="reqEmail" type="email" placeholder="e.g. sara@company.sa">
+        </div>
       </div>
 
-      <textarea id="reqReason" placeholder="Reason"></textarea>
+      <div class="row">
+        <div>
+          <label>Job Title <span class="required">*</span></label>
+          <input id="reqJob" type="text" placeholder="e.g. Digital Forensics Analyst">
+        </div>
+        <div>
+          <label>Department</label>
+          <select id="reqDept">
+            <option value="">-- Select --</option>
+            <option value="forensics">Digital Forensics</option>
+            <option value="investigations">Investigations</option>
+            <option value="cybersecurity">Cybersecurity</option>
+            <option value="legal">Legal/Compliance</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <label>Reason for Access <span class="required">*</span></label>
+      <textarea id="reqReason" placeholder="Briefly explain why you need access to this platform (e.g., case number, project details, team assignment)"></textarea>
+
+      <div class="note">
+        <strong>Note:</strong> Your request will be reviewed by the administrator. 
+        You will receive an email notification once your account is approved or if additional information is needed.
+      </div>
 
       <div class="actions">
-        <button class="btn btn-primary">Submit</button>
-        <button class="btn btn-ghost">Clear</button>
+        <button class="btn btn-primary" id="btnSubmitRequest">Submit Request</button>
+        <button class="btn btn-ghost" id="btnClearRequest">Clear Form</button>
       </div>
     </div>
 
@@ -227,31 +312,136 @@
 </div>
 
 <script>
+  // ========== TAB SWITCHING ==========
   const tabs = document.querySelectorAll(".tab-btn");
   const contents = document.querySelectorAll(".tab-content");
 
-  tabs.forEach(btn=>{
-    btn.onclick=()=>{
-      tabs.forEach(b=>b.classList.remove("active"));
-      contents.forEach(c=>c.classList.remove("active"));
+  tabs.forEach(btn => {
+    btn.onclick = () => {
+      tabs.forEach(b => b.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
       btn.classList.add("active");
       document.getElementById(btn.dataset.tab).classList.add("active");
+      hideAlert();
     }
   });
 
-  document.getElementById("btnLogin").onclick=()=>{
-    const u=loginUser.value,p=loginPass.value;
-    const alert=document.getElementById("alert");
-    if(u==="admin" && p==="admin123"){
-      alert.className="alert success";
-      alert.textContent="Login successful";
-      alert.classList.remove("hidden");
-    }else{
-      alert.className="alert danger";
-      alert.textContent="Invalid credentials";
-      alert.classList.remove("hidden");
-    }
+  // ========== ALERT HELPER ==========
+  const alertBox = document.getElementById("alert");
+
+  function showAlert(type, message){
+    alertBox.className = `alert ${type}`;
+    alertBox.textContent = message;
+    alertBox.classList.remove("hidden");
   }
+
+  function hideAlert(){
+    alertBox.classList.add("hidden");
+    alertBox.textContent = "";
+  }
+
+  // ========== LOGIN LOGIC ==========
+  document.getElementById("btnLogin").onclick = () => {
+    const user = document.getElementById("loginUser").value.trim();
+    const pass = document.getElementById("loginPass").value.trim();
+
+    if(!user || !pass){
+      showAlert("danger", "Please enter both username and password.");
+      return;
+    }
+
+    // Check if user is in active users list (for approved users)
+    const activeUsers = JSON.parse(localStorage.getItem("activeUsers") || "[]");
+    const approvedUser = activeUsers.find(u => u.email === user);
+
+    // Admin login
+    if(user === "admin" && pass === "admin123"){
+      localStorage.setItem("userRole", "admin");
+      localStorage.setItem("currentUser", JSON.stringify({
+        name: "Admin User",
+        email: "admin@whisper-wa.local",
+        role: "admin"
+      }));
+      showAlert("success", "✓ Admin login successful! Redirecting...");
+      setTimeout(() => {
+        window.location.href = "connect.html";
+      }, 1200);
+    } 
+    // Approved user login (demo - in production you'd check against a real database)
+    else if(approvedUser && pass === "demo123"){
+      localStorage.setItem("userRole", "user");
+      localStorage.setItem("currentUser", JSON.stringify({
+        name: approvedUser.name,
+        email: approvedUser.email,
+        role: "user"
+      }));
+      showAlert("success", `✓ Welcome back, ${approvedUser.name}! Redirecting...`);
+      setTimeout(() => {
+        window.location.href = "connect.html";
+      }, 1200);
+    }
+    // Invalid credentials
+    else {
+      showAlert("danger", "Invalid credentials or account not approved yet.");
+    }
+  };
+
+  // ========== REQUEST LOGIC ==========
+  document.getElementById("btnSubmitRequest").onclick = () => {
+    const name = document.getElementById("reqName").value.trim();
+    const email = document.getElementById("reqEmail").value.trim();
+    const job = document.getElementById("reqJob").value.trim();
+    const dept = document.getElementById("reqDept").value;
+    const reason = document.getElementById("reqReason").value.trim();
+
+    // Validation
+    if(!name || !email || !job || !reason){
+      showAlert("danger", "Please fill in all required fields (marked with *).");
+      return;
+    }
+
+    // Simple email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRegex.test(email)){
+      showAlert("danger", "Please enter a valid email address.");
+      return;
+    }
+
+    // Create request object
+    const request = {
+      id: Date.now(),
+      name,
+      email,
+      job,
+      department: dept || "Not specified",
+      reason,
+      status: "pending",
+      timestamp: new Date().toISOString()
+    };
+
+    // Save to localStorage (demo)
+    const existingRequests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    existingRequests.push(request);
+    localStorage.setItem("accountRequests", JSON.stringify(existingRequests));
+
+    // Success message
+    showAlert("success", "✓ Request submitted successfully! Redirecting...");
+
+    // Redirect to pending page after 1.5 seconds
+    setTimeout(() => {
+      window.location.href = "pending.html";
+    }, 1500);
+  };
+
+  // ========== CLEAR FORM ==========
+  document.getElementById("btnClearRequest").onclick = () => {
+    document.getElementById("reqName").value = "";
+    document.getElementById("reqEmail").value = "";
+    document.getElementById("reqJob").value = "";
+    document.getElementById("reqDept").value = "";
+    document.getElementById("reqReason").value = "";
+    hideAlert();
+  };
 </script>
 
 </body>
