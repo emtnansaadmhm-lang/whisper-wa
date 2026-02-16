@@ -31,7 +31,6 @@ body {
     padding: 20px;
 }
 
-/* Background grid effect */
 body::before {
     content: '';
     position: fixed;
@@ -51,12 +50,10 @@ body::before {
     margin: 0 auto;
 }
 
-/* Header spacing */
 .content-wrapper {
     margin-top: 30px;
 }
 
-/* Page Title Section */
 .page-header {
     background: rgba(20, 40, 30, 0.65);
     border: 1px solid var(--border-color);
@@ -87,7 +84,32 @@ body::before {
     padding-left: 50px;
 }
 
-/* Filters Section */
+.user-welcome {
+    background: rgba(95, 191, 122, 0.15);
+    border: 1px solid rgba(95, 191, 122, 0.3);
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-welcome i {
+    color: var(--green-accent);
+    font-size: 1.3rem;
+}
+
+.user-welcome-text {
+    color: var(--green-light);
+    font-size: 1rem;
+}
+
+.user-welcome-text strong {
+    color: #fff;
+    font-size: 1.1rem;
+}
+
 .filters-section {
     background: rgba(20, 40, 30, 0.65);
     border: 1px solid var(--border-color);
@@ -181,7 +203,6 @@ body::before {
     transform: translateY(-2px);
 }
 
-/* Reports Table */
 .reports-section {
     background: rgba(20, 40, 30, 0.65);
     border: 1px solid var(--border-color);
@@ -215,7 +236,6 @@ body::before {
     font-weight: 700;
 }
 
-/* Table Styles */
 .table-wrapper {
     border-radius: 12px;
     overflow: hidden;
@@ -266,7 +286,6 @@ body::before {
     font-weight: 700;
 }
 
-/* Status Badge */
 .status-badge {
     display: inline-block;
     padding: 6px 14px;
@@ -295,7 +314,6 @@ body::before {
     border: 1px solid rgba(158, 158, 158, 0.4);
 }
 
-/* Action Buttons */
 .action-buttons {
     display: flex;
     gap: 10px;
@@ -355,7 +373,6 @@ body::before {
     border-color: rgba(244, 67, 54, 0.4);
 }
 
-/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -403,7 +420,6 @@ body::before {
     padding: 0 15px;
 }
 
-/* Empty State */
 .empty-state {
     text-align: center;
     padding: 80px 20px;
@@ -430,7 +446,6 @@ body::before {
 </head>
 <body>
 
-<!-- Include Header -->
 <div class="container">
     <!-- Header will be loaded here -->
     <div id="headerContainer"></div>
@@ -442,7 +457,15 @@ body::before {
                 <i class="fa-solid fa-file-lines"></i>
                 All Reports
             </h1>
-            <p class="page-subtitle">View, download, and manage all forensic reports</p>
+            <p class="page-subtitle">View, download, and manage all your forensic reports</p>
+            
+            <!-- User Welcome Message -->
+            <div class="user-welcome" id="userWelcome">
+                <i class="fa-solid fa-user-check"></i>
+                <div class="user-welcome-text">
+                    Logged in as: <strong id="currentUserName">Rahaf Alruwaysan</strong>
+                </div>
+            </div>
         </div>
 
         <!-- Filters Section -->
@@ -457,8 +480,8 @@ body::before {
                     <input type="text" id="filterCase" class="filter-input" placeholder="Enter case #">
                 </div>
                 <div class="filter-group">
-                    <label for="filterInvestigator">Investigator</label>
-                    <input type="text" id="filterInvestigator" class="filter-input" placeholder="Enter name">
+                    <label for="filterDevice">Device Info</label>
+                    <input type="text" id="filterDevice" class="filter-input" placeholder="Enter device">
                 </div>
                 <div class="filter-group">
                     <label for="filterStatus">Status</label>
@@ -486,7 +509,7 @@ body::before {
         <div class="reports-section">
             <div class="section-header">
                 <h2 class="section-title">
-                    Reports List
+                    My Reports
                     <span class="reports-count" id="reportsCount">0</span>
                 </h2>
             </div>
@@ -498,7 +521,6 @@ body::before {
                             <th>Date</th>
                             <th>Time</th>
                             <th>Case #</th>
-                            <th>Investigator</th>
                             <th>Device Info</th>
                             <th>Status</th>
                             <th>Actions</th>
@@ -513,7 +535,7 @@ body::before {
                 <div class="empty-state" id="emptyState" style="display: none;">
                     <i class="fa-solid fa-folder-open"></i>
                     <h3>No Reports Found</h3>
-                    <p>There are no reports matching your criteria.</p>
+                    <p>You don't have any reports yet.</p>
                 </div>
             </div>
 
@@ -540,86 +562,105 @@ fetch('header.html')
     })
     .catch(error => console.error('Error loading header:', error));
 
-// Sample Reports Data (سيتم استبداله بالبيانات من قاعدة البيانات)
+// Mock Current User (يمكنك تغييره حسب المستخدم المسجل)
+const currentUser = {
+    id: 1,
+    name: 'Rahaf Alruwaysan',
+    email: 'rahaf@example.com',
+    role: 'investigator'
+};
+
+// Display current user name
+document.getElementById('currentUserName').textContent = currentUser.name;
+
+// Mock Reports Database - تقارير Rahaf فقط
 let reportsData = [
     {
         id: 1,
+        userId: 1,
         date: '2026-02-15',
         time: '14:30',
         caseNumber: '055XXX',
-        investigator: 'Ahmed Al-Saud',
+        investigator: 'Rahaf Alruwaysan',
         deviceInfo: 'iPhone 13 Pro',
         status: 'completed',
         pdfUrl: 'reports/report_001.pdf'
     },
     {
         id: 2,
+        userId: 1,
         date: '2026-02-14',
         time: '11:20',
         caseNumber: '055YYY',
-        investigator: 'Fatima Al-Ghamdi',
+        investigator: 'Rahaf Alruwaysan',
         deviceInfo: 'Samsung Galaxy S21',
         status: 'completed',
         pdfUrl: 'reports/report_002.pdf'
     },
     {
         id: 3,
+        userId: 1,
         date: '2026-02-13',
         time: '09:15',
         caseNumber: '055ZZZ',
-        investigator: 'Mohammed Al-Otaibi',
+        investigator: 'Rahaf Alruwaysan',
         deviceInfo: 'Google Pixel 6',
         status: 'pending',
         pdfUrl: 'reports/report_003.pdf'
     },
     {
         id: 4,
-        date: '2026-02-12',
-        time: '16:45',
+        userId: 1,
+        date: '2026-02-10',
+        time: '16:30',
         caseNumber: '055AAA',
-        investigator: 'Sara Al-Harthi',
-        deviceInfo: 'iPhone 12',
-        status: 'completed',
+        investigator: 'Rahaf Alruwaysan',
+        deviceInfo: 'OnePlus 9',
+        status: 'archived',
         pdfUrl: 'reports/report_004.pdf'
     },
     {
         id: 5,
-        date: '2026-02-10',
-        time: '13:00',
+        userId: 1,
+        date: '2026-02-09',
+        time: '13:45',
         caseNumber: '055BBB',
-        investigator: 'Khalid Al-Subaie',
-        deviceInfo: 'OnePlus 9',
-        status: 'archived',
+        investigator: 'Rahaf Alruwaysan',
+        deviceInfo: 'Xiaomi Mi 11',
+        status: 'completed',
         pdfUrl: 'reports/report_005.pdf'
     },
     {
         id: 6,
-        date: '2026-02-09',
-        time: '10:30',
+        userId: 1,
+        date: '2026-02-08',
+        time: '10:00',
         caseNumber: '055CCC',
-        investigator: 'Nora Al-Qarni',
-        deviceInfo: 'Xiaomi Mi 11',
-        status: 'completed',
+        investigator: 'Rahaf Alruwaysan',
+        deviceInfo: 'Huawei P40',
+        status: 'pending',
         pdfUrl: 'reports/report_006.pdf'
     },
     {
         id: 7,
-        date: '2026-02-08',
+        userId: 1,
+        date: '2026-02-07',
         time: '15:20',
         caseNumber: '055DDD',
-        investigator: 'Omar Al-Zahrani',
-        deviceInfo: 'Huawei P40',
-        status: 'pending',
+        investigator: 'Rahaf Alruwaysan',
+        deviceInfo: 'iPhone 14',
+        status: 'completed',
         pdfUrl: 'reports/report_007.pdf'
     },
     {
         id: 8,
-        date: '2026-02-07',
+        userId: 1,
+        date: '2026-02-05',
         time: '12:00',
         caseNumber: '055EEE',
-        investigator: 'Layla Al-Mutairi',
-        deviceInfo: 'iPhone 14',
-        status: 'completed',
+        investigator: 'Rahaf Alruwaysan',
+        deviceInfo: 'Oppo Find X3',
+        status: 'archived',
         pdfUrl: 'reports/report_008.pdf'
     }
 ];
@@ -684,7 +725,6 @@ function createReportRow(report) {
         <td>${report.date}</td>
         <td>${report.time}</td>
         <td><strong>${report.caseNumber}</strong></td>
-        <td>${report.investigator}</td>
         <td>${report.deviceInfo}</td>
         <td><span class="status-badge ${statusClass}">${statusText}</span></td>
         <td>
@@ -758,7 +798,7 @@ function setupEventListeners() {
 function applyFilters() {
     const filterDate = document.getElementById('filterDate').value;
     const filterCase = document.getElementById('filterCase').value.toLowerCase();
-    const filterInvestigator = document.getElementById('filterInvestigator').value.toLowerCase();
+    const filterDevice = document.getElementById('filterDevice').value.toLowerCase();
     const filterStatus = document.getElementById('filterStatus').value;
 
     filteredReports = reportsData.filter(report => {
@@ -766,7 +806,7 @@ function applyFilters() {
 
         if (filterDate && report.date !== filterDate) match = false;
         if (filterCase && !report.caseNumber.toLowerCase().includes(filterCase)) match = false;
-        if (filterInvestigator && !report.investigator.toLowerCase().includes(filterInvestigator)) match = false;
+        if (filterDevice && !report.deviceInfo.toLowerCase().includes(filterDevice)) match = false;
         if (filterStatus && report.status !== filterStatus) match = false;
 
         return match;
@@ -780,7 +820,7 @@ function applyFilters() {
 function clearFilters() {
     document.getElementById('filterDate').value = '';
     document.getElementById('filterCase').value = '';
-    document.getElementById('filterInvestigator').value = '';
+    document.getElementById('filterDevice').value = '';
     document.getElementById('filterStatus').value = '';
 
     filteredReports = [...reportsData];
@@ -792,13 +832,11 @@ function clearFilters() {
 function downloadReport(reportId) {
     const report = reportsData.find(r => r.id === reportId);
     if (report) {
-        // هنا بتحط الكود حق التحميل من قاعدة البيانات
-        console.log(`Downloading report: ${report.pdfUrl}`);
+        // لما تربط قاعدة البيانات، استبدل هذا بـ:
+        // window.location.href = `api/reports.php?action=download&id=${reportId}`;
         
-        // مثال للتحميل (شغّله لما تربط قاعدة البيانات):
-        // window.location.href = report.pdfUrl;
-        
-        alert(`Downloading report for case ${report.caseNumber}...`);
+        alert(`Downloading report: ${report.caseNumber}\nFile: ${report.pdfUrl}`);
+        console.log('Download:', report);
     }
 }
 
@@ -806,26 +844,26 @@ function downloadReport(reportId) {
 function viewReport(reportId) {
     const report = reportsData.find(r => r.id === reportId);
     if (report) {
-        // هنا بتحط الكود حق فتح الملف من قاعدة البيانات
-        console.log(`Viewing report: ${report.pdfUrl}`);
+        // لما تربط قاعدة البيانات، استبدل هذا بـ:
+        // window.open(`api/reports.php?action=download&id=${reportId}`, '_blank');
         
-        // مثال للفتح (شغّله لما تربط قاعدة البيانات):
-        // window.open(report.pdfUrl, '_blank');
-        
-        alert(`Opening report for case ${report.caseNumber}...`);
+        alert(`Opening report: ${report.caseNumber}\nFile: ${report.pdfUrl}`);
+        console.log('View:', report);
     }
 }
 
 // Delete Report
 function deleteReport(reportId) {
-    if (confirm('Are you sure you want to delete this report? This action cannot be undone.')) {
-        // هنا بتحط الكود حق الحذف من قاعدة البيانات
-        reportsData = reportsData.filter(r => r.id !== reportId);
-        filteredReports = filteredReports.filter(r => r.id !== reportId);
-        loadReports();
-        
-        alert('Report deleted successfully!');
+    if (!confirm('Are you sure you want to delete this report? This action cannot be undone.')) {
+        return;
     }
+
+    // لما تربط قاعدة البيانات، استبدل هذا بـ API call
+    reportsData = reportsData.filter(r => r.id !== reportId);
+    filteredReports = filteredReports.filter(r => r.id !== reportId);
+    loadReports();
+
+    alert('Report deleted successfully!');
 }
 
 // Initialize on page load
@@ -834,4 +872,3 @@ document.addEventListener('DOMContentLoaded', init);
 
 </body>
 </html>
-
