@@ -96,7 +96,7 @@
   }
 
   .ww-dropdown{
-    position: relative; /* مهم جدًا */
+    position: relative;
   }
 
   .ww-avatar-btn{
@@ -111,6 +111,7 @@
     justify-content:center;
     color:#c2dec9;
     transition:0.2s;
+    position: relative;
   }
 
   .ww-avatar-btn:hover{
@@ -119,14 +120,37 @@
     transform: translateY(-1px);
   }
 
-  /* ✅ التعديل المهم هنا */
+  /* Badge for pending requests */
+  .ww-avatar-badge{
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: linear-gradient(135deg, #ff6b6b, #ff4757);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 900;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    border: 2px solid var(--bg-dark, #0e1a12);
+    box-shadow: 0 2px 8px rgba(255,75,87,0.4);
+  }
+
+  .ww-avatar-badge.show{
+    display: flex;
+  }
+
   .ww-menu{
     position:absolute;
-    top: calc(100% + 10px);     /* بدل رقم ثابت */
-    inset-inline-end: 0;        /* يمين تلقائي مع RTL/LTR */
+    top: calc(100% + 10px);
+    inset-inline-end: 0;
     inset-inline-start: auto;
 
-    min-width: 180px;
+    min-width: 200px;
     background: rgba(20, 40, 30, 0.92);
     border: 1px solid rgba(95, 191, 122, 0.3);
     backdrop-filter: blur(12px);
@@ -157,14 +181,50 @@
     font-family: 'Tajawal', sans-serif;
     font-size: 0.92rem;
     text-align: start;
+    transition: 0.2s;
   }
 
   .ww-menu-item i{
     color:#8fd9a8;
+    width: 20px;
   }
 
   .ww-menu-item:hover{
     background: rgba(95,191,122,0.14);
+  }
+
+  /* Admin-specific styling */
+  .ww-menu-item.admin-only{
+    display: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 4px;
+    padding-top: 14px;
+  }
+
+  .ww-menu-item.admin-only.show{
+    display: flex;
+  }
+
+  .ww-menu-item.admin-only i{
+    color: #ffc857;
+  }
+
+  .ww-menu-item.admin-only:hover{
+    background: rgba(255,200,87,0.14);
+  }
+
+  /* Badge inside menu item */
+  .menu-badge{
+    margin-left: auto;
+    background: rgba(255,107,107,0.2);
+    color: #ffd1d1;
+    border: 1px solid rgba(255,107,107,0.3);
+    font-size: 0.75rem;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 999px;
+    min-width: 20px;
+    text-align: center;
   }
 </style>
 
@@ -191,9 +251,18 @@
     <div class="ww-dropdown" id="accountDropdown">
       <button class="ww-avatar-btn" id="btnAccount" type="button" aria-haspopup="menu" aria-expanded="false">
         <i class="fa-solid fa-user"></i>
+        <span class="ww-avatar-badge" id="avatarBadge">0</span>
       </button>
 
       <div class="ww-menu" id="accountMenu" role="menu" aria-hidden="true">
+        
+        <!-- Admin Menu Item (hidden by default) -->
+        <a class="ww-menu-item admin-only" id="menuAdmin" href="admin.html" role="menuitem">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Admin Dashboard</span>
+          <span class="menu-badge" id="menuAdminBadge">0</span>
+        </a>
+
         <a class="ww-menu-item" href="settings.html" role="menuitem">
           <i class="fa-solid fa-gear"></i>
           <span>Settings</span>
@@ -213,9 +282,44 @@
   const btnAccount = document.getElementById("btnAccount");
   const menu = document.getElementById("accountMenu");
   const logoutBtn = document.getElementById("menuLogout");
+  const menuAdmin = document.getElementById("menuAdmin");
+  const menuAdminBadge = document.getElementById("menuAdminBadge");
+  const avatarBadge = document.getElementById("avatarBadge");
 
   if (!btnAccount || !menu) return;
 
+  // ========== CHECK ADMIN ROLE ==========
+  function checkAdminRole(){
+    // Check if user is admin (you can customize this logic)
+    const userRole = localStorage.getItem("userRole");
+    const isAdmin = (userRole === "admin");
+
+    if(isAdmin && menuAdmin){
+      menuAdmin.classList.add("show");
+      updatePendingCount();
+    }
+  }
+
+  // ========== UPDATE PENDING REQUESTS COUNT ==========
+  function updatePendingCount(){
+    try{
+      const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+      const pendingCount = requests.filter(r => r.status === "pending").length;
+
+      if(pendingCount > 0){
+        menuAdminBadge.textContent = pendingCount;
+        avatarBadge.textContent = pendingCount;
+        avatarBadge.classList.add("show");
+      } else {
+        menuAdminBadge.textContent = "0";
+        avatarBadge.classList.remove("show");
+      }
+    } catch(e){
+      console.error("Error updating pending count:", e);
+    }
+  }
+
+  // ========== MENU TOGGLE ==========
   function openMenu(){
     menu.classList.add("open");
     btnAccount.setAttribute("aria-expanded", "true");
@@ -236,10 +340,24 @@
   menu.addEventListener("click", (e)=> e.stopPropagation());
   document.addEventListener("click", closeMenu);
 
+  // ========== LOGOUT ==========
   if (logoutBtn){
     logoutBtn.addEventListener("click", ()=> {
+      // Clear user session
+      localStorage.removeItem("userRole");
       window.location.href = "index.html";
     });
   }
+
+  // ========== INIT ==========
+  checkAdminRole();
+
+  // Update badge every 5 seconds (for real-time updates)
+  setInterval(() => {
+    const userRole = localStorage.getItem("userRole");
+    if(userRole === "admin"){
+      updatePendingCount();
+    }
+  }, 5000);
 })();
 </script>
