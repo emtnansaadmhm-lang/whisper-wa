@@ -17,8 +17,8 @@ def pull_whatsapp_evidence(case_id="Case_001"):
     os.makedirs(save_path, exist_ok=True)
 
     # مسارات الملفات (تحتاج روت)
-    android_db = "/sdcard/WhatsApp/Databases/msgstore.db.crypt14"
-    android_key = "/data/data/com.whatsapp/files/key"
+android_db = "/sdcard/WhatsApp/Databases/msgstore.db.crypt14"
+android_key = "/data/data/com.whatsapp/files/key"
 
     results = []
 
@@ -65,3 +65,4 @@ def pull_whatsapp_evidence(case_id="Case_001"):
             })
 
     return results
+
