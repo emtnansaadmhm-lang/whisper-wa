@@ -18,7 +18,7 @@ def pull_whatsapp_evidence(case_id="Case_001"):
     os.makedirs(save_path, exist_ok=True)
     
     # مسارات الملفات في الأندرويد (تحتاج روت)
-   android_db = "/sdcard/WhatsApp/Databases/msgstore.db.crypt14"
+    android_db = "/sdcard/WhatsApp/Databases/msgstore.db.crypt14"
     android_key = "/data/data/com.whatsapp/files/key"
     
     results = []
@@ -34,12 +34,20 @@ def pull_whatsapp_evidence(case_id="Case_001"):
         
         try:
             # 1. نسخ الملف لمكان مؤقت في الجوال ثم سحبه
-            subprocess.run(['adb', 'shell', 'su', '-c', f'cp {file["path"]} /sdcard/{file["name"]}'], check=True)
-            subprocess.run(['adb', 'pull', f'/sdcard/{file["name"]}', local_file_path], check=True)
+            subprocess.run(
+                ['adb', 'shell', 'su', '-c', f'cp {file["path"]} /sdcard/{file["name"]}'],
+                check=True
+            )
+            subprocess.run(
+                ['adb', 'pull', f'/sdcard/{file["name"]}', local_file_path],
+                check=True
+            )
             
-            # --- الإضافة الجديدة هنا: مسح الملف المؤقت من الجوال لضمان النظافة الجنائية ---
-            subprocess.run(['adb', 'shell', 'rm', f'/sdcard/{file["name"]}'], check=True)
-            # -------------------------------------------------------------------------
+            # مسح الملف المؤقت من الجوال
+            subprocess.run(
+                ['adb', 'shell', 'rm', f'/sdcard/{file["name"]}'],
+                check=True
+            )
 
             # 2. حساب الهاش وتوثيق معلومات الملف
             file_hash = calculate_sha256(local_file_path)
@@ -54,7 +62,10 @@ def pull_whatsapp_evidence(case_id="Case_001"):
             })
             
         except Exception as e:
-            results.append({"file": file["name"], "status": "Failed", "error": str(e)})
+            results.append({
+                "file": file["name"],
+                "status": "Failed",
+                "error": str(e)
+            })
             
     return results
-
