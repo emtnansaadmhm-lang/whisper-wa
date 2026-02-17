@@ -669,6 +669,10 @@
     // =========================
     // ✅ تحميل الهيدر + تفعيل (Back/Dropdown/Lang)
     // =========================
+    // ✅ Route Protection
+if(!localStorage.getItem("userRole")){
+  window.location.href = "auth.html";
+}
     window.addEventListener("DOMContentLoaded", async () => {
       try {
         const res = await fetch("header.html");
