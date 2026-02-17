@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Whisper-WA | تسجيل الدخول</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -39,14 +40,13 @@
 
     .animated-bg-logo{
       position: fixed;
-      top:50%;
-      left:50%;
+      top:50%; left:50%;
       transform: translate(-50%,-50%);
       z-index:-1;
       width: 620px;
       opacity:0.18;
-      animation: glow 8s ease-in-out infinite alternate;
       pointer-events: none;
+      animation: glow 8s ease-in-out infinite alternate;
     }
     .animated-bg-logo img{
       width:100%;
@@ -57,6 +57,83 @@
       to{ opacity:0.26; transform:translate(-50%,-50%) scale(1.04); }
     }
 
+    /* ========== HEADER ========== */
+    .ww-topbar{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+      position: relative;
+      z-index: 9999;
+      margin-bottom: 0;
+    }
+
+    .ww-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .ww-icon-btn{
+      border:none;
+      background: rgba(0,0,0,0.18);
+      color:#c2dec9;
+      width:38px; height:38px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:0.2s;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .ww-icon-btn:hover{
+      background: rgba(95,191,122,0.14);
+      color:#8fd9a8;
+      transform: translateY(-1px);
+    }
+
+    .ww-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .ww-logo{
+      height:42px; width:auto;
+      filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
+    }
+    .ww-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .ww-title b{ font-size:1.15rem; color:#fff; }
+    .ww-title span{ color:#c2dec9; font-size:0.85rem; margin-top:4px; }
+
+    .ww-lang-btn{
+      background: rgba(95,191,122,0.10);
+      border: 1px solid rgba(95,191,122,0.3);
+      color:#8fd9a8;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:900;
+      font-family: inherit;
+      transition:0.25s;
+      user-select:none;
+    }
+    .ww-lang-btn:hover{
+      background: rgba(95,191,122,0.18);
+      transform: translateY(-1px);
+    }
+
+    /* ========== PAGE ========== */
     .page-container{
       max-width: 1200px;
       margin: 0 auto;
@@ -70,7 +147,7 @@
       align-items:center;
       justify-content:center;
       min-height: calc(100vh - 120px);
-      padding:40px 0;
+      padding: 40px 0;
     }
 
     .card{
@@ -86,7 +163,8 @@
     }
 
     h1{ font-size:1.7rem; margin-bottom:6px; }
-    .subtitle{ color:var(--text-muted); margin-bottom:18px; line-height: 1.5; }
+    .subtitle{ color:var(--text-muted); margin-bottom:18px; line-height:1.5; }
+
     .tabs{
       display:flex;
       background: rgba(0,0,0,0.18);
@@ -96,88 +174,87 @@
     }
     .tab-btn{
       flex:1; padding:12px; border:none; background:none;
-      color:var(--text-muted); font-weight:900; cursor:pointer; font-family: inherit;
+      color:var(--text-muted); font-weight:900; cursor:pointer; font-family:inherit;
     }
     .tab-btn.active{
       background: rgba(95,191,122,0.16);
       color: var(--accent-glow);
     }
+
     .tab-content{ display:none; }
     .tab-content.active{ display:block; }
-    label{ 
-      display:block; margin:10px 0 6px; 
-      color:var(--text-muted); font-weight:800; 
+
+    label{
+      display:block; margin:10px 0 6px;
+      color:var(--text-muted); font-weight:800;
     }
-    label .required{
-      color: #ff6b6b;
-      margin-left: 4px;
-    }
-    input,select,textarea{
+    .required{ color:#ff6b6b; margin-inline-start:4px; }
+
+    input, select, textarea{
       width:100%; padding:12px; border-radius:12px;
       border:1px solid var(--glass-border);
       background: rgba(0,0,0,0.25);
-      color:white; font-family: inherit;
+      color:white; font-family:inherit; font-size: 1rem;
     }
     input::placeholder, textarea::placeholder{
       color: rgba(194,222,201,0.5);
     }
-    textarea{ min-height:110px; resize: vertical; }
+    textarea{ min-height:110px; resize:vertical; }
+
     .row{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
     }
     @media(max-width:720px){ .row{ grid-template-columns:1fr; } }
-    .actions{
-      display:flex; gap:12px; margin-top:14px;
-    }
+
+    .actions{ display:flex; gap:12px; margin-top:14px; }
+
     .btn{
       flex:1; padding:12px; border-radius:14px;
       font-weight:900; cursor:pointer; border:none;
-      transition: 0.25s; font-family: inherit;
+      transition:0.25s; font-family:inherit; font-size: 1rem;
     }
-    .btn:disabled{
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .btn:disabled{ opacity:0.5; cursor:not-allowed; }
     .btn-primary{
       background: linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
       color:white;
     }
-    .btn-primary:hover:not(:disabled){
-      filter: brightness(1.15);
-      transform: translateY(-1px);
-    }
+    .btn-primary:hover:not(:disabled){ filter:brightness(1.15); transform:translateY(-1px); }
     .btn-ghost{
       background: rgba(0,0,0,0.2);
       color: var(--accent-glow);
       border:1px solid rgba(255,255,255,0.1);
     }
-    .btn-ghost:hover:not(:disabled){
-      background: rgba(95,191,122,0.12);
-      transform: translateY(-1px);
-    }
+    .btn-ghost:hover:not(:disabled){ background:rgba(95,191,122,0.12); transform:translateY(-1px); }
+
     .alert{
       margin-top:16px; padding:12px; border-radius:14px; font-weight:900;
     }
     .hidden{ display:none; }
-    .success{ 
-      background: rgba(95,191,122,0.14); 
-      color: #dffbe7;
-      border: 1px solid rgba(95,191,122,0.3);
+    .success{
+      background:rgba(95,191,122,0.14); color:#dffbe7;
+      border:1px solid rgba(95,191,122,0.3);
     }
-    .danger{ 
-      background: rgba(255,107,107,0.14); 
-      color: #ffd1d1;
-      border: 1px solid rgba(255,107,107,0.3);
+    .danger{
+      background:rgba(255,107,107,0.14); color:#ffd1d1;
+      border:1px solid rgba(255,107,107,0.3);
     }
+
     .note{
-      margin-top: 10px; padding: 10px;
-      background: rgba(99,179,237,0.08);
-      border: 1px solid rgba(99,179,237,0.2);
-      border-radius: 10px;
-      color: rgba(209,231,255,0.9);
-      font-size: 0.9rem; line-height: 1.5;
+      margin-top:10px; padding:10px;
+      background:rgba(99,179,237,0.08);
+      border:1px solid rgba(99,179,237,0.2);
+      border-radius:10px;
+      color:rgba(209,231,255,0.9);
+      font-size:0.9rem; line-height:1.6;
+    }
+    .note code{
+      background: rgba(0,0,0,0.25);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      color: var(--accent-glow);
     }
   </style>
 </head>
@@ -188,10 +265,34 @@
 </div>
 
 <div class="page-container">
-  <div id="header-placeholder"></div>
 
+  <!-- ========== HEADER ========== -->
+  <header class="ww-topbar">
+    <div class="ww-left">
+      <!-- زر الرجوع -->
+      <a href="index.html" class="ww-icon-btn" title="Back">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <!-- اللوغو -->
+      <div class="ww-brand">
+        <img src="logo.png" class="ww-logo" alt="Whisper-WA Logo" />
+        <div class="ww-title">
+          <b>Whisper-WA</b>
+          <span id="top-subtitle">منصة التحليل الجنائي الرقمي</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- زر اللغة فقط (بدون أيقونة حساب) -->
+    <button class="ww-lang-btn" id="btnLang" type="button">
+      <span id="langText">EN</span>
+    </button>
+  </header>
+
+  <!-- ========== CONTENT ========== -->
   <div class="main-container">
     <section class="card">
+
       <h1 id="page-title">التحكم بالوصول</h1>
       <p class="subtitle" id="page-subtitle">سجّل دخول للمتابعة، أو قدّم طلب حساب للمراجعة.</p>
 
@@ -200,24 +301,30 @@
         <button class="tab-btn" data-tab="request" id="tab-request-btn">طلب حساب</button>
       </div>
 
+      <!-- ========== LOGIN ========== -->
       <div class="tab-content active" id="login">
+
         <label id="lbl-email">البريد الإلكتروني</label>
-        <input id="loginUser" type="text" placeholder="أدخل بريدك الإلكتروني" onkeypress="if(event.key === 'Enter') document.getElementById('btnLogin').click()">
+        <input id="loginUser" type="text" placeholder="أدخل بريدك الإلكتروني"
+          onkeypress="if(event.key==='Enter') document.getElementById('btnLogin').click()">
 
         <label id="lbl-password">كلمة المرور</label>
-        <input id="loginPass" type="password" placeholder="أدخل كلمة المرور" onkeypress="if(event.key === 'Enter') document.getElementById('btnLogin').click()">
+        <input id="loginPass" type="password" placeholder="أدخل كلمة المرور"
+          onkeypress="if(event.key==='Enter') document.getElementById('btnLogin').click()">
 
         <div class="actions">
           <button class="btn btn-primary" id="btnLogin">تسجيل الدخول</button>
         </div>
 
         <div class="note">
-          <strong id="note-demo">بيانات تجريبية:</strong><br>
-          <span id="note-creds">البريد: <code>admin@whisper-wa.local</code> | كلمة المرور: <code>admin123</code></span>
+          <strong id="note-demo-label">بيانات تجريبية:</strong><br>
+          <span id="note-demo-creds">البريد: <code>admin</code> | كلمة المرور: <code>admin123</code></span>
         </div>
       </div>
 
+      <!-- ========== REQUEST ========== -->
       <div class="tab-content" id="request">
+
         <div class="row">
           <div>
             <label id="lbl-name">الاسم الكامل <span class="required">*</span></label>
@@ -248,11 +355,10 @@
         </div>
 
         <label id="lbl-reason">سبب طلب الوصول <span class="required">*</span></label>
-        <textarea id="reqReason" placeholder="اشرح بإيجاز سبب احتياجك للوصول (مثال: رقم القضية، تفاصيل المشروع، تعيين الفريق)" onkeypress="if(event.key === 'Enter' && event.ctrlKey) document.getElementById('btnSubmitRequest').click()"></textarea>
+        <textarea id="reqReason" placeholder="اشرح بإيجاز سبب احتياجك للوصول (مثال: رقم القضية، تفاصيل المشروع، تعيين الفريق)"></textarea>
 
-        <div class="note">
-          <strong id="note-review">ملاحظة:</strong> <span id="note-review-text">سيتم مراجعة طلبك من قبل المسؤول. ستتلقى إشعارًا بالبريد الإلكتروني بمجرد الموافقة أو في حالة الحاجة لمعلومات إضافية.</span>
- 
+        <div class="note" id="req-note">
+          Your request will be reviewed by the administrator. You will receive an email notification once your account is approved or if additional information is needed.
         </div>
 
         <div class="actions">
@@ -261,18 +367,20 @@
         </div>
       </div>
 
-      <div id="alert" class="alert hidden"></div>
+      <div id="alertBox" class="alert hidden"></div>
+
     </section>
   </div>
 </div>
 
 <script>
-  const API_URL = "http://localhost:5000/api";
   let currentLang = localStorage.getItem("lang") || "ar";
 
   const UI = {
     ar: {
       title: "Whisper-WA | تسجيل الدخول",
+      subtitle: "منصة التحليل الجنائي الرقمي",
+      langText: "EN",
       pageTitle: "التحكم بالوصول",
       pageSubtitle: "سجّل دخول للمتابعة، أو قدّم طلب حساب للمراجعة.",
       tabLogin: "تسجيل الدخول",
@@ -280,6 +388,7 @@
       lblEmail: "البريد الإلكتروني",
       lblPassword: "كلمة المرور",
       lblName: "الاسم الكامل",
+      lblReqEmail: "البريد الإلكتروني",
       lblJob: "المسمى الوظيفي",
       lblDept: "القسم",
       lblReason: "سبب طلب الوصول",
@@ -288,24 +397,32 @@
       phName: "مثال: سارة الزهراني",
       phReqEmail: "مثال: sara@company.sa",
       phJob: "مثال: محلل جنائي رقمي",
-      phReason: "اشرح بإيجاز سبب احتياجك للوصول",
+      phReason: "اشرح بإيجاز سبب احتياجك للوصول (مثال: رقم القضية، تفاصيل المشروع، تعيين الفريق)",
+      selectOpt: "-- اختر --",
+      dept1: "الأدلة الجنائية الرقمية",
+      dept2: "التحقيقات",
+      dept3: "الأمن السيبراني",
+      dept4: "القانوني والامتثال",
+      dept5: "أخرى",
       btnLogin: "تسجيل الدخول",
       btnSubmit: "إرسال الطلب",
       btnClear: "مسح النموذج",
-      noteDemo: "بيانات تجريبية:",
-      noteCreds: 'البريد: <code>admin@whisper-wa.local</code> | كلمة المرور: <code>admin123</code>',
-      noteReview: "ملاحظة:",
-    noteReviewText: "سيتم مراجعة طلبك من قبل المسؤول. ستتلقى إشعارًا بالبريد الإلكتروني بمجرد الموافقة أو في حالة الحاجة لمعلومات إضافية.",
-      errorFields: "الرجاء ملء جميع الحقول المطلوبة (*)",
-      errorEmail: "الرجاء إدخال بريد إلكتروني صحيح",
-      errorLogin: "الرجاء إدخال البريد وكلمة المرور",
-      errorConnection: "خطأ في الاتصال. تأكد من تشغيل السيرفر.",
+      noteDemoLabel: "بيانات تجريبية:",
+      noteDemoCreds: "البريد: <code>admin</code> | كلمة المرور: <code>admin123</code>",
+      reqNote: "سيتم مراجعة طلبك من قبل المسؤول. ستتلقى إشعارًا بالبريد الإلكتروني بمجرد الموافقة على حسابك أو في حالة الحاجة إلى معلومات إضافية.",
+      errFields: "الرجاء ملء جميع الحقول المطلوبة (*)",
+      errEmail: "الرجاء إدخال بريد إلكتروني صحيح",
+      errLogin: "الرجاء إدخال البريد الإلكتروني وكلمة المرور",
+      errCreds: "بيانات الدخول غير صحيحة أو الحساب غير معتمد بعد.",
+      successLogin: "✓ تم تسجيل الدخول بنجاح! جاري التحويل...",
+      successRequest: "✓ تم إرسال الطلب بنجاح! جاري التحويل...",
       signingIn: "جاري التسجيل...",
-      submitting: "جاري الإرسال...",
-      successRequest: "✓ تم إرسال الطلب بنجاح!"
+      submitting: "جاري الإرسال..."
     },
     en: {
       title: "Whisper-WA | Login",
+      subtitle: "Digital Forensics Platform",
+      langText: "AR",
       pageTitle: "Access Control",
       pageSubtitle: "Login to continue, or request an account for approval.",
       tabLogin: "Login",
@@ -313,6 +430,7 @@
       lblEmail: "Email",
       lblPassword: "Password",
       lblName: "Full Name",
+      lblReqEmail: "Email",
       lblJob: "Job Title",
       lblDept: "Department",
       lblReason: "Reason for Access",
@@ -321,166 +439,190 @@
       phName: "e.g. Sara Al-Zahrani",
       phReqEmail: "e.g. sara@company.sa",
       phJob: "e.g. Digital Forensics Analyst",
-      phReason: "Briefly explain why you need access",
+      phReason: "Briefly explain why you need access (e.g., case number, project details)",
+      selectOpt: "-- Select --",
+      dept1: "Digital Forensics",
+      dept2: "Investigations",
+      dept3: "Cybersecurity",
+      dept4: "Legal/Compliance",
+      dept5: "Other",
       btnLogin: "Sign In",
       btnSubmit: "Submit Request",
       btnClear: "Clear Form",
-      noteDemo: "Demo Credentials:",
-      noteCreds: 'Email: <code>admin@whisper-wa.local</code> | Password: <code>admin123</code>',
-      noteReview: "Note:",
-      noteReviewText: "Your request will be reviewed by the administrator. You will receive an email notification once your account is approved or if additional information is needed.",
-      errorFields: "Please fill in all required fields (*)",
-      errorEmail: "Please enter a valid email address",
-      errorLogin: "Please enter email and password",
-      errorConnection: "Connection error. Please check if server is running.",
+      noteDemoLabel: "Demo Credentials:",
+      noteDemoCreds: "Email: <code>admin</code> | Password: <code>admin123</code>",
+      reqNote: "Your request will be reviewed by the administrator. You will receive an email notification once your account is approved or if additional information is needed.",
+      errFields: "Please fill in all required fields (*)",
+      errEmail: "Please enter a valid email address",
+      errLogin: "Please enter your email and password",
+      errCreds: "Invalid credentials or account not approved yet.",
+      successLogin: "✓ Login successful! Redirecting...",
+      successRequest: "✓ Request submitted successfully! Redirecting...",
       signingIn: "Signing in...",
-      submitting: "Submitting...",
-      successRequest: "✓ Request submitted successfully!"
+      submitting: "Submitting..."
     }
   };
 
-  function applyLanguage(lang){
+  // ========== APPLY LANGUAGE ==========
+  function applyLang(lang) {
     currentLang = lang;
     const t = UI[lang];
+    const isAr = lang === "ar";
+
     document.documentElement.lang = lang;
-    document.documentElement.dir = (lang === "ar") ? "rtl" : "ltr";
+    document.documentElement.dir = isAr ? "rtl" : "ltr";
     document.title = t.title;
-    
+    localStorage.setItem("lang", lang);
+
+    document.getElementById("top-subtitle").textContent = t.subtitle;
+    document.getElementById("langText").textContent = t.langText;
     document.getElementById("page-title").textContent = t.pageTitle;
     document.getElementById("page-subtitle").textContent = t.pageSubtitle;
     document.getElementById("tab-login-btn").textContent = t.tabLogin;
     document.getElementById("tab-request-btn").textContent = t.tabRequest;
+
     document.getElementById("lbl-email").textContent = t.lblEmail;
     document.getElementById("lbl-password").textContent = t.lblPassword;
     document.getElementById("loginUser").placeholder = t.phEmail;
     document.getElementById("loginPass").placeholder = t.phPassword;
     document.getElementById("btnLogin").textContent = t.btnLogin;
+
     document.getElementById("lbl-name").innerHTML = t.lblName + ' <span class="required">*</span>';
-    document.getElementById("lbl-req-email").innerHTML = t.lblEmail + ' <span class="required">*</span>';
+    document.getElementById("lbl-req-email").innerHTML = t.lblReqEmail + ' <span class="required">*</span>';
     document.getElementById("lbl-job").innerHTML = t.lblJob + ' <span class="required">*</span>';
     document.getElementById("lbl-dept").textContent = t.lblDept;
     document.getElementById("lbl-reason").innerHTML = t.lblReason + ' <span class="required">*</span>';
+
     document.getElementById("reqName").placeholder = t.phName;
     document.getElementById("reqEmail").placeholder = t.phReqEmail;
     document.getElementById("reqJob").placeholder = t.phJob;
     document.getElementById("reqReason").placeholder = t.phReason;
+
+    const dept = document.getElementById("reqDept");
+    dept.options[0].text = t.selectOpt;
+    dept.options[1].text = t.dept1;
+    dept.options[2].text = t.dept2;
+    dept.options[3].text = t.dept3;
+    dept.options[4].text = t.dept4;
+    dept.options[5].text = t.dept5;
+
     document.getElementById("btnSubmitRequest").textContent = t.btnSubmit;
     document.getElementById("btnClearRequest").textContent = t.btnClear;
-    document.getElementById("note-demo").textContent = t.noteDemo;
-    document.getElementById("note-creds").innerHTML = t.noteCreds;
-    document.getElementById("note-review").textContent = t.noteReview;
-    document.getElementById("note-review-text").textContent = t.noteReviewText;
-    document.getElementById("note-tip").textContent = t.noteTip;
-    localStorage.setItem("lang", lang);
+    document.getElementById("note-demo-label").textContent = t.noteDemoLabel;
+    document.getElementById("note-demo-creds").innerHTML = t.noteDemoCreds;
+    document.getElementById("req-note").textContent = t.reqNote;
   }
 
-  const tabs = document.querySelectorAll(".tab-btn");
-  const contents = document.querySelectorAll(".tab-content");
-  tabs.forEach(btn => {
+  // ========== TABS ==========
+  document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.onclick = () => {
-      tabs.forEach(b => b.classList.remove("active"));
-      contents.forEach(c => c.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
       btn.classList.add("active");
       document.getElementById(btn.dataset.tab).classList.add("active");
-      document.getElementById("alert").classList.add("hidden");
+      hideAlert();
     }
   });
 
-  const alertBox = document.getElementById("alert");
-  function showAlert(type, message){
-    alertBox.className = `alert ${type}`;
-    alertBox.textContent = message;
-    alertBox.classList.remove("hidden");
+  // ========== ALERT ==========
+  function showAlert(type, msg) {
+    const box = document.getElementById("alertBox");
+    box.className = `alert ${type}`;
+    box.textContent = msg;
+    box.classList.remove("hidden");
+  }
+  function hideAlert() {
+    const box = document.getElementById("alertBox");
+    box.classList.add("hidden");
+    box.textContent = "";
   }
 
-  document.getElementById("btnLogin").onclick = async () => {
+  // ========== LOGIN ==========
+  document.getElementById("btnLogin").onclick = () => {
     const user = document.getElementById("loginUser").value.trim();
     const pass = document.getElementById("loginPass").value.trim();
-    if(!user || !pass){ showAlert("danger", UI[currentLang].errorLogin); return; }
+    const t = UI[currentLang];
+
+    if(!user || !pass){ showAlert("danger", t.errLogin); return; }
+
     const btnLogin = document.getElementById("btnLogin");
-    const originalText = btnLogin.textContent;
+    const original = btnLogin.textContent;
     btnLogin.disabled = true;
-    btnLogin.textContent = UI[currentLang].signingIn;
-    try {
-      const response = await fetch(`${API_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: user, password: pass })
-      });
-      const data = await response.json();
-      if(data.success){
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("userRole", data.user.role);
-        localStorage.setItem("currentUser", JSON.stringify(data.user));
-        showAlert("success", `✓ ${data.message}!`);
+    btnLogin.textContent = t.signingIn;
+
+    setTimeout(() => {
+      const activeUsers = JSON.parse(localStorage.getItem("activeUsers") || "[]");
+      const approvedUser = activeUsers.find(u => u.email === user);
+
+      if(user === "admin" && pass === "admin123"){
+        localStorage.setItem("userRole", "admin");
+        localStorage.setItem("currentUser", JSON.stringify({ name:"Admin User", email:"admin", role:"admin" }));
+        showAlert("success", t.successLogin);
         setTimeout(() => window.location.href = "connect.html", 1200);
+
+      } else if(approvedUser && pass === "demo123"){
+        localStorage.setItem("userRole", "user");
+        localStorage.setItem("currentUser", JSON.stringify({ name:approvedUser.name, email:approvedUser.email, role:"user" }));
+        showAlert("success", t.successLogin);
+        setTimeout(() => window.location.href = "connect.html", 1200);
+
       } else {
-        showAlert("danger", data.message);
+        showAlert("danger", t.errCreds);
         btnLogin.disabled = false;
-        btnLogin.textContent = originalText;
+        btnLogin.textContent = original;
       }
-    } catch(error) {
-      showAlert("danger", UI[currentLang].errorConnection);
-      btnLogin.disabled = false;
-      btnLogin.textContent = originalText;
-    }
+    }, 600);
   };
 
-  document.getElementById("btnSubmitRequest").onclick = async () => {
-    const name = document.getElementById("reqName").value.trim();
-    const email = document.getElementById("reqEmail").value.trim();
-    const job = document.getElementById("reqJob").value.trim();
-    const dept = document.getElementById("reqDept").value;
+  // ========== REQUEST ==========
+  document.getElementById("btnSubmitRequest").onclick = () => {
+    const name   = document.getElementById("reqName").value.trim();
+    const email  = document.getElementById("reqEmail").value.trim();
+    const job    = document.getElementById("reqJob").value.trim();
+    const dept   = document.getElementById("reqDept").value;
     const reason = document.getElementById("reqReason").value.trim();
-    if(!name || !email || !job || !reason){ showAlert("danger", UI[currentLang].errorFields); return; }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showAlert("danger", UI[currentLang].errorEmail); return; }
+    const t = UI[currentLang];
+
+    if(!name || !email || !job || !reason){ showAlert("danger", t.errFields); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showAlert("danger", t.errEmail); return; }
+
     const btnSubmit = document.getElementById("btnSubmitRequest");
-    const originalText = btnSubmit.textContent;
+    const original = btnSubmit.textContent;
     btnSubmit.disabled = true;
-    btnSubmit.textContent = UI[currentLang].submitting;
-    try {
-      const response = await fetch(`${API_URL}/auth/register-request`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, job_title: job, department: dept || "Not specified", reason })
+    btnSubmit.textContent = t.submitting;
+
+    setTimeout(() => {
+      const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+      requests.push({
+        id: Date.now(),
+        name, email, job,
+        department: dept || "Not specified",
+        reason,
+        status: "pending",
+        timestamp: new Date().toISOString()
       });
-      const data = await response.json();
-      if(data.success){
-        showAlert("success", UI[currentLang].successRequest);
-        localStorage.setItem("lastRequestId", data.request_id);
-        setTimeout(() => window.location.href = "pending.html", 1500);
-      } else {
-        showAlert("danger", data.message);
-        btnSubmit.disabled = false;
-        btnSubmit.textContent = originalText;
-      }
-    } catch(error) {
-      showAlert("danger", UI[currentLang].errorConnection);
-      btnSubmit.disabled = false;
-      btnSubmit.textContent = originalText;
-    }
+      localStorage.setItem("accountRequests", JSON.stringify(requests));
+
+      showAlert("success", t.successRequest);
+      setTimeout(() => window.location.href = "pending.html", 1500);
+    }, 600);
   };
 
+  // ========== CLEAR ==========
   document.getElementById("btnClearRequest").onclick = () => {
-    ["reqName","reqEmail","reqJob","reqDept","reqReason"].forEach(id => document.getElementById(id).value = "");
-    document.getElementById("alert").classList.add("hidden");
+    ["reqName","reqEmail","reqJob","reqDept","reqReason"].forEach(id => {
+      document.getElementById(id).value = "";
+    });
+    hideAlert();
   };
 
-  window.addEventListener("DOMContentLoaded", async () => {
-    try {
-      const res = await fetch("header.html");
-      const headerHtml = await res.text();
-      document.getElementById("header-placeholder").innerHTML = headerHtml;
-      const backBtn = document.getElementById("btnBack");
-      if(backBtn) backBtn.style.display = "none";
-      const btnLang = document.getElementById("btnLang");
-      if(btnLang) btnLang.addEventListener("click", () => applyLanguage((currentLang === "ar") ? "en" : "ar"));
-      applyLanguage(currentLang);
-    } catch(e) {
-      console.error("Header load error:", e);
-      applyLanguage(currentLang);
-    }
-  });
+  // ========== LANG BUTTON ==========
+  document.getElementById("btnLang").onclick = () => {
+    applyLang(currentLang === "ar" ? "en" : "ar");
+  };
+
+  // ========== INIT ==========
+  applyLang(currentLang);
 </script>
 </body>
 </html>
