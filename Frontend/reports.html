@@ -722,6 +722,10 @@ let filteredReports = [...reportsData];
 // ========================================
 // INITIALIZE
 // ========================================
+    // ✅ Route Protection
+if(!localStorage.getItem("userRole")){
+  window.location.href = "auth.html";
+}
 function init() {
     loadReports();
     setupEventListeners();
