@@ -391,6 +391,10 @@
     btnUsbPrev.addEventListener("click", () => window.location.assign(CHAT_PAGE));
 
     // header.html optional
+    // ✅ Route Protection
+if(!localStorage.getItem("userRole")){
+  window.location.href = "auth.html";
+}
     window.addEventListener("DOMContentLoaded", async () => {
       try{
         const res = await fetch("header.html");
