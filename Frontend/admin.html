@@ -643,6 +643,10 @@
     }
 
     // ========== INIT ==========
+    // ✅ Admin Route Protection
+const _role = localStorage.getItem("userRole");
+if(!_role){ window.location.href = "auth.html"; }
+else if(_role !== "admin"){ window.location.href = "connect.html"; }
     window.onload = refresh;
   </script>
 </body>
