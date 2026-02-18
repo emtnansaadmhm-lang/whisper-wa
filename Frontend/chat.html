@@ -665,7 +665,6 @@
       a.remove();
       URL.revokeObjectURL(url);
     });
-
 // =========================
 // ✅ Route Protection
 // =========================
@@ -674,9 +673,32 @@ if(!localStorage.getItem("userRole")){
 }
 
 // =========================
-// ✅ وظيفة تفعيل الهيدر
+// ✅ تحميل الهيدر + تفعيل كامل
 // =========================
-function initHeader(){
+window.addEventListener("DOMContentLoaded", async () => {
+  try {
+    // تحميل الهيدر
+    const res = await fetch("header.html");
+    const headerHtml = await res.text();
+    const holder = document.getElementById("header-placeholder");
+    if (holder) holder.innerHTML = headerHtml;
+
+    // انتظر شوي عشان العناصر تتحمل
+    setTimeout(() => {
+      setupHeader();
+      initHeaderForPage("chat.html");
+      setupLanguage();
+    }, 100);
+
+  } catch (e) {
+    console.error("Header load error:", e);
+  }
+});
+
+// =========================
+// ✅ إعداد الهيدر كامل
+// =========================
+function setupHeader(){
   const btnAccount = document.getElementById("btnAccount");
   const menu = document.getElementById("accountMenu");
   const logoutBtn = document.getElementById("menuLogout");
@@ -684,14 +706,18 @@ function initHeader(){
   const menuAdminBadge = document.getElementById("menuAdminBadge");
   const avatarBadge = document.getElementById("avatarBadge");
 
-  if (!btnAccount || !menu) return;
+  if (!btnAccount || !menu) {
+    console.error("Header elements not found!");
+    return;
+  }
 
   // فحص الأدمن
   const userRole = localStorage.getItem("userRole");
-  const isAdmin = (userRole === "admin");
+  console.log("User role:", userRole); // للتأكد
 
-  if(isAdmin && menuAdmin){
+  if(userRole === "admin" && menuAdmin){
     menuAdmin.classList.add("show");
+    console.log("Admin menu shown!"); // للتأكد
     
     // تحديث العداد
     try{
@@ -703,54 +729,51 @@ function initHeader(){
         avatarBadge.textContent = pendingCount;
         avatarBadge.classList.add("show");
       }
-    } catch(e){}
+    } catch(e){
+      console.error("Error updating badge:", e);
+    }
   }
 
   // فتح/إغلاق القائمة
-  btnAccount.addEventListener("click", (e)=>{
+  btnAccount.onclick = (e) => {
     e.stopPropagation();
+    const isOpen = menu.classList.contains("open");
     menu.classList.toggle("open");
-  });
+    console.log("Menu clicked, now:", isOpen ? "closing" : "opening");
+  };
 
-  document.addEventListener("click", ()=> menu.classList.remove("open"));
-  menu.addEventListener("click", (e)=> e.stopPropagation());
+  document.onclick = () => {
+    if(menu.classList.contains("open")){
+      menu.classList.remove("open");
+    }
+  };
+
+  menu.onclick = (e) => e.stopPropagation();
 
   // Logout
   if (logoutBtn){
-    logoutBtn.addEventListener("click", ()=> {
+    logoutBtn.onclick = () => {
       localStorage.removeItem("userRole");
       window.location.href = "index.html";
-    });
+    };
   }
 }
 
 // =========================
-// ✅ تحميل الهيدر + تفعيل (Back/Dropdown/Lang)
+// ✅ إعداد اللغة
 // =========================
-window.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const res = await fetch("header.html");
-    const headerHtml = await res.text();
-    const holder = document.getElementById("header-placeholder");
-    if (holder) holder.innerHTML = headerHtml;
+function setupLanguage(){
+  const saved = localStorage.getItem("lang") || "ar";
+  applyLang(saved);
 
-    initHeader();
-    initHeaderForPage("chat.html");
-
-    const saved = localStorage.getItem("lang") || "ar";
-    applyLang(saved);
-
-    const btnLang = document.getElementById("btnLang");
-    if (btnLang) {
-      btnLang.addEventListener("click", () => {
-        const next = (document.documentElement.lang === "ar") ? "en" : "ar";
-        applyLang(next);
-      });
-    }
-  } catch (e) {
-    console.error("Header load error:", e);
+  const btnLang = document.getElementById("btnLang");
+  if (btnLang) {
+    btnLang.onclick = () => {
+      const next = (document.documentElement.lang === "ar") ? "en" : "ar";
+      applyLang(next);
+    };
   }
-});
+}
   </script>
 </body>
 </html>
