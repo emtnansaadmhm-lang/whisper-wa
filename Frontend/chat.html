@@ -666,14 +666,16 @@
       URL.revokeObjectURL(url);
     });
 
-    // =========================
-    // ✅ تحميل الهيدر + تفعيل (Back/Dropdown/Lang)
-    // =========================
-    // ✅ Route Protection
+// =========================
+// ✅ Route Protection
+// =========================
 if(!localStorage.getItem("userRole")){
   window.location.href = "auth.html";
 }
-    // ✅ وظيفة تفعيل الهيدر
+
+// =========================
+// ✅ وظيفة تفعيل الهيدر
+// =========================
 function initHeader(){
   const btnAccount = document.getElementById("btnAccount");
   const menu = document.getElementById("accountMenu");
@@ -721,30 +723,34 @@ function initHeader(){
     });
   }
 }
-    window.addEventListener("DOMContentLoaded", async () => {
-      try {
-        const res = await fetch("header.html");
-        const headerHtml = await res.text();
-        const holder = document.getElementById("header-placeholder");
-        if (holder) holder.innerHTML = headerHtml;
 
-        initHeader();
-        initHeaderForPage("chat.html");
+// =========================
+// ✅ تحميل الهيدر + تفعيل (Back/Dropdown/Lang)
+// =========================
+window.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const res = await fetch("header.html");
+    const headerHtml = await res.text();
+    const holder = document.getElementById("header-placeholder");
+    if (holder) holder.innerHTML = headerHtml;
 
-        const saved = localStorage.getItem("lang") || "ar";
-        applyLang(saved);
+    initHeader();
+    initHeaderForPage("chat.html");
 
-        const btnLang = document.getElementById("btnLang");
-        if (btnLang) {
-          btnLang.addEventListener("click", () => {
-            const next = (document.documentElement.lang === "ar") ? "en" : "ar";
-            applyLang(next);
-          });
-        }
-      } catch (e) {
-        console.error("Header load error:", e);
-      }
-    });
+    const saved = localStorage.getItem("lang") || "ar";
+    applyLang(saved);
+
+    const btnLang = document.getElementById("btnLang");
+    if (btnLang) {
+      btnLang.addEventListener("click", () => {
+        const next = (document.documentElement.lang === "ar") ? "en" : "ar";
+        applyLang(next);
+      });
+    }
+  } catch (e) {
+    console.error("Header load error:", e);
+  }
+});
   </script>
 </body>
 </html>
