@@ -355,8 +355,13 @@ document.addEventListener('DOMContentLoaded', () => {
   checkAdminRole();
 });
 
-//   
-checkAdminRole();
+// ========== INIT ==========
+  // انتظر تحميل DOM بالكامل
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkAdminRole);
+  } else {
+    checkAdminRole();
+  }
 
   // Update badge every 5 seconds (for real-time updates)
   setInterval(() => {
