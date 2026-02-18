@@ -673,6 +673,54 @@
 if(!localStorage.getItem("userRole")){
   window.location.href = "auth.html";
 }
+    // ✅ وظيفة تفعيل الهيدر
+function initHeader(){
+  const btnAccount = document.getElementById("btnAccount");
+  const menu = document.getElementById("accountMenu");
+  const logoutBtn = document.getElementById("menuLogout");
+  const menuAdmin = document.getElementById("menuAdmin");
+  const menuAdminBadge = document.getElementById("menuAdminBadge");
+  const avatarBadge = document.getElementById("avatarBadge");
+
+  if (!btnAccount || !menu) return;
+
+  // فحص الأدمن
+  const userRole = localStorage.getItem("userRole");
+  const isAdmin = (userRole === "admin");
+
+  if(isAdmin && menuAdmin){
+    menuAdmin.classList.add("show");
+    
+    // تحديث العداد
+    try{
+      const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+      const pendingCount = requests.filter(r => r.status === "pending").length;
+
+      if(pendingCount > 0){
+        menuAdminBadge.textContent = pendingCount;
+        avatarBadge.textContent = pendingCount;
+        avatarBadge.classList.add("show");
+      }
+    } catch(e){}
+  }
+
+  // فتح/إغلاق القائمة
+  btnAccount.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    menu.classList.toggle("open");
+  });
+
+  document.addEventListener("click", ()=> menu.classList.remove("open"));
+  menu.addEventListener("click", (e)=> e.stopPropagation());
+
+  // Logout
+  if (logoutBtn){
+    logoutBtn.addEventListener("click", ()=> {
+      localStorage.removeItem("userRole");
+      window.location.href = "index.html";
+    });
+  }
+}
     window.addEventListener("DOMContentLoaded", async () => {
       try {
         const res = await fetch("header.html");
