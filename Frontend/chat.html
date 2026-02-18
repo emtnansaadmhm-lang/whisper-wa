@@ -680,6 +680,7 @@ if(!localStorage.getItem("userRole")){
         const holder = document.getElementById("header-placeholder");
         if (holder) holder.innerHTML = headerHtml;
 
+        initHeader();
         initHeaderForPage("chat.html");
 
         const saved = localStorage.getItem("lang") || "ar";
