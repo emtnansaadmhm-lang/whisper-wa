@@ -349,8 +349,14 @@
     });
   }
 
-  // ========== INIT ==========
+ // ========== INIT ==========
+// 
+document.addEventListener('DOMContentLoaded', () => {
   checkAdminRole();
+});
+
+//   
+checkAdminRole();
 
   // Update badge every 5 seconds (for real-time updates)
   setInterval(() => {
