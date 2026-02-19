@@ -552,9 +552,13 @@ body::before {
         </div>
     </div>
 </div>
-
 <script>
-
+// =========================
+// ✅ Route Protection
+// =========================
+if(!localStorage.getItem("userRole")){
+  window.location.href = "auth.html";
+}
 
 // ========================================
 // CURRENT USER (محقق مسجل الدخول)
@@ -714,10 +718,6 @@ let filteredReports = [...reportsData];
 // ========================================
 // INITIALIZE
 // ========================================
-    // ✅ Route Protection
-if(!localStorage.getItem("userRole")){
-  window.location.href = "auth.html";
-}
 function init() {
     loadReports();
     setupEventListeners();
@@ -838,14 +838,65 @@ function setupEventListeners() {
     // Filters
     document.getElementById('btnApplyFilters').addEventListener('click', applyFilters);
     document.getElementById('btnClearFilters').addEventListener('click', clearFilters);
+}
 
-  
+// ========================================
+// REPORT ACTIONS
+// ========================================
+function downloadReport(id) {
+    const report = reportsData.find(r => r.id === id);
+    if (report) {
+        alert(`Downloading report: ${report.caseNumber}`);
+        // هنا تحطين كود التحميل الفعلي
+    }
+}
 
-            // =========================
-// ✅ Route Protection
-// =========================
-if(!localStorage.getItem("userRole")){
-  window.location.href = "auth.html";
+function viewReport(id) {
+    const report = reportsData.find(r => r.id === id);
+    if (report) {
+        alert(`Viewing report: ${report.caseNumber}`);
+        // هنا تحطين كود العرض الفعلي
+    }
+}
+
+function deleteReport(id) {
+    if (confirm('Are you sure you want to delete this report?')) {
+        reportsData = reportsData.filter(r => r.id !== id);
+        filteredReports = [...reportsData];
+        currentPage = 1;
+        loadReports();
+        alert('Report deleted successfully');
+    }
+}
+
+function applyFilters() {
+    const dateFilter = document.getElementById('filterDate').value;
+    const caseFilter = document.getElementById('filterCase').value.toLowerCase();
+    const deviceFilter = document.getElementById('filterDevice').value.toLowerCase();
+    const statusFilter = document.getElementById('filterStatus').value;
+
+    filteredReports = reportsData.filter(report => {
+        const matchDate = !dateFilter || report.date === dateFilter;
+        const matchCase = !caseFilter || report.caseNumber.toLowerCase().includes(caseFilter);
+        const matchDevice = !deviceFilter || report.deviceInfo.toLowerCase().includes(deviceFilter);
+        const matchStatus = !statusFilter || report.status === statusFilter;
+
+        return matchDate && matchCase && matchDevice && matchStatus;
+    });
+
+    currentPage = 1;
+    loadReports();
+}
+
+function clearFilters() {
+    document.getElementById('filterDate').value = '';
+    document.getElementById('filterCase').value = '';
+    document.getElementById('filterDevice').value = '';
+    document.getElementById('filterStatus').value = '';
+    
+    filteredReports = [...reportsData];
+    currentPage = 1;
+    loadReports();
 }
 
 // =========================
@@ -907,7 +958,7 @@ function setupReportsHeader(){
 }
 
 // =========================
-// ✅ تحديث تحميل الهيدر
+// ✅ تحميل الهيدر + تفعيل
 // =========================
 fetch('header.html')
   .then(response => response.text())
@@ -915,7 +966,11 @@ fetch('header.html')
     document.getElementById('headerContainer').innerHTML = data;
     setTimeout(() => {
       setupReportsHeader();
+      init();
     }, 100);
   })
-  .catch(error => console.error('Error loading header:', error));
-            </script> 
+  .catch(error => {
+    console.error('Error loading header:', error);
+    init();
+  });
+</script>
