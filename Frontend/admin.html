@@ -706,13 +706,32 @@ function setupAdminHeader(){
     };
   }
 
-  // ✅ زر الرجوع يروح للشات
+ // ✅ زر الرجوع يروح للشات
   if(backBtn){
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
   }
-}
 
+  // ✅ زر اللغة
+  const btnLang = document.getElementById("btnLang");
+  const langText = document.getElementById("langText");
+  const topSubtitle = document.getElementById("top-subtitle");
+  
+  if(btnLang){
+    btnLang.onclick = () => {
+      const currentLang = document.documentElement.lang;
+      const newLang = (currentLang === "ar") ? "en" : "ar";
+      
+      document.documentElement.lang = newLang;
+      document.documentElement.dir = (newLang === "ar") ? "rtl" : "ltr";
+      
+      if(langText) langText.textContent = (newLang === "ar") ? "EN" : "AR";
+      if(topSubtitle) topSubtitle.textContent = (newLang === "ar") ? "منصة التحليل الجنائي الرقمي" : "Digital Forensics Platform";
+      
+      localStorage.setItem("lang", newLang);
+    };
+  }
+}
 // =========================
 // ✅ تحميل الهيدر + تفعيل
 // =========================
