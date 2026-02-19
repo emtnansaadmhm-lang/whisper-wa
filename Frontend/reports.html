@@ -852,3 +852,82 @@ function setupEventListeners() {
         const btnBack = document.getElementById('btnBack');
         if (btnBack) {
             btnBack.addEventListen
+
+            // =========================
+// ✅ Route Protection
+// =========================
+if(!localStorage.getItem("userRole")){
+  window.location.href = "auth.html";
+}
+
+// =========================
+// ✅ إعداد الهيدر
+// =========================
+function setupReportsHeader(){
+  const btnAccount = document.getElementById("btnAccount");
+  const menu = document.getElementById("accountMenu");
+  const logoutBtn = document.getElementById("menuLogout");
+  const menuAdmin = document.getElementById("menuAdmin");
+  const menuAdminBadge = document.getElementById("menuAdminBadge");
+  const avatarBadge = document.getElementById("avatarBadge");
+  const backBtn = document.getElementById("btnBack");
+
+  if (!btnAccount || !menu) return;
+
+  const userRole = localStorage.getItem("userRole");
+
+  if(userRole === "admin" && menuAdmin){
+    menuAdmin.classList.add("show");
+    
+    try{
+      const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+      const pendingCount = requests.filter(r => r.status === "pending").length;
+
+      if(pendingCount > 0){
+        menuAdminBadge.textContent = pendingCount;
+        avatarBadge.textContent = pendingCount;
+        avatarBadge.classList.add("show");
+      }
+    } catch(e){}
+  }
+
+  btnAccount.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("open");
+  };
+
+  document.onclick = () => {
+    if(menu.classList.contains("open")){
+      menu.classList.remove("open");
+    }
+  };
+
+  menu.onclick = (e) => e.stopPropagation();
+
+  if (logoutBtn){
+    logoutBtn.onclick = () => {
+      localStorage.removeItem("userRole");
+      window.location.href = "index.html";
+    };
+  }
+
+  // زر الرجوع
+  if(backBtn){
+    backBtn.style.display = "inline-flex";
+    backBtn.onclick = () => window.location.href = "chat.html";
+  }
+}
+
+// =========================
+// ✅ تحديث تحميل الهيدر
+// =========================
+fetch('header.html')
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('headerContainer').innerHTML = data;
+    setTimeout(() => {
+      setupReportsHeader();
+    }, 100);
+  })
+  .catch(error => console.error('Error loading header:', error));
+            </script> 
