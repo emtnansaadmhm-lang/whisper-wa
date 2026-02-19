@@ -561,20 +561,7 @@ if(!localStorage.getItem("userRole")){
 }
 
 // ========================================
-// CURRENT USER (محقق مسجل الدخول)
-// ========================================
-const currentUser = {
-    id: 1,
-    name: 'Rahaf Alruwaysan',
-    email: 'rahaf@example.com',
-    role: 'investigator'
-};
-
-// Display current user name
-document.getElementById('currentUserName').textContent = currentUser.name;
-
-// ========================================
-// MOCK REPORTS DATABASE - أجهزة أندرويد فقط
+// MOCK REPORTS DATABASE
 // ========================================
 let reportsData = [
     {
@@ -716,14 +703,6 @@ const itemsPerPage = 10;
 let filteredReports = [...reportsData];
 
 // ========================================
-// INITIALIZE
-// ========================================
-function init() {
-    loadReports();
-    setupEventListeners();
-}
-
-// ========================================
 // LOAD AND DISPLAY REPORTS
 // ========================================
 function loadReports() {
@@ -731,15 +710,11 @@ function loadReports() {
     const emptyState = document.getElementById('emptyState');
     const reportsCount = document.getElementById('reportsCount');
 
-    // Calculate pagination
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const paginatedReports = filteredReports.slice(startIndex, endIndex);
 
-    // Update count
     reportsCount.textContent = filteredReports.length;
-
-    // Clear table
     tbody.innerHTML = '';
 
     if (paginatedReports.length === 0) {
@@ -760,12 +735,8 @@ function loadReports() {
     }
 }
 
-// ========================================
-// CREATE REPORT ROW
-// ========================================
 function createReportRow(report) {
     const tr = document.createElement('tr');
-    
     const statusClass = `status-${report.status}`;
     const statusText = {
         completed: 'Completed',
@@ -796,13 +767,9 @@ function createReportRow(report) {
             </div>
         </td>
     `;
-
     return tr;
 }
 
-// ========================================
-// UPDATE PAGINATION
-// ========================================
 function updatePagination() {
     const totalPages = Math.ceil(filteredReports.length / itemsPerPage);
     const pageInfo = document.getElementById('pageInfo');
@@ -810,44 +777,14 @@ function updatePagination() {
     const btnNext = document.getElementById('btnNextPage');
 
     pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-
     btnPrev.disabled = currentPage === 1;
     btnNext.disabled = currentPage === totalPages || totalPages === 0;
 }
 
-// ========================================
-// SETUP EVENT LISTENERS
-// ========================================
-function setupEventListeners() {
-    // Pagination
-    document.getElementById('btnPrevPage').addEventListener('click', () => {
-        if (currentPage > 1) {
-            currentPage--;
-            loadReports();
-        }
-    });
-
-    document.getElementById('btnNextPage').addEventListener('click', () => {
-        const totalPages = Math.ceil(filteredReports.length / itemsPerPage);
-        if (currentPage < totalPages) {
-            currentPage++;
-            loadReports();
-        }
-    });
-
-    // Filters
-    document.getElementById('btnApplyFilters').addEventListener('click', applyFilters);
-    document.getElementById('btnClearFilters').addEventListener('click', clearFilters);
-}
-
-// ========================================
-// REPORT ACTIONS
-// ========================================
 function downloadReport(id) {
     const report = reportsData.find(r => r.id === id);
     if (report) {
         alert(`Downloading report: ${report.caseNumber}`);
-        // هنا تحطين كود التحميل الفعلي
     }
 }
 
@@ -855,7 +792,6 @@ function viewReport(id) {
     const report = reportsData.find(r => r.id === id);
     if (report) {
         alert(`Viewing report: ${report.caseNumber}`);
-        // هنا تحطين كود العرض الفعلي
     }
 }
 
@@ -880,7 +816,6 @@ function applyFilters() {
         const matchCase = !caseFilter || report.caseNumber.toLowerCase().includes(caseFilter);
         const matchDevice = !deviceFilter || report.deviceInfo.toLowerCase().includes(deviceFilter);
         const matchStatus = !statusFilter || report.status === statusFilter;
-
         return matchDate && matchCase && matchDevice && matchStatus;
     });
 
@@ -893,15 +828,11 @@ function clearFilters() {
     document.getElementById('filterCase').value = '';
     document.getElementById('filterDevice').value = '';
     document.getElementById('filterStatus').value = '';
-    
     filteredReports = [...reportsData];
     currentPage = 1;
     loadReports();
 }
 
-// =========================
-// ✅ إعداد الهيدر
-// =========================
 function setupReportsHeader(){
   const btnAccount = document.getElementById("btnAccount");
   const menu = document.getElementById("accountMenu");
@@ -917,11 +848,9 @@ function setupReportsHeader(){
 
   if(userRole === "admin" && menuAdmin){
     menuAdmin.classList.add("show");
-    
     try{
       const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
       const pendingCount = requests.filter(r => r.status === "pending").length;
-
       if(pendingCount > 0){
         menuAdminBadge.textContent = pendingCount;
         avatarBadge.textContent = pendingCount;
@@ -934,13 +863,7 @@ function setupReportsHeader(){
     e.stopPropagation();
     menu.classList.toggle("open");
   };
-
-  document.onclick = () => {
-    if(menu.classList.contains("open")){
-      menu.classList.remove("open");
-    }
-  };
-
+  document.onclick = () => { if(menu.classList.contains("open")){ menu.classList.remove("open"); } };
   menu.onclick = (e) => e.stopPropagation();
 
   if (logoutBtn){
@@ -950,7 +873,6 @@ function setupReportsHeader(){
     };
   }
 
-  // زر الرجوع
   if(backBtn){
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
@@ -958,19 +880,37 @@ function setupReportsHeader(){
 }
 
 // =========================
-// ✅ تحميل الهيدر + تفعيل
+// ✅ INIT
 // =========================
-fetch('header.html')
-  .then(response => response.text())
-  .then(data => {
-    document.getElementById('headerContainer').innerHTML = data;
-    setTimeout(() => {
-      setupReportsHeader();
-      init();
-    }, 100);
-  })
-  .catch(error => {
-    console.error('Error loading header:', error);
-    init();
+document.addEventListener('DOMContentLoaded', () => {
+  // عرض اسم المستخدم
+  const userNameEl = document.getElementById('currentUserName');
+  if(userNameEl) userNameEl.textContent = 'Rahaf Alruwaysan';
+
+  // Event listeners
+  document.getElementById('btnPrevPage').addEventListener('click', () => {
+    if (currentPage > 1) { currentPage--; loadReports(); }
   });
+  document.getElementById('btnNextPage').addEventListener('click', () => {
+    const totalPages = Math.ceil(filteredReports.length / itemsPerPage);
+    if (currentPage < totalPages) { currentPage++; loadReports(); }
+  });
+  document.getElementById('btnApplyFilters').addEventListener('click', applyFilters);
+  document.getElementById('btnClearFilters').addEventListener('click', clearFilters);
+
+  // تحميل الهيدر
+  fetch('header.html')
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById('headerContainer').innerHTML = data;
+      setTimeout(() => {
+        setupReportsHeader();
+        loadReports();
+      }, 100);
+    })
+    .catch(error => {
+      console.error('Error loading header:', error);
+      loadReports();
+    });
+});
 </script>
