@@ -576,44 +576,111 @@
 
     // =========================
     // ✅ Load header.html + Back button for analysis
-    // =========================
-    // ✅ Route Protection
+   // =========================
+// ✅ Route Protection
+// =========================
 if(!localStorage.getItem("userRole")){
   window.location.href = "auth.html";
 }
-    window.addEventListener("DOMContentLoaded", async () => {
-      try{
-        const res = await fetch("header.html");
-        const headerHtml = await res.text();
-        const holder = document.getElementById("header-placeholder");
-        if(holder) holder.innerHTML = headerHtml;
 
-        // ✅ Back: analysis -> chat
-        const backBtn = document.getElementById("btnBack");
-        if(backBtn){
-          backBtn.style.display = "inline-flex";
-          backBtn.onclick = () => window.location.href = "chat.html";
-        }
+// =========================
+// ✅ تحميل الهيدر + تفعيل كامل
+// =========================
+window.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const res = await fetch("header.html");
+    const headerHtml = await res.text();
+    const holder = document.getElementById("header-placeholder");
+    if (holder) holder.innerHTML = headerHtml;
 
-        // ✅ Language button
-        const btnLang = document.getElementById("btnLang");
-        if(btnLang){
-          btnLang.addEventListener("click", () => {
-            currentLang = (currentLang === "ar") ? "en" : "ar";
-            localStorage.setItem("lang", currentLang);
-            applyLangToHeaderAndPage();
-          });
-        }
+    setTimeout(() => {
+      setupHeader();
+      setupBackButton("chat.html"); // يرجع للشات
+      setupLanguage();
+    }, 100);
 
-        // init
-        applyLangToHeaderAndPage();
+  } catch (e) {
+    console.error("Header load error:", e);
+    applyLangToHeaderAndPage();
+  }
+});
 
-      }catch(e){
-        console.error("Header load failed:", e);
-        // still render page content
-        applyLangToHeaderAndPage();
+// =========================
+// ✅ إعداد الهيدر كامل
+// =========================
+function setupHeader(){
+  const btnAccount = document.getElementById("btnAccount");
+  const menu = document.getElementById("accountMenu");
+  const logoutBtn = document.getElementById("menuLogout");
+  const menuAdmin = document.getElementById("menuAdmin");
+  const menuAdminBadge = document.getElementById("menuAdminBadge");
+  const avatarBadge = document.getElementById("avatarBadge");
+
+  if (!btnAccount || !menu) return;
+
+  const userRole = localStorage.getItem("userRole");
+
+  if(userRole === "admin" && menuAdmin){
+    menuAdmin.classList.add("show");
+    
+    try{
+      const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+      const pendingCount = requests.filter(r => r.status === "pending").length;
+
+      if(pendingCount > 0){
+        menuAdminBadge.textContent = pendingCount;
+        avatarBadge.textContent = pendingCount;
+        avatarBadge.classList.add("show");
       }
-    });
+    } catch(e){}
+  }
+
+  btnAccount.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("open");
+  };
+
+  document.onclick = () => {
+    if(menu.classList.contains("open")){
+      menu.classList.remove("open");
+    }
+  };
+
+  menu.onclick = (e) => e.stopPropagation();
+
+  if (logoutBtn){
+    logoutBtn.onclick = () => {
+      localStorage.removeItem("userRole");
+      window.location.href = "index.html";
+    };
+  }
+}
+
+// =========================
+// ✅ إعداد زر الرجوع
+// =========================
+function setupBackButton(returnPage){
+  const backBtn = document.getElementById("btnBack");
+  if(backBtn){
+    backBtn.style.display = "inline-flex";
+    backBtn.onclick = () => window.location.href = returnPage;
+  }
+}
+
+// =========================
+// ✅ إعداد اللغة
+// =========================
+function setupLanguage(){
+  const btnLang = document.getElementById("btnLang");
+  if (btnLang) {
+    btnLang.onclick = () => {
+      currentLang = (currentLang === "ar") ? "en" : "ar";
+      localStorage.setItem("lang", currentLang);
+      applyLangToHeaderAndPage();
+    };
+  }
+  applyLangToHeaderAndPage();
+}
   </script>
 </body>
 </html>
