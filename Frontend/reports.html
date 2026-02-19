@@ -554,15 +554,7 @@ body::before {
 </div>
 
 <script>
-// ========================================
-// LOAD HEADER
-// ========================================
-fetch('header.html')
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('headerContainer').innerHTML = data;
-    })
-    .catch(error => console.error('Error loading header:', error));
+
 
 // ========================================
 // CURRENT USER (محقق مسجل الدخول)
@@ -847,11 +839,7 @@ function setupEventListeners() {
     document.getElementById('btnApplyFilters').addEventListener('click', applyFilters);
     document.getElementById('btnClearFilters').addEventListener('click', clearFilters);
 
-    // Back button in header (when header loads)
-    setTimeout(() => {
-        const btnBack = document.getElementById('btnBack');
-        if (btnBack) {
-            btnBack.addEventListen
+  
 
             // =========================
 // ✅ Route Protection
