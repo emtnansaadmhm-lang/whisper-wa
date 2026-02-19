@@ -647,7 +647,104 @@
 const _role = localStorage.getItem("userRole");
 if(!_role){ window.location.href = "auth.html"; }
 else if(_role !== "admin"){ window.location.href = "connect.html"; }
-    window.onload = refresh;
+    // =========================
+// ✅ Admin Route Protection
+// =========================
+const _role = localStorage.getItem("userRole");
+if(!_role){ 
+  window.location.href = "auth.html"; 
+}
+else if(_role !== "admin"){ 
+  window.location.href = "connect.html"; 
+}
+
+// =========================
+// ✅ إعداد الهيدر
+// =========================
+function setupAdminHeader(){
+  const btnAccount = document.getElementById("btnAccount");
+  const menu = document.getElementById("accountMenu");
+  const logoutBtn = document.getElementById("menuLogout");
+  const menuAdmin = document.getElementById("menuAdmin");
+  const menuAdminBadge = document.getElementById("menuAdminBadge");
+  const avatarBadge = document.getElementById("avatarBadge");
+  const backBtn = document.getElementById("btnBack");
+
+  if (!btnAccount || !menu) return;
+
+  // إظهار قائمة الأدمن
+  if(menuAdmin){
+    menuAdmin.classList.add("show");
+    updatePendingCount();
+  }
+
+  btnAccount.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle("open");
+  };
+
+  document.onclick = () => {
+    if(menu.classList.contains("open")){
+      menu.classList.remove("open");
+    }
+  };
+
+  menu.onclick = (e) => e.stopPropagation();
+
+  if (logoutBtn){
+    logoutBtn.onclick = () => {
+      localStorage.removeItem("userRole");
+      window.location.href = "index.html";
+    };
+  }
+
+  // زر الرجوع يروح للشات
+  if(backBtn){
+    backBtn.style.display = "inline-flex";
+    backBtn.onclick = () => window.location.href = "chat.html";
+  }
+}
+
+function updatePendingCount(){
+  try{
+    const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    const pendingCount = requests.filter(r => r.status === "pending").length;
+    
+    const menuAdminBadge = document.getElementById("menuAdminBadge");
+    const avatarBadge = document.getElementById("avatarBadge");
+
+    if(pendingCount > 0 && menuAdminBadge && avatarBadge){
+      menuAdminBadge.textContent = pendingCount;
+      avatarBadge.textContent = pendingCount;
+      avatarBadge.classList.add("show");
+    }
+  } catch(e){}
+}
+
+// =========================
+// ✅ تحميل الهيدر + تفعيل
+// =========================
+window.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const res = await fetch("header.html");
+    const headerHtml = await res.text();
+    const pageHeader = document.querySelector(".page-header");
+    
+    if(pageHeader){
+      pageHeader.insertAdjacentHTML('beforebegin', '<div id="header-placeholder"></div>');
+      document.getElementById("header-placeholder").innerHTML = headerHtml;
+    }
+
+    setTimeout(() => {
+      setupAdminHeader();
+      refresh();
+    }, 100);
+
+  } catch (e) {
+    console.error("Header load error:", e);
+    refresh();
+  }
+});
   </script>
 </body>
 </html>
