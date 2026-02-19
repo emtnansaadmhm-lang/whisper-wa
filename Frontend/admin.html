@@ -381,8 +381,10 @@
   <div class="animated-bg-logo">
     <img src="logo.png" alt="Background Logo">
   </div>
+<div class="main-container">
+  <!-- ✅ Header -->
+  <div id="header-placeholder"></div>
 
-  <div class="main-container">
 
     <!-- ========== HEADER ========== -->
     
@@ -392,9 +394,7 @@
         <p>Manage user access requests and active accounts</p>
       </div>
       <div class="header-actions">
-        <button class="btn btn-ghost" onclick="window.location.href='connect.html'">
-          <i class="fa-solid fa-arrow-left"></i> Back to App
-        </button>
+        
       </div>
     </header>
 
@@ -465,7 +465,6 @@
     </section>
 
   </div>
-
 <script>
 // =========================
 // ✅ Admin Route Protection
@@ -664,11 +663,27 @@ function setupAdminHeader(){
   const avatarBadge = document.getElementById("avatarBadge");
   const backBtn = document.getElementById("btnBack");
 
-  if (!btnAccount || !menu) return;
+  if (!btnAccount || !menu) {
+    console.error("Header elements not found!");
+    return;
+  }
 
   if(menuAdmin){
     menuAdmin.classList.add("show");
-    updatePendingCount();
+  }
+
+  // Update badge
+  try{
+    const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    const pendingCount = requests.filter(r => r.status === "pending").length;
+    
+    if(pendingCount > 0 && menuAdminBadge && avatarBadge){
+      menuAdminBadge.textContent = pendingCount;
+      avatarBadge.textContent = pendingCount;
+      avatarBadge.classList.add("show");
+    }
+  } catch(e){
+    console.error("Error updating badge:", e);
   }
 
   btnAccount.onclick = (e) => {
@@ -691,26 +706,11 @@ function setupAdminHeader(){
     };
   }
 
+  // ✅ زر الرجوع يروح للشات
   if(backBtn){
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
   }
-}
-
-function updatePendingCount(){
-  try{
-    const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
-    const pendingCount = requests.filter(r => r.status === "pending").length;
-    
-    const menuAdminBadge = document.getElementById("menuAdminBadge");
-    const avatarBadge = document.getElementById("avatarBadge");
-
-    if(pendingCount > 0 && menuAdminBadge && avatarBadge){
-      menuAdminBadge.textContent = pendingCount;
-      avatarBadge.textContent = pendingCount;
-      avatarBadge.classList.add("show");
-    }
-  } catch(e){}
 }
 
 // =========================
@@ -720,17 +720,19 @@ window.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch("header.html");
     const headerHtml = await res.text();
-    const pageHeader = document.querySelector(".page-header");
+    const placeholder = document.getElementById("header-placeholder");
     
-    if(pageHeader){
-      pageHeader.insertAdjacentHTML('beforebegin', '<div id="header-placeholder"></div>');
-      document.getElementById("header-placeholder").innerHTML = headerHtml;
+    if(placeholder){
+      placeholder.innerHTML = headerHtml;
+      console.log("Header loaded successfully!");
+    } else {
+      console.error("header-placeholder not found!");
     }
 
     setTimeout(() => {
       setupAdminHeader();
       refresh();
-    }, 100);
+    }, 150);
 
   } catch (e) {
     console.error("Header load error:", e);
