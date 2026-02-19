@@ -466,189 +466,8 @@
 
   </div>
 
-  <script>
-    // ========== DATA MANAGEMENT ==========
-    function getRequests(){
-      return JSON.parse(localStorage.getItem("accountRequests") || "[]");
-    }
-
-    function saveRequests(requests){
-      localStorage.setItem("accountRequests", JSON.stringify(requests));
-    }
-
-    function getActiveUsers(){
-      return JSON.parse(localStorage.getItem("activeUsers") || "[]");
-    }
-
-    function saveActiveUsers(users){
-      localStorage.setItem("activeUsers", JSON.stringify(users));
-    }
-
-    // ========== ALERT ==========
-    function showAlert(type, message){
-      const alertBox = document.getElementById("alertBox");
-      alertBox.className = `alert ${type} show`;
-      alertBox.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i> ${message}`;
-      setTimeout(() => alertBox.classList.remove("show"), 4000);
-    }
-
-    // ========== UPDATE STATS ==========
-    function updateStats(){
-      const requests = getRequests();
-      const activeUsers = getActiveUsers();
-
-      const pending = requests.filter(r => r.status === "pending").length;
-      const rejected = requests.filter(r => r.status === "rejected").length;
-
-      document.getElementById("statPending").textContent = pending;
-      document.getElementById("statActive").textContent = activeUsers.length;
-      document.getElementById("statRejected").textContent = rejected;
-      document.getElementById("statTotal").textContent = requests.length;
-      document.getElementById("badgePending").textContent = pending;
-    }
-
-    // ========== RENDER PENDING REQUESTS ==========
-    function renderPendingRequests(){
-      const container = document.getElementById("pendingRequestsContainer");
-      const requests = getRequests().filter(r => r.status === "pending");
-
-      if(requests.length === 0){
-        container.innerHTML = `
-          <div class="empty-state">
-            <i class="fa-solid fa-inbox"></i>
-            <p>No pending requests at the moment.</p>
-          </div>
-        `;
-        return;
-      }
-
-      container.innerHTML = requests.map(req => `
-        <div class="request-card" data-id="${req.id}">
-          <div class="request-header">
-            <div class="request-info">
-              <h4>${req.name}</h4>
-              <div class="email"><i class="fa-solid fa-envelope"></i> ${req.email}</div>
-              <div class="meta">
-                <i class="fa-solid fa-briefcase"></i> ${req.job} 
-                ${req.department !== "Not specified" ? `• ${req.department}` : ""}
-                <br>
-                <i class="fa-solid fa-clock"></i> Submitted: ${new Date(req.timestamp).toLocaleString()}
-              </div>
-            </div>
-          </div>
-          <div class="request-reason">
-            <strong>Reason for Access:</strong><br>
-            ${req.reason}
-          </div>
-          <div class="request-actions">
-            <button class="btn-small btn-approve" onclick="approveRequest(${req.id})">
-              <i class="fa-solid fa-check"></i> Approve
-            </button>
-            <button class="btn-small btn-reject" onclick="rejectRequest(${req.id})">
-              <i class="fa-solid fa-xmark"></i> Reject
-            </button>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    // ========== RENDER ACTIVE USERS ==========
-    function renderActiveUsers(){
-      const tbody = document.getElementById("activeUsersTable");
-      const users = getActiveUsers();
-
-      if(users.length === 0){
-        tbody.innerHTML = `
-          <tr>
-            <td colspan="5" style="text-align:center; padding:40px; color:var(--text-muted);">
-              <i class="fa-solid fa-users-slash" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>
-              No active users yet.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tbody.innerHTML = users.map(user => `
-        <tr>
-          <td><strong>${user.name}</strong></td>
-          <td>${user.email}</td>
-          <td>${user.job}</td>
-          <td>${new Date(user.approvedOn).toLocaleDateString()}</td>
-          <td>
-            <button class="btn-revoke" onclick="revokeUser('${user.email}')">
-              <i class="fa-solid fa-ban"></i> Revoke
-            </button>
-          </td>
-        </tr>
-      `).join("");
-    }
-
-    // ========== APPROVE REQUEST ==========
-    function approveRequest(id){
-      const requests = getRequests();
-      const request = requests.find(r => r.id === id);
-      
-      if(!request) return;
-
-      // Update request status
-      request.status = "approved";
-      saveRequests(requests);
-
-      // Add to active users
-      const activeUsers = getActiveUsers();
-      activeUsers.push({
-        name: request.name,
-        email: request.email,
-        job: request.job,
-        department: request.department,
-        approvedOn: new Date().toISOString()
-      });
-      saveActiveUsers(activeUsers);
-
-      showAlert("success", `✓ ${request.name}'s request has been approved!`);
-      refresh();
-    }
-
-    // ========== REJECT REQUEST ==========
-    function rejectRequest(id){
-      const requests = getRequests();
-      const request = requests.find(r => r.id === id);
-      
-      if(!request) return;
-
-      request.status = "rejected";
-      saveRequests(requests);
-
-      showAlert("info", `${request.name}'s request has been rejected.`);
-      refresh();
-    }
-
-    // ========== REVOKE USER ==========
-    function revokeUser(email){
-      if(!confirm(`Are you sure you want to revoke access for ${email}?`)) return;
-
-      const activeUsers = getActiveUsers();
-      const filtered = activeUsers.filter(u => u.email !== email);
-      saveActiveUsers(filtered);
-
-      showAlert("info", `Access revoked for ${email}.`);
-      refresh();
-    }
-
-    // ========== REFRESH DATA ==========
-    function refresh(){
-      updateStats();
-      renderPendingRequests();
-      renderActiveUsers();
-    }
-
-    // ========== INIT ==========
-    // ✅ Admin Route Protection
-const _role = localStorage.getItem("userRole");
-if(!_role){ window.location.href = "auth.html"; }
-else if(_role !== "admin"){ window.location.href = "connect.html"; }
-    // =========================
+<script>
+// =========================
 // ✅ Admin Route Protection
 // =========================
 const _role = localStorage.getItem("userRole");
@@ -657,6 +476,180 @@ if(!_role){
 }
 else if(_role !== "admin"){ 
   window.location.href = "connect.html"; 
+}
+
+// ========== DATA MANAGEMENT ==========
+function getRequests(){
+  return JSON.parse(localStorage.getItem("accountRequests") || "[]");
+}
+
+function saveRequests(requests){
+  localStorage.setItem("accountRequests", JSON.stringify(requests));
+}
+
+function getActiveUsers(){
+  return JSON.parse(localStorage.getItem("activeUsers") || "[]");
+}
+
+function saveActiveUsers(users){
+  localStorage.setItem("activeUsers", JSON.stringify(users));
+}
+
+// ========== ALERT ==========
+function showAlert(type, message){
+  const alertBox = document.getElementById("alertBox");
+  alertBox.className = `alert ${type} show`;
+  alertBox.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i> ${message}`;
+  setTimeout(() => alertBox.classList.remove("show"), 4000);
+}
+
+// ========== UPDATE STATS ==========
+function updateStats(){
+  const requests = getRequests();
+  const activeUsers = getActiveUsers();
+
+  const pending = requests.filter(r => r.status === "pending").length;
+  const rejected = requests.filter(r => r.status === "rejected").length;
+
+  document.getElementById("statPending").textContent = pending;
+  document.getElementById("statActive").textContent = activeUsers.length;
+  document.getElementById("statRejected").textContent = rejected;
+  document.getElementById("statTotal").textContent = requests.length;
+  document.getElementById("badgePending").textContent = pending;
+}
+
+// ========== RENDER PENDING REQUESTS ==========
+function renderPendingRequests(){
+  const container = document.getElementById("pendingRequestsContainer");
+  const requests = getRequests().filter(r => r.status === "pending");
+
+  if(requests.length === 0){
+    container.innerHTML = `
+      <div class="empty-state">
+        <i class="fa-solid fa-inbox"></i>
+        <p>No pending requests at the moment.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = requests.map(req => `
+    <div class="request-card" data-id="${req.id}">
+      <div class="request-header">
+        <div class="request-info">
+          <h4>${req.name}</h4>
+          <div class="email"><i class="fa-solid fa-envelope"></i> ${req.email}</div>
+          <div class="meta">
+            <i class="fa-solid fa-briefcase"></i> ${req.job} 
+            ${req.department !== "Not specified" ? `• ${req.department}` : ""}
+            <br>
+            <i class="fa-solid fa-clock"></i> Submitted: ${new Date(req.timestamp).toLocaleString()}
+          </div>
+        </div>
+      </div>
+      <div class="request-reason">
+        <strong>Reason for Access:</strong><br>
+        ${req.reason}
+      </div>
+      <div class="request-actions">
+        <button class="btn-small btn-approve" onclick="approveRequest(${req.id})">
+          <i class="fa-solid fa-check"></i> Approve
+        </button>
+        <button class="btn-small btn-reject" onclick="rejectRequest(${req.id})">
+          <i class="fa-solid fa-xmark"></i> Reject
+        </button>
+      </div>
+    </div>
+  `).join("");
+}
+
+// ========== RENDER ACTIVE USERS ==========
+function renderActiveUsers(){
+  const tbody = document.getElementById("activeUsersTable");
+  const users = getActiveUsers();
+
+  if(users.length === 0){
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align:center; padding:40px; color:var(--text-muted);">
+          <i class="fa-solid fa-users-slash" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>
+          No active users yet.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = users.map(user => `
+    <tr>
+      <td><strong>${user.name}</strong></td>
+      <td>${user.email}</td>
+      <td>${user.job}</td>
+      <td>${new Date(user.approvedOn).toLocaleDateString()}</td>
+      <td>
+        <button class="btn-revoke" onclick="revokeUser('${user.email}')">
+          <i class="fa-solid fa-ban"></i> Revoke
+        </button>
+      </td>
+    </tr>
+  `).join("");
+}
+
+// ========== APPROVE REQUEST ==========
+function approveRequest(id){
+  const requests = getRequests();
+  const request = requests.find(r => r.id === id);
+  
+  if(!request) return;
+
+  request.status = "approved";
+  saveRequests(requests);
+
+  const activeUsers = getActiveUsers();
+  activeUsers.push({
+    name: request.name,
+    email: request.email,
+    job: request.job,
+    department: request.department,
+    approvedOn: new Date().toISOString()
+  });
+  saveActiveUsers(activeUsers);
+
+  showAlert("success", `✓ ${request.name}'s request has been approved!`);
+  refresh();
+}
+
+// ========== REJECT REQUEST ==========
+function rejectRequest(id){
+  const requests = getRequests();
+  const request = requests.find(r => r.id === id);
+  
+  if(!request) return;
+
+  request.status = "rejected";
+  saveRequests(requests);
+
+  showAlert("info", `${request.name}'s request has been rejected.`);
+  refresh();
+}
+
+// ========== REVOKE USER ==========
+function revokeUser(email){
+  if(!confirm(`Are you sure you want to revoke access for ${email}?`)) return;
+
+  const activeUsers = getActiveUsers();
+  const filtered = activeUsers.filter(u => u.email !== email);
+  saveActiveUsers(filtered);
+
+  showAlert("info", `Access revoked for ${email}.`);
+  refresh();
+}
+
+// ========== REFRESH DATA ==========
+function refresh(){
+  updateStats();
+  renderPendingRequests();
+  renderActiveUsers();
 }
 
 // =========================
@@ -673,7 +666,6 @@ function setupAdminHeader(){
 
   if (!btnAccount || !menu) return;
 
-  // إظهار قائمة الأدمن
   if(menuAdmin){
     menuAdmin.classList.add("show");
     updatePendingCount();
@@ -699,7 +691,6 @@ function setupAdminHeader(){
     };
   }
 
-  // زر الرجوع يروح للشات
   if(backBtn){
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
@@ -746,6 +737,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     refresh();
   }
 });
-  </script>
+</script>
 </body>
 </html>
+
