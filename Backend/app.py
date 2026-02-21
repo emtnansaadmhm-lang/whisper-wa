@@ -192,3 +192,6 @@ def api_workflow_run():
         result["decrypt"] = dec
 
     return jsonify(result), 200
+
+from index import build_index
+
