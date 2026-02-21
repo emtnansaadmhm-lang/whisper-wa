@@ -194,4 +194,13 @@ def api_workflow_run():
     return jsonify(result), 200
 
 from index import build_index
+@app.route("/build-index", methods=["POST"])
+def build_index_api():
+    data = request.json
+    index_data = build_index(data)
+    return {
+        "status": "ok",
+        "indexed_words": len(index_data)
+    }
+
 
