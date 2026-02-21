@@ -202,5 +202,47 @@ def build_index_api():
         "status": "ok",
         "indexed_words": len(index_data)
     }
+# Backend/app.py
+from flask import Flask, request, jsonify
+from index import build_index, search_word
+
+app = Flask(__name__)
+
+MESSAGES = {}
+INDEX = {}
+
+@app.route("/build-index", methods=["POST"])
+def build():
+    global MESSAGES, INDEX
+
+    data = request.json
+    # نتأكد إن الـ IDs أرقام
+    MESSAGES = {int(k): v for k, v in data["messages"].items()}
+    INDEX = build_index(MESSAGES)
+
+    return jsonify({
+        "status": "success",
+        "total_words": len(INDEX["word_index"]),
+        "total_links": len(INDEX["links"]),
+        "total_images": len(INDEX["images"]),
+        "most_common_word": INDEX["most_common"]
+    })
+
+@app.route("/search", methods=["GET"])
+def search():
+    q = request.args.get("q")
+    ids = search_word(INDEX, q)
+    return jsonify({i: MESSAGES[i] for i in ids})
+
+@app.route("/links", methods=["GET"])
+def links():
+    return jsonify(INDEX["links"])
+
+@app.route("/images", methods=["GET"])
+def images():
+    return jsonify(INDEX["images"])
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 
