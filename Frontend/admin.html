@@ -803,6 +803,32 @@ function applyAdminLanguage(lang){
   // Re-render content with new language
   refresh();
 }
+// =========================
+// ✅ تحميل الهيدر + تفعيل
+// =========================
+window.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const res = await fetch("header.html");
+    const headerHtml = await res.text();
+    const placeholder = document.getElementById("header-placeholder");
+    
+    if(placeholder){
+      placeholder.innerHTML = headerHtml;
+      console.log("Header loaded successfully!");
+    } else {
+      console.error("header-placeholder not found!");
+    }
+
+    setTimeout(() => {
+      setupAdminHeader();
+      refresh();
+    }, 150);
+
+  } catch (e) {
+    console.error("Header load error:", e);
+    refresh();
+  }
+});
 </script>
 </body>
 </html>
