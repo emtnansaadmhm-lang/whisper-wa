@@ -521,18 +521,18 @@ function updateStats(){
 function renderPendingRequests(){
   const container = document.getElementById("pendingRequestsContainer");
   const requests = getRequests().filter(r => r.status === "pending");
+   const isAr = document.documentElement.lang === "ar";
 
-  if(requests.length === 0){
+ if(requests.length === 0){
     container.innerHTML = `
       <div class="empty-state">
         <i class="fa-solid fa-inbox"></i>
-        <p>No pending requests at the moment.</p>
+        <p>${isAr ? "لا توجد طلبات معلقة حالياً." : "No pending requests at the moment."}</p>
       </div>
     `;
     return;
   }
-
-  container.innerHTML = requests.map(req => `
+ container.innerHTML = requests.map(req => `
     <div class="request-card" data-id="${req.id}">
       <div class="request-header">
         <div class="request-info">
@@ -542,20 +542,20 @@ function renderPendingRequests(){
             <i class="fa-solid fa-briefcase"></i> ${req.job} 
             ${req.department !== "Not specified" ? `• ${req.department}` : ""}
             <br>
-            <i class="fa-solid fa-clock"></i> Submitted: ${new Date(req.timestamp).toLocaleString()}
+            <i class="fa-solid fa-clock"></i> ${isAr ? "تاريخ التقديم:" : "Submitted:"} ${new Date(req.timestamp).toLocaleString()}
           </div>
         </div>
       </div>
       <div class="request-reason">
-        <strong>Reason for Access:</strong><br>
+        <strong>${isAr ? "سبب طلب الوصول:" : "Reason for Access:"}</strong><br>
         ${req.reason}
       </div>
       <div class="request-actions">
         <button class="btn-small btn-approve" onclick="approveRequest(${req.id})">
-          <i class="fa-solid fa-check"></i> Approve
+          <i class="fa-solid fa-check"></i> ${isAr ? "موافقة" : "Approve"}
         </button>
         <button class="btn-small btn-reject" onclick="rejectRequest(${req.id})">
-          <i class="fa-solid fa-xmark"></i> Reject
+          <i class="fa-solid fa-xmark"></i> ${isAr ? "رفض" : "Reject"}
         </button>
       </div>
     </div>
@@ -566,13 +566,14 @@ function renderPendingRequests(){
 function renderActiveUsers(){
   const tbody = document.getElementById("activeUsersTable");
   const users = getActiveUsers();
+   const isAr = document.documentElement.lang === "ar";
 
-  if(users.length === 0){
+if(users.length === 0){
     tbody.innerHTML = `
       <tr>
         <td colspan="5" style="text-align:center; padding:40px; color:var(--text-muted);">
           <i class="fa-solid fa-users-slash" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>
-          No active users yet.
+          ${isAr ? "لا يوجد مستخدمون نشطون بعد." : "No active users yet."}
         </td>
       </tr>
     `;
@@ -587,7 +588,7 @@ function renderActiveUsers(){
       <td>${new Date(user.approvedOn).toLocaleDateString()}</td>
       <td>
         <button class="btn-revoke" onclick="revokeUser('${user.email}')">
-          <i class="fa-solid fa-ban"></i> Revoke
+          <i class="fa-solid fa-ban"></i> ${isAr ? "إلغاء" : "Revoke"}
         </button>
       </td>
     </tr>
@@ -706,58 +707,102 @@ function setupAdminHeader(){
     };
   }
 
- // ✅ زر الرجوع يروح للشات
+  // ✅ زر الرجوع يروح للشات
   if(backBtn){
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
   }
 
-  // ✅ زر اللغة
+  // ✅ زر اللغة مع ترجمة كاملة
   const btnLang = document.getElementById("btnLang");
-  const langText = document.getElementById("langText");
-  const topSubtitle = document.getElementById("top-subtitle");
   
   if(btnLang){
     btnLang.onclick = () => {
       const currentLang = document.documentElement.lang;
       const newLang = (currentLang === "ar") ? "en" : "ar";
       
-      document.documentElement.lang = newLang;
-      document.documentElement.dir = (newLang === "ar") ? "rtl" : "ltr";
-      
-      if(langText) langText.textContent = (newLang === "ar") ? "EN" : "AR";
-      if(topSubtitle) topSubtitle.textContent = (newLang === "ar") ? "منصة التحليل الجنائي الرقمي" : "Digital Forensics Platform";
-      
-      localStorage.setItem("lang", newLang);
+      applyAdminLanguage(newLang);
     };
   }
+  
+  // تطبيق اللغة المحفوظة
+  const savedLang = localStorage.getItem("lang") || "en";
+  applyAdminLanguage(savedLang);
 }
-// =========================
-// ✅ تحميل الهيدر + تفعيل
-// =========================
-window.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const res = await fetch("header.html");
-    const headerHtml = await res.text();
-    const placeholder = document.getElementById("header-placeholder");
-    
-    if(placeholder){
-      placeholder.innerHTML = headerHtml;
-      console.log("Header loaded successfully!");
-    } else {
-      console.error("header-placeholder not found!");
-    }
 
-    setTimeout(() => {
-      setupAdminHeader();
-      refresh();
-    }, 150);
+// =========================
+// ✅ تطبيق اللغة على الصفحة
+// =========================
+function applyAdminLanguage(lang){
+  const isAr = (lang === "ar");
+  
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isAr ? "rtl" : "ltr";
+  localStorage.setItem("lang", lang);
 
-  } catch (e) {
-    console.error("Header load error:", e);
-    refresh();
+  // الهيدر
+  const langText = document.getElementById("langText");
+  const topSubtitle = document.getElementById("top-subtitle");
+  if(langText) langText.textContent = isAr ? "EN" : "AR";
+  if(topSubtitle) topSubtitle.textContent = isAr ? "منصة التحليل الجنائي الرقمي" : "Digital Forensics Platform";
+
+  // Page Header
+  document.title = isAr ? "Whisper-WA | لوحة تحكم المسؤول" : "Whisper-WA | Admin Dashboard";
+  
+  const pageTitle = document.querySelector(".page-header h1");
+  const pageSubtitle = document.querySelector(".page-header p");
+  if(pageTitle) pageTitle.innerHTML = isAr 
+    ? '<i class="fa-solid fa-shield-halved"></i> لوحة تحكم المسؤول'
+    : '<i class="fa-solid fa-shield-halved"></i> Admin Dashboard';
+  if(pageSubtitle) pageSubtitle.textContent = isAr 
+    ? "إدارة طلبات الوصول والحسابات النشطة"
+    : "Manage user access requests and active accounts";
+
+  // Back Button
+  const backBtnText = document.querySelector(".btn-ghost");
+  if(backBtnText) backBtnText.innerHTML = isAr
+    ? '<i class="fa-solid fa-arrow-left"></i> العودة للتطبيق'
+    : '<i class="fa-solid fa-arrow-left"></i> Back to App';
+
+  // Stats Cards
+  const statLabels = document.querySelectorAll(".stat-card .label");
+  const statTexts = isAr 
+    ? ["الطلبات المعلقة", "المستخدمون النشطون", "الطلبات المرفوضة", "إجمالي الطلبات"]
+    : ["Pending Requests", "Active Users", "Rejected Requests", "Total Requests"];
+  statLabels.forEach((label, i) => {
+    if(label) label.textContent = statTexts[i];
+  });
+
+  // Pending Requests Section
+  const pendingTitle = document.querySelector(".panel-header h3");
+  if(pendingTitle){
+    const badge = pendingTitle.querySelector(".badge");
+    const badgeText = badge ? badge.textContent : "0";
+    pendingTitle.innerHTML = isAr
+      ? `<i class="fa-solid fa-hourglass-half"></i> الطلبات المعلقة <span class="badge">${badgeText}</span>`
+      : `<i class="fa-solid fa-hourglass-half"></i> Pending Requests <span class="badge">${badgeText}</span>`;
   }
-});
+
+  // Active Users Section
+  const usersTitle = document.querySelectorAll(".panel-header h3")[1];
+  if(usersTitle){
+    usersTitle.innerHTML = isAr
+      ? '<i class="fa-solid fa-users"></i> المستخدمون النشطون'
+      : '<i class="fa-solid fa-users"></i> Active Users';
+  }
+
+  // Table Headers
+  const tableHeaders = document.querySelectorAll(".user-table thead th");
+  const headerTexts = isAr
+    ? ["الاسم", "البريد الإلكتروني", "المسمى الوظيفي", "تاريخ الموافقة", "الإجراءات"]
+    : ["Name", "Email", "Job Title", "Approved On", "Actions"];
+  tableHeaders.forEach((th, i) => {
+    if(th) th.textContent = headerTexts[i];
+  });
+
+  // Re-render content with new language
+  refresh();
+}
 </script>
 </body>
 </html>
