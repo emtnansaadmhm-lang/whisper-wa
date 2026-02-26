@@ -510,13 +510,19 @@ function updateStats(){
   const pending = requests.filter(r => r.status === "pending").length;
   const rejected = requests.filter(r => r.status === "rejected").length;
 
-  document.getElementById("statPending").textContent = pending;
-  document.getElementById("statActive").textContent = activeUsers.length;
-  document.getElementById("statRejected").textContent = rejected;
-  document.getElementById("statTotal").textContent = requests.length;
-  document.getElementById("badgePending").textContent = pending;
-}
+  // ✅ تحقق من وجود العناصر قبل الكتابة
+  const statPending = document.getElementById("statPending");
+  const statActive = document.getElementById("statActive");
+  const statRejected = document.getElementById("statRejected");
+  const statTotal = document.getElementById("statTotal");
+  const badgePending = document.getElementById("badgePending");
 
+  if(statPending) statPending.textContent = pending;
+  if(statActive) statActive.textContent = activeUsers.length;
+  if(statRejected) statRejected.textContent = rejected;
+  if(statTotal) statTotal.textContent = requests.length;
+  if(badgePending) badgePending.textContent = pending;
+}
 // ========== RENDER PENDING REQUESTS ==========
 function renderPendingRequests(){
   const container = document.getElementById("pendingRequestsContainer");
@@ -821,12 +827,17 @@ window.addEventListener("DOMContentLoaded", async () => {
 
     setTimeout(() => {
       setupAdminHeader();
-      refresh();
-    }, 150);
+      
+      // ✅ انتظر frame إضافي
+      requestAnimationFrame(() => {
+        refresh();
+        console.log("✅ All loaded! Pending:", getRequests().filter(r => r.status === "pending").length);
+      });
+    }, 300);
 
   } catch (e) {
-    console.error("Header load error:", e);
-    refresh();
+    console.error("❌ Error:", e);
+
   }
 });
 </script>
