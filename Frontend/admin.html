@@ -804,7 +804,7 @@ function applyAdminLanguage(lang){
     : ["Name", "Email", "Job Title", "Approved On", "Actions"];
   tableHeaders.forEach((th, i) => {
     if(th) th.textContent = headerTexts[i];
-  });
+  
 
   // Re-render content with new language
   refresh();
