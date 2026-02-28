@@ -35,7 +35,6 @@ body::before {
   z-index: 0; pointer-events: none;
 }
 
-/* BG Logo */
 .animated-bg-logo {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%,-50%);
@@ -52,7 +51,6 @@ body::before {
 .container { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
 .content-wrapper { margin-top: 26px; }
 
-/* ── STATS ── */
 .stats-row {
   display: grid;
   grid-template-columns: repeat(4,1fr);
@@ -83,7 +81,6 @@ body::before {
 .stat-value { font-size:2rem; font-weight:900; color:#fff; line-height:1; }
 .stat-label { font-size:0.8rem; color:#c2dec9; margin-top:4px; }
 
-/* ── PAGE HEADER ── */
 .page-header {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -110,7 +107,6 @@ body::before {
 .user-badge span { color:#c2dec9; font-size:0.88rem; }
 .user-badge strong { color:#fff; font-size:0.95rem; }
 
-/* ── FILTERS ── */
 .filters-section {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -140,7 +136,6 @@ body::before {
 .filter-select option { background:#142820; color:var(--text-light); }
 .filter-actions { display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; }
 
-/* ── BUTTONS ── */
 .btn {
   padding: 10px 20px; border:none; border-radius:10px;
   font-size:0.92rem; font-weight:700;
@@ -162,7 +157,6 @@ body::before {
 .btn-danger { background:linear-gradient(135deg,#ff6b6b,#c0392b); color:#fff; }
 .btn-danger:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(192,57,43,0.4); }
 
-/* ── TABLE SECTION ── */
 .reports-section {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
@@ -203,7 +197,6 @@ body::before {
 .reports-table td { padding:15px 16px; color:#c2dec9; font-size:0.9rem; vertical-align:middle; }
 .reports-table td strong { color:var(--green-light); font-weight:700; }
 
-/* Status */
 .status-badge {
   display:inline-flex; align-items:center; gap:5px;
   padding:5px 11px; border-radius:20px;
@@ -213,7 +206,6 @@ body::before {
 .status-pending   { background:rgba(255,193,7,0.18);  color:#FFD54F; border:1px solid rgba(255,193,7,0.33); }
 .status-archived  { background:rgba(158,158,158,0.18);color:#BDBDBD; border:1px solid rgba(158,158,158,0.33); }
 
-/* Action Btns */
 .action-buttons { display:flex; gap:6px; flex-wrap:wrap; }
 .action-btn {
   background:rgba(95,191,122,0.12);
@@ -230,7 +222,6 @@ body::before {
 }
 .action-btn.delete:hover { background:rgba(244,67,54,0.2); }
 
-/* ── PAGINATION ── */
 .pagination {
   display:flex; justify-content:center;
   align-items:center; gap:10px; margin-top:22px;
@@ -245,13 +236,11 @@ body::before {
 .page-btn:disabled { opacity:0.3; cursor:not-allowed; }
 .page-info { color:#c2dec9; font-size:0.91rem; font-weight:600; padding:0 10px; }
 
-/* ── EMPTY STATE ── */
 .empty-state { text-align:center; padding:60px 20px; color:#c2dec9; }
 .empty-state i { font-size:3.8rem; color:rgba(95,191,122,0.27); margin-bottom:16px; display:block; }
 .empty-state h3 { font-size:1.45rem; color:var(--green-light); margin-bottom:8px; }
 .empty-state p  { font-size:0.95rem; opacity:0.72; }
 
-/* ── MODALS ── */
 .modal-overlay {
   position:fixed; inset:0; background:rgba(0,0,0,0.8);
   z-index:99999; display:flex; align-items:center;
@@ -278,16 +267,12 @@ body::before {
 .modal-box p { color:#c2dec9; font-size:0.93rem; line-height:1.65; }
 .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; flex-wrap:wrap; }
 
-/* View Modal Grid */
 .view-grid {
   display:grid; grid-template-columns:1fr 1fr;
   gap:12px; margin-top:16px;
 }
 @media(max-width:480px){ .view-grid{ grid-template-columns:1fr; } }
-.vf {
-  background:rgba(0,0,0,0.25); border-radius:10px;
-  padding:13px 15px;
-}
+.vf { background:rgba(0,0,0,0.25); border-radius:10px; padding:13px 15px; }
 .vf.full { grid-column:1/-1; }
 .vf label {
   display:block; color:#8fd9a8; font-size:0.76rem;
@@ -421,7 +406,7 @@ body::before {
         <div class="empty-state" id="emptyState" style="display:none;">
           <i class="fa-solid fa-folder-open"></i>
           <h3 id="txt-no-reports">No Reports Found</h3>
-          <p id="txt-no-reports-sub">You don't have any reports matching your criteria.</p>
+          <p id="txt-no-reports-sub">No reports have been saved yet.</p>
         </div>
       </div>
 
@@ -439,7 +424,7 @@ body::before {
   </div>
 </div>
 
-<!-- ══ DELETE MODAL ══ -->
+<!-- DELETE MODAL -->
 <div class="modal-overlay hidden" id="deleteModal">
   <div class="modal-box sm">
     <h3>
@@ -459,7 +444,7 @@ body::before {
   </div>
 </div>
 
-<!-- ══ VIEW MODAL ══ -->
+<!-- VIEW MODAL -->
 <div class="modal-overlay hidden" id="viewModal">
   <div class="modal-box lg">
     <h3>
@@ -521,7 +506,7 @@ const UI = {
     btnDownload:"Download", btnView:"View", btnDelete:"Delete",
     pageOf:(c,t) => `Page ${c} of ${t}`,
     noReports:"No Reports Found",
-    noReportsSub:"You don't have any reports matching your criteria.",
+    noReportsSub:"No reports have been saved yet.",
     delTitle:"Confirm Delete",
     delBody:"Are you sure you want to delete this report? This action cannot be undone.",
     delCancel:"Cancel", delConfirm:"Delete",
@@ -556,7 +541,7 @@ const UI = {
     btnDownload:"تحميل", btnView:"عرض", btnDelete:"حذف",
     pageOf:(c,t) => `صفحة ${c} من ${t}`,
     noReports:"لا توجد تقارير",
-    noReportsSub:"لا توجد تقارير مطابقة للمعايير المحددة.",
+    noReportsSub:"لم يتم حفظ أي تقارير بعد.",
     delTitle:"تأكيد الحذف",
     delBody:"هل أنت متأكد من حذف هذا التقرير؟ لا يمكن التراجع عن هذه العملية.",
     delCancel:"إلغاء", delConfirm:"حذف",
@@ -579,24 +564,20 @@ function applyLang(lang) {
   document.title = t.docTitle;
   localStorage.setItem("lang", lang);
 
-  // Header
   const ts = document.getElementById("top-subtitle");
   const lt = document.getElementById("langText");
   if(ts) ts.textContent = t.topSubtitle;
   if(lt) lt.textContent = t.langBtn;
 
-  // Stats labels
   document.getElementById("lbl-stat-total").textContent     = t.statTotal;
   document.getElementById("lbl-stat-completed").textContent = t.statCompleted;
   document.getElementById("lbl-stat-pending").textContent   = t.statPending;
   document.getElementById("lbl-stat-archived").textContent  = t.statArchived;
 
-  // Page header
   document.getElementById("txt-page-title").innerHTML      = `<i class="fa-solid fa-file-lines"></i> ${t.pageTitle}`;
   document.getElementById("txt-page-subtitle").textContent = t.pageSub;
   document.getElementById("txt-logged-as").textContent     = t.loggedAs;
 
-  // Filters
   document.getElementById("lbl-f-date").textContent   = t.lblDate;
   document.getElementById("lbl-f-case").textContent   = t.lblCase;
   document.getElementById("lbl-f-device").textContent = t.lblDevice;
@@ -607,11 +588,10 @@ function applyLang(lang) {
   document.getElementById("opt-completed").textContent = t.optCompleted;
   document.getElementById("opt-pending").textContent   = t.optPending;
   document.getElementById("opt-archived").textContent  = t.optArchived;
-  document.getElementById("txt-clear").textContent     = t.txtClear;
-  document.getElementById("txt-export-csv").textContent= t.txtExportCSV;
-  document.getElementById("txt-apply").textContent     = t.txtApply;
+  document.getElementById("txt-clear").textContent      = t.txtClear;
+  document.getElementById("txt-export-csv").textContent = t.txtExportCSV;
+  document.getElementById("txt-apply").textContent      = t.txtApply;
 
-  // Table headers
   document.getElementById("txt-my-reports").textContent  = t.myReports;
   document.getElementById("th-date").textContent         = t.thDate;
   document.getElementById("th-time").textContent         = t.thTime;
@@ -621,21 +601,17 @@ function applyLang(lang) {
   document.getElementById("th-status").textContent       = t.thStatus;
   document.getElementById("th-actions").textContent      = t.thActions;
 
-  // Empty
   document.getElementById("txt-no-reports").textContent     = t.noReports;
   document.getElementById("txt-no-reports-sub").textContent = t.noReportsSub;
 
-  // Delete modal
   document.getElementById("txt-del-title").textContent   = t.delTitle;
   document.getElementById("txt-del-body").textContent    = t.delBody;
   document.getElementById("txt-del-cancel").textContent  = t.delCancel;
   document.getElementById("txt-del-confirm").textContent = t.delConfirm;
 
-  // View modal
   document.getElementById("txt-view-title").textContent = t.viewTitle;
   document.getElementById("txt-view-close").textContent = t.viewClose;
 
-  // Pagination arrows flip
   document.getElementById("icon-prev").className = `fa-solid fa-chevron-${isAr ? "right":"left"}`;
   document.getElementById("icon-next").className = `fa-solid fa-chevron-${isAr ? "left":"right"}`;
 
@@ -644,25 +620,8 @@ function applyLang(lang) {
 }
 
 // ════════════════════════════════════
-// ✅ MOCK DATA
+// ✅ DATA — من localStorage فقط
 // ════════════════════════════════════
-const allReports = [
-  { id:1,  investigator:"Rahaf Alruwaysan", date:"2026-02-15", time:"14:30", caseNumber:"055XXX", deviceInfo:"Samsung Galaxy S21",    status:"completed" },
-  { id:2,  investigator:"Rahaf Alruwaysan", date:"2026-02-14", time:"11:20", caseNumber:"055YYY", deviceInfo:"Google Pixel 6",         status:"completed" },
-  { id:3,  investigator:"Rahaf Alruwaysan", date:"2026-02-13", time:"09:15", caseNumber:"055ZZZ", deviceInfo:"OnePlus 9 Pro",          status:"pending"   },
-  { id:4,  investigator:"Rahaf Alruwaysan", date:"2026-02-10", time:"16:30", caseNumber:"055AAA", deviceInfo:"Xiaomi Mi 11",           status:"archived"  },
-  { id:5,  investigator:"Rahaf Alruwaysan", date:"2026-02-09", time:"13:45", caseNumber:"055BBB", deviceInfo:"Samsung Galaxy A52",     status:"completed" },
-  { id:6,  investigator:"Rahaf Alruwaysan", date:"2026-02-08", time:"10:00", caseNumber:"055CCC", deviceInfo:"Huawei P40 Pro",         status:"pending"   },
-  { id:7,  investigator:"Rahaf Alruwaysan", date:"2026-02-07", time:"15:20", caseNumber:"055DDD", deviceInfo:"Oppo Find X3 Pro",       status:"completed" },
-  { id:8,  investigator:"Rahaf Alruwaysan", date:"2026-02-05", time:"12:00", caseNumber:"055EEE", deviceInfo:"Realme GT Master",       status:"archived"  },
-  { id:9,  investigator:"Rahaf Alruwaysan", date:"2026-02-04", time:"09:30", caseNumber:"055FFF", deviceInfo:"Vivo X70 Pro",           status:"completed" },
-  { id:10, investigator:"Rahaf Alruwaysan", date:"2026-02-03", time:"14:15", caseNumber:"055GGG", deviceInfo:"Samsung Galaxy Z Fold3", status:"pending"   },
-  { id:11, investigator:"Rahaf Alruwaysan", date:"2026-02-02", time:"11:00", caseNumber:"055HHH", deviceInfo:"Google Pixel 7",         status:"completed" },
-  { id:12, investigator:"Rahaf Alruwaysan", date:"2026-02-01", time:"16:45", caseNumber:"055III", deviceInfo:"Motorola Edge 30",       status:"archived"  },
-  { id:13, investigator:"Admin User",       date:"2026-01-28", time:"10:00", caseNumber:"055JJJ", deviceInfo:"iPhone 14 Pro",          status:"completed" },
-  { id:14, investigator:"Admin User",       date:"2026-01-25", time:"08:30", caseNumber:"055KKK", deviceInfo:"iPad Pro 2022",          status:"pending"   },
-];
-
 let reportsData     = [];
 let filteredReports = [];
 let currentPage     = 1;
@@ -670,13 +629,20 @@ const itemsPerPage  = 10;
 let pendingDeleteId = null;
 
 function initUserReports() {
+  let saved = [];
+  try {
+    saved = JSON.parse(localStorage.getItem("savedReports") || "[]");
+  } catch(e){ saved = []; }
+
   const name = currentUser.name || "";
-  if(currentUser.role === "admin") {
-    reportsData = [...allReports];
+  const role = currentUser.role || "user";
+
+  if(role === "admin") {
+    reportsData = saved;
   } else {
-    reportsData = allReports.filter(r => r.investigator === name);
-    if(reportsData.length === 0) reportsData = [...allReports];
+    reportsData = saved.filter(r => r.investigator === name);
   }
+
   filteredReports = [...reportsData];
 }
 
@@ -694,11 +660,11 @@ function updateStats() {
 // ✅ RENDER TABLE
 // ════════════════════════════════════
 function renderTable() {
-  const tbody  = document.getElementById("reportsBody");
-  const empty  = document.getElementById("emptyState");
-  const table  = document.getElementById("reportsTable");
-  const pgn    = document.getElementById("pagination");
-  const t      = UI[currentLang];
+  const tbody = document.getElementById("reportsBody");
+  const empty = document.getElementById("emptyState");
+  const table = document.getElementById("reportsTable");
+  const pgn   = document.getElementById("pagination");
+  const t     = UI[currentLang];
 
   const start = (currentPage - 1) * itemsPerPage;
   const paged = filteredReports.slice(start, start + itemsPerPage);
@@ -730,7 +696,7 @@ function renderTable() {
       <td>${r.deviceInfo}</td>
       <td>
         <span class="status-badge status-${r.status}">
-          <i class="fa-solid ${sIco[r.status]}"></i>
+          <i class="fa-solid ${sIco[r.status] || 'fa-circle'}"></i>
           ${sLbl[r.status] || r.status}
         </span>
       </td>
@@ -755,9 +721,9 @@ function renderTable() {
 
 function updatePagination() {
   const total = Math.max(1, Math.ceil(filteredReports.length / itemsPerPage));
-  document.getElementById("pageInfo").textContent      = UI[currentLang].pageOf(currentPage, total);
-  document.getElementById("btnPrevPage").disabled      = currentPage === 1;
-  document.getElementById("btnNextPage").disabled      = currentPage >= total;
+  document.getElementById("pageInfo").textContent    = UI[currentLang].pageOf(currentPage, total);
+  document.getElementById("btnPrevPage").disabled    = currentPage === 1;
+  document.getElementById("btnNextPage").disabled    = currentPage >= total;
 }
 
 // ════════════════════════════════════
@@ -767,8 +733,10 @@ function downloadReport(id) {
   const r = reportsData.find(x => x.id === id);
   if(!r) return;
   const t = UI[currentLang];
-  const csv  = [t.exportHeaders.join(","),
-    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v}"`).join(",")
+  const csv  = [
+    t.exportHeaders.join(","),
+    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status]
+      .map(v=>`"${v}"`).join(",")
   ].join("\n");
   const blob = new Blob(["\uFEFF"+csv], { type:"text/csv;charset=utf-8;" });
   const url  = URL.createObjectURL(blob);
@@ -781,14 +749,13 @@ function downloadReport(id) {
 function viewReport(id) {
   const r = reportsData.find(x => x.id === id);
   if(!r) return;
-  const t   = UI[currentLang];
-  const lbl = t.vLbl;
+  const t    = UI[currentLang];
+  const lbl  = t.vLbl;
   const sLbl = { completed:t.sCompleted, pending:t.sPending, archived:t.sArchived };
   const sIco = { completed:"fa-circle-check", pending:"fa-clock", archived:"fa-box-archive" };
 
   document.getElementById("txt-view-title").textContent = t.viewTitle;
   document.getElementById("txt-view-close").textContent = t.viewClose;
-
   document.getElementById("viewGrid").innerHTML = `
     <div class="vf"><label>${lbl.id}</label><span>#${r.id}</span></div>
     <div class="vf"><label>${lbl.date}</label><span>${r.date}</span></div>
@@ -799,10 +766,10 @@ function viewReport(id) {
     <div class="vf full">
       <label>${lbl.status}</label>
       <span class="status-badge status-${r.status}">
-        <i class="fa-solid ${sIco[r.status]}"></i> ${sLbl[r.status]}
+        <i class="fa-solid ${sIco[r.status] || 'fa-circle'}"></i>
+        ${sLbl[r.status] || r.status}
       </span>
     </div>`;
-
   document.getElementById("viewModal").classList.remove("hidden");
 }
 
@@ -815,7 +782,8 @@ function exportCSV() {
   const t = UI[currentLang];
   if(!filteredReports.length) return;
   const rows = filteredReports.map(r =>
-    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v}"`).join(",")
+    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status]
+      .map(v=>`"${v||''}"`).join(",")
   );
   const csv  = [t.exportHeaders.join(","), ...rows].join("\n");
   const blob = new Blob(["\uFEFF"+csv], { type:"text/csv;charset=utf-8;" });
@@ -836,8 +804,8 @@ function applyFilters() {
   const sf = document.getElementById("filterStatus").value;
   filteredReports = reportsData.filter(r =>
     (!df || r.date === df) &&
-    (!cf || r.caseNumber.toLowerCase().includes(cf)) &&
-    (!vf || r.deviceInfo.toLowerCase().includes(vf)) &&
+    (!cf || (r.caseNumber||"").toLowerCase().includes(cf)) &&
+    (!vf || (r.deviceInfo||"").toLowerCase().includes(vf)) &&
     (!sf || r.status === sf)
   );
   currentPage = 1;
@@ -845,7 +813,8 @@ function applyFilters() {
 }
 
 function clearFilters() {
-  ["filterDate","filterCase","filterDevice"].forEach(id => document.getElementById(id).value = "");
+  ["filterDate","filterCase","filterDevice"].forEach(id =>
+    document.getElementById(id).value = "");
   document.getElementById("filterStatus").value = "";
   filteredReports = [...reportsData];
   currentPage = 1;
@@ -858,7 +827,10 @@ function clearFilters() {
 document.getElementById("btnApplyFilters").onclick = applyFilters;
 document.getElementById("btnClearFilters").onclick = clearFilters;
 document.getElementById("btnExportCSV").onclick    = exportCSV;
-document.getElementById("btnPrevPage").onclick = () => { if(currentPage > 1){ currentPage--; renderTable(); } };
+
+document.getElementById("btnPrevPage").onclick = () => {
+  if(currentPage > 1){ currentPage--; renderTable(); }
+};
 document.getElementById("btnNextPage").onclick = () => {
   const total = Math.ceil(filteredReports.length / itemsPerPage);
   if(currentPage < total){ currentPage++; renderTable(); }
@@ -871,11 +843,17 @@ document.getElementById("btnCancelDelete").onclick = () => {
 };
 document.getElementById("btnConfirmDelete").onclick = () => {
   if(pendingDeleteId !== null) {
+    // احذف من localStorage
+    let saved = JSON.parse(localStorage.getItem("savedReports") || "[]");
+    saved = saved.filter(r => r.id !== pendingDeleteId);
+    localStorage.setItem("savedReports", JSON.stringify(saved));
+
     reportsData     = reportsData.filter(r => r.id !== pendingDeleteId);
     filteredReports = filteredReports.filter(r => r.id !== pendingDeleteId);
     pendingDeleteId = null;
     currentPage = 1;
-    renderTable(); updateStats();
+    renderTable();
+    updateStats();
   }
   document.getElementById("deleteModal").classList.add("hidden");
 };
@@ -887,7 +865,8 @@ document.getElementById("deleteModal").onclick = (e) => {
 };
 
 // View modal
-document.getElementById("btnCloseView").onclick = () => document.getElementById("viewModal").classList.add("hidden");
+document.getElementById("btnCloseView").onclick = () =>
+  document.getElementById("viewModal").classList.add("hidden");
 document.getElementById("viewModal").onclick = (e) => {
   if(e.target === document.getElementById("viewModal"))
     document.getElementById("viewModal").classList.add("hidden");
@@ -908,7 +887,6 @@ function setupHeader() {
 
   if(!btnAccount || !menu) return;
 
-  // Admin badge
   if(localStorage.getItem("userRole") === "admin" && menuAdmin) {
     menuAdmin.classList.add("show");
     try {
@@ -922,12 +900,10 @@ function setupHeader() {
     } catch(e){}
   }
 
-  // Toggle menu
   btnAccount.onclick = (e) => { e.stopPropagation(); menu.classList.toggle("open"); };
   document.onclick   = ()  => menu.classList.remove("open");
   menu.onclick       = (e) => e.stopPropagation();
 
-  // Logout
   if(logoutBtn) {
     logoutBtn.onclick = () => {
       localStorage.removeItem("userRole");
@@ -936,13 +912,11 @@ function setupHeader() {
     };
   }
 
-  // Back → chat
   if(backBtn) {
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
   }
 
-  // Language
   if(btnLang) {
     btnLang.onclick = () => applyLang(currentLang === "en" ? "ar" : "en");
   }
@@ -953,6 +927,8 @@ function setupHeader() {
 // ════════════════════════════════════
 window.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("currentUserName").textContent = currentUser.name || "---";
+
+  // اقرأ التقارير من localStorage
   initUserReports();
 
   try {
