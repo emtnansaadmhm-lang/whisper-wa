@@ -1,839 +1,773 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Reports - Whisper-WA</title>
+<title>كل التقارير - Whisper-WA</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-    --bg-dark: #0e1a12;
-    --bg-main: #142820;
-    --green-dark: #0B3D2A;
-    --green-main: #0F6B3A;
-    --green-light: #9BE3B4;
-    --green-accent: #2FA66A;
-    --text-light: #EAF7F0;
-    --border-color: rgba(95, 191, 122, 0.3);
+  --bg-dark: #0e1a12;
+  --bg-main: #142820;
+  --green-dark: #0B3D2A;
+  --green-main: #0F6B3A;
+  --green-light: #9BE3B4;
+  --green-accent: #2FA66A;
+  --text-light: #EAF7F0;
+  --border-color: rgba(95, 191, 122, 0.3);
 }
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Tajawal', 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #071F16, #0F6B3A);
-    color: var(--text-light);
-    min-height: 100vh;
-    padding: 20px;
+  font-family: 'Tajawal', 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #071F16, #0F6B3A);
+  color: var(--text-light);
+  min-height: 100vh;
+  padding: 20px;
 }
-
 body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-        linear-gradient(rgba(155, 227, 180, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(155, 227, 180, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-    z-index: 0;
-    pointer-events: none;
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(155,227,180,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(155,227,180,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0;
+  pointer-events: none;
 }
-
 .container {
-    position: relative;
-    z-index: 1;
-    max-width: 1600px;
-    margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
 }
+.content-wrapper { margin-top: 28px; }
 
-.content-wrapper {
-    margin-top: 30px;
-}
-
+/* ─── PAGE HEADER ─── */
 .page-header {
-    background: rgba(20, 40, 30, 0.65);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 35px 40px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+  background: rgba(20,40,30,0.65);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 28px 36px;
+  margin-bottom: 22px;
 }
-
 .page-title {
-    font-size: 2.2rem;
-    color: var(--green-light);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+  font-size: 2rem;
+  color: var(--green-light);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
-
-.page-title i {
-    color: var(--green-accent);
-    font-size: 2rem;
-}
-
-.page-subtitle {
-    color: #c2dec9;
-    font-size: 1.05rem;
-    padding-left: 50px;
-}
+.page-title i { color: var(--green-accent); font-size: 1.8rem; }
+.page-subtitle { color: #c2dec9; font-size: 1rem; padding-inline-start: 50px; }
 
 .user-welcome {
-    background: rgba(95, 191, 122, 0.15);
-    border: 1px solid rgba(95, 191, 122, 0.3);
-    padding: 15px 20px;
-    border-radius: 12px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  background: rgba(95,191,122,0.12);
+  border: 1px solid rgba(95,191,122,0.3);
+  padding: 13px 18px;
+  border-radius: 12px;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
+.user-welcome i { color: var(--green-accent); font-size: 1.2rem; }
+.user-welcome-text { color: var(--green-light); font-size: 0.97rem; }
+.user-welcome-text strong { color: #fff; font-size: 1.05rem; }
 
-.user-welcome i {
-    color: var(--green-accent);
-    font-size: 1.3rem;
-}
-
-.user-welcome-text {
-    color: var(--green-light);
-    font-size: 1rem;
-}
-
-.user-welcome-text strong {
-    color: #fff;
-    font-size: 1.1rem;
-}
-
+/* ─── FILTERS ─── */
 .filters-section {
-    background: rgba(20, 40, 30, 0.65);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 30px;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+  background: rgba(20,40,30,0.65);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 26px;
+  margin-bottom: 22px;
 }
-
 .filters-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 25px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 20px;
 }
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+@media(max-width:900px){ .filters-grid{ grid-template-columns: repeat(2,1fr); } }
+@media(max-width:550px){ .filters-grid{ grid-template-columns: 1fr; } }
+.filter-group { display: flex; flex-direction: column; gap: 8px; }
+.filter-group label { color: var(--green-light); font-size: 0.9rem; font-weight: 600; }
+.filter-input, .filter-select {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 11px 14px;
+  color: var(--text-light);
+  font-size: 0.97rem;
+  font-family: 'Tajawal', sans-serif;
+  transition: all 0.2s;
 }
-
-.filter-group label {
-    color: var(--green-light);
-    font-size: 0.95rem;
-    font-weight: 600;
+.filter-input:focus, .filter-select:focus {
+  outline: none;
+  border-color: var(--green-accent);
+  background: rgba(0,0,0,0.4);
+  box-shadow: 0 0 0 3px rgba(47,166,106,0.1);
 }
-
-.filter-input,
-.filter-select {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 12px 16px;
-    color: var(--text-light);
-    font-size: 1rem;
-    transition: all 0.2s;
-}
-
-.filter-input:focus,
-.filter-select:focus {
-    outline: none;
-    border-color: var(--green-accent);
-    background: rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 0 3px rgba(47, 166, 106, 0.1);
-}
-
-.filter-select option {
-    background: var(--bg-main);
-    color: var(--text-light);
-}
-
-.filter-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-}
-
+.filter-select option { background: var(--bg-main); color: var(--text-light); }
+.filter-actions { display: flex; gap: 12px; justify-content: flex-end; }
 .btn {
-    padding: 12px 28px;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+  padding: 11px 24px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.97rem;
+  font-weight: 700;
+  font-family: 'Tajawal', sans-serif;
+  cursor: pointer;
+  transition: all 0.22s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
-
 .btn-primary {
-    background: linear-gradient(135deg, #9BE3B4, #2FA66A);
-    color: #062016;
+  background: linear-gradient(135deg, #9BE3B4, #2FA66A);
+  color: #062016;
 }
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(47, 166, 106, 0.4);
-}
-
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(47,166,106,0.4); }
 .btn-secondary {
-    background: rgba(95, 191, 122, 0.15);
-    border: 1px solid var(--border-color);
-    color: var(--green-light);
+  background: rgba(95,191,122,0.15);
+  border: 1px solid var(--border-color);
+  color: var(--green-light);
 }
+.btn-secondary:hover { background: rgba(95,191,122,0.25); transform: translateY(-2px); }
 
-.btn-secondary:hover {
-    background: rgba(95, 191, 122, 0.25);
-    transform: translateY(-2px);
-}
-
+/* ─── TABLE SECTION ─── */
 .reports-section {
-    background: rgba(20, 40, 30, 0.65);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+  background: rgba(20,40,30,0.65);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 28px;
 }
-
 .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
 }
-
 .section-title {
-    font-size: 1.5rem;
-    color: var(--green-light);
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  font-size: 1.4rem;
+  color: var(--green-light);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-
 .reports-count {
-    background: rgba(95, 191, 122, 0.2);
-    color: var(--green-light);
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 700;
+  background: rgba(95,191,122,0.2);
+  color: var(--green-light);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 700;
 }
-
-.table-wrapper {
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.reports-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.reports-table thead {
-    background: rgba(95, 191, 122, 0.15);
-}
-
+.table-wrapper { border-radius: 12px; overflow-x: auto; }
+.reports-table { width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.2); min-width: 700px; }
+.reports-table thead { background: rgba(95,191,122,0.15); }
 .reports-table th {
-    padding: 18px 20px;
-    text-align: left;
-    color: var(--green-light);
-    font-weight: 700;
-    font-size: 1rem;
-    border-bottom: 2px solid var(--border-color);
-    white-space: nowrap;
+  padding: 16px 18px;
+  text-align: start;
+  color: var(--green-light);
+  font-weight: 700;
+  font-size: 0.97rem;
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
 }
-
 .reports-table tbody tr {
-    border-bottom: 1px solid rgba(95, 191, 122, 0.1);
-    transition: all 0.2s;
+  border-bottom: 1px solid rgba(95,191,122,0.1);
+  transition: all 0.2s;
 }
-
-.reports-table tbody tr:hover {
-    background: rgba(95, 191, 122, 0.1);
-    transform: scale(1.002);
-}
-
-.reports-table tbody tr:last-child {
-    border-bottom: none;
-}
-
-.reports-table td {
-    padding: 20px;
-    color: #c2dec9;
-    font-size: 0.95rem;
-}
-
-.reports-table td strong {
-    color: var(--green-light);
-    font-weight: 700;
-}
+.reports-table tbody tr:hover { background: rgba(95,191,122,0.08); }
+.reports-table tbody tr:last-child { border-bottom: none; }
+.reports-table td { padding: 18px; color: #c2dec9; font-size: 0.93rem; }
+.reports-table td strong { color: var(--green-light); font-weight: 700; }
 
 .status-badge {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
+.status-completed { background: rgba(76,175,80,0.2); color: #9BE3B4; border: 1px solid rgba(76,175,80,0.4); }
+.status-pending { background: rgba(255,193,7,0.2); color: #ffd54f; border: 1px solid rgba(255,193,7,0.4); }
+.status-archived { background: rgba(158,158,158,0.2); color: #bdbdbd; border: 1px solid rgba(158,158,158,0.4); }
 
-.status-completed {
-    background: rgba(76, 175, 80, 0.2);
-    color: #9BE3B4;
-    border: 1px solid rgba(76, 175, 80, 0.4);
-}
-
-.status-pending {
-    background: rgba(255, 193, 7, 0.2);
-    color: #ffd54f;
-    border: 1px solid rgba(255, 193, 7, 0.4);
-}
-
-.status-archived {
-    background: rgba(158, 158, 158, 0.2);
-    color: #bdbdbd;
-    border: 1px solid rgba(158, 158, 158, 0.4);
-}
-
-.action-buttons {
-    display: flex;
-    gap: 10px;
-}
-
+.action-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
 .action-btn {
-    background: rgba(95, 191, 122, 0.15);
-    border: 1px solid var(--border-color);
-    color: var(--green-light);
-    padding: 9px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.88rem;
-    font-weight: 600;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
+  background: rgba(95,191,122,0.15);
+  border: 1px solid var(--border-color);
+  color: var(--green-light);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: 'Tajawal', sans-serif;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
-
-.action-btn:hover {
-    background: rgba(95, 191, 122, 0.25);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.action-btn i {
-    font-size: 0.9rem;
-}
-
-.action-btn.download {
-    color: #9BE3B4;
-}
-
-.action-btn.download:hover {
-    background: rgba(155, 227, 180, 0.2);
-    border-color: rgba(155, 227, 180, 0.4);
-}
-
-.action-btn.view {
-    color: #8fd9a8;
-}
-
-.action-btn.view:hover {
-    background: rgba(143, 217, 168, 0.2);
-    border-color: rgba(143, 217, 168, 0.4);
-}
-
+.action-btn:hover { background: rgba(95,191,122,0.25); transform: translateY(-2px); }
 .action-btn.delete {
-    background: rgba(244, 67, 54, 0.15);
-    border: 1px solid rgba(244, 67, 54, 0.3);
-    color: #ff8a80;
+  background: rgba(244,67,54,0.12);
+  border: 1px solid rgba(244,67,54,0.3);
+  color: #ff8a80;
 }
+.action-btn.delete:hover { background: rgba(244,67,54,0.22); }
 
-.action-btn.delete:hover {
-    background: rgba(244, 67, 54, 0.25);
-    border-color: rgba(244, 67, 54, 0.4);
-}
-
+/* ─── PAGINATION ─── */
 .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
 }
-
 .page-btn {
-    background: rgba(95, 191, 122, 0.15);
-    border: 1px solid var(--border-color);
-    color: var(--green-light);
-    width: 45px;
-    height: 45px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 1rem;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: rgba(95,191,122,0.15);
+  border: 1px solid var(--border-color);
+  color: var(--green-light);
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+.page-btn:hover:not(:disabled) { background: rgba(95,191,122,0.25); transform: translateY(-2px); }
+.page-btn.active { background: linear-gradient(135deg, #9BE3B4, #2FA66A); color: #062016; border-color: transparent; }
+.page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.page-info { color: #c2dec9; font-size: 0.97rem; font-weight: 600; padding: 0 12px; }
 
-.page-btn:hover:not(:disabled) {
-    background: rgba(95, 191, 122, 0.25);
-    transform: translateY(-2px);
-}
+/* ─── EMPTY STATE ─── */
+.empty-state { text-align: center; padding: 70px 20px; color: #c2dec9; }
+.empty-state i { font-size: 4.5rem; color: rgba(95,191,122,0.3); margin-bottom: 20px; }
+.empty-state h3 { font-size: 1.6rem; color: var(--green-light); margin-bottom: 10px; }
+.empty-state p { font-size: 1rem; opacity: 0.8; }
 
-.page-btn.active {
-    background: linear-gradient(135deg, #9BE3B4, #2FA66A);
-    color: #062016;
-    border-color: transparent;
+/* ─── MODAL ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
 }
-
-.page-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
+.modal-overlay.hidden { display: none; }
+.modal-box {
+  background: linear-gradient(135deg, #0e2318, #1a3a25);
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  padding: 36px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
-
-.page-info {
-    color: #c2dec9;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0 15px;
-}
-
-.empty-state {
-    text-align: center;
-    padding: 80px 20px;
-    color: #c2dec9;
-}
-
-.empty-state i {
-    font-size: 5rem;
-    color: rgba(95, 191, 122, 0.3);
-    margin-bottom: 25px;
-}
-
-.empty-state h3 {
-    font-size: 1.8rem;
-    color: var(--green-light);
-    margin-bottom: 12px;
-}
-
-.empty-state p {
-    font-size: 1.1rem;
-    opacity: 0.8;
-}
+.modal-box h3 { color: var(--green-light); font-size: 1.4rem; margin-bottom: 14px; display: flex; gap: 10px; align-items: center; }
+.modal-box p { color: #c2dec9; margin-bottom: 12px; font-size: 0.97rem; line-height: 1.6; }
+.modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Header will be loaded here -->
-    <div id="headerContainer"></div>
+  <!-- ✅ Header يتحمل هنا -->
+  <div id="header-placeholder"></div>
 
-    <div class="content-wrapper">
-        <!-- Page Header -->
-        <div class="page-header">
-            <h1 class="page-title">
-                <i class="fa-solid fa-file-lines"></i>
-                All Reports
-            </h1>
-            <p class="page-subtitle">View, download, and manage all your forensic reports</p>
-            
-            <!-- User Welcome Message -->
-            <div class="user-welcome" id="userWelcome">
-                <i class="fa-solid fa-user-check"></i>
-                <div class="user-welcome-text">
-                    Logged in as: <strong id="currentUserName">Rahaf Alruwaysan</strong>
-                </div>
-            </div>
+  <div class="content-wrapper">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <h1 class="page-title" id="txt-page-title">
+        <i class="fa-solid fa-file-lines"></i>
+        كل التقارير
+      </h1>
+      <p class="page-subtitle" id="txt-page-subtitle">عرض وتحميل وإدارة جميع تقارير التحليل الجنائي الخاصة بك</p>
+      <div class="user-welcome" id="userWelcome">
+        <i class="fa-solid fa-user-check"></i>
+        <div class="user-welcome-text">
+          <span id="txt-logged-as">مسجّل الدخول بـ:</span>
+          <strong id="currentUserName">---</strong>
         </div>
-
-        <!-- Filters Section -->
-        <div class="filters-section">
-            <div class="filters-grid">
-                <div class="filter-group">
-                    <label for="filterDate">Date Range</label>
-                    <input type="date" id="filterDate" class="filter-input">
-                </div>
-                <div class="filter-group">
-                    <label for="filterCase">Case Number</label>
-                    <input type="text" id="filterCase" class="filter-input" placeholder="Enter case #">
-                </div>
-                <div class="filter-group">
-                    <label for="filterDevice">Device Info</label>
-                    <input type="text" id="filterDevice" class="filter-input" placeholder="Enter device">
-                </div>
-                <div class="filter-group">
-                    <label for="filterStatus">Status</label>
-                    <select id="filterStatus" class="filter-select">
-                        <option value="">All Statuses</option>
-                        <option value="completed">Completed</option>
-                        <option value="pending">Pending</option>
-                        <option value="archived">Archived</option>
-                    </select>
-                </div>
-            </div>
-            <div class="filter-actions">
-                <button class="btn btn-secondary" id="btnClearFilters">
-                    <i class="fa-solid fa-rotate-right"></i>
-                    Clear Filters
-                </button>
-                <button class="btn btn-primary" id="btnApplyFilters">
-                    <i class="fa-solid fa-filter"></i>
-                    Apply Filters
-                </button>
-            </div>
-        </div>
-
-        <!-- Reports Table -->
-        <div class="reports-section">
-            <div class="section-header">
-                <h2 class="section-title">
-                    My Reports
-                    <span class="reports-count" id="reportsCount">0</span>
-                </h2>
-            </div>
-
-            <div class="table-wrapper">
-                <table class="reports-table" id="reportsTable">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Case #</th>
-                            <th>Device Info</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="reportsBody">
-                        <!-- Reports will be loaded here -->
-                    </tbody>
-                </table>
-
-                <!-- Empty State -->
-                <div class="empty-state" id="emptyState" style="display: none;">
-                    <i class="fa-solid fa-folder-open"></i>
-                    <h3>No Reports Found</h3>
-                    <p>You don't have any reports matching your criteria.</p>
-                </div>
-            </div>
-
-            <!-- Pagination -->
-            <div class="pagination" id="pagination">
-                <button class="page-btn" id="btnPrevPage" disabled>
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <span class="page-info" id="pageInfo">Page 1 of 1</span>
-                <button class="page-btn" id="btnNextPage" disabled>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
+      </div>
     </div>
+
+    <!-- FILTERS -->
+    <div class="filters-section">
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label for="filterDate" id="lbl-filter-date">التاريخ</label>
+          <input type="date" id="filterDate" class="filter-input">
+        </div>
+        <div class="filter-group">
+          <label for="filterCase" id="lbl-filter-case">رقم القضية</label>
+          <input type="text" id="filterCase" class="filter-input" placeholder="أدخل رقم القضية">
+        </div>
+        <div class="filter-group">
+          <label for="filterDevice" id="lbl-filter-device">معلومات الجهاز</label>
+          <input type="text" id="filterDevice" class="filter-input" placeholder="أدخل اسم الجهاز">
+        </div>
+        <div class="filter-group">
+          <label for="filterStatus" id="lbl-filter-status">الحالة</label>
+          <select id="filterStatus" class="filter-select">
+            <option value="" id="opt-all">الكل</option>
+            <option value="completed" id="opt-completed">مكتمل</option>
+            <option value="pending" id="opt-pending">قيد الانتظار</option>
+            <option value="archived" id="opt-archived">مؤرشف</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-actions">
+        <button class="btn btn-secondary" id="btnClearFilters">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span id="txt-clear-filters">مسح الفلاتر</span>
+        </button>
+        <button class="btn btn-primary" id="btnApplyFilters">
+          <i class="fa-solid fa-filter"></i>
+          <span id="txt-apply-filters">تطبيق</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="reports-section">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fa-solid fa-list"></i>
+          <span id="txt-my-reports">تقاريري</span>
+          <span class="reports-count" id="reportsCount">0</span>
+        </h2>
+      </div>
+      <div class="table-wrapper">
+        <table class="reports-table" id="reportsTable">
+          <thead>
+            <tr>
+              <th id="th-date">التاريخ</th>
+              <th id="th-time">الوقت</th>
+              <th id="th-case">رقم القضية</th>
+              <th id="th-device">الجهاز</th>
+              <th id="th-status">الحالة</th>
+              <th id="th-actions">الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="reportsBody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState" style="display:none;">
+          <i class="fa-solid fa-folder-open"></i>
+          <h3 id="txt-no-reports">لا توجد تقارير</h3>
+          <p id="txt-no-reports-sub">لا توجد تقارير مطابقة للمعايير المحددة.</p>
+        </div>
+      </div>
+      <div class="pagination" id="pagination">
+        <button class="page-btn" id="btnPrevPage" disabled>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <span class="page-info" id="pageInfo">صفحة 1 من 1</span>
+        <button class="page-btn" id="btnNextPage" disabled>
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
 </div>
+
+<!-- ─── DELETE CONFIRM MODAL ─── -->
+<div class="modal-overlay hidden" id="deleteModal">
+  <div class="modal-box">
+    <h3><i class="fa-solid fa-trash"></i> <span id="txt-modal-title">تأكيد الحذف</span></h3>
+    <p id="txt-modal-body">هل أنت متأكد من حذف هذا التقرير؟ لا يمكن التراجع عن هذه العملية.</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="btnCancelDelete">
+        <span id="txt-modal-cancel">إلغاء</span>
+      </button>
+      <button class="btn" id="btnConfirmDelete"
+        style="background:linear-gradient(135deg,#ff6b6b,#c0392b);color:#fff;">
+        <i class="fa-solid fa-trash"></i>
+        <span id="txt-modal-confirm">حذف</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <script>
-// =========================
+// ════════════════════════════════════════
 // ✅ Route Protection
-// =========================
+// ════════════════════════════════════════
 if(!localStorage.getItem("userRole")){
   window.location.href = "auth.html";
 }
 
-// ========================================
-// MOCK REPORTS DATABASE
-// ========================================
-let reportsData = [
-    {
-        id: 1,
-        userId: 1,
-        date: '2026-02-15',
-        time: '14:30',
-        caseNumber: '055XXX',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Samsung Galaxy S21',
-        status: 'completed',
-        pdfUrl: 'reports/report_001.pdf'
-    },
-    {
-        id: 2,
-        userId: 1,
-        date: '2026-02-14',
-        time: '11:20',
-        caseNumber: '055YYY',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Google Pixel 6',
-        status: 'completed',
-        pdfUrl: 'reports/report_002.pdf'
-    },
-    {
-        id: 3,
-        userId: 1,
-        date: '2026-02-13',
-        time: '09:15',
-        caseNumber: '055ZZZ',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'OnePlus 9 Pro',
-        status: 'pending',
-        pdfUrl: 'reports/report_003.pdf'
-    },
-    {
-        id: 4,
-        userId: 1,
-        date: '2026-02-10',
-        time: '16:30',
-        caseNumber: '055AAA',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Xiaomi Mi 11',
-        status: 'archived',
-        pdfUrl: 'reports/report_004.pdf'
-    },
-    {
-        id: 5,
-        userId: 1,
-        date: '2026-02-09',
-        time: '13:45',
-        caseNumber: '055BBB',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Samsung Galaxy A52',
-        status: 'completed',
-        pdfUrl: 'reports/report_005.pdf'
-    },
-    {
-        id: 6,
-        userId: 1,
-        date: '2026-02-08',
-        time: '10:00',
-        caseNumber: '055CCC',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Huawei P40 Pro',
-        status: 'pending',
-        pdfUrl: 'reports/report_006.pdf'
-    },
-    {
-        id: 7,
-        userId: 1,
-        date: '2026-02-07',
-        time: '15:20',
-        caseNumber: '055DDD',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Oppo Find X3 Pro',
-        status: 'completed',
-        pdfUrl: 'reports/report_007.pdf'
-    },
-    {
-        id: 8,
-        userId: 1,
-        date: '2026-02-05',
-        time: '12:00',
-        caseNumber: '055EEE',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Realme GT Master',
-        status: 'archived',
-        pdfUrl: 'reports/report_008.pdf'
-    },
-    {
-        id: 9,
-        userId: 1,
-        date: '2026-02-04',
-        time: '09:30',
-        caseNumber: '055FFF',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Vivo X70 Pro',
-        status: 'completed',
-        pdfUrl: 'reports/report_009.pdf'
-    },
-    {
-        id: 10,
-        userId: 1,
-        date: '2026-02-03',
-        time: '14:15',
-        caseNumber: '055GGG',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Samsung Galaxy Z Fold3',
-        status: 'pending',
-        pdfUrl: 'reports/report_010.pdf'
-    },
-    {
-        id: 11,
-        userId: 1,
-        date: '2026-02-02',
-        time: '11:00',
-        caseNumber: '055HHH',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Google Pixel 7',
-        status: 'completed',
-        pdfUrl: 'reports/report_011.pdf'
-    },
-    {
-        id: 12,
-        userId: 1,
-        date: '2026-02-01',
-        time: '16:45',
-        caseNumber: '055III',
-        investigator: 'Rahaf Alruwaysan',
-        deviceInfo: 'Motorola Edge 30',
-        status: 'archived',
-        pdfUrl: 'reports/report_012.pdf'
-    }
-];
+// ════════════════════════════════════════
+// ✅ Current User
+// ════════════════════════════════════════
+let currentUser = { name: "مستخدم", email: "", role: "user" };
+try {
+  const stored = localStorage.getItem("currentUser");
+  if(stored) currentUser = JSON.parse(stored);
+} catch(e){}
 
-let currentPage = 1;
-const itemsPerPage = 10;
-let filteredReports = [...reportsData];
+// ════════════════════════════════════════
+// ✅ Language
+// ════════════════════════════════════════
+let currentLang = localStorage.getItem("lang") || "ar";
 
-// ========================================
-// LOAD AND DISPLAY REPORTS
-// ========================================
-function loadReports() {
-    const tbody = document.getElementById('reportsBody');
-    const emptyState = document.getElementById('emptyState');
-    const reportsCount = document.getElementById('reportsCount');
+const UI = {
+  ar: {
+    dir: "rtl",
+    title: "كل التقارير - Whisper-WA",
+    topSubtitle: "منصة التحليل الجنائي الرقمي",
+    langText: "EN",
+    pageTitle: "كل التقارير",
+    pageSubtitle: "عرض وتحميل وإدارة جميع تقارير التحليل الجنائي الخاصة بك",
+    loggedAs: "مسجّل الدخول بـ:",
+    lblDate: "التاريخ",
+    lblCase: "رقم القضية",
+    lblDevice: "معلومات الجهاز",
+    lblStatus: "الحالة",
+    phCase: "أدخل رقم القضية",
+    phDevice: "أدخل اسم الجهاز",
+    optAll: "الكل",
+    optCompleted: "مكتمل",
+    optPending: "قيد الانتظار",
+    optArchived: "مؤرشف",
+    clearFilters: "مسح الفلاتر",
+    applyFilters: "تطبيق",
+    myReports: "تقاريري",
+    thDate: "التاريخ",
+    thTime: "الوقت",
+    thCase: "رقم القضية",
+    thDevice: "الجهاز",
+    thStatus: "الحالة",
+    thActions: "الإجراءات",
+    noReports: "لا توجد تقارير",
+    noReportsSub: "لا توجد تقارير مطابقة للمعايير المحددة.",
+    btnDownload: "تحميل",
+    btnView: "عرض",
+    btnDelete: "حذف",
+    pageOf: (c, t) => `صفحة ${c} من ${t}`,
+    statusCompleted: "مكتمل",
+    statusPending: "قيد الانتظار",
+    statusArchived: "مؤرشف",
+    modalTitle: "تأكيد الحذف",
+    modalBody: "هل أنت متأكد من حذف هذا التقرير؟ لا يمكن التراجع عن هذه العملية.",
+    modalCancel: "إلغاء",
+    modalConfirm: "حذف",
+    downloadMsg: (cn) => `جاري تحميل تقرير: ${cn}`,
+    viewMsg: (cn) => `عرض تقرير: ${cn}`
+  },
+  en: {
+    dir: "ltr",
+    title: "All Reports - Whisper-WA",
+    topSubtitle: "Digital Forensics Platform",
+    langText: "AR",
+    pageTitle: "All Reports",
+    pageSubtitle: "View, download, and manage all your forensic reports",
+    loggedAs: "Logged in as:",
+    lblDate: "Date",
+    lblCase: "Case Number",
+    lblDevice: "Device Info",
+    lblStatus: "Status",
+    phCase: "Enter case #",
+    phDevice: "Enter device name",
+    optAll: "All",
+    optCompleted: "Completed",
+    optPending: "Pending",
+    optArchived: "Archived",
+    clearFilters: "Clear Filters",
+    applyFilters: "Apply Filters",
+    myReports: "My Reports",
+    thDate: "Date",
+    thTime: "Time",
+    thCase: "Case #",
+    thDevice: "Device",
+    thStatus: "Status",
+    thActions: "Actions",
+    noReports: "No Reports Found",
+    noReportsSub: "You don't have any reports matching your criteria.",
+    btnDownload: "Download",
+    btnView: "View",
+    btnDelete: "Delete",
+    pageOf: (c, t) => `Page ${c} of ${t}`,
+    statusCompleted: "Completed",
+    statusPending: "Pending",
+    statusArchived: "Archived",
+    modalTitle: "Confirm Delete",
+    modalBody: "Are you sure you want to delete this report? This action cannot be undone.",
+    modalCancel: "Cancel",
+    modalConfirm: "Delete",
+    downloadMsg: (cn) => `Downloading report: ${cn}`,
+    viewMsg: (cn) => `Viewing report: ${cn}`
+  }
+};
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const paginatedReports = filteredReports.slice(startIndex, endIndex);
+function applyLang(lang) {
+  currentLang = lang;
+  const t = UI[lang];
+  const isAr = lang === "ar";
 
-    reportsCount.textContent = filteredReports.length;
-    tbody.innerHTML = '';
+  document.documentElement.lang = lang;
+  document.documentElement.dir = t.dir;
+  document.title = t.title;
+  localStorage.setItem("lang", lang);
 
-    if (paginatedReports.length === 0) {
-        emptyState.style.display = 'block';
-        document.querySelector('.table-wrapper table').style.display = 'none';
-        document.getElementById('pagination').style.display = 'none';
-    } else {
-        emptyState.style.display = 'none';
-        document.querySelector('.table-wrapper table').style.display = 'table';
-        document.getElementById('pagination').style.display = 'flex';
+  const topSubtitle = document.getElementById("top-subtitle");
+  const langText = document.getElementById("langText");
+  if(topSubtitle) topSubtitle.textContent = t.topSubtitle;
+  if(langText) langText.textContent = t.langText;
 
-        paginatedReports.forEach(report => {
-            const row = createReportRow(report);
-            tbody.appendChild(row);
-        });
+  document.getElementById("txt-page-title").innerHTML = `<i class="fa-solid fa-file-lines"></i> ${t.pageTitle}`;
+  document.getElementById("txt-page-subtitle").textContent = t.pageSubtitle;
+  document.getElementById("txt-logged-as").textContent = t.loggedAs;
+  document.getElementById("lbl-filter-date").textContent = t.lblDate;
+  document.getElementById("lbl-filter-case").textContent = t.lblCase;
+  document.getElementById("lbl-filter-device").textContent = t.lblDevice;
+  document.getElementById("lbl-filter-status").textContent = t.lblStatus;
+  document.getElementById("filterCase").placeholder = t.phCase;
+  document.getElementById("filterDevice").placeholder = t.phDevice;
+  document.getElementById("opt-all").textContent = t.optAll;
+  document.getElementById("opt-completed").textContent = t.optCompleted;
+  document.getElementById("opt-pending").textContent = t.optPending;
+  document.getElementById("opt-archived").textContent = t.optArchived;
+  document.getElementById("txt-clear-filters").textContent = t.clearFilters;
+  document.getElementById("txt-apply-filters").textContent = t.applyFilters;
+  document.getElementById("txt-my-reports").textContent = t.myReports;
+  document.getElementById("th-date").textContent = t.thDate;
+  document.getElementById("th-time").textContent = t.thTime;
+  document.getElementById("th-case").textContent = t.thCase;
+  document.getElementById("th-device").textContent = t.thDevice;
+  document.getElementById("th-status").textContent = t.thStatus;
+  document.getElementById("th-actions").textContent = t.thActions;
+  document.getElementById("txt-no-reports").textContent = t.noReports;
+  document.getElementById("txt-no-reports-sub").textContent = t.noReportsSub;
+  document.getElementById("txt-modal-title").textContent = t.modalTitle;
+  document.getElementById("txt-modal-body").textContent = t.modalBody;
+  document.getElementById("txt-modal-cancel").textContent = t.modalCancel;
+  document.getElementById("txt-modal-confirm").textContent = t.modalConfirm;
 
-        updatePagination();
-    }
+  document.getElementById("btnPrevPage").innerHTML = `<i class="fa-solid fa-chevron-${isAr ? 'right' : 'left'}"></i>`;
+  document.getElementById("btnNextPage").innerHTML = `<i class="fa-solid fa-chevron-${isAr ? 'left' : 'right'}"></i>`;
+
+  renderTable();
 }
 
-function createReportRow(report) {
-    const tr = document.createElement('tr');
-    const statusClass = `status-${report.status}`;
-    const statusText = {
-        completed: 'Completed',
-        pending: 'Pending',
-        archived: 'Archived'
-    }[report.status];
+// ════════════════════════════════════════
+// ✅ Mock Data
+// ════════════════════════════════════════
+const allReports = [
+  { id:1,  investigator:"Rahaf Alruwaysan", date:"2026-02-15", time:"14:30", caseNumber:"055XXX", deviceInfo:"Samsung Galaxy S21", status:"completed", pdfUrl:"reports/report_001.pdf" },
+  { id:2,  investigator:"Rahaf Alruwaysan", date:"2026-02-14", time:"11:20", caseNumber:"055YYY", deviceInfo:"Google Pixel 6", status:"completed", pdfUrl:"reports/report_002.pdf" },
+  { id:3,  investigator:"Rahaf Alruwaysan", date:"2026-02-13", time:"09:15", caseNumber:"055ZZZ", deviceInfo:"OnePlus 9 Pro", status:"pending", pdfUrl:"reports/report_003.pdf" },
+  { id:4,  investigator:"Rahaf Alruwaysan", date:"2026-02-10", time:"16:30", caseNumber:"055AAA", deviceInfo:"Xiaomi Mi 11", status:"archived", pdfUrl:"reports/report_004.pdf" },
+  { id:5,  investigator:"Rahaf Alruwaysan", date:"2026-02-09", time:"13:45", caseNumber:"055BBB", deviceInfo:"Samsung Galaxy A52", status:"completed", pdfUrl:"reports/report_005.pdf" },
+  { id:6,  investigator:"Rahaf Alruwaysan", date:"2026-02-08", time:"10:00", caseNumber:"055CCC", deviceInfo:"Huawei P40 Pro", status:"pending", pdfUrl:"reports/report_006.pdf" },
+  { id:7,  investigator:"Rahaf Alruwaysan", date:"2026-02-07", time:"15:20", caseNumber:"055DDD", deviceInfo:"Oppo Find X3 Pro", status:"completed", pdfUrl:"reports/report_007.pdf" },
+  { id:8,  investigator:"Rahaf Alruwaysan", date:"2026-02-05", time:"12:00", caseNumber:"055EEE", deviceInfo:"Realme GT Master", status:"archived", pdfUrl:"reports/report_008.pdf" },
+  { id:9,  investigator:"Rahaf Alruwaysan", date:"2026-02-04", time:"09:30", caseNumber:"055FFF", deviceInfo:"Vivo X70 Pro", status:"completed", pdfUrl:"reports/report_009.pdf" },
+  { id:10, investigator:"Rahaf Alruwaysan", date:"2026-02-03", time:"14:15", caseNumber:"055GGG", deviceInfo:"Samsung Galaxy Z Fold3", status:"pending", pdfUrl:"reports/report_010.pdf" },
+  { id:11, investigator:"Rahaf Alruwaysan", date:"2026-02-02", time:"11:00", caseNumber:"055HHH", deviceInfo:"Google Pixel 7", status:"completed", pdfUrl:"reports/report_011.pdf" },
+  { id:12, investigator:"Rahaf Alruwaysan", date:"2026-02-01", time:"16:45", caseNumber:"055III", deviceInfo:"Motorola Edge 30", status:"archived", pdfUrl:"reports/report_012.pdf" },
+  { id:13, investigator:"Admin User", date:"2026-01-25", time:"10:00", caseNumber:"055JJJ", deviceInfo:"iPhone 14", status:"completed", pdfUrl:"reports/report_013.pdf" },
+];
 
-    tr.innerHTML = `
-        <td>${report.date}</td>
-        <td>${report.time}</td>
-        <td><strong>${report.caseNumber}</strong></td>
-        <td>${report.deviceInfo}</td>
-        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+// ════════════════════════════════════════
+// ✅ State
+// ════════════════════════════════════════
+let reportsData = [];
+let filteredReports = [];
+let currentPage = 1;
+const itemsPerPage = 10;
+let pendingDeleteId = null;
+
+function initUserReports() {
+  const userName = currentUser.name || "";
+  if(currentUser.role === "admin") {
+    reportsData = [...allReports];
+  } else {
+    reportsData = allReports.filter(r => r.investigator === userName);
+    if(reportsData.length === 0) {
+      reportsData = [...allReports];
+    }
+  }
+  filteredReports = [...reportsData];
+}
+
+// ════════════════════════════════════════
+// ✅ Render Table
+// ════════════════════════════════════════
+function renderTable() {
+  const tbody = document.getElementById("reportsBody");
+  const emptyState = document.getElementById("emptyState");
+  const table = document.getElementById("reportsTable");
+  const pagination = document.getElementById("pagination");
+  const t = UI[currentLang];
+
+  const start = (currentPage - 1) * itemsPerPage;
+  const paged = filteredReports.slice(start, start + itemsPerPage);
+
+  document.getElementById("reportsCount").textContent = filteredReports.length;
+  tbody.innerHTML = "";
+
+  if(paged.length === 0) {
+    emptyState.style.display = "block";
+    table.style.display = "none";
+    pagination.style.display = "none";
+  } else {
+    emptyState.style.display = "none";
+    table.style.display = "table";
+    pagination.style.display = "flex";
+
+    paged.forEach(r => {
+      const tr = document.createElement("tr");
+      const statusLabels = {
+        completed: t.statusCompleted,
+        pending: t.statusPending,
+        archived: t.statusArchived
+      };
+      tr.innerHTML = `
+        <td>${r.date}</td>
+        <td>${r.time}</td>
+        <td><strong>${r.caseNumber}</strong></td>
+        <td>${r.deviceInfo}</td>
+        <td><span class="status-badge status-${r.status}">${statusLabels[r.status] || r.status}</span></td>
         <td>
-            <div class="action-buttons">
-                <button class="action-btn download" onclick="downloadReport(${report.id})">
-                    <i class="fa-solid fa-download"></i>
-                    Download
-                </button>
-                <button class="action-btn view" onclick="viewReport(${report.id})">
-                    <i class="fa-solid fa-eye"></i>
-                    View
-                </button>
-                <button class="action-btn delete" onclick="deleteReport(${report.id})">
-                    <i class="fa-solid fa-trash"></i>
-                    Delete
-                </button>
-            </div>
-        </td>
-    `;
-    return tr;
+          <div class="action-buttons">
+            <button class="action-btn download" onclick="downloadReport(${r.id})">
+              <i class="fa-solid fa-download"></i> ${t.btnDownload}
+            </button>
+            <button class="action-btn view" onclick="viewReport(${r.id})">
+              <i class="fa-solid fa-eye"></i> ${t.btnView}
+            </button>
+            <button class="action-btn delete" onclick="confirmDelete(${r.id})">
+              <i class="fa-solid fa-trash"></i> ${t.btnDelete}
+            </button>
+          </div>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+
+    updatePagination();
+  }
 }
 
 function updatePagination() {
-    const totalPages = Math.ceil(filteredReports.length / itemsPerPage);
-    const pageInfo = document.getElementById('pageInfo');
-    const btnPrev = document.getElementById('btnPrevPage');
-    const btnNext = document.getElementById('btnNextPage');
-
-    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-    btnPrev.disabled = currentPage === 1;
-    btnNext.disabled = currentPage === totalPages || totalPages === 0;
+  const totalPages = Math.max(1, Math.ceil(filteredReports.length / itemsPerPage));
+  const t = UI[currentLang];
+  document.getElementById("pageInfo").textContent = t.pageOf(currentPage, totalPages);
+  document.getElementById("btnPrevPage").disabled = currentPage === 1;
+  document.getElementById("btnNextPage").disabled = currentPage >= totalPages;
 }
 
+// ════════════════════════════════════════
+// ✅ Actions
+// ════════════════════════════════════════
 function downloadReport(id) {
-    const report = reportsData.find(r => r.id === id);
-    if (report) {
-        alert(`Downloading report: ${report.caseNumber}`);
-    }
+  const r = reportsData.find(x => x.id === id);
+  if(!r) return;
+  const t = UI[currentLang];
+  alert(t.downloadMsg(r.caseNumber));
 }
 
 function viewReport(id) {
-    const report = reportsData.find(r => r.id === id);
-    if (report) {
-        alert(`Viewing report: ${report.caseNumber}`);
-    }
+  const r = reportsData.find(x => x.id === id);
+  if(!r) return;
+  const t = UI[currentLang];
+  alert(t.viewMsg(r.caseNumber));
 }
 
-function deleteReport(id) {
-    if (confirm('Are you sure you want to delete this report?')) {
-        reportsData = reportsData.filter(r => r.id !== id);
-        filteredReports = [...reportsData];
-        currentPage = 1;
-        loadReports();
-        alert('Report deleted successfully');
-    }
+function confirmDelete(id) {
+  pendingDeleteId = id;
+  document.getElementById("deleteModal").classList.remove("hidden");
 }
 
-function applyFilters() {
-    const dateFilter = document.getElementById('filterDate').value;
-    const caseFilter = document.getElementById('filterCase').value.toLowerCase();
-    const deviceFilter = document.getElementById('filterDevice').value.toLowerCase();
-    const statusFilter = document.getElementById('filterStatus').value;
+document.getElementById("btnCancelDelete").onclick = () => {
+  pendingDeleteId = null;
+  document.getElementById("deleteModal").classList.add("hidden");
+};
 
-    filteredReports = reportsData.filter(report => {
-        const matchDate = !dateFilter || report.date === dateFilter;
-        const matchCase = !caseFilter || report.caseNumber.toLowerCase().includes(caseFilter);
-        const matchDevice = !deviceFilter || report.deviceInfo.toLowerCase().includes(deviceFilter);
-        const matchStatus = !statusFilter || report.status === statusFilter;
-        return matchDate && matchCase && matchDevice && matchStatus;
-    });
-
+document.getElementById("btnConfirmDelete").onclick = () => {
+  if(pendingDeleteId !== null) {
+    reportsData = reportsData.filter(r => r.id !== pendingDeleteId);
+    filteredReports = filteredReports.filter(r => r.id !== pendingDeleteId);
     currentPage = 1;
-    loadReports();
+    renderTable();
+    pendingDeleteId = null;
+  }
+  document.getElementById("deleteModal").classList.add("hidden");
+};
+
+document.getElementById("deleteModal").onclick = (e) => {
+  if(e.target === document.getElementById("deleteModal")) {
+    pendingDeleteId = null;
+    document.getElementById("deleteModal").classList.add("hidden");
+  }
+};
+
+// ════════════════════════════════════════
+// ✅ Filters
+// ════════════════════════════════════════
+function applyFilters() {
+  const dateFilter = document.getElementById("filterDate").value;
+  const caseFilter = document.getElementById("filterCase").value.toLowerCase();
+  const deviceFilter = document.getElementById("filterDevice").value.toLowerCase();
+  const statusFilter = document.getElementById("filterStatus").value;
+
+  filteredReports = reportsData.filter(r => {
+    return (!dateFilter || r.date === dateFilter)
+      && (!caseFilter || r.caseNumber.toLowerCase().includes(caseFilter))
+      && (!deviceFilter || r.deviceInfo.toLowerCase().includes(deviceFilter))
+      && (!statusFilter || r.status === statusFilter);
+  });
+  currentPage = 1;
+  renderTable();
 }
 
 function clearFilters() {
-    document.getElementById('filterDate').value = '';
-    document.getElementById('filterCase').value = '';
-    document.getElementById('filterDevice').value = '';
-    document.getElementById('filterStatus').value = '';
-    filteredReports = [...reportsData];
-    currentPage = 1;
-    loadReports();
+  document.getElementById("filterDate").value = "";
+  document.getElementById("filterCase").value = "";
+  document.getElementById("filterDevice").value = "";
+  document.getElementById("filterStatus").value = "";
+  filteredReports = [...reportsData];
+  currentPage = 1;
+  renderTable();
 }
 
-function setupReportsHeader(){
+document.getElementById("btnApplyFilters").onclick = applyFilters;
+document.getElementById("btnClearFilters").onclick = clearFilters;
+
+document.getElementById("btnPrevPage").onclick = () => {
+  if(currentPage > 1) { currentPage--; renderTable(); }
+};
+document.getElementById("btnNextPage").onclick = () => {
+  const total = Math.ceil(filteredReports.length / itemsPerPage);
+  if(currentPage < total) { currentPage++; renderTable(); }
+};
+
+// ════════════════════════════════════════
+// ✅ Setup Header
+// ════════════════════════════════════════
+function setupHeader() {
   const btnAccount = document.getElementById("btnAccount");
   const menu = document.getElementById("accountMenu");
   const logoutBtn = document.getElementById("menuLogout");
@@ -841,76 +775,73 @@ function setupReportsHeader(){
   const menuAdminBadge = document.getElementById("menuAdminBadge");
   const avatarBadge = document.getElementById("avatarBadge");
   const backBtn = document.getElementById("btnBack");
+  const btnLang = document.getElementById("btnLang");
 
-  if (!btnAccount || !menu) return;
+  if(!btnAccount || !menu) return;
 
   const userRole = localStorage.getItem("userRole");
-
-  if(userRole === "admin" && menuAdmin){
+  if(userRole === "admin" && menuAdmin) {
     menuAdmin.classList.add("show");
-    try{
+    try {
       const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
-      const pendingCount = requests.filter(r => r.status === "pending").length;
-      if(pendingCount > 0){
-        menuAdminBadge.textContent = pendingCount;
-        avatarBadge.textContent = pendingCount;
+      const pending = requests.filter(r => r.status === "pending").length;
+      if(pending > 0 && menuAdminBadge && avatarBadge) {
+        menuAdminBadge.textContent = pending;
+        avatarBadge.textContent = pending;
         avatarBadge.classList.add("show");
       }
-    } catch(e){}
+    } catch(e) {}
   }
 
   btnAccount.onclick = (e) => {
     e.stopPropagation();
     menu.classList.toggle("open");
   };
-  document.onclick = () => { if(menu.classList.contains("open")){ menu.classList.remove("open"); } };
+  document.onclick = () => { menu.classList.remove("open"); };
   menu.onclick = (e) => e.stopPropagation();
 
-  if (logoutBtn){
+  if(logoutBtn) {
     logoutBtn.onclick = () => {
       localStorage.removeItem("userRole");
+      localStorage.removeItem("currentUser");
       window.location.href = "index.html";
     };
   }
 
-  if(backBtn){
+  if(backBtn) {
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
   }
+
+  if(btnLang) {
+    btnLang.onclick = () => {
+      const next = currentLang === "ar" ? "en" : "ar";
+      applyLang(next);
+    };
+  }
 }
 
-// =========================
+// ════════════════════════════════════════
 // ✅ INIT
-// =========================
-document.addEventListener('DOMContentLoaded', () => {
-  // عرض اسم المستخدم
-  const userNameEl = document.getElementById('currentUserName');
-  if(userNameEl) userNameEl.textContent = 'Rahaf Alruwaysan';
+// ════════════════════════════════════════
+window.addEventListener("DOMContentLoaded", async () => {
+  document.getElementById("currentUserName").textContent = currentUser.name || "---";
 
-  // Event listeners
-  document.getElementById('btnPrevPage').addEventListener('click', () => {
-    if (currentPage > 1) { currentPage--; loadReports(); }
-  });
-  document.getElementById('btnNextPage').addEventListener('click', () => {
-    const totalPages = Math.ceil(filteredReports.length / itemsPerPage);
-    if (currentPage < totalPages) { currentPage++; loadReports(); }
-  });
-  document.getElementById('btnApplyFilters').addEventListener('click', applyFilters);
-  document.getElementById('btnClearFilters').addEventListener('click', clearFilters);
+  initUserReports();
 
-  // تحميل الهيدر
-  fetch('header.html')
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById('headerContainer').innerHTML = data;
-      setTimeout(() => {
-        setupReportsHeader();
-        loadReports();
-      }, 100);
-    })
-    .catch(error => {
-      console.error('Error loading header:', error);
-      loadReports();
-    });
+  try {
+    const res = await fetch("header.html");
+    const headerHtml = await res.text();
+    document.getElementById("header-placeholder").innerHTML = headerHtml;
+    setTimeout(() => {
+      setupHeader();
+      applyLang(currentLang);
+    }, 100);
+  } catch(e) {
+    console.error("Header load error:", e);
+    applyLang(currentLang);
+  }
 });
 </script>
+</body>
+</html>
