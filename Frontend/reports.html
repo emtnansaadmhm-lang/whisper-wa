@@ -1,315 +1,356 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>كل التقارير - Whisper-WA</title>
+<title>All Reports - Whisper-WA</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg-dark: #0e1a12;
   --bg-main: #142820;
-  --green-dark: #0B3D2A;
-  --green-main: #0F6B3A;
   --green-light: #9BE3B4;
   --green-accent: #2FA66A;
   --text-light: #EAF7F0;
-  --border-color: rgba(95, 191, 122, 0.3);
+  --border-color: rgba(95,191,122,0.3);
+  --card-bg: rgba(20,40,30,0.65);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Tajawal', 'Segoe UI', Arial, sans-serif;
+  font-family: 'Tajawal','Segoe UI', Arial, sans-serif;
   background: linear-gradient(135deg, #071F16, #0F6B3A);
   color: var(--text-light);
   min-height: 100vh;
   padding: 20px;
 }
 body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
+  content:'';
+  position: fixed; inset: 0;
   background-image:
-    linear-gradient(rgba(155,227,180,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(155,227,180,0.05) 1px, transparent 1px);
+    linear-gradient(rgba(155,227,180,0.04) 1px,transparent 1px),
+    linear-gradient(90deg, rgba(155,227,180,0.04) 1px,transparent 1px);
   background-size: 60px 60px;
-  z-index: 0;
-  pointer-events: none;
+  z-index: 0; pointer-events: none;
 }
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-.content-wrapper { margin-top: 28px; }
 
-/* ─── PAGE HEADER ─── */
-.page-header {
-  background: rgba(20,40,30,0.65);
+/* BG Logo */
+.animated-bg-logo {
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 0; width: 580px;
+  pointer-events: none; opacity: 0.12;
+  animation: bgPulse 8s ease-in-out infinite alternate;
+}
+.animated-bg-logo img { width:100%; filter: drop-shadow(0 0 30px rgba(47,166,106,0.5)); }
+@keyframes bgPulse {
+  0%  { opacity:0.08; transform:translate(-50%,-50%) scale(0.95); }
+  100%{ opacity:0.18; transform:translate(-50%,-50%) scale(1.05); }
+}
+
+.container { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
+.content-wrapper { margin-top: 26px; }
+
+/* ── STATS ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 16px; margin-bottom: 18px;
+}
+@media(max-width:900px){ .stats-row{ grid-template-columns: repeat(2,1fr); } }
+@media(max-width:480px){ .stats-row{ grid-template-columns: 1fr 1fr; gap:10px; } }
+
+.stat-card {
+  background: var(--card-bg);
   border: 1px solid var(--border-color);
   backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 28px 36px;
-  margin-bottom: 22px;
+  border-radius: 14px; padding: 18px 20px;
+  display: flex; align-items: center; gap: 14px;
+  transition: transform 0.2s;
+}
+.stat-card:hover { transform: translateY(-3px); }
+.stat-icon {
+  width:48px; height:48px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.25rem; flex-shrink:0;
+}
+.stat-icon.total   { background:rgba(95,191,122,0.2);  color:var(--green-light); }
+.stat-icon.done    { background:rgba(76,175,80,0.2);   color:#81C784; }
+.stat-icon.pend    { background:rgba(255,193,7,0.2);   color:#FFD54F; }
+.stat-icon.arch    { background:rgba(158,158,158,0.2); color:#BDBDBD; }
+.stat-info { flex:1; min-width:0; }
+.stat-value { font-size:2rem; font-weight:900; color:#fff; line-height:1; }
+.stat-label { font-size:0.8rem; color:#c2dec9; margin-top:4px; }
+
+/* ── PAGE HEADER ── */
+.page-header {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px);
+  border-radius: 16px; padding: 24px 32px;
+  margin-bottom: 16px;
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 16px; flex-wrap: wrap;
 }
 .page-title {
-  font-size: 2rem;
-  color: var(--green-light);
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  font-size: 1.8rem; color: var(--green-light);
+  margin-bottom: 5px;
+  display: flex; align-items: center; gap: 12px;
 }
-.page-title i { color: var(--green-accent); font-size: 1.8rem; }
-.page-subtitle { color: #c2dec9; font-size: 1rem; padding-inline-start: 50px; }
-
-.user-welcome {
+.page-title i { color: var(--green-accent); }
+.page-subtitle { color:#c2dec9; font-size:0.95rem; padding-inline-start:44px; }
+.user-badge {
   background: rgba(95,191,122,0.12);
   border: 1px solid rgba(95,191,122,0.3);
-  padding: 13px 18px;
-  border-radius: 12px;
-  margin-top: 18px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  padding: 10px 18px; border-radius: 50px;
+  display: flex; align-items: center; gap: 8px; white-space: nowrap;
 }
-.user-welcome i { color: var(--green-accent); font-size: 1.2rem; }
-.user-welcome-text { color: var(--green-light); font-size: 0.97rem; }
-.user-welcome-text strong { color: #fff; font-size: 1.05rem; }
+.user-badge i { color: var(--green-accent); }
+.user-badge span { color:#c2dec9; font-size:0.88rem; }
+.user-badge strong { color:#fff; font-size:0.95rem; }
 
-/* ─── FILTERS ─── */
+/* ── FILTERS ── */
 .filters-section {
-  background: rgba(20,40,30,0.65);
+  background: var(--card-bg);
   border: 1px solid var(--border-color);
   backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 26px;
-  margin-bottom: 22px;
+  border-radius: 16px; padding: 20px 24px; margin-bottom: 16px;
 }
 .filters-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-bottom: 20px;
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 14px; margin-bottom: 14px;
 }
 @media(max-width:900px){ .filters-grid{ grid-template-columns: repeat(2,1fr); } }
-@media(max-width:550px){ .filters-grid{ grid-template-columns: 1fr; } }
-.filter-group { display: flex; flex-direction: column; gap: 8px; }
-.filter-group label { color: var(--green-light); font-size: 0.9rem; font-weight: 600; }
+@media(max-width:520px){ .filters-grid{ grid-template-columns: 1fr; } }
+.filter-group { display:flex; flex-direction:column; gap:6px; }
+.filter-group label { color:var(--green-light); font-size:0.87rem; font-weight:700; }
 .filter-input, .filter-select {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.28);
   border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 11px 14px;
-  color: var(--text-light);
-  font-size: 0.97rem;
-  font-family: 'Tajawal', sans-serif;
-  transition: all 0.2s;
+  border-radius: 10px; padding: 10px 13px;
+  color: var(--text-light); font-size:0.94rem;
+  font-family:'Tajawal',sans-serif; transition:all 0.2s;
 }
 .filter-input:focus, .filter-select:focus {
-  outline: none;
-  border-color: var(--green-accent);
-  background: rgba(0,0,0,0.4);
-  box-shadow: 0 0 0 3px rgba(47,166,106,0.1);
+  outline:none; border-color:var(--green-accent);
+  background:rgba(0,0,0,0.38);
+  box-shadow: 0 0 0 3px rgba(47,166,106,0.12);
 }
-.filter-select option { background: var(--bg-main); color: var(--text-light); }
-.filter-actions { display: flex; gap: 12px; justify-content: flex-end; }
-.btn {
-  padding: 11px 24px;
-  border: none;
-  border-radius: 10px;
-  font-size: 0.97rem;
-  font-weight: 700;
-  font-family: 'Tajawal', sans-serif;
-  cursor: pointer;
-  transition: all 0.22s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.btn-primary {
-  background: linear-gradient(135deg, #9BE3B4, #2FA66A);
-  color: #062016;
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(47,166,106,0.4); }
-.btn-secondary {
-  background: rgba(95,191,122,0.15);
-  border: 1px solid var(--border-color);
-  color: var(--green-light);
-}
-.btn-secondary:hover { background: rgba(95,191,122,0.25); transform: translateY(-2px); }
+.filter-select option { background:#142820; color:var(--text-light); }
+.filter-actions { display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; }
 
-/* ─── TABLE SECTION ─── */
+/* ── BUTTONS ── */
+.btn {
+  padding: 10px 20px; border:none; border-radius:10px;
+  font-size:0.92rem; font-weight:700;
+  font-family:'Tajawal',sans-serif; cursor:pointer;
+  transition:all 0.2s; display:inline-flex; align-items:center; gap:7px;
+}
+.btn-primary { background:linear-gradient(135deg,#9BE3B4,#2FA66A); color:#062016; }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(47,166,106,0.4); }
+.btn-secondary {
+  background:rgba(95,191,122,0.14);
+  border:1px solid var(--border-color); color:var(--green-light);
+}
+.btn-secondary:hover { background:rgba(95,191,122,0.24); transform:translateY(-2px); }
+.btn-export {
+  background:rgba(99,179,237,0.14);
+  border:1px solid rgba(99,179,237,0.3); color:#90cdf4;
+}
+.btn-export:hover { background:rgba(99,179,237,0.24); transform:translateY(-2px); }
+.btn-danger { background:linear-gradient(135deg,#ff6b6b,#c0392b); color:#fff; }
+.btn-danger:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(192,57,43,0.4); }
+
+/* ── TABLE SECTION ── */
 .reports-section {
-  background: rgba(20,40,30,0.65);
+  background: var(--card-bg);
   border: 1px solid var(--border-color);
   backdrop-filter: blur(12px);
-  border-radius: 16px;
-  padding: 28px;
+  border-radius: 16px; padding: 24px;
 }
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 22px;
+  display:flex; justify-content:space-between;
+  align-items:center; margin-bottom:18px;
+  flex-wrap:wrap; gap:10px;
 }
 .section-title {
-  font-size: 1.4rem;
-  color: var(--green-light);
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  font-size:1.25rem; color:var(--green-light);
+  display:flex; align-items:center; gap:10px;
 }
 .reports-count {
-  background: rgba(95,191,122,0.2);
-  color: var(--green-light);
-  padding: 5px 14px;
-  border-radius: 20px;
-  font-size: 0.88rem;
-  font-weight: 700;
+  background:rgba(95,191,122,0.2); color:var(--green-light);
+  padding:4px 14px; border-radius:20px;
+  font-size:0.83rem; font-weight:800;
 }
-.table-wrapper { border-radius: 12px; overflow-x: auto; }
-.reports-table { width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.2); min-width: 700px; }
-.reports-table thead { background: rgba(95,191,122,0.15); }
+.table-wrapper { border-radius:12px; overflow-x:auto; }
+.reports-table {
+  width:100%; border-collapse:collapse;
+  background:rgba(0,0,0,0.15); min-width:800px;
+}
+.reports-table thead { background:rgba(95,191,122,0.14); }
 .reports-table th {
-  padding: 16px 18px;
-  text-align: start;
-  color: var(--green-light);
-  font-weight: 700;
-  font-size: 0.97rem;
-  border-bottom: 2px solid var(--border-color);
-  white-space: nowrap;
+  padding:14px 16px; text-align:start;
+  color:var(--green-light); font-weight:700; font-size:0.9rem;
+  border-bottom:2px solid var(--border-color); white-space:nowrap;
 }
 .reports-table tbody tr {
-  border-bottom: 1px solid rgba(95,191,122,0.1);
-  transition: all 0.2s;
+  border-bottom:1px solid rgba(95,191,122,0.07);
+  transition:background 0.15s;
 }
-.reports-table tbody tr:hover { background: rgba(95,191,122,0.08); }
-.reports-table tbody tr:last-child { border-bottom: none; }
-.reports-table td { padding: 18px; color: #c2dec9; font-size: 0.93rem; }
-.reports-table td strong { color: var(--green-light); font-weight: 700; }
+.reports-table tbody tr:hover { background:rgba(95,191,122,0.07); }
+.reports-table tbody tr:last-child { border-bottom:none; }
+.reports-table td { padding:15px 16px; color:#c2dec9; font-size:0.9rem; vertical-align:middle; }
+.reports-table td strong { color:var(--green-light); font-weight:700; }
 
+/* Status */
 .status-badge {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 11px; border-radius:20px;
+  font-size:0.77rem; font-weight:700; white-space:nowrap;
 }
-.status-completed { background: rgba(76,175,80,0.2); color: #9BE3B4; border: 1px solid rgba(76,175,80,0.4); }
-.status-pending { background: rgba(255,193,7,0.2); color: #ffd54f; border: 1px solid rgba(255,193,7,0.4); }
-.status-archived { background: rgba(158,158,158,0.2); color: #bdbdbd; border: 1px solid rgba(158,158,158,0.4); }
+.status-completed { background:rgba(76,175,80,0.18); color:#81C784; border:1px solid rgba(76,175,80,0.33); }
+.status-pending   { background:rgba(255,193,7,0.18);  color:#FFD54F; border:1px solid rgba(255,193,7,0.33); }
+.status-archived  { background:rgba(158,158,158,0.18);color:#BDBDBD; border:1px solid rgba(158,158,158,0.33); }
 
-.action-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+/* Action Btns */
+.action-buttons { display:flex; gap:6px; flex-wrap:wrap; }
 .action-btn {
-  background: rgba(95,191,122,0.15);
-  border: 1px solid var(--border-color);
-  color: var(--green-light);
-  padding: 8px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-weight: 600;
-  font-family: 'Tajawal', sans-serif;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  background:rgba(95,191,122,0.12);
+  border:1px solid var(--border-color); color:var(--green-light);
+  padding:6px 12px; border-radius:8px; cursor:pointer;
+  font-size:0.81rem; font-weight:700;
+  font-family:'Tajawal',sans-serif; transition:all 0.18s;
+  display:inline-flex; align-items:center; gap:5px; white-space:nowrap;
 }
-.action-btn:hover { background: rgba(95,191,122,0.25); transform: translateY(-2px); }
+.action-btn:hover { background:rgba(95,191,122,0.22); transform:translateY(-1px); }
 .action-btn.delete {
-  background: rgba(244,67,54,0.12);
-  border: 1px solid rgba(244,67,54,0.3);
-  color: #ff8a80;
+  background:rgba(244,67,54,0.1);
+  border-color:rgba(244,67,54,0.28); color:#ff8a80;
 }
-.action-btn.delete:hover { background: rgba(244,67,54,0.22); }
+.action-btn.delete:hover { background:rgba(244,67,54,0.2); }
 
-/* ─── PAGINATION ─── */
+/* ── PAGINATION ── */
 .pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 28px;
+  display:flex; justify-content:center;
+  align-items:center; gap:10px; margin-top:22px;
 }
 .page-btn {
-  background: rgba(95,191,122,0.15);
-  border: 1px solid var(--border-color);
-  color: var(--green-light);
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 1rem;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background:rgba(95,191,122,0.14); border:1px solid var(--border-color);
+  color:var(--green-light); width:40px; height:40px;
+  border-radius:10px; cursor:pointer; font-size:0.93rem;
+  transition:all 0.18s; display:flex; align-items:center; justify-content:center;
 }
-.page-btn:hover:not(:disabled) { background: rgba(95,191,122,0.25); transform: translateY(-2px); }
-.page-btn.active { background: linear-gradient(135deg, #9BE3B4, #2FA66A); color: #062016; border-color: transparent; }
-.page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-.page-info { color: #c2dec9; font-size: 0.97rem; font-weight: 600; padding: 0 12px; }
+.page-btn:hover:not(:disabled) { background:rgba(95,191,122,0.24); transform:translateY(-1px); }
+.page-btn:disabled { opacity:0.3; cursor:not-allowed; }
+.page-info { color:#c2dec9; font-size:0.91rem; font-weight:600; padding:0 10px; }
 
-/* ─── EMPTY STATE ─── */
-.empty-state { text-align: center; padding: 70px 20px; color: #c2dec9; }
-.empty-state i { font-size: 4.5rem; color: rgba(95,191,122,0.3); margin-bottom: 20px; }
-.empty-state h3 { font-size: 1.6rem; color: var(--green-light); margin-bottom: 10px; }
-.empty-state p { font-size: 1rem; opacity: 0.8; }
+/* ── EMPTY STATE ── */
+.empty-state { text-align:center; padding:60px 20px; color:#c2dec9; }
+.empty-state i { font-size:3.8rem; color:rgba(95,191,122,0.27); margin-bottom:16px; display:block; }
+.empty-state h3 { font-size:1.45rem; color:var(--green-light); margin-bottom:8px; }
+.empty-state p  { font-size:0.95rem; opacity:0.72; }
 
-/* ─── MODAL ─── */
+/* ── MODALS ── */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.75);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  backdrop-filter: blur(4px);
+  position:fixed; inset:0; background:rgba(0,0,0,0.8);
+  z-index:99999; display:flex; align-items:center;
+  justify-content:center; padding:20px; backdrop-filter:blur(5px);
 }
-.modal-overlay.hidden { display: none; }
+.modal-overlay.hidden { display:none; }
 .modal-box {
-  background: linear-gradient(135deg, #0e2318, #1a3a25);
-  border: 1px solid var(--border-color);
-  border-radius: 18px;
-  padding: 36px;
-  max-width: 500px;
-  width: 100%;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  background:linear-gradient(135deg,#0d2118,#1a3a25);
+  border:1px solid var(--border-color); border-radius:18px;
+  padding:30px; width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55);
+  animation:modalIn 0.22s ease;
 }
-.modal-box h3 { color: var(--green-light); font-size: 1.4rem; margin-bottom: 14px; display: flex; gap: 10px; align-items: center; }
-.modal-box p { color: #c2dec9; margin-bottom: 12px; font-size: 0.97rem; line-height: 1.6; }
-.modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 24px; }
+@keyframes modalIn {
+  from { opacity:0; transform:scale(0.92) translateY(20px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+.modal-box.sm  { max-width:460px; }
+.modal-box.lg  { max-width:660px; }
+.modal-box h3 {
+  color:var(--green-light); font-size:1.3rem;
+  margin-bottom:12px; display:flex; gap:10px; align-items:center;
+}
+.modal-box p { color:#c2dec9; font-size:0.93rem; line-height:1.65; }
+.modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; flex-wrap:wrap; }
+
+/* View Modal Grid */
+.view-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:12px; margin-top:16px;
+}
+@media(max-width:480px){ .view-grid{ grid-template-columns:1fr; } }
+.vf {
+  background:rgba(0,0,0,0.25); border-radius:10px;
+  padding:13px 15px;
+}
+.vf.full { grid-column:1/-1; }
+.vf label {
+  display:block; color:#8fd9a8; font-size:0.76rem;
+  font-weight:700; text-transform:uppercase;
+  letter-spacing:0.5px; margin-bottom:5px;
+}
+.vf span { color:#fff; font-size:0.97rem; font-weight:600; }
+.view-close-btn { width:100%; margin-top:18px; justify-content:center; }
 </style>
 </head>
 <body>
 
+<div class="animated-bg-logo"><img src="logo.png" alt=""></div>
+
 <div class="container">
-  <!-- ✅ Header يتحمل هنا -->
   <div id="header-placeholder"></div>
 
   <div class="content-wrapper">
 
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon total"><i class="fa-solid fa-file-lines"></i></div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-total">0</div>
+          <div class="stat-label" id="lbl-stat-total">Total Reports</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon done"><i class="fa-solid fa-circle-check"></i></div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-completed">0</div>
+          <div class="stat-label" id="lbl-stat-completed">Completed</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon pend"><i class="fa-solid fa-clock"></i></div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-pending">0</div>
+          <div class="stat-label" id="lbl-stat-pending">Pending</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon arch"><i class="fa-solid fa-box-archive"></i></div>
+        <div class="stat-info">
+          <div class="stat-value" id="stat-archived">0</div>
+          <div class="stat-label" id="lbl-stat-archived">Archived</div>
+        </div>
+      </div>
+    </div>
+
     <!-- PAGE HEADER -->
     <div class="page-header">
-      <h1 class="page-title" id="txt-page-title">
-        <i class="fa-solid fa-file-lines"></i>
-        كل التقارير
-      </h1>
-      <p class="page-subtitle" id="txt-page-subtitle">عرض وتحميل وإدارة جميع تقارير التحليل الجنائي الخاصة بك</p>
-      <div class="user-welcome" id="userWelcome">
-        <i class="fa-solid fa-user-check"></i>
-        <div class="user-welcome-text">
-          <span id="txt-logged-as">مسجّل الدخول بـ:</span>
-          <strong id="currentUserName">---</strong>
-        </div>
+      <div>
+        <h1 class="page-title" id="txt-page-title">
+          <i class="fa-solid fa-file-lines"></i> All Reports
+        </h1>
+        <p class="page-subtitle" id="txt-page-subtitle">View, download, and manage all your forensic reports</p>
+      </div>
+      <div class="user-badge">
+        <i class="fa-solid fa-user-shield"></i>
+        <span id="txt-logged-as">Investigator:</span>
+        <strong id="currentUserName">---</strong>
       </div>
     </div>
 
@@ -317,35 +358,36 @@ body::before {
     <div class="filters-section">
       <div class="filters-grid">
         <div class="filter-group">
-          <label for="filterDate" id="lbl-filter-date">التاريخ</label>
+          <label for="filterDate" id="lbl-f-date">Date</label>
           <input type="date" id="filterDate" class="filter-input">
         </div>
         <div class="filter-group">
-          <label for="filterCase" id="lbl-filter-case">رقم القضية</label>
-          <input type="text" id="filterCase" class="filter-input" placeholder="أدخل رقم القضية">
+          <label for="filterCase" id="lbl-f-case">Case Number</label>
+          <input type="text" id="filterCase" class="filter-input" placeholder="Enter case #">
         </div>
         <div class="filter-group">
-          <label for="filterDevice" id="lbl-filter-device">معلومات الجهاز</label>
-          <input type="text" id="filterDevice" class="filter-input" placeholder="أدخل اسم الجهاز">
+          <label for="filterDevice" id="lbl-f-device">Device</label>
+          <input type="text" id="filterDevice" class="filter-input" placeholder="Enter device name">
         </div>
         <div class="filter-group">
-          <label for="filterStatus" id="lbl-filter-status">الحالة</label>
+          <label for="filterStatus" id="lbl-f-status">Status</label>
           <select id="filterStatus" class="filter-select">
-            <option value="" id="opt-all">الكل</option>
-            <option value="completed" id="opt-completed">مكتمل</option>
-            <option value="pending" id="opt-pending">قيد الانتظار</option>
-            <option value="archived" id="opt-archived">مؤرشف</option>
+            <option value=""          id="opt-all">All Statuses</option>
+            <option value="completed" id="opt-completed">Completed</option>
+            <option value="pending"   id="opt-pending">Pending</option>
+            <option value="archived"  id="opt-archived">Archived</option>
           </select>
         </div>
       </div>
       <div class="filter-actions">
         <button class="btn btn-secondary" id="btnClearFilters">
-          <i class="fa-solid fa-rotate-right"></i>
-          <span id="txt-clear-filters">مسح الفلاتر</span>
+          <i class="fa-solid fa-rotate-right"></i> <span id="txt-clear">Clear</span>
+        </button>
+        <button class="btn btn-export" id="btnExportCSV">
+          <i class="fa-solid fa-file-csv"></i> <span id="txt-export-csv">Export CSV</span>
         </button>
         <button class="btn btn-primary" id="btnApplyFilters">
-          <i class="fa-solid fa-filter"></i>
-          <span id="txt-apply-filters">تطبيق</span>
+          <i class="fa-solid fa-filter"></i> <span id="txt-apply">Apply Filters</span>
         </button>
       </div>
     </div>
@@ -354,38 +396,42 @@ body::before {
     <div class="reports-section">
       <div class="section-header">
         <h2 class="section-title">
-          <i class="fa-solid fa-list"></i>
-          <span id="txt-my-reports">تقاريري</span>
+          <i class="fa-solid fa-list-ul"></i>
+          <span id="txt-my-reports">My Reports</span>
           <span class="reports-count" id="reportsCount">0</span>
         </h2>
       </div>
+
       <div class="table-wrapper">
         <table class="reports-table" id="reportsTable">
           <thead>
             <tr>
-              <th id="th-date">التاريخ</th>
-              <th id="th-time">الوقت</th>
-              <th id="th-case">رقم القضية</th>
-              <th id="th-device">الجهاز</th>
-              <th id="th-status">الحالة</th>
-              <th id="th-actions">الإجراءات</th>
+              <th id="th-date">Date</th>
+              <th id="th-time">Time</th>
+              <th id="th-case">Case #</th>
+              <th id="th-investigator">Investigator</th>
+              <th id="th-device">Device</th>
+              <th id="th-status">Status</th>
+              <th id="th-actions">Actions</th>
             </tr>
           </thead>
           <tbody id="reportsBody"></tbody>
         </table>
+
         <div class="empty-state" id="emptyState" style="display:none;">
           <i class="fa-solid fa-folder-open"></i>
-          <h3 id="txt-no-reports">لا توجد تقارير</h3>
-          <p id="txt-no-reports-sub">لا توجد تقارير مطابقة للمعايير المحددة.</p>
+          <h3 id="txt-no-reports">No Reports Found</h3>
+          <p id="txt-no-reports-sub">You don't have any reports matching your criteria.</p>
         </div>
       </div>
-      <div class="pagination" id="pagination">
+
+      <div class="pagination" id="pagination" style="display:none;">
         <button class="page-btn" id="btnPrevPage" disabled>
-          <i class="fa-solid fa-chevron-right"></i>
+          <i id="icon-prev" class="fa-solid fa-chevron-left"></i>
         </button>
-        <span class="page-info" id="pageInfo">صفحة 1 من 1</span>
+        <span class="page-info" id="pageInfo">Page 1 of 1</span>
         <button class="page-btn" id="btnNextPage" disabled>
-          <i class="fa-solid fa-chevron-left"></i>
+          <i id="icon-next" class="fa-solid fa-chevron-right"></i>
         </button>
       </div>
     </div>
@@ -393,132 +439,133 @@ body::before {
   </div>
 </div>
 
-<!-- ─── DELETE CONFIRM MODAL ─── -->
+<!-- ══ DELETE MODAL ══ -->
 <div class="modal-overlay hidden" id="deleteModal">
-  <div class="modal-box">
-    <h3><i class="fa-solid fa-trash"></i> <span id="txt-modal-title">تأكيد الحذف</span></h3>
-    <p id="txt-modal-body">هل أنت متأكد من حذف هذا التقرير؟ لا يمكن التراجع عن هذه العملية.</p>
+  <div class="modal-box sm">
+    <h3>
+      <i class="fa-solid fa-triangle-exclamation" style="color:#FFD54F"></i>
+      <span id="txt-del-title">Confirm Delete</span>
+    </h3>
+    <p id="txt-del-body">Are you sure you want to delete this report? This action cannot be undone.</p>
     <div class="modal-actions">
       <button class="btn btn-secondary" id="btnCancelDelete">
-        <span id="txt-modal-cancel">إلغاء</span>
+        <span id="txt-del-cancel">Cancel</span>
       </button>
-      <button class="btn" id="btnConfirmDelete"
-        style="background:linear-gradient(135deg,#ff6b6b,#c0392b);color:#fff;">
+      <button class="btn btn-danger" id="btnConfirmDelete">
         <i class="fa-solid fa-trash"></i>
-        <span id="txt-modal-confirm">حذف</span>
+        <span id="txt-del-confirm">Delete</span>
       </button>
     </div>
+  </div>
+</div>
+
+<!-- ══ VIEW MODAL ══ -->
+<div class="modal-overlay hidden" id="viewModal">
+  <div class="modal-box lg">
+    <h3>
+      <i class="fa-solid fa-file-magnifying-glass"></i>
+      <span id="txt-view-title">Report Details</span>
+    </h3>
+    <div class="view-grid" id="viewGrid"></div>
+    <button class="btn btn-secondary view-close-btn" id="btnCloseView">
+      <i class="fa-solid fa-xmark"></i>
+      <span id="txt-view-close">Close</span>
+    </button>
   </div>
 </div>
 
 <script>
-// ════════════════════════════════════════
-// ✅ Route Protection
-// ════════════════════════════════════════
+// ════════════════════════════════════
+// ✅ ROUTE PROTECTION
+// ════════════════════════════════════
 if(!localStorage.getItem("userRole")){
   window.location.href = "auth.html";
 }
 
-// ════════════════════════════════════════
-// ✅ Current User
-// ════════════════════════════════════════
-let currentUser = { name: "مستخدم", email: "", role: "user" };
+// ════════════════════════════════════
+// ✅ CURRENT USER
+// ════════════════════════════════════
+let currentUser = { name:"Investigator", email:"", role:"user" };
 try {
-  const stored = localStorage.getItem("currentUser");
-  if(stored) currentUser = JSON.parse(stored);
+  const s = localStorage.getItem("currentUser");
+  if(s) currentUser = JSON.parse(s);
 } catch(e){}
 
-// ════════════════════════════════════════
-// ✅ Language
-// ════════════════════════════════════════
-let currentLang = localStorage.getItem("lang") || "ar";
+// ════════════════════════════════════
+// ✅ LANGUAGE — English Default
+// ════════════════════════════════════
+let currentLang = localStorage.getItem("lang") || "en";
 
 const UI = {
-  ar: {
-    dir: "rtl",
-    title: "كل التقارير - Whisper-WA",
-    topSubtitle: "منصة التحليل الجنائي الرقمي",
-    langText: "EN",
-    pageTitle: "كل التقارير",
-    pageSubtitle: "عرض وتحميل وإدارة جميع تقارير التحليل الجنائي الخاصة بك",
-    loggedAs: "مسجّل الدخول بـ:",
-    lblDate: "التاريخ",
-    lblCase: "رقم القضية",
-    lblDevice: "معلومات الجهاز",
-    lblStatus: "الحالة",
-    phCase: "أدخل رقم القضية",
-    phDevice: "أدخل اسم الجهاز",
-    optAll: "الكل",
-    optCompleted: "مكتمل",
-    optPending: "قيد الانتظار",
-    optArchived: "مؤرشف",
-    clearFilters: "مسح الفلاتر",
-    applyFilters: "تطبيق",
-    myReports: "تقاريري",
-    thDate: "التاريخ",
-    thTime: "الوقت",
-    thCase: "رقم القضية",
-    thDevice: "الجهاز",
-    thStatus: "الحالة",
-    thActions: "الإجراءات",
-    noReports: "لا توجد تقارير",
-    noReportsSub: "لا توجد تقارير مطابقة للمعايير المحددة.",
-    btnDownload: "تحميل",
-    btnView: "عرض",
-    btnDelete: "حذف",
-    pageOf: (c, t) => `صفحة ${c} من ${t}`,
-    statusCompleted: "مكتمل",
-    statusPending: "قيد الانتظار",
-    statusArchived: "مؤرشف",
-    modalTitle: "تأكيد الحذف",
-    modalBody: "هل أنت متأكد من حذف هذا التقرير؟ لا يمكن التراجع عن هذه العملية.",
-    modalCancel: "إلغاء",
-    modalConfirm: "حذف",
-    downloadMsg: (cn) => `جاري تحميل تقرير: ${cn}`,
-    viewMsg: (cn) => `عرض تقرير: ${cn}`
-  },
   en: {
-    dir: "ltr",
-    title: "All Reports - Whisper-WA",
-    topSubtitle: "Digital Forensics Platform",
-    langText: "AR",
-    pageTitle: "All Reports",
-    pageSubtitle: "View, download, and manage all your forensic reports",
-    loggedAs: "Logged in as:",
-    lblDate: "Date",
-    lblCase: "Case Number",
-    lblDevice: "Device Info",
-    lblStatus: "Status",
-    phCase: "Enter case #",
-    phDevice: "Enter device name",
-    optAll: "All",
-    optCompleted: "Completed",
-    optPending: "Pending",
-    optArchived: "Archived",
-    clearFilters: "Clear Filters",
-    applyFilters: "Apply Filters",
-    myReports: "My Reports",
-    thDate: "Date",
-    thTime: "Time",
-    thCase: "Case #",
-    thDevice: "Device",
-    thStatus: "Status",
-    thActions: "Actions",
-    noReports: "No Reports Found",
-    noReportsSub: "You don't have any reports matching your criteria.",
-    btnDownload: "Download",
-    btnView: "View",
-    btnDelete: "Delete",
-    pageOf: (c, t) => `Page ${c} of ${t}`,
-    statusCompleted: "Completed",
-    statusPending: "Pending",
-    statusArchived: "Archived",
-    modalTitle: "Confirm Delete",
-    modalBody: "Are you sure you want to delete this report? This action cannot be undone.",
-    modalCancel: "Cancel",
-    modalConfirm: "Delete",
-    downloadMsg: (cn) => `Downloading report: ${cn}`,
-    viewMsg: (cn) => `Viewing report: ${cn}`
+    dir:"ltr", htmlLang:"en",
+    docTitle:"All Reports - Whisper-WA",
+    topSubtitle:"Digital Forensics Platform",
+    langBtn:"AR",
+    pageTitle:"All Reports",
+    pageSub:"View, download, and manage all your forensic reports",
+    loggedAs:"Investigator:",
+    statTotal:"Total Reports", statCompleted:"Completed",
+    statPending:"Pending", statArchived:"Archived",
+    lblDate:"Date", lblCase:"Case Number",
+    lblDevice:"Device", lblStatus:"Status",
+    phCase:"Enter case #", phDevice:"Enter device name",
+    optAll:"All Statuses", optCompleted:"Completed",
+    optPending:"Pending", optArchived:"Archived",
+    txtClear:"Clear", txtExportCSV:"Export CSV", txtApply:"Apply Filters",
+    myReports:"My Reports",
+    thDate:"Date", thTime:"Time", thCase:"Case #",
+    thInvestigator:"Investigator", thDevice:"Device",
+    thStatus:"Status", thActions:"Actions",
+    sCompleted:"Completed", sPending:"Pending", sArchived:"Archived",
+    btnDownload:"Download", btnView:"View", btnDelete:"Delete",
+    pageOf:(c,t) => `Page ${c} of ${t}`,
+    noReports:"No Reports Found",
+    noReportsSub:"You don't have any reports matching your criteria.",
+    delTitle:"Confirm Delete",
+    delBody:"Are you sure you want to delete this report? This action cannot be undone.",
+    delCancel:"Cancel", delConfirm:"Delete",
+    viewTitle:"Report Details", viewClose:"Close",
+    vLbl:{ id:"Report ID", date:"Date", time:"Time",
+           caseNumber:"Case #", investigator:"Investigator",
+           deviceInfo:"Device", status:"Status" },
+    exportHeaders:["Date","Time","Case #","Investigator","Device","Status"],
+    exportFilename:"whisper_wa_reports.csv",
+  },
+  ar: {
+    dir:"rtl", htmlLang:"ar",
+    docTitle:"كل التقارير - Whisper-WA",
+    topSubtitle:"منصة التحليل الجنائي الرقمي",
+    langBtn:"EN",
+    pageTitle:"كل التقارير",
+    pageSub:"عرض وتحميل وإدارة جميع تقارير التحليل الجنائي الخاصة بك",
+    loggedAs:"المحقق:",
+    statTotal:"إجمالي التقارير", statCompleted:"مكتملة",
+    statPending:"قيد الانتظار", statArchived:"مؤرشفة",
+    lblDate:"التاريخ", lblCase:"رقم القضية",
+    lblDevice:"الجهاز", lblStatus:"الحالة",
+    phCase:"أدخل رقم القضية", phDevice:"أدخل اسم الجهاز",
+    optAll:"كل الحالات", optCompleted:"مكتمل",
+    optPending:"قيد الانتظار", optArchived:"مؤرشف",
+    txtClear:"مسح", txtExportCSV:"تصدير CSV", txtApply:"تطبيق الفلاتر",
+    myReports:"تقاريري",
+    thDate:"التاريخ", thTime:"الوقت", thCase:"رقم القضية",
+    thInvestigator:"المحقق", thDevice:"الجهاز",
+    thStatus:"الحالة", thActions:"الإجراءات",
+    sCompleted:"مكتمل", sPending:"قيد الانتظار", sArchived:"مؤرشف",
+    btnDownload:"تحميل", btnView:"عرض", btnDelete:"حذف",
+    pageOf:(c,t) => `صفحة ${c} من ${t}`,
+    noReports:"لا توجد تقارير",
+    noReportsSub:"لا توجد تقارير مطابقة للمعايير المحددة.",
+    delTitle:"تأكيد الحذف",
+    delBody:"هل أنت متأكد من حذف هذا التقرير؟ لا يمكن التراجع عن هذه العملية.",
+    delCancel:"إلغاء", delConfirm:"حذف",
+    viewTitle:"تفاصيل التقرير", viewClose:"إغلاق",
+    vLbl:{ id:"رقم التقرير", date:"التاريخ", time:"الوقت",
+           caseNumber:"رقم القضية", investigator:"المحقق",
+           deviceInfo:"الجهاز", status:"الحالة" },
+    exportHeaders:["التاريخ","الوقت","رقم القضية","المحقق","الجهاز","الحالة"],
+    exportFilename:"تقارير_whisper_wa.csv",
   }
 };
 
@@ -527,101 +574,131 @@ function applyLang(lang) {
   const t = UI[lang];
   const isAr = lang === "ar";
 
-  document.documentElement.lang = lang;
-  document.documentElement.dir = t.dir;
-  document.title = t.title;
+  document.documentElement.lang = t.htmlLang;
+  document.documentElement.dir  = t.dir;
+  document.title = t.docTitle;
   localStorage.setItem("lang", lang);
 
-  const topSubtitle = document.getElementById("top-subtitle");
-  const langText = document.getElementById("langText");
-  if(topSubtitle) topSubtitle.textContent = t.topSubtitle;
-  if(langText) langText.textContent = t.langText;
+  // Header
+  const ts = document.getElementById("top-subtitle");
+  const lt = document.getElementById("langText");
+  if(ts) ts.textContent = t.topSubtitle;
+  if(lt) lt.textContent = t.langBtn;
 
-  document.getElementById("txt-page-title").innerHTML = `<i class="fa-solid fa-file-lines"></i> ${t.pageTitle}`;
-  document.getElementById("txt-page-subtitle").textContent = t.pageSubtitle;
-  document.getElementById("txt-logged-as").textContent = t.loggedAs;
-  document.getElementById("lbl-filter-date").textContent = t.lblDate;
-  document.getElementById("lbl-filter-case").textContent = t.lblCase;
-  document.getElementById("lbl-filter-device").textContent = t.lblDevice;
-  document.getElementById("lbl-filter-status").textContent = t.lblStatus;
-  document.getElementById("filterCase").placeholder = t.phCase;
+  // Stats labels
+  document.getElementById("lbl-stat-total").textContent     = t.statTotal;
+  document.getElementById("lbl-stat-completed").textContent = t.statCompleted;
+  document.getElementById("lbl-stat-pending").textContent   = t.statPending;
+  document.getElementById("lbl-stat-archived").textContent  = t.statArchived;
+
+  // Page header
+  document.getElementById("txt-page-title").innerHTML      = `<i class="fa-solid fa-file-lines"></i> ${t.pageTitle}`;
+  document.getElementById("txt-page-subtitle").textContent = t.pageSub;
+  document.getElementById("txt-logged-as").textContent     = t.loggedAs;
+
+  // Filters
+  document.getElementById("lbl-f-date").textContent   = t.lblDate;
+  document.getElementById("lbl-f-case").textContent   = t.lblCase;
+  document.getElementById("lbl-f-device").textContent = t.lblDevice;
+  document.getElementById("lbl-f-status").textContent = t.lblStatus;
+  document.getElementById("filterCase").placeholder   = t.phCase;
   document.getElementById("filterDevice").placeholder = t.phDevice;
-  document.getElementById("opt-all").textContent = t.optAll;
+  document.getElementById("opt-all").textContent       = t.optAll;
   document.getElementById("opt-completed").textContent = t.optCompleted;
-  document.getElementById("opt-pending").textContent = t.optPending;
-  document.getElementById("opt-archived").textContent = t.optArchived;
-  document.getElementById("txt-clear-filters").textContent = t.clearFilters;
-  document.getElementById("txt-apply-filters").textContent = t.applyFilters;
-  document.getElementById("txt-my-reports").textContent = t.myReports;
-  document.getElementById("th-date").textContent = t.thDate;
-  document.getElementById("th-time").textContent = t.thTime;
-  document.getElementById("th-case").textContent = t.thCase;
-  document.getElementById("th-device").textContent = t.thDevice;
-  document.getElementById("th-status").textContent = t.thStatus;
-  document.getElementById("th-actions").textContent = t.thActions;
-  document.getElementById("txt-no-reports").textContent = t.noReports;
-  document.getElementById("txt-no-reports-sub").textContent = t.noReportsSub;
-  document.getElementById("txt-modal-title").textContent = t.modalTitle;
-  document.getElementById("txt-modal-body").textContent = t.modalBody;
-  document.getElementById("txt-modal-cancel").textContent = t.modalCancel;
-  document.getElementById("txt-modal-confirm").textContent = t.modalConfirm;
+  document.getElementById("opt-pending").textContent   = t.optPending;
+  document.getElementById("opt-archived").textContent  = t.optArchived;
+  document.getElementById("txt-clear").textContent     = t.txtClear;
+  document.getElementById("txt-export-csv").textContent= t.txtExportCSV;
+  document.getElementById("txt-apply").textContent     = t.txtApply;
 
-  document.getElementById("btnPrevPage").innerHTML = `<i class="fa-solid fa-chevron-${isAr ? 'right' : 'left'}"></i>`;
-  document.getElementById("btnNextPage").innerHTML = `<i class="fa-solid fa-chevron-${isAr ? 'left' : 'right'}"></i>`;
+  // Table headers
+  document.getElementById("txt-my-reports").textContent  = t.myReports;
+  document.getElementById("th-date").textContent         = t.thDate;
+  document.getElementById("th-time").textContent         = t.thTime;
+  document.getElementById("th-case").textContent         = t.thCase;
+  document.getElementById("th-investigator").textContent = t.thInvestigator;
+  document.getElementById("th-device").textContent       = t.thDevice;
+  document.getElementById("th-status").textContent       = t.thStatus;
+  document.getElementById("th-actions").textContent      = t.thActions;
+
+  // Empty
+  document.getElementById("txt-no-reports").textContent     = t.noReports;
+  document.getElementById("txt-no-reports-sub").textContent = t.noReportsSub;
+
+  // Delete modal
+  document.getElementById("txt-del-title").textContent   = t.delTitle;
+  document.getElementById("txt-del-body").textContent    = t.delBody;
+  document.getElementById("txt-del-cancel").textContent  = t.delCancel;
+  document.getElementById("txt-del-confirm").textContent = t.delConfirm;
+
+  // View modal
+  document.getElementById("txt-view-title").textContent = t.viewTitle;
+  document.getElementById("txt-view-close").textContent = t.viewClose;
+
+  // Pagination arrows flip
+  document.getElementById("icon-prev").className = `fa-solid fa-chevron-${isAr ? "right":"left"}`;
+  document.getElementById("icon-next").className = `fa-solid fa-chevron-${isAr ? "left":"right"}`;
 
   renderTable();
+  updateStats();
 }
 
-// ════════════════════════════════════════
-// ✅ Mock Data
-// ════════════════════════════════════════
+// ════════════════════════════════════
+// ✅ MOCK DATA
+// ════════════════════════════════════
 const allReports = [
-  { id:1,  investigator:"Rahaf Alruwaysan", date:"2026-02-15", time:"14:30", caseNumber:"055XXX", deviceInfo:"Samsung Galaxy S21", status:"completed", pdfUrl:"reports/report_001.pdf" },
-  { id:2,  investigator:"Rahaf Alruwaysan", date:"2026-02-14", time:"11:20", caseNumber:"055YYY", deviceInfo:"Google Pixel 6", status:"completed", pdfUrl:"reports/report_002.pdf" },
-  { id:3,  investigator:"Rahaf Alruwaysan", date:"2026-02-13", time:"09:15", caseNumber:"055ZZZ", deviceInfo:"OnePlus 9 Pro", status:"pending", pdfUrl:"reports/report_003.pdf" },
-  { id:4,  investigator:"Rahaf Alruwaysan", date:"2026-02-10", time:"16:30", caseNumber:"055AAA", deviceInfo:"Xiaomi Mi 11", status:"archived", pdfUrl:"reports/report_004.pdf" },
-  { id:5,  investigator:"Rahaf Alruwaysan", date:"2026-02-09", time:"13:45", caseNumber:"055BBB", deviceInfo:"Samsung Galaxy A52", status:"completed", pdfUrl:"reports/report_005.pdf" },
-  { id:6,  investigator:"Rahaf Alruwaysan", date:"2026-02-08", time:"10:00", caseNumber:"055CCC", deviceInfo:"Huawei P40 Pro", status:"pending", pdfUrl:"reports/report_006.pdf" },
-  { id:7,  investigator:"Rahaf Alruwaysan", date:"2026-02-07", time:"15:20", caseNumber:"055DDD", deviceInfo:"Oppo Find X3 Pro", status:"completed", pdfUrl:"reports/report_007.pdf" },
-  { id:8,  investigator:"Rahaf Alruwaysan", date:"2026-02-05", time:"12:00", caseNumber:"055EEE", deviceInfo:"Realme GT Master", status:"archived", pdfUrl:"reports/report_008.pdf" },
-  { id:9,  investigator:"Rahaf Alruwaysan", date:"2026-02-04", time:"09:30", caseNumber:"055FFF", deviceInfo:"Vivo X70 Pro", status:"completed", pdfUrl:"reports/report_009.pdf" },
-  { id:10, investigator:"Rahaf Alruwaysan", date:"2026-02-03", time:"14:15", caseNumber:"055GGG", deviceInfo:"Samsung Galaxy Z Fold3", status:"pending", pdfUrl:"reports/report_010.pdf" },
-  { id:11, investigator:"Rahaf Alruwaysan", date:"2026-02-02", time:"11:00", caseNumber:"055HHH", deviceInfo:"Google Pixel 7", status:"completed", pdfUrl:"reports/report_011.pdf" },
-  { id:12, investigator:"Rahaf Alruwaysan", date:"2026-02-01", time:"16:45", caseNumber:"055III", deviceInfo:"Motorola Edge 30", status:"archived", pdfUrl:"reports/report_012.pdf" },
-  { id:13, investigator:"Admin User", date:"2026-01-25", time:"10:00", caseNumber:"055JJJ", deviceInfo:"iPhone 14", status:"completed", pdfUrl:"reports/report_013.pdf" },
+  { id:1,  investigator:"Rahaf Alruwaysan", date:"2026-02-15", time:"14:30", caseNumber:"055XXX", deviceInfo:"Samsung Galaxy S21",    status:"completed" },
+  { id:2,  investigator:"Rahaf Alruwaysan", date:"2026-02-14", time:"11:20", caseNumber:"055YYY", deviceInfo:"Google Pixel 6",         status:"completed" },
+  { id:3,  investigator:"Rahaf Alruwaysan", date:"2026-02-13", time:"09:15", caseNumber:"055ZZZ", deviceInfo:"OnePlus 9 Pro",          status:"pending"   },
+  { id:4,  investigator:"Rahaf Alruwaysan", date:"2026-02-10", time:"16:30", caseNumber:"055AAA", deviceInfo:"Xiaomi Mi 11",           status:"archived"  },
+  { id:5,  investigator:"Rahaf Alruwaysan", date:"2026-02-09", time:"13:45", caseNumber:"055BBB", deviceInfo:"Samsung Galaxy A52",     status:"completed" },
+  { id:6,  investigator:"Rahaf Alruwaysan", date:"2026-02-08", time:"10:00", caseNumber:"055CCC", deviceInfo:"Huawei P40 Pro",         status:"pending"   },
+  { id:7,  investigator:"Rahaf Alruwaysan", date:"2026-02-07", time:"15:20", caseNumber:"055DDD", deviceInfo:"Oppo Find X3 Pro",       status:"completed" },
+  { id:8,  investigator:"Rahaf Alruwaysan", date:"2026-02-05", time:"12:00", caseNumber:"055EEE", deviceInfo:"Realme GT Master",       status:"archived"  },
+  { id:9,  investigator:"Rahaf Alruwaysan", date:"2026-02-04", time:"09:30", caseNumber:"055FFF", deviceInfo:"Vivo X70 Pro",           status:"completed" },
+  { id:10, investigator:"Rahaf Alruwaysan", date:"2026-02-03", time:"14:15", caseNumber:"055GGG", deviceInfo:"Samsung Galaxy Z Fold3", status:"pending"   },
+  { id:11, investigator:"Rahaf Alruwaysan", date:"2026-02-02", time:"11:00", caseNumber:"055HHH", deviceInfo:"Google Pixel 7",         status:"completed" },
+  { id:12, investigator:"Rahaf Alruwaysan", date:"2026-02-01", time:"16:45", caseNumber:"055III", deviceInfo:"Motorola Edge 30",       status:"archived"  },
+  { id:13, investigator:"Admin User",       date:"2026-01-28", time:"10:00", caseNumber:"055JJJ", deviceInfo:"iPhone 14 Pro",          status:"completed" },
+  { id:14, investigator:"Admin User",       date:"2026-01-25", time:"08:30", caseNumber:"055KKK", deviceInfo:"iPad Pro 2022",          status:"pending"   },
 ];
 
-// ════════════════════════════════════════
-// ✅ State
-// ════════════════════════════════════════
-let reportsData = [];
+let reportsData     = [];
 let filteredReports = [];
-let currentPage = 1;
-const itemsPerPage = 10;
+let currentPage     = 1;
+const itemsPerPage  = 10;
 let pendingDeleteId = null;
 
 function initUserReports() {
-  const userName = currentUser.name || "";
+  const name = currentUser.name || "";
   if(currentUser.role === "admin") {
     reportsData = [...allReports];
   } else {
-    reportsData = allReports.filter(r => r.investigator === userName);
-    if(reportsData.length === 0) {
-      reportsData = [...allReports];
-    }
+    reportsData = allReports.filter(r => r.investigator === name);
+    if(reportsData.length === 0) reportsData = [...allReports];
   }
   filteredReports = [...reportsData];
 }
 
-// ════════════════════════════════════════
-// ✅ Render Table
-// ════════════════════════════════════════
+// ════════════════════════════════════
+// ✅ STATS
+// ════════════════════════════════════
+function updateStats() {
+  document.getElementById("stat-total").textContent     = reportsData.length;
+  document.getElementById("stat-completed").textContent = reportsData.filter(r=>r.status==="completed").length;
+  document.getElementById("stat-pending").textContent   = reportsData.filter(r=>r.status==="pending").length;
+  document.getElementById("stat-archived").textContent  = reportsData.filter(r=>r.status==="archived").length;
+}
+
+// ════════════════════════════════════
+// ✅ RENDER TABLE
+// ════════════════════════════════════
 function renderTable() {
-  const tbody = document.getElementById("reportsBody");
-  const emptyState = document.getElementById("emptyState");
-  const table = document.getElementById("reportsTable");
-  const pagination = document.getElementById("pagination");
-  const t = UI[currentLang];
+  const tbody  = document.getElementById("reportsBody");
+  const empty  = document.getElementById("emptyState");
+  const table  = document.getElementById("reportsTable");
+  const pgn    = document.getElementById("pagination");
+  const t      = UI[currentLang];
 
   const start = (currentPage - 1) * itemsPerPage;
   const paged = filteredReports.slice(start, start + itemsPerPage);
@@ -630,70 +707,103 @@ function renderTable() {
   tbody.innerHTML = "";
 
   if(paged.length === 0) {
-    emptyState.style.display = "block";
+    empty.style.display = "block";
     table.style.display = "none";
-    pagination.style.display = "none";
-  } else {
-    emptyState.style.display = "none";
-    table.style.display = "table";
-    pagination.style.display = "flex";
-
-    paged.forEach(r => {
-      const tr = document.createElement("tr");
-      const statusLabels = {
-        completed: t.statusCompleted,
-        pending: t.statusPending,
-        archived: t.statusArchived
-      };
-      tr.innerHTML = `
-        <td>${r.date}</td>
-        <td>${r.time}</td>
-        <td><strong>${r.caseNumber}</strong></td>
-        <td>${r.deviceInfo}</td>
-        <td><span class="status-badge status-${r.status}">${statusLabels[r.status] || r.status}</span></td>
-        <td>
-          <div class="action-buttons">
-            <button class="action-btn download" onclick="downloadReport(${r.id})">
-              <i class="fa-solid fa-download"></i> ${t.btnDownload}
-            </button>
-            <button class="action-btn view" onclick="viewReport(${r.id})">
-              <i class="fa-solid fa-eye"></i> ${t.btnView}
-            </button>
-            <button class="action-btn delete" onclick="confirmDelete(${r.id})">
-              <i class="fa-solid fa-trash"></i> ${t.btnDelete}
-            </button>
-          </div>
-        </td>`;
-      tbody.appendChild(tr);
-    });
-
-    updatePagination();
+    pgn.style.display   = "none";
+    return;
   }
+
+  empty.style.display = "none";
+  table.style.display = "table";
+  pgn.style.display   = "flex";
+
+  const sIco = { completed:"fa-circle-check", pending:"fa-clock", archived:"fa-box-archive" };
+  const sLbl = { completed:t.sCompleted, pending:t.sPending, archived:t.sArchived };
+
+  paged.forEach(r => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${r.date}</td>
+      <td>${r.time}</td>
+      <td><strong>${r.caseNumber}</strong></td>
+      <td>${r.investigator}</td>
+      <td>${r.deviceInfo}</td>
+      <td>
+        <span class="status-badge status-${r.status}">
+          <i class="fa-solid ${sIco[r.status]}"></i>
+          ${sLbl[r.status] || r.status}
+        </span>
+      </td>
+      <td>
+        <div class="action-buttons">
+          <button class="action-btn" onclick="downloadReport(${r.id})">
+            <i class="fa-solid fa-download"></i> ${t.btnDownload}
+          </button>
+          <button class="action-btn" onclick="viewReport(${r.id})">
+            <i class="fa-solid fa-eye"></i> ${t.btnView}
+          </button>
+          <button class="action-btn delete" onclick="confirmDelete(${r.id})">
+            <i class="fa-solid fa-trash"></i> ${t.btnDelete}
+          </button>
+        </div>
+      </td>`;
+    tbody.appendChild(tr);
+  });
+
+  updatePagination();
 }
 
 function updatePagination() {
-  const totalPages = Math.max(1, Math.ceil(filteredReports.length / itemsPerPage));
-  const t = UI[currentLang];
-  document.getElementById("pageInfo").textContent = t.pageOf(currentPage, totalPages);
-  document.getElementById("btnPrevPage").disabled = currentPage === 1;
-  document.getElementById("btnNextPage").disabled = currentPage >= totalPages;
+  const total = Math.max(1, Math.ceil(filteredReports.length / itemsPerPage));
+  document.getElementById("pageInfo").textContent      = UI[currentLang].pageOf(currentPage, total);
+  document.getElementById("btnPrevPage").disabled      = currentPage === 1;
+  document.getElementById("btnNextPage").disabled      = currentPage >= total;
 }
 
-// ════════════════════════════════════════
-// ✅ Actions
-// ════════════════════════════════════════
+// ════════════════════════════════════
+// ✅ ACTIONS
+// ════════════════════════════════════
 function downloadReport(id) {
   const r = reportsData.find(x => x.id === id);
   if(!r) return;
   const t = UI[currentLang];
-  alert(t.downloadMsg(r.caseNumber));
+  const csv  = [t.exportHeaders.join(","),
+    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v}"`).join(",")
+  ].join("\n");
+  const blob = new Blob(["\uFEFF"+csv], { type:"text/csv;charset=utf-8;" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href = url; a.download = `report_${r.caseNumber}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
 }
 
 function viewReport(id) {
   const r = reportsData.find(x => x.id === id);
   if(!r) return;
-  const t = UI[currentLang];
-  alert(t.viewMsg(r.caseNumber));
+  const t   = UI[currentLang];
+  const lbl = t.vLbl;
+  const sLbl = { completed:t.sCompleted, pending:t.sPending, archived:t.sArchived };
+  const sIco = { completed:"fa-circle-check", pending:"fa-clock", archived:"fa-box-archive" };
+
+  document.getElementById("txt-view-title").textContent = t.viewTitle;
+  document.getElementById("txt-view-close").textContent = t.viewClose;
+
+  document.getElementById("viewGrid").innerHTML = `
+    <div class="vf"><label>${lbl.id}</label><span>#${r.id}</span></div>
+    <div class="vf"><label>${lbl.date}</label><span>${r.date}</span></div>
+    <div class="vf"><label>${lbl.time}</label><span>${r.time}</span></div>
+    <div class="vf"><label>${lbl.caseNumber}</label><span><strong>${r.caseNumber}</strong></span></div>
+    <div class="vf full"><label>${lbl.investigator}</label><span>${r.investigator}</span></div>
+    <div class="vf full"><label>${lbl.deviceInfo}</label><span>${r.deviceInfo}</span></div>
+    <div class="vf full">
+      <label>${lbl.status}</label>
+      <span class="status-badge status-${r.status}">
+        <i class="fa-solid ${sIco[r.status]}"></i> ${sLbl[r.status]}
+      </span>
+    </div>`;
+
+  document.getElementById("viewModal").classList.remove("hidden");
 }
 
 function confirmDelete(id) {
@@ -701,105 +811,123 @@ function confirmDelete(id) {
   document.getElementById("deleteModal").classList.remove("hidden");
 }
 
-document.getElementById("btnCancelDelete").onclick = () => {
-  pendingDeleteId = null;
-  document.getElementById("deleteModal").classList.add("hidden");
-};
+function exportCSV() {
+  const t = UI[currentLang];
+  if(!filteredReports.length) return;
+  const rows = filteredReports.map(r =>
+    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v}"`).join(",")
+  );
+  const csv  = [t.exportHeaders.join(","), ...rows].join("\n");
+  const blob = new Blob(["\uFEFF"+csv], { type:"text/csv;charset=utf-8;" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href = url; a.download = t.exportFilename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
 
-document.getElementById("btnConfirmDelete").onclick = () => {
-  if(pendingDeleteId !== null) {
-    reportsData = reportsData.filter(r => r.id !== pendingDeleteId);
-    filteredReports = filteredReports.filter(r => r.id !== pendingDeleteId);
-    currentPage = 1;
-    renderTable();
-    pendingDeleteId = null;
-  }
-  document.getElementById("deleteModal").classList.add("hidden");
-};
-
-document.getElementById("deleteModal").onclick = (e) => {
-  if(e.target === document.getElementById("deleteModal")) {
-    pendingDeleteId = null;
-    document.getElementById("deleteModal").classList.add("hidden");
-  }
-};
-
-// ════════════════════════════════════════
-// ✅ Filters
-// ════════════════════════════════════════
+// ════════════════════════════════════
+// ✅ FILTERS
+// ════════════════════════════════════
 function applyFilters() {
-  const dateFilter = document.getElementById("filterDate").value;
-  const caseFilter = document.getElementById("filterCase").value.toLowerCase();
-  const deviceFilter = document.getElementById("filterDevice").value.toLowerCase();
-  const statusFilter = document.getElementById("filterStatus").value;
-
-  filteredReports = reportsData.filter(r => {
-    return (!dateFilter || r.date === dateFilter)
-      && (!caseFilter || r.caseNumber.toLowerCase().includes(caseFilter))
-      && (!deviceFilter || r.deviceInfo.toLowerCase().includes(deviceFilter))
-      && (!statusFilter || r.status === statusFilter);
-  });
+  const df = document.getElementById("filterDate").value;
+  const cf = document.getElementById("filterCase").value.toLowerCase();
+  const vf = document.getElementById("filterDevice").value.toLowerCase();
+  const sf = document.getElementById("filterStatus").value;
+  filteredReports = reportsData.filter(r =>
+    (!df || r.date === df) &&
+    (!cf || r.caseNumber.toLowerCase().includes(cf)) &&
+    (!vf || r.deviceInfo.toLowerCase().includes(vf)) &&
+    (!sf || r.status === sf)
+  );
   currentPage = 1;
   renderTable();
 }
 
 function clearFilters() {
-  document.getElementById("filterDate").value = "";
-  document.getElementById("filterCase").value = "";
-  document.getElementById("filterDevice").value = "";
+  ["filterDate","filterCase","filterDevice"].forEach(id => document.getElementById(id).value = "");
   document.getElementById("filterStatus").value = "";
   filteredReports = [...reportsData];
   currentPage = 1;
   renderTable();
 }
 
+// ════════════════════════════════════
+// ✅ EVENT LISTENERS
+// ════════════════════════════════════
 document.getElementById("btnApplyFilters").onclick = applyFilters;
 document.getElementById("btnClearFilters").onclick = clearFilters;
-
-document.getElementById("btnPrevPage").onclick = () => {
-  if(currentPage > 1) { currentPage--; renderTable(); }
-};
+document.getElementById("btnExportCSV").onclick    = exportCSV;
+document.getElementById("btnPrevPage").onclick = () => { if(currentPage > 1){ currentPage--; renderTable(); } };
 document.getElementById("btnNextPage").onclick = () => {
   const total = Math.ceil(filteredReports.length / itemsPerPage);
-  if(currentPage < total) { currentPage++; renderTable(); }
+  if(currentPage < total){ currentPage++; renderTable(); }
 };
 
-// ════════════════════════════════════════
-// ✅ Setup Header
-// ════════════════════════════════════════
+// Delete modal
+document.getElementById("btnCancelDelete").onclick = () => {
+  pendingDeleteId = null;
+  document.getElementById("deleteModal").classList.add("hidden");
+};
+document.getElementById("btnConfirmDelete").onclick = () => {
+  if(pendingDeleteId !== null) {
+    reportsData     = reportsData.filter(r => r.id !== pendingDeleteId);
+    filteredReports = filteredReports.filter(r => r.id !== pendingDeleteId);
+    pendingDeleteId = null;
+    currentPage = 1;
+    renderTable(); updateStats();
+  }
+  document.getElementById("deleteModal").classList.add("hidden");
+};
+document.getElementById("deleteModal").onclick = (e) => {
+  if(e.target === document.getElementById("deleteModal")){
+    pendingDeleteId = null;
+    document.getElementById("deleteModal").classList.add("hidden");
+  }
+};
+
+// View modal
+document.getElementById("btnCloseView").onclick = () => document.getElementById("viewModal").classList.add("hidden");
+document.getElementById("viewModal").onclick = (e) => {
+  if(e.target === document.getElementById("viewModal"))
+    document.getElementById("viewModal").classList.add("hidden");
+};
+
+// ════════════════════════════════════
+// ✅ SETUP HEADER
+// ════════════════════════════════════
 function setupHeader() {
-  const btnAccount = document.getElementById("btnAccount");
-  const menu = document.getElementById("accountMenu");
-  const logoutBtn = document.getElementById("menuLogout");
-  const menuAdmin = document.getElementById("menuAdmin");
+  const btnAccount     = document.getElementById("btnAccount");
+  const menu           = document.getElementById("accountMenu");
+  const logoutBtn      = document.getElementById("menuLogout");
+  const menuAdmin      = document.getElementById("menuAdmin");
   const menuAdminBadge = document.getElementById("menuAdminBadge");
-  const avatarBadge = document.getElementById("avatarBadge");
-  const backBtn = document.getElementById("btnBack");
-  const btnLang = document.getElementById("btnLang");
+  const avatarBadge    = document.getElementById("avatarBadge");
+  const backBtn        = document.getElementById("btnBack");
+  const btnLang        = document.getElementById("btnLang");
 
   if(!btnAccount || !menu) return;
 
-  const userRole = localStorage.getItem("userRole");
-  if(userRole === "admin" && menuAdmin) {
+  // Admin badge
+  if(localStorage.getItem("userRole") === "admin" && menuAdmin) {
     menuAdmin.classList.add("show");
     try {
-      const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
-      const pending = requests.filter(r => r.status === "pending").length;
-      if(pending > 0 && menuAdminBadge && avatarBadge) {
-        menuAdminBadge.textContent = pending;
-        avatarBadge.textContent = pending;
+      const reqs = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+      const pend = reqs.filter(r => r.status === "pending").length;
+      if(pend > 0 && menuAdminBadge && avatarBadge) {
+        menuAdminBadge.textContent = pend;
+        avatarBadge.textContent    = pend;
         avatarBadge.classList.add("show");
       }
-    } catch(e) {}
+    } catch(e){}
   }
 
-  btnAccount.onclick = (e) => {
-    e.stopPropagation();
-    menu.classList.toggle("open");
-  };
-  document.onclick = () => { menu.classList.remove("open"); };
-  menu.onclick = (e) => e.stopPropagation();
+  // Toggle menu
+  btnAccount.onclick = (e) => { e.stopPropagation(); menu.classList.toggle("open"); };
+  document.onclick   = ()  => menu.classList.remove("open");
+  menu.onclick       = (e) => e.stopPropagation();
 
+  // Logout
   if(logoutBtn) {
     logoutBtn.onclick = () => {
       localStorage.removeItem("userRole");
@@ -808,31 +936,29 @@ function setupHeader() {
     };
   }
 
+  // Back → chat
   if(backBtn) {
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
   }
 
+  // Language
   if(btnLang) {
-    btnLang.onclick = () => {
-      const next = currentLang === "ar" ? "en" : "ar";
-      applyLang(next);
-    };
+    btnLang.onclick = () => applyLang(currentLang === "en" ? "ar" : "en");
   }
 }
 
-// ════════════════════════════════════════
+// ════════════════════════════════════
 // ✅ INIT
-// ════════════════════════════════════════
+// ════════════════════════════════════
 window.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("currentUserName").textContent = currentUser.name || "---";
-
   initUserReports();
 
   try {
-    const res = await fetch("header.html");
-    const headerHtml = await res.text();
-    document.getElementById("header-placeholder").innerHTML = headerHtml;
+    const res  = await fetch("header.html");
+    const html = await res.text();
+    document.getElementById("header-placeholder").innerHTML = html;
     setTimeout(() => {
       setupHeader();
       applyLang(currentLang);
