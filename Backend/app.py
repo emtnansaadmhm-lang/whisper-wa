@@ -3,6 +3,10 @@ import subprocess
 from datetime import datetime
 from flask import Blueprint, request, jsonify
 
+#كود ال export للداونلود
+from export import bp_export
+from flask_cors import CORS
+
 # ✅ نستدعي شغل البنات مثل ما هو
 from acquisition import pull_whatsapp_evidence
 
@@ -208,6 +212,11 @@ from index import build_index, search_word
 
 app = Flask(__name__)
 
+#كود الداونلود
+CORS(app)
+app.register_blueprint(bp_export)
+
+
 MESSAGES = {}
 INDEX = {}
 
@@ -244,5 +253,6 @@ def images():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
