@@ -34,7 +34,6 @@ body::before {
   background-size: 60px 60px;
   z-index: 0; pointer-events: none;
 }
-
 .animated-bg-logo {
   position: fixed; top: 50%; left: 50%;
   transform: translate(-50%,-50%);
@@ -47,25 +46,20 @@ body::before {
   0%  { opacity:0.08; transform:translate(-50%,-50%) scale(0.95); }
   100%{ opacity:0.18; transform:translate(-50%,-50%) scale(1.05); }
 }
-
 .container { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
 .content-wrapper { margin-top: 26px; }
 
 .stats-row {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
+  display: grid; grid-template-columns: repeat(4,1fr);
   gap: 16px; margin-bottom: 18px;
 }
 @media(max-width:900px){ .stats-row{ grid-template-columns: repeat(2,1fr); } }
 @media(max-width:480px){ .stats-row{ grid-template-columns: 1fr 1fr; gap:10px; } }
 
 .stat-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(12px);
-  border-radius: 14px; padding: 18px 20px;
-  display: flex; align-items: center; gap: 14px;
-  transition: transform 0.2s;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px); border-radius: 14px; padding: 18px 20px;
+  display: flex; align-items: center; gap: 14px; transition: transform 0.2s;
 }
 .stat-card:hover { transform: translateY(-3px); }
 .stat-icon {
@@ -73,33 +67,28 @@ body::before {
   display:flex; align-items:center; justify-content:center;
   font-size:1.25rem; flex-shrink:0;
 }
-.stat-icon.total   { background:rgba(95,191,122,0.2);  color:var(--green-light); }
-.stat-icon.done    { background:rgba(76,175,80,0.2);   color:#81C784; }
-.stat-icon.pend    { background:rgba(255,193,7,0.2);   color:#FFD54F; }
-.stat-icon.arch    { background:rgba(158,158,158,0.2); color:#BDBDBD; }
+.stat-icon.total { background:rgba(95,191,122,0.2); color:var(--green-light); }
+.stat-icon.done  { background:rgba(76,175,80,0.2);  color:#81C784; }
+.stat-icon.pend  { background:rgba(255,193,7,0.2);  color:#FFD54F; }
+.stat-icon.arch  { background:rgba(158,158,158,0.2);color:#BDBDBD; }
 .stat-info { flex:1; min-width:0; }
 .stat-value { font-size:2rem; font-weight:900; color:#fff; line-height:1; }
 .stat-label { font-size:0.8rem; color:#c2dec9; margin-top:4px; }
 
 .page-header {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(12px);
-  border-radius: 16px; padding: 24px 32px;
-  margin-bottom: 16px;
-  display: flex; align-items: center;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px); border-radius: 16px; padding: 24px 32px;
+  margin-bottom: 16px; display: flex; align-items: center;
   justify-content: space-between; gap: 16px; flex-wrap: wrap;
 }
 .page-title {
   font-size: 1.8rem; color: var(--green-light);
-  margin-bottom: 5px;
-  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 5px; display: flex; align-items: center; gap: 12px;
 }
 .page-title i { color: var(--green-accent); }
 .page-subtitle { color:#c2dec9; font-size:0.95rem; padding-inline-start:44px; }
 .user-badge {
-  background: rgba(95,191,122,0.12);
-  border: 1px solid rgba(95,191,122,0.3);
+  background: rgba(95,191,122,0.12); border: 1px solid rgba(95,191,122,0.3);
   padding: 10px 18px; border-radius: 50px;
   display: flex; align-items: center; gap: 8px; white-space: nowrap;
 }
@@ -108,10 +97,9 @@ body::before {
 .user-badge strong { color:#fff; font-size:0.95rem; }
 
 .filters-section {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(12px);
-  border-radius: 16px; padding: 20px 24px; margin-bottom: 16px;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px); border-radius: 16px;
+  padding: 20px 24px; margin-bottom: 16px;
 }
 .filters-grid {
   display: grid; grid-template-columns: repeat(4,1fr);
@@ -122,60 +110,43 @@ body::before {
 .filter-group { display:flex; flex-direction:column; gap:6px; }
 .filter-group label { color:var(--green-light); font-size:0.87rem; font-weight:700; }
 .filter-input, .filter-select {
-  background: rgba(0,0,0,0.28);
-  border: 1px solid var(--border-color);
-  border-radius: 10px; padding: 10px 13px;
-  color: var(--text-light); font-size:0.94rem;
-  font-family:'Tajawal',sans-serif; transition:all 0.2s;
+  background: rgba(0,0,0,0.28); border: 1px solid var(--border-color);
+  border-radius: 10px; padding: 10px 13px; color: var(--text-light);
+  font-size:0.94rem; font-family:'Tajawal',sans-serif; transition:all 0.2s;
 }
 .filter-input:focus, .filter-select:focus {
   outline:none; border-color:var(--green-accent);
-  background:rgba(0,0,0,0.38);
-  box-shadow: 0 0 0 3px rgba(47,166,106,0.12);
+  background:rgba(0,0,0,0.38); box-shadow: 0 0 0 3px rgba(47,166,106,0.12);
 }
 .filter-select option { background:#142820; color:var(--text-light); }
 .filter-actions { display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; }
 
 .btn {
   padding: 10px 20px; border:none; border-radius:10px;
-  font-size:0.92rem; font-weight:700;
-  font-family:'Tajawal',sans-serif; cursor:pointer;
-  transition:all 0.2s; display:inline-flex; align-items:center; gap:7px;
+  font-size:0.92rem; font-weight:700; font-family:'Tajawal',sans-serif;
+  cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; gap:7px;
 }
 .btn-primary { background:linear-gradient(135deg,#9BE3B4,#2FA66A); color:#062016; }
 .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(47,166,106,0.4); }
-.btn-secondary {
-  background:rgba(95,191,122,0.14);
-  border:1px solid var(--border-color); color:var(--green-light);
-}
+.btn-secondary { background:rgba(95,191,122,0.14); border:1px solid var(--border-color); color:var(--green-light); }
 .btn-secondary:hover { background:rgba(95,191,122,0.24); transform:translateY(-2px); }
-.btn-export {
-  background:rgba(99,179,237,0.14);
-  border:1px solid rgba(99,179,237,0.3); color:#90cdf4;
-}
+.btn-export { background:rgba(99,179,237,0.14); border:1px solid rgba(99,179,237,0.3); color:#90cdf4; }
 .btn-export:hover { background:rgba(99,179,237,0.24); transform:translateY(-2px); }
 .btn-danger { background:linear-gradient(135deg,#ff6b6b,#c0392b); color:#fff; }
 .btn-danger:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(192,57,43,0.4); }
 
 .reports-section {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  backdrop-filter: blur(12px);
-  border-radius: 16px; padding: 24px;
+  background: var(--card-bg); border: 1px solid var(--border-color);
+  backdrop-filter: blur(12px); border-radius: 16px; padding: 24px;
 }
 .section-header {
-  display:flex; justify-content:space-between;
-  align-items:center; margin-bottom:18px;
-  flex-wrap:wrap; gap:10px;
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:18px; flex-wrap:wrap; gap:10px;
 }
-.section-title {
-  font-size:1.25rem; color:var(--green-light);
-  display:flex; align-items:center; gap:10px;
-}
+.section-title { font-size:1.25rem; color:var(--green-light); display:flex; align-items:center; gap:10px; }
 .reports-count {
   background:rgba(95,191,122,0.2); color:var(--green-light);
-  padding:4px 14px; border-radius:20px;
-  font-size:0.83rem; font-weight:800;
+  padding:4px 14px; border-radius:20px; font-size:0.83rem; font-weight:800;
 }
 .table-wrapper { border-radius:12px; overflow-x:auto; }
 .reports-table {
@@ -184,14 +155,10 @@ body::before {
 }
 .reports-table thead { background:rgba(95,191,122,0.14); }
 .reports-table th {
-  padding:14px 16px; text-align:start;
-  color:var(--green-light); font-weight:700; font-size:0.9rem;
-  border-bottom:2px solid var(--border-color); white-space:nowrap;
+  padding:14px 16px; text-align:start; color:var(--green-light);
+  font-weight:700; font-size:0.9rem; border-bottom:2px solid var(--border-color); white-space:nowrap;
 }
-.reports-table tbody tr {
-  border-bottom:1px solid rgba(95,191,122,0.07);
-  transition:background 0.15s;
-}
+.reports-table tbody tr { border-bottom:1px solid rgba(95,191,122,0.07); transition:background 0.15s; }
 .reports-table tbody tr:hover { background:rgba(95,191,122,0.07); }
 .reports-table tbody tr:last-child { border-bottom:none; }
 .reports-table td { padding:15px 16px; color:#c2dec9; font-size:0.9rem; vertical-align:middle; }
@@ -199,8 +166,7 @@ body::before {
 
 .status-badge {
   display:inline-flex; align-items:center; gap:5px;
-  padding:5px 11px; border-radius:20px;
-  font-size:0.77rem; font-weight:700; white-space:nowrap;
+  padding:5px 11px; border-radius:20px; font-size:0.77rem; font-weight:700; white-space:nowrap;
 }
 .status-completed { background:rgba(76,175,80,0.18); color:#81C784; border:1px solid rgba(76,175,80,0.33); }
 .status-pending   { background:rgba(255,193,7,0.18);  color:#FFD54F; border:1px solid rgba(255,193,7,0.33); }
@@ -208,29 +174,21 @@ body::before {
 
 .action-buttons { display:flex; gap:6px; flex-wrap:wrap; }
 .action-btn {
-  background:rgba(95,191,122,0.12);
-  border:1px solid var(--border-color); color:var(--green-light);
-  padding:6px 12px; border-radius:8px; cursor:pointer;
-  font-size:0.81rem; font-weight:700;
-  font-family:'Tajawal',sans-serif; transition:all 0.18s;
-  display:inline-flex; align-items:center; gap:5px; white-space:nowrap;
+  background:rgba(95,191,122,0.12); border:1px solid var(--border-color);
+  color:var(--green-light); padding:6px 12px; border-radius:8px; cursor:pointer;
+  font-size:0.81rem; font-weight:700; font-family:'Tajawal',sans-serif;
+  transition:all 0.18s; display:inline-flex; align-items:center; gap:5px; white-space:nowrap;
 }
 .action-btn:hover { background:rgba(95,191,122,0.22); transform:translateY(-1px); }
-.action-btn.delete {
-  background:rgba(244,67,54,0.1);
-  border-color:rgba(244,67,54,0.28); color:#ff8a80;
-}
+.action-btn.delete { background:rgba(244,67,54,0.1); border-color:rgba(244,67,54,0.28); color:#ff8a80; }
 .action-btn.delete:hover { background:rgba(244,67,54,0.2); }
 
-.pagination {
-  display:flex; justify-content:center;
-  align-items:center; gap:10px; margin-top:22px;
-}
+.pagination { display:flex; justify-content:center; align-items:center; gap:10px; margin-top:22px; }
 .page-btn {
   background:rgba(95,191,122,0.14); border:1px solid var(--border-color);
-  color:var(--green-light); width:40px; height:40px;
-  border-radius:10px; cursor:pointer; font-size:0.93rem;
-  transition:all 0.18s; display:flex; align-items:center; justify-content:center;
+  color:var(--green-light); width:40px; height:40px; border-radius:10px;
+  cursor:pointer; font-size:0.93rem; transition:all 0.18s;
+  display:flex; align-items:center; justify-content:center;
 }
 .page-btn:hover:not(:disabled) { background:rgba(95,191,122,0.24); transform:translateY(-1px); }
 .page-btn:disabled { opacity:0.3; cursor:not-allowed; }
@@ -249,37 +207,25 @@ body::before {
 .modal-overlay.hidden { display:none; }
 .modal-box {
   background:linear-gradient(135deg,#0d2118,#1a3a25);
-  border:1px solid var(--border-color); border-radius:18px;
-  padding:30px; width:100%;
-  box-shadow:0 20px 60px rgba(0,0,0,0.55);
-  animation:modalIn 0.22s ease;
+  border:1px solid var(--border-color); border-radius:18px; padding:30px; width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55); animation:modalIn 0.22s ease;
 }
 @keyframes modalIn {
   from { opacity:0; transform:scale(0.92) translateY(20px); }
   to   { opacity:1; transform:scale(1) translateY(0); }
 }
-.modal-box.sm  { max-width:460px; }
-.modal-box.lg  { max-width:660px; }
-.modal-box h3 {
-  color:var(--green-light); font-size:1.3rem;
-  margin-bottom:12px; display:flex; gap:10px; align-items:center;
-}
-.modal-box p { color:#c2dec9; font-size:0.93rem; line-height:1.65; }
+.modal-box.sm { max-width:460px; }
+.modal-box.lg { max-width:660px; }
+.modal-box h3 { color:var(--green-light); font-size:1.3rem; margin-bottom:12px; display:flex; gap:10px; align-items:center; }
+.modal-box p  { color:#c2dec9; font-size:0.93rem; line-height:1.65; }
 .modal-actions { display:flex; gap:10px; justify-content:flex-end; margin-top:20px; flex-wrap:wrap; }
 
-.view-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:12px; margin-top:16px;
-}
+.view-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
 @media(max-width:480px){ .view-grid{ grid-template-columns:1fr; } }
 .vf { background:rgba(0,0,0,0.25); border-radius:10px; padding:13px 15px; }
 .vf.full { grid-column:1/-1; }
-.vf label {
-  display:block; color:#8fd9a8; font-size:0.76rem;
-  font-weight:700; text-transform:uppercase;
-  letter-spacing:0.5px; margin-bottom:5px;
-}
-.vf span { color:#fff; font-size:0.97rem; font-weight:600; }
+.vf label { display:block; color:#8fd9a8; font-size:0.76rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:5px; }
+.vf span  { color:#fff; font-size:0.97rem; font-weight:600; }
 .view-close-btn { width:100%; margin-top:18px; justify-content:center; }
 </style>
 </head>
@@ -289,45 +235,32 @@ body::before {
 
 <div class="container">
   <div id="header-placeholder"></div>
-
   <div class="content-wrapper">
 
+    <!-- STATS -->
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-icon total"><i class="fa-solid fa-file-lines"></i></div>
-        <div class="stat-info">
-          <div class="stat-value" id="stat-total">0</div>
-          <div class="stat-label" id="lbl-stat-total">Total Reports</div>
-        </div>
+        <div class="stat-info"><div class="stat-value" id="stat-total">0</div><div class="stat-label" id="lbl-stat-total">Total Reports</div></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon done"><i class="fa-solid fa-circle-check"></i></div>
-        <div class="stat-info">
-          <div class="stat-value" id="stat-completed">0</div>
-          <div class="stat-label" id="lbl-stat-completed">Completed</div>
-        </div>
+        <div class="stat-info"><div class="stat-value" id="stat-completed">0</div><div class="stat-label" id="lbl-stat-completed">Completed</div></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon pend"><i class="fa-solid fa-clock"></i></div>
-        <div class="stat-info">
-          <div class="stat-value" id="stat-pending">0</div>
-          <div class="stat-label" id="lbl-stat-pending">Pending</div>
-        </div>
+        <div class="stat-info"><div class="stat-value" id="stat-pending">0</div><div class="stat-label" id="lbl-stat-pending">Pending</div></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon arch"><i class="fa-solid fa-box-archive"></i></div>
-        <div class="stat-info">
-          <div class="stat-value" id="stat-archived">0</div>
-          <div class="stat-label" id="lbl-stat-archived">Archived</div>
-        </div>
+        <div class="stat-info"><div class="stat-value" id="stat-archived">0</div><div class="stat-label" id="lbl-stat-archived">Archived</div></div>
       </div>
     </div>
 
+    <!-- PAGE HEADER -->
     <div class="page-header">
       <div>
-        <h1 class="page-title" id="txt-page-title">
-          <i class="fa-solid fa-file-lines"></i> All Reports
-        </h1>
+        <h1 class="page-title" id="txt-page-title"><i class="fa-solid fa-file-lines"></i> All Reports</h1>
         <p class="page-subtitle" id="txt-page-subtitle">View, download, and manage all your forensic reports</p>
       </div>
       <div class="user-badge">
@@ -337,6 +270,7 @@ body::before {
       </div>
     </div>
 
+    <!-- FILTERS -->
     <div class="filters-section">
       <div class="filters-grid">
         <div class="filter-group">
@@ -362,18 +296,13 @@ body::before {
         </div>
       </div>
       <div class="filter-actions">
-        <button class="btn btn-secondary" id="btnClearFilters">
-          <i class="fa-solid fa-rotate-right"></i> <span id="txt-clear">Clear</span>
-        </button>
-        <button class="btn btn-export" id="btnExportCSV">
-          <i class="fa-solid fa-file-csv"></i> <span id="txt-export-csv">Export CSV</span>
-        </button>
-        <button class="btn btn-primary" id="btnApplyFilters">
-          <i class="fa-solid fa-filter"></i> <span id="txt-apply">Apply Filters</span>
-        </button>
+        <button class="btn btn-secondary" id="btnClearFilters"><i class="fa-solid fa-rotate-right"></i> <span id="txt-clear">Clear</span></button>
+        <button class="btn btn-export"    id="btnExportCSV">  <i class="fa-solid fa-file-csv"></i>      <span id="txt-export-csv">Export CSV</span></button>
+        <button class="btn btn-primary"   id="btnApplyFilters"><i class="fa-solid fa-filter"></i>        <span id="txt-apply">Apply Filters</span></button>
       </div>
     </div>
 
+    <!-- TABLE -->
     <div class="reports-section">
       <div class="section-header">
         <h2 class="section-title">
@@ -382,7 +311,6 @@ body::before {
           <span class="reports-count" id="reportsCount">0</span>
         </h2>
       </div>
-
       <div class="table-wrapper">
         <table class="reports-table" id="reportsTable">
           <thead>
@@ -398,22 +326,16 @@ body::before {
           </thead>
           <tbody id="reportsBody"></tbody>
         </table>
-
         <div class="empty-state" id="emptyState" style="display:none;">
           <i class="fa-solid fa-folder-open"></i>
           <h3 id="txt-no-reports">No Reports Found</h3>
           <p id="txt-no-reports-sub">No reports have been saved yet.</p>
         </div>
       </div>
-
       <div class="pagination" id="pagination" style="display:none;">
-        <button class="page-btn" id="btnPrevPage" disabled>
-          <i id="icon-prev" class="fa-solid fa-chevron-left"></i>
-        </button>
+        <button class="page-btn" id="btnPrevPage" disabled><i id="icon-prev" class="fa-solid fa-chevron-left"></i></button>
         <span class="page-info" id="pageInfo">Page 1 of 1</span>
-        <button class="page-btn" id="btnNextPage" disabled>
-          <i id="icon-next" class="fa-solid fa-chevron-right"></i>
-        </button>
+        <button class="page-btn" id="btnNextPage" disabled><i id="icon-next" class="fa-solid fa-chevron-right"></i></button>
       </div>
     </div>
 
@@ -423,19 +345,11 @@ body::before {
 <!-- DELETE MODAL -->
 <div class="modal-overlay hidden" id="deleteModal">
   <div class="modal-box sm">
-    <h3>
-      <i class="fa-solid fa-triangle-exclamation" style="color:#FFD54F"></i>
-      <span id="txt-del-title">Confirm Delete</span>
-    </h3>
+    <h3><i class="fa-solid fa-triangle-exclamation" style="color:#FFD54F"></i> <span id="txt-del-title">Confirm Delete</span></h3>
     <p id="txt-del-body">Are you sure you want to delete this report? This action cannot be undone.</p>
     <div class="modal-actions">
-      <button class="btn btn-secondary" id="btnCancelDelete">
-        <span id="txt-del-cancel">Cancel</span>
-      </button>
-      <button class="btn btn-danger" id="btnConfirmDelete">
-        <i class="fa-solid fa-trash"></i>
-        <span id="txt-del-confirm">Delete</span>
-      </button>
+      <button class="btn btn-secondary" id="btnCancelDelete"><span id="txt-del-cancel">Cancel</span></button>
+      <button class="btn btn-danger"    id="btnConfirmDelete"><i class="fa-solid fa-trash"></i> <span id="txt-del-confirm">Delete</span></button>
     </div>
   </div>
 </div>
@@ -443,99 +357,77 @@ body::before {
 <!-- VIEW MODAL -->
 <div class="modal-overlay hidden" id="viewModal">
   <div class="modal-box lg">
-    <h3>
-      <i class="fa-solid fa-file-magnifying-glass"></i>
-      <span id="txt-view-title">Report Details</span>
-    </h3>
+    <h3><i class="fa-solid fa-file-magnifying-glass"></i> <span id="txt-view-title">Report Details</span></h3>
     <div class="view-grid" id="viewGrid"></div>
     <button class="btn btn-secondary view-close-btn" id="btnCloseView">
-      <i class="fa-solid fa-xmark"></i>
-      <span id="txt-view-close">Close</span>
+      <i class="fa-solid fa-xmark"></i> <span id="txt-view-close">Close</span>
     </button>
   </div>
 </div>
 
 <script>
-if(!localStorage.getItem("userRole")){
-  window.location.href = "auth.html";
-}
+// ── ROUTE PROTECTION ──
+if(!localStorage.getItem("userRole")) window.location.href = "auth.html";
 
+// ── CURRENT USER ──
 let currentUser = { name:"Investigator", email:"", role:"user" };
-try {
-  const s = localStorage.getItem("currentUser");
-  if(s) currentUser = JSON.parse(s);
-} catch(e){}
+try { const s = localStorage.getItem("currentUser"); if(s) currentUser = JSON.parse(s); } catch(e){}
 
+// ── LANGUAGE — default: English ──
 let currentLang = localStorage.getItem("lang") || "en";
 
 const UI = {
   en: {
     dir:"ltr", htmlLang:"en",
     docTitle:"All Reports - Whisper-WA",
-    topSubtitle:"Digital Forensics Platform",
-    langBtn:"AR",
+    topSubtitle:"Digital Forensics Platform", langBtn:"AR",
     pageTitle:"All Reports",
     pageSub:"View, download, and manage all your forensic reports",
     loggedAs:"Investigator:",
-    statTotal:"Total Reports", statCompleted:"Completed",
-    statPending:"Pending", statArchived:"Archived",
-    lblDate:"Date", lblCase:"Case Number",
-    lblDevice:"Device", lblStatus:"Status",
+    statTotal:"Total Reports", statCompleted:"Completed", statPending:"Pending", statArchived:"Archived",
+    lblDate:"Date", lblCase:"Case Number", lblDevice:"Device", lblStatus:"Status",
     phCase:"Enter case #", phDevice:"Enter device name",
-    optAll:"All Statuses", optCompleted:"Completed",
-    optPending:"Pending", optArchived:"Archived",
+    optAll:"All Statuses", optCompleted:"Completed", optPending:"Pending", optArchived:"Archived",
     txtClear:"Clear", txtExportCSV:"Export CSV", txtApply:"Apply Filters",
     myReports:"My Reports",
-    thDate:"Date", thTime:"Time", thCase:"Case #",
-    thInvestigator:"Investigator", thDevice:"Device",
-    thStatus:"Status", thActions:"Actions",
+    thDate:"Date", thTime:"Time", thCase:"Case #", thInvestigator:"Investigator",
+    thDevice:"Device", thStatus:"Status", thActions:"Actions",
     sCompleted:"Completed", sPending:"Pending", sArchived:"Archived",
     btnDownload:"Download", btnView:"View", btnDelete:"Delete",
-    pageOf:(c,t) => `Page ${c} of ${t}`,
-    noReports:"No Reports Found",
-    noReportsSub:"No reports have been saved yet.",
+    pageOf:(c,t)=>`Page ${c} of ${t}`,
+    noReports:"No Reports Found", noReportsSub:"No reports have been saved yet.",
     delTitle:"Confirm Delete",
     delBody:"Are you sure you want to delete this report? This action cannot be undone.",
     delCancel:"Cancel", delConfirm:"Delete",
     viewTitle:"Report Details", viewClose:"Close",
-    vLbl:{ id:"Report ID", date:"Date", time:"Time",
-           caseNumber:"Case #", investigator:"Investigator",
-           deviceInfo:"Device", status:"Status" },
+    vLbl:{ id:"Report ID", date:"Date", time:"Time", caseNumber:"Case #", investigator:"Investigator", deviceInfo:"Device", status:"Status" },
     exportHeaders:["Date","Time","Case #","Investigator","Device","Status"],
     exportFilename:"whisper_wa_reports.csv",
   },
   ar: {
     dir:"rtl", htmlLang:"ar",
     docTitle:"كل التقارير - Whisper-WA",
-    topSubtitle:"منصة التحليل الجنائي الرقمي",
-    langBtn:"EN",
+    topSubtitle:"منصة التحليل الجنائي الرقمي", langBtn:"EN",
     pageTitle:"كل التقارير",
     pageSub:"عرض وتحميل وإدارة جميع تقارير التحليل الجنائي الخاصة بك",
     loggedAs:"المحقق:",
-    statTotal:"إجمالي التقارير", statCompleted:"مكتملة",
-    statPending:"قيد الانتظار", statArchived:"مؤرشفة",
-    lblDate:"التاريخ", lblCase:"رقم القضية",
-    lblDevice:"الجهاز", lblStatus:"الحالة",
+    statTotal:"إجمالي التقارير", statCompleted:"مكتملة", statPending:"قيد الانتظار", statArchived:"مؤرشفة",
+    lblDate:"التاريخ", lblCase:"رقم القضية", lblDevice:"الجهاز", lblStatus:"الحالة",
     phCase:"أدخل رقم القضية", phDevice:"أدخل اسم الجهاز",
-    optAll:"كل الحالات", optCompleted:"مكتمل",
-    optPending:"قيد الانتظار", optArchived:"مؤرشف",
+    optAll:"كل الحالات", optCompleted:"مكتمل", optPending:"قيد الانتظار", optArchived:"مؤرشف",
     txtClear:"مسح", txtExportCSV:"تصدير CSV", txtApply:"تطبيق الفلاتر",
     myReports:"تقاريري",
-    thDate:"التاريخ", thTime:"الوقت", thCase:"رقم القضية",
-    thInvestigator:"المحقق", thDevice:"الجهاز",
-    thStatus:"الحالة", thActions:"الإجراءات",
+    thDate:"التاريخ", thTime:"الوقت", thCase:"رقم القضية", thInvestigator:"المحقق",
+    thDevice:"الجهاز", thStatus:"الحالة", thActions:"الإجراءات",
     sCompleted:"مكتمل", sPending:"قيد الانتظار", sArchived:"مؤرشف",
     btnDownload:"تحميل", btnView:"عرض", btnDelete:"حذف",
-    pageOf:(c,t) => `صفحة ${c} من ${t}`,
-    noReports:"لا توجد تقارير",
-    noReportsSub:"لم يتم حفظ أي تقارير بعد.",
+    pageOf:(c,t)=>`صفحة ${c} من ${t}`,
+    noReports:"لا توجد تقارير", noReportsSub:"لم يتم حفظ أي تقارير بعد.",
     delTitle:"تأكيد الحذف",
     delBody:"هل أنت متأكد من حذف هذا التقرير؟ لا يمكن التراجع عن هذه العملية.",
     delCancel:"إلغاء", delConfirm:"حذف",
     viewTitle:"تفاصيل التقرير", viewClose:"إغلاق",
-    vLbl:{ id:"رقم التقرير", date:"التاريخ", time:"الوقت",
-           caseNumber:"رقم القضية", investigator:"المحقق",
-           deviceInfo:"الجهاز", status:"الحالة" },
+    vLbl:{ id:"رقم التقرير", date:"التاريخ", time:"الوقت", caseNumber:"رقم القضية", investigator:"المحقق", deviceInfo:"الجهاز", status:"الحالة" },
     exportHeaders:["التاريخ","الوقت","رقم القضية","المحقق","الجهاز","الحالة"],
     exportFilename:"تقارير_whisper_wa.csv",
   }
@@ -557,15 +449,15 @@ function applyLang(lang) {
   document.getElementById("lbl-stat-completed").textContent = t.statCompleted;
   document.getElementById("lbl-stat-pending").textContent   = t.statPending;
   document.getElementById("lbl-stat-archived").textContent  = t.statArchived;
-  document.getElementById("txt-page-title").innerHTML      = `<i class="fa-solid fa-file-lines"></i> ${t.pageTitle}`;
-  document.getElementById("txt-page-subtitle").textContent = t.pageSub;
-  document.getElementById("txt-logged-as").textContent     = t.loggedAs;
-  document.getElementById("lbl-f-date").textContent   = t.lblDate;
-  document.getElementById("lbl-f-case").textContent   = t.lblCase;
-  document.getElementById("lbl-f-device").textContent = t.lblDevice;
-  document.getElementById("lbl-f-status").textContent = t.lblStatus;
-  document.getElementById("filterCase").placeholder   = t.phCase;
-  document.getElementById("filterDevice").placeholder = t.phDevice;
+  document.getElementById("txt-page-title").innerHTML       = `<i class="fa-solid fa-file-lines"></i> ${t.pageTitle}`;
+  document.getElementById("txt-page-subtitle").textContent  = t.pageSub;
+  document.getElementById("txt-logged-as").textContent      = t.loggedAs;
+  document.getElementById("lbl-f-date").textContent    = t.lblDate;
+  document.getElementById("lbl-f-case").textContent    = t.lblCase;
+  document.getElementById("lbl-f-device").textContent  = t.lblDevice;
+  document.getElementById("lbl-f-status").textContent  = t.lblStatus;
+  document.getElementById("filterCase").placeholder    = t.phCase;
+  document.getElementById("filterDevice").placeholder  = t.phDevice;
   document.getElementById("opt-all").textContent       = t.optAll;
   document.getElementById("opt-completed").textContent = t.optCompleted;
   document.getElementById("opt-pending").textContent   = t.optPending;
@@ -587,17 +479,15 @@ function applyLang(lang) {
   document.getElementById("txt-del-body").textContent    = t.delBody;
   document.getElementById("txt-del-cancel").textContent  = t.delCancel;
   document.getElementById("txt-del-confirm").textContent = t.delConfirm;
-  document.getElementById("txt-view-title").textContent = t.viewTitle;
-  document.getElementById("txt-view-close").textContent = t.viewClose;
-  document.getElementById("icon-prev").className = `fa-solid fa-chevron-${isAr ? "right":"left"}`;
-  document.getElementById("icon-next").className = `fa-solid fa-chevron-${isAr ? "left":"right"}`;
+  document.getElementById("txt-view-title").textContent  = t.viewTitle;
+  document.getElementById("txt-view-close").textContent  = t.viewClose;
+  document.getElementById("icon-prev").className = `fa-solid fa-chevron-${isAr?"right":"left"}`;
+  document.getElementById("icon-next").className = `fa-solid fa-chevron-${isAr?"left":"right"}`;
   renderTable();
   updateStats();
 }
 
-// ════════════════════════════════════
-// ✅ DATA — من الباك اند
-// ════════════════════════════════════
+// ── DATA من الباك اند ──
 let reportsData     = [];
 let filteredReports = [];
 let currentPage     = 1;
@@ -631,46 +521,28 @@ function renderTable() {
   const table = document.getElementById("reportsTable");
   const pgn   = document.getElementById("pagination");
   const t     = UI[currentLang];
-  const start = (currentPage - 1) * itemsPerPage;
-  const paged = filteredReports.slice(start, start + itemsPerPage);
+  const start = (currentPage-1)*itemsPerPage;
+  const paged = filteredReports.slice(start, start+itemsPerPage);
   document.getElementById("reportsCount").textContent = filteredReports.length;
   tbody.innerHTML = "";
   if(paged.length === 0) {
-    empty.style.display = "block";
-    table.style.display = "none";
-    pgn.style.display   = "none";
-    return;
+    empty.style.display = "block"; table.style.display = "none"; pgn.style.display = "none"; return;
   }
-  empty.style.display = "none";
-  table.style.display = "table";
-  pgn.style.display   = "flex";
+  empty.style.display = "none"; table.style.display = "table"; pgn.style.display = "flex";
   const sIco = { completed:"fa-circle-check", pending:"fa-clock", archived:"fa-box-archive" };
   const sLbl = { completed:t.sCompleted, pending:t.sPending, archived:t.sArchived };
   paged.forEach(r => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${r.date}</td>
-      <td>${r.time}</td>
+      <td>${r.date}</td><td>${r.time}</td>
       <td><strong>${r.caseNumber}</strong></td>
-      <td>${r.investigator}</td>
-      <td>${r.deviceInfo}</td>
-      <td>
-        <span class="status-badge status-${r.status}">
-          <i class="fa-solid ${sIco[r.status]||'fa-circle'}"></i>
-          ${sLbl[r.status] || r.status}
-        </span>
-      </td>
+      <td>${r.investigator}</td><td>${r.deviceInfo}</td>
+      <td><span class="status-badge status-${r.status}"><i class="fa-solid ${sIco[r.status]||'fa-circle'}"></i> ${sLbl[r.status]||r.status}</span></td>
       <td>
         <div class="action-buttons">
-          <button class="action-btn" onclick="downloadReport(${r.id})">
-            <i class="fa-solid fa-download"></i> ${t.btnDownload}
-          </button>
-          <button class="action-btn" onclick="viewReport(${r.id})">
-            <i class="fa-solid fa-eye"></i> ${t.btnView}
-          </button>
-          <button class="action-btn delete" onclick="confirmDelete(${r.id})">
-            <i class="fa-solid fa-trash"></i> ${t.btnDelete}
-          </button>
+          <button class="action-btn" onclick="downloadReport(${r.id})"><i class="fa-solid fa-download"></i> ${t.btnDownload}</button>
+          <button class="action-btn" onclick="viewReport(${r.id})"><i class="fa-solid fa-eye"></i> ${t.btnView}</button>
+          <button class="action-btn delete" onclick="confirmDelete(${r.id})"><i class="fa-solid fa-trash"></i> ${t.btnDelete}</button>
         </div>
       </td>`;
     tbody.appendChild(tr);
@@ -679,34 +551,28 @@ function renderTable() {
 }
 
 function updatePagination() {
-  const total = Math.max(1, Math.ceil(filteredReports.length / itemsPerPage));
-  document.getElementById("pageInfo").textContent = UI[currentLang].pageOf(currentPage, total);
-  document.getElementById("btnPrevPage").disabled = currentPage === 1;
-  document.getElementById("btnNextPage").disabled = currentPage >= total;
+  const total = Math.max(1, Math.ceil(filteredReports.length/itemsPerPage));
+  document.getElementById("pageInfo").textContent    = UI[currentLang].pageOf(currentPage, total);
+  document.getElementById("btnPrevPage").disabled    = currentPage === 1;
+  document.getElementById("btnNextPage").disabled    = currentPage >= total;
 }
 
 function downloadReport(id) {
-  const r = reportsData.find(x => x.id === id);
-  if(!r) return;
+  const r = reportsData.find(x=>x.id===id); if(!r) return;
   const t = UI[currentLang];
-  const csv  = [t.exportHeaders.join(","),
-    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v}"`).join(",")
-  ].join("\n");
-  const blob = new Blob(["\uFEFF"+csv], { type:"text/csv;charset=utf-8;" });
+  const csv  = [t.exportHeaders.join(","), [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v}"`).join(",")].join("\n");
+  const blob = new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement("a");
-  a.href = url; a.download = `report_${r.caseNumber}.csv`;
-  document.body.appendChild(a); a.click(); a.remove();
-  URL.revokeObjectURL(url);
+  a.href=url; a.download=`report_${r.caseNumber}.csv`;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 }
 
 function viewReport(id) {
-  const r = reportsData.find(x => x.id === id);
-  if(!r) return;
-  const t    = UI[currentLang];
-  const lbl  = t.vLbl;
-  const sLbl = { completed:t.sCompleted, pending:t.sPending, archived:t.sArchived };
-  const sIco = { completed:"fa-circle-check", pending:"fa-clock", archived:"fa-box-archive" };
+  const r = reportsData.find(x=>x.id===id); if(!r) return;
+  const t=UI[currentLang], lbl=t.vLbl;
+  const sLbl={completed:t.sCompleted,pending:t.sPending,archived:t.sArchived};
+  const sIco={completed:"fa-circle-check",pending:"fa-clock",archived:"fa-box-archive"};
   document.getElementById("txt-view-title").textContent = t.viewTitle;
   document.getElementById("txt-view-close").textContent = t.viewClose;
   document.getElementById("viewGrid").innerHTML = `
@@ -716,11 +582,8 @@ function viewReport(id) {
     <div class="vf"><label>${lbl.caseNumber}</label><span><strong>${r.caseNumber}</strong></span></div>
     <div class="vf full"><label>${lbl.investigator}</label><span>${r.investigator}</span></div>
     <div class="vf full"><label>${lbl.deviceInfo}</label><span>${r.deviceInfo}</span></div>
-    <div class="vf full">
-      <label>${lbl.status}</label>
-      <span class="status-badge status-${r.status}">
-        <i class="fa-solid ${sIco[r.status]||'fa-circle'}"></i> ${sLbl[r.status]||r.status}
-      </span>
+    <div class="vf full"><label>${lbl.status}</label>
+      <span class="status-badge status-${r.status}"><i class="fa-solid ${sIco[r.status]||'fa-circle'}"></i> ${sLbl[r.status]||r.status}</span>
     </div>`;
   document.getElementById("viewModal").classList.remove("hidden");
 }
@@ -731,137 +594,90 @@ function confirmDelete(id) {
 }
 
 function exportCSV() {
-  const t = UI[currentLang];
-  if(!filteredReports.length) return;
-  const rows = filteredReports.map(r =>
-    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v||''}"`).join(",")
-  );
-  const csv  = [t.exportHeaders.join(","), ...rows].join("\n");
-  const blob = new Blob(["\uFEFF"+csv], { type:"text/csv;charset=utf-8;" });
+  const t = UI[currentLang]; if(!filteredReports.length) return;
+  const rows = filteredReports.map(r=>[r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v||''}"`).join(","));
+  const csv  = [t.exportHeaders.join(","),...rows].join("\n");
+  const blob = new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement("a");
-  a.href = url; a.download = t.exportFilename;
-  document.body.appendChild(a); a.click(); a.remove();
-  URL.revokeObjectURL(url);
+  a.href=url; a.download=t.exportFilename;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
 }
 
 function applyFilters() {
-  const df = document.getElementById("filterDate").value;
-  const cf = document.getElementById("filterCase").value.toLowerCase();
-  const vf = document.getElementById("filterDevice").value.toLowerCase();
-  const sf = document.getElementById("filterStatus").value;
-  filteredReports = reportsData.filter(r =>
-    (!df || r.date === df) &&
-    (!cf || (r.caseNumber||"").toLowerCase().includes(cf)) &&
-    (!vf || (r.deviceInfo||"").toLowerCase().includes(vf)) &&
-    (!sf || r.status === sf)
+  const df=document.getElementById("filterDate").value;
+  const cf=document.getElementById("filterCase").value.toLowerCase();
+  const vf=document.getElementById("filterDevice").value.toLowerCase();
+  const sf=document.getElementById("filterStatus").value;
+  filteredReports = reportsData.filter(r=>
+    (!df||r.date===df)&&(!cf||(r.caseNumber||"").toLowerCase().includes(cf))&&
+    (!vf||(r.deviceInfo||"").toLowerCase().includes(vf))&&(!sf||r.status===sf)
   );
-  currentPage = 1;
-  renderTable();
+  currentPage=1; renderTable();
 }
 
 function clearFilters() {
-  ["filterDate","filterCase","filterDevice"].forEach(id => document.getElementById(id).value = "");
-  document.getElementById("filterStatus").value = "";
-  filteredReports = [...reportsData];
-  currentPage = 1;
-  renderTable();
+  ["filterDate","filterCase","filterDevice"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("filterStatus").value="";
+  filteredReports=[...reportsData]; currentPage=1; renderTable();
 }
 
 document.getElementById("btnApplyFilters").onclick = applyFilters;
 document.getElementById("btnClearFilters").onclick = clearFilters;
 document.getElementById("btnExportCSV").onclick    = exportCSV;
-document.getElementById("btnPrevPage").onclick = () => { if(currentPage > 1){ currentPage--; renderTable(); } };
-document.getElementById("btnNextPage").onclick = () => {
-  const total = Math.ceil(filteredReports.length / itemsPerPage);
-  if(currentPage < total){ currentPage++; renderTable(); }
-};
+document.getElementById("btnPrevPage").onclick = ()=>{ if(currentPage>1){currentPage--;renderTable();} };
+document.getElementById("btnNextPage").onclick = ()=>{ const total=Math.ceil(filteredReports.length/itemsPerPage); if(currentPage<total){currentPage++;renderTable();} };
 
-document.getElementById("btnCancelDelete").onclick = () => {
-  pendingDeleteId = null;
-  document.getElementById("deleteModal").classList.add("hidden");
-};
-document.getElementById("btnConfirmDelete").onclick = async () => {
-  if(pendingDeleteId !== null) {
-    try {
-      await fetch(`/api/reports/${pendingDeleteId}`, { method: "DELETE" });
-    } catch(e) { console.error("Delete failed:", e); }
-    reportsData     = reportsData.filter(r => r.id !== pendingDeleteId);
-    filteredReports = filteredReports.filter(r => r.id !== pendingDeleteId);
-    pendingDeleteId = null;
-    currentPage = 1;
-    renderTable(); updateStats();
+document.getElementById("btnCancelDelete").onclick = ()=>{ pendingDeleteId=null; document.getElementById("deleteModal").classList.add("hidden"); };
+document.getElementById("btnConfirmDelete").onclick = async ()=>{
+  if(pendingDeleteId!==null){
+    try{ await fetch(`/api/reports/${pendingDeleteId}`,{method:"DELETE"}); }catch(e){console.error(e);}
+    reportsData=reportsData.filter(r=>r.id!==pendingDeleteId);
+    filteredReports=filteredReports.filter(r=>r.id!==pendingDeleteId);
+    pendingDeleteId=null; currentPage=1; renderTable(); updateStats();
   }
   document.getElementById("deleteModal").classList.add("hidden");
 };
-document.getElementById("deleteModal").onclick = (e) => {
-  if(e.target === document.getElementById("deleteModal")){
-    pendingDeleteId = null;
-    document.getElementById("deleteModal").classList.add("hidden");
-  }
-};
-document.getElementById("btnCloseView").onclick = () => document.getElementById("viewModal").classList.add("hidden");
-document.getElementById("viewModal").onclick = (e) => {
-  if(e.target === document.getElementById("viewModal"))
-    document.getElementById("viewModal").classList.add("hidden");
-};
+document.getElementById("deleteModal").onclick=(e)=>{ if(e.target===document.getElementById("deleteModal")){pendingDeleteId=null;document.getElementById("deleteModal").classList.add("hidden");} };
+document.getElementById("btnCloseView").onclick=()=>document.getElementById("viewModal").classList.add("hidden");
+document.getElementById("viewModal").onclick=(e)=>{ if(e.target===document.getElementById("viewModal"))document.getElementById("viewModal").classList.add("hidden"); };
 
 function setupHeader() {
-  const btnAccount     = document.getElementById("btnAccount");
-  const menu           = document.getElementById("accountMenu");
-  const logoutBtn      = document.getElementById("menuLogout");
-  const menuAdmin      = document.getElementById("menuAdmin");
-  const menuAdminBadge = document.getElementById("menuAdminBadge");
-  const avatarBadge    = document.getElementById("avatarBadge");
-  const backBtn        = document.getElementById("btnBack");
-  const btnLang        = document.getElementById("btnLang");
-  if(!btnAccount || !menu) return;
-  if(localStorage.getItem("userRole") === "admin" && menuAdmin) {
+  const btnAccount=document.getElementById("btnAccount");
+  const menu=document.getElementById("accountMenu");
+  const logoutBtn=document.getElementById("menuLogout");
+  const menuAdmin=document.getElementById("menuAdmin");
+  const menuAdminBadge=document.getElementById("menuAdminBadge");
+  const avatarBadge=document.getElementById("avatarBadge");
+  const backBtn=document.getElementById("btnBack");
+  const btnLang=document.getElementById("btnLang");
+  if(!btnAccount||!menu) return;
+  if(localStorage.getItem("userRole")==="admin"&&menuAdmin){
     menuAdmin.classList.add("show");
-    try {
-      const reqs = JSON.parse(localStorage.getItem("accountRequests") || "[]");
-      const pend = reqs.filter(r => r.status === "pending").length;
-      if(pend > 0 && menuAdminBadge && avatarBadge) {
-        menuAdminBadge.textContent = pend;
-        avatarBadge.textContent    = pend;
-        avatarBadge.classList.add("show");
-      }
-    } catch(e){}
+    try{
+      const reqs=JSON.parse(localStorage.getItem("accountRequests")||"[]");
+      const pend=reqs.filter(r=>r.status==="pending").length;
+      if(pend>0&&menuAdminBadge&&avatarBadge){ menuAdminBadge.textContent=pend; avatarBadge.textContent=pend; avatarBadge.classList.add("show"); }
+    }catch(e){}
   }
-  btnAccount.onclick = (e) => { e.stopPropagation(); menu.classList.toggle("open"); };
-  document.onclick   = ()  => menu.classList.remove("open");
-  menu.onclick       = (e) => e.stopPropagation();
-  if(logoutBtn) {
-    logoutBtn.onclick = () => {
-      localStorage.removeItem("userRole");
-      localStorage.removeItem("currentUser");
-      window.location.href = "index.html";
-    };
-  }
-  if(backBtn) {
-    backBtn.style.display = "inline-flex";
-    backBtn.onclick = () => window.location.href = "chat.html";
-  }
-  if(btnLang) {
-    btnLang.onclick = () => applyLang(currentLang === "en" ? "ar" : "en");
-  }
+  btnAccount.onclick=(e)=>{e.stopPropagation();menu.classList.toggle("open");};
+  document.onclick=()=>menu.classList.remove("open");
+  menu.onclick=(e)=>e.stopPropagation();
+  if(logoutBtn){ logoutBtn.onclick=()=>{ localStorage.removeItem("userRole"); localStorage.removeItem("currentUser"); window.location.href="index.html"; }; }
+  if(backBtn){ backBtn.style.display="inline-flex"; backBtn.onclick=()=>window.location.href="chat.html"; }
+  if(btnLang){ btnLang.onclick=()=>applyLang(currentLang==="en"?"ar":"en"); }
 }
 
-window.addEventListener("DOMContentLoaded", async () => {
-  document.getElementById("currentUserName").textContent = currentUser.name || "---";
-  try {
-    const res  = await fetch("header.html");
-    const html = await res.text();
-    document.getElementById("header-placeholder").innerHTML = html;
-    setTimeout(async () => {
-      setupHeader();
-      await initUserReports();
-      applyLang(currentLang);
-    }, 100);
-  } catch(e) {
-    console.error("Header load error:", e);
-    await initUserReports();
-    applyLang(currentLang);
+window.addEventListener("DOMContentLoaded", async ()=>{
+  document.getElementById("currentUserName").textContent = currentUser.name||"---";
+  try{
+    const res=await fetch("header.html");
+    const html=await res.text();
+    document.getElementById("header-placeholder").innerHTML=html;
+    setTimeout(async()=>{ setupHeader(); await initUserReports(); applyLang(currentLang); },100);
+  }catch(e){
+    console.error("Header load error:",e);
+    await initUserReports(); applyLang(currentLang);
   }
 });
 </script>
