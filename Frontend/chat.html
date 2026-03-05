@@ -639,7 +639,7 @@
     });
 
     const exportBtn = document.getElementById('btn-export');
-    exportBtn.addEventListener('click', () => {
+    exportBtn.addEventListener('click', async () => {
       const rows = [...tbody.querySelectorAll('tr')];
       if (!rows.length) return;
 
@@ -664,6 +664,21 @@
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+      
+      // ✅ احفظ في الباك اند
+      try {
+        const user = JSON.parse(localStorage.getItem("currentUser") || "{}");
+        await fetch("/api/reports", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            investigator: user.name || "Unknown",
+            caseNumber:   "report_export",
+            deviceInfo:   "---",
+            status:       "completed"
+          })
+        });
+      } catch(e) { console.error("Save report failed:", e); }
     });
 // =========================
 // ✅ Route Protection
