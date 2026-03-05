@@ -3,6 +3,9 @@ import subprocess
 from datetime import datetime
 from flask import Blueprint, request, jsonify
 
+from reports import bp_reports
+app.register_blueprint(bp_reports)
+
 #كود ال export للداونلود
 from export import bp_export
 from flask_cors import CORS
@@ -253,6 +256,7 @@ def images():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 
