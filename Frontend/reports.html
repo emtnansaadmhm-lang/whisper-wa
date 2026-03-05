@@ -292,7 +292,6 @@ body::before {
 
   <div class="content-wrapper">
 
-    <!-- STATS -->
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-icon total"><i class="fa-solid fa-file-lines"></i></div>
@@ -324,7 +323,6 @@ body::before {
       </div>
     </div>
 
-    <!-- PAGE HEADER -->
     <div class="page-header">
       <div>
         <h1 class="page-title" id="txt-page-title">
@@ -339,7 +337,6 @@ body::before {
       </div>
     </div>
 
-    <!-- FILTERS -->
     <div class="filters-section">
       <div class="filters-grid">
         <div class="filter-group">
@@ -377,7 +374,6 @@ body::before {
       </div>
     </div>
 
-    <!-- TABLE -->
     <div class="reports-section">
       <div class="section-header">
         <h2 class="section-title">
@@ -460,25 +456,16 @@ body::before {
 </div>
 
 <script>
-// ════════════════════════════════════
-// ✅ ROUTE PROTECTION
-// ════════════════════════════════════
 if(!localStorage.getItem("userRole")){
   window.location.href = "auth.html";
 }
 
-// ════════════════════════════════════
-// ✅ CURRENT USER
-// ════════════════════════════════════
 let currentUser = { name:"Investigator", email:"", role:"user" };
 try {
   const s = localStorage.getItem("currentUser");
   if(s) currentUser = JSON.parse(s);
 } catch(e){}
 
-// ════════════════════════════════════
-// ✅ LANGUAGE — English Default
-// ════════════════════════════════════
 let currentLang = localStorage.getItem("lang") || "en";
 
 const UI = {
@@ -558,26 +545,21 @@ function applyLang(lang) {
   currentLang = lang;
   const t = UI[lang];
   const isAr = lang === "ar";
-
   document.documentElement.lang = t.htmlLang;
   document.documentElement.dir  = t.dir;
   document.title = t.docTitle;
   localStorage.setItem("lang", lang);
-
   const ts = document.getElementById("top-subtitle");
   const lt = document.getElementById("langText");
   if(ts) ts.textContent = t.topSubtitle;
   if(lt) lt.textContent = t.langBtn;
-
   document.getElementById("lbl-stat-total").textContent     = t.statTotal;
   document.getElementById("lbl-stat-completed").textContent = t.statCompleted;
   document.getElementById("lbl-stat-pending").textContent   = t.statPending;
   document.getElementById("lbl-stat-archived").textContent  = t.statArchived;
-
   document.getElementById("txt-page-title").innerHTML      = `<i class="fa-solid fa-file-lines"></i> ${t.pageTitle}`;
   document.getElementById("txt-page-subtitle").textContent = t.pageSub;
   document.getElementById("txt-logged-as").textContent     = t.loggedAs;
-
   document.getElementById("lbl-f-date").textContent   = t.lblDate;
   document.getElementById("lbl-f-case").textContent   = t.lblCase;
   document.getElementById("lbl-f-device").textContent = t.lblDevice;
@@ -591,7 +573,6 @@ function applyLang(lang) {
   document.getElementById("txt-clear").textContent      = t.txtClear;
   document.getElementById("txt-export-csv").textContent = t.txtExportCSV;
   document.getElementById("txt-apply").textContent      = t.txtApply;
-
   document.getElementById("txt-my-reports").textContent  = t.myReports;
   document.getElementById("th-date").textContent         = t.thDate;
   document.getElementById("th-time").textContent         = t.thTime;
@@ -600,27 +581,22 @@ function applyLang(lang) {
   document.getElementById("th-device").textContent       = t.thDevice;
   document.getElementById("th-status").textContent       = t.thStatus;
   document.getElementById("th-actions").textContent      = t.thActions;
-
   document.getElementById("txt-no-reports").textContent     = t.noReports;
   document.getElementById("txt-no-reports-sub").textContent = t.noReportsSub;
-
   document.getElementById("txt-del-title").textContent   = t.delTitle;
   document.getElementById("txt-del-body").textContent    = t.delBody;
   document.getElementById("txt-del-cancel").textContent  = t.delCancel;
   document.getElementById("txt-del-confirm").textContent = t.delConfirm;
-
   document.getElementById("txt-view-title").textContent = t.viewTitle;
   document.getElementById("txt-view-close").textContent = t.viewClose;
-
   document.getElementById("icon-prev").className = `fa-solid fa-chevron-${isAr ? "right":"left"}`;
   document.getElementById("icon-next").className = `fa-solid fa-chevron-${isAr ? "left":"right"}`;
-
   renderTable();
   updateStats();
 }
 
 // ════════════════════════════════════
-// ✅ DATA — من localStorage فقط
+// ✅ DATA — من الباك اند
 // ════════════════════════════════════
 let reportsData     = [];
 let filteredReports = [];
@@ -628,27 +604,20 @@ let currentPage     = 1;
 const itemsPerPage  = 10;
 let pendingDeleteId = null;
 
-function initUserReports() {
-  let saved = [];
+async function initUserReports() {
   try {
-    saved = JSON.parse(localStorage.getItem("savedReports") || "[]");
-  } catch(e){ saved = []; }
-
-  const name = currentUser.name || "";
-  const role = currentUser.role || "user";
-
-  if(role === "admin") {
-    reportsData = saved;
-  } else {
-    reportsData = saved.filter(r => r.investigator === name);
+    const name = encodeURIComponent(currentUser.name || "");
+    const role = currentUser.role || "user";
+    const res  = await fetch(`/api/reports?investigator=${name}&role=${role}`);
+    const data = await res.json();
+    reportsData     = data.reports || [];
+    filteredReports = [...reportsData];
+  } catch(e) {
+    console.error("Failed to load reports:", e);
+    reportsData = []; filteredReports = [];
   }
-
-  filteredReports = [...reportsData];
 }
 
-// ════════════════════════════════════
-// ✅ STATS
-// ════════════════════════════════════
 function updateStats() {
   document.getElementById("stat-total").textContent     = reportsData.length;
   document.getElementById("stat-completed").textContent = reportsData.filter(r=>r.status==="completed").length;
@@ -656,36 +625,27 @@ function updateStats() {
   document.getElementById("stat-archived").textContent  = reportsData.filter(r=>r.status==="archived").length;
 }
 
-// ════════════════════════════════════
-// ✅ RENDER TABLE
-// ════════════════════════════════════
 function renderTable() {
   const tbody = document.getElementById("reportsBody");
   const empty = document.getElementById("emptyState");
   const table = document.getElementById("reportsTable");
   const pgn   = document.getElementById("pagination");
   const t     = UI[currentLang];
-
   const start = (currentPage - 1) * itemsPerPage;
   const paged = filteredReports.slice(start, start + itemsPerPage);
-
   document.getElementById("reportsCount").textContent = filteredReports.length;
   tbody.innerHTML = "";
-
   if(paged.length === 0) {
     empty.style.display = "block";
     table.style.display = "none";
     pgn.style.display   = "none";
     return;
   }
-
   empty.style.display = "none";
   table.style.display = "table";
   pgn.style.display   = "flex";
-
   const sIco = { completed:"fa-circle-check", pending:"fa-clock", archived:"fa-box-archive" };
   const sLbl = { completed:t.sCompleted, pending:t.sPending, archived:t.sArchived };
-
   paged.forEach(r => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
@@ -696,7 +656,7 @@ function renderTable() {
       <td>${r.deviceInfo}</td>
       <td>
         <span class="status-badge status-${r.status}">
-          <i class="fa-solid ${sIco[r.status] || 'fa-circle'}"></i>
+          <i class="fa-solid ${sIco[r.status]||'fa-circle'}"></i>
           ${sLbl[r.status] || r.status}
         </span>
       </td>
@@ -715,28 +675,22 @@ function renderTable() {
       </td>`;
     tbody.appendChild(tr);
   });
-
   updatePagination();
 }
 
 function updatePagination() {
   const total = Math.max(1, Math.ceil(filteredReports.length / itemsPerPage));
-  document.getElementById("pageInfo").textContent    = UI[currentLang].pageOf(currentPage, total);
-  document.getElementById("btnPrevPage").disabled    = currentPage === 1;
-  document.getElementById("btnNextPage").disabled    = currentPage >= total;
+  document.getElementById("pageInfo").textContent = UI[currentLang].pageOf(currentPage, total);
+  document.getElementById("btnPrevPage").disabled = currentPage === 1;
+  document.getElementById("btnNextPage").disabled = currentPage >= total;
 }
 
-// ════════════════════════════════════
-// ✅ ACTIONS
-// ════════════════════════════════════
 function downloadReport(id) {
   const r = reportsData.find(x => x.id === id);
   if(!r) return;
   const t = UI[currentLang];
-  const csv  = [
-    t.exportHeaders.join(","),
-    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status]
-      .map(v=>`"${v}"`).join(",")
+  const csv  = [t.exportHeaders.join(","),
+    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v}"`).join(",")
   ].join("\n");
   const blob = new Blob(["\uFEFF"+csv], { type:"text/csv;charset=utf-8;" });
   const url  = URL.createObjectURL(blob);
@@ -753,7 +707,6 @@ function viewReport(id) {
   const lbl  = t.vLbl;
   const sLbl = { completed:t.sCompleted, pending:t.sPending, archived:t.sArchived };
   const sIco = { completed:"fa-circle-check", pending:"fa-clock", archived:"fa-box-archive" };
-
   document.getElementById("txt-view-title").textContent = t.viewTitle;
   document.getElementById("txt-view-close").textContent = t.viewClose;
   document.getElementById("viewGrid").innerHTML = `
@@ -766,8 +719,7 @@ function viewReport(id) {
     <div class="vf full">
       <label>${lbl.status}</label>
       <span class="status-badge status-${r.status}">
-        <i class="fa-solid ${sIco[r.status] || 'fa-circle'}"></i>
-        ${sLbl[r.status] || r.status}
+        <i class="fa-solid ${sIco[r.status]||'fa-circle'}"></i> ${sLbl[r.status]||r.status}
       </span>
     </div>`;
   document.getElementById("viewModal").classList.remove("hidden");
@@ -782,8 +734,7 @@ function exportCSV() {
   const t = UI[currentLang];
   if(!filteredReports.length) return;
   const rows = filteredReports.map(r =>
-    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status]
-      .map(v=>`"${v||''}"`).join(",")
+    [r.date,r.time,r.caseNumber,r.investigator,r.deviceInfo,r.status].map(v=>`"${v||''}"`).join(",")
   );
   const csv  = [t.exportHeaders.join(","), ...rows].join("\n");
   const blob = new Blob(["\uFEFF"+csv], { type:"text/csv;charset=utf-8;" });
@@ -794,9 +745,6 @@ function exportCSV() {
   URL.revokeObjectURL(url);
 }
 
-// ════════════════════════════════════
-// ✅ FILTERS
-// ════════════════════════════════════
 function applyFilters() {
   const df = document.getElementById("filterDate").value;
   const cf = document.getElementById("filterCase").value.toLowerCase();
@@ -813,47 +761,36 @@ function applyFilters() {
 }
 
 function clearFilters() {
-  ["filterDate","filterCase","filterDevice"].forEach(id =>
-    document.getElementById(id).value = "");
+  ["filterDate","filterCase","filterDevice"].forEach(id => document.getElementById(id).value = "");
   document.getElementById("filterStatus").value = "";
   filteredReports = [...reportsData];
   currentPage = 1;
   renderTable();
 }
 
-// ════════════════════════════════════
-// ✅ EVENT LISTENERS
-// ════════════════════════════════════
 document.getElementById("btnApplyFilters").onclick = applyFilters;
 document.getElementById("btnClearFilters").onclick = clearFilters;
 document.getElementById("btnExportCSV").onclick    = exportCSV;
-
-document.getElementById("btnPrevPage").onclick = () => {
-  if(currentPage > 1){ currentPage--; renderTable(); }
-};
+document.getElementById("btnPrevPage").onclick = () => { if(currentPage > 1){ currentPage--; renderTable(); } };
 document.getElementById("btnNextPage").onclick = () => {
   const total = Math.ceil(filteredReports.length / itemsPerPage);
   if(currentPage < total){ currentPage++; renderTable(); }
 };
 
-// Delete modal
 document.getElementById("btnCancelDelete").onclick = () => {
   pendingDeleteId = null;
   document.getElementById("deleteModal").classList.add("hidden");
 };
-document.getElementById("btnConfirmDelete").onclick = () => {
+document.getElementById("btnConfirmDelete").onclick = async () => {
   if(pendingDeleteId !== null) {
-    // احذف من localStorage
-    let saved = JSON.parse(localStorage.getItem("savedReports") || "[]");
-    saved = saved.filter(r => r.id !== pendingDeleteId);
-    localStorage.setItem("savedReports", JSON.stringify(saved));
-
+    try {
+      await fetch(`/api/reports/${pendingDeleteId}`, { method: "DELETE" });
+    } catch(e) { console.error("Delete failed:", e); }
     reportsData     = reportsData.filter(r => r.id !== pendingDeleteId);
     filteredReports = filteredReports.filter(r => r.id !== pendingDeleteId);
     pendingDeleteId = null;
     currentPage = 1;
-    renderTable();
-    updateStats();
+    renderTable(); updateStats();
   }
   document.getElementById("deleteModal").classList.add("hidden");
 };
@@ -863,18 +800,12 @@ document.getElementById("deleteModal").onclick = (e) => {
     document.getElementById("deleteModal").classList.add("hidden");
   }
 };
-
-// View modal
-document.getElementById("btnCloseView").onclick = () =>
-  document.getElementById("viewModal").classList.add("hidden");
+document.getElementById("btnCloseView").onclick = () => document.getElementById("viewModal").classList.add("hidden");
 document.getElementById("viewModal").onclick = (e) => {
   if(e.target === document.getElementById("viewModal"))
     document.getElementById("viewModal").classList.add("hidden");
 };
 
-// ════════════════════════════════════
-// ✅ SETUP HEADER
-// ════════════════════════════════════
 function setupHeader() {
   const btnAccount     = document.getElementById("btnAccount");
   const menu           = document.getElementById("accountMenu");
@@ -884,9 +815,7 @@ function setupHeader() {
   const avatarBadge    = document.getElementById("avatarBadge");
   const backBtn        = document.getElementById("btnBack");
   const btnLang        = document.getElementById("btnLang");
-
   if(!btnAccount || !menu) return;
-
   if(localStorage.getItem("userRole") === "admin" && menuAdmin) {
     menuAdmin.classList.add("show");
     try {
@@ -899,11 +828,9 @@ function setupHeader() {
       }
     } catch(e){}
   }
-
   btnAccount.onclick = (e) => { e.stopPropagation(); menu.classList.toggle("open"); };
   document.onclick   = ()  => menu.classList.remove("open");
   menu.onclick       = (e) => e.stopPropagation();
-
   if(logoutBtn) {
     logoutBtn.onclick = () => {
       localStorage.removeItem("userRole");
@@ -911,36 +838,29 @@ function setupHeader() {
       window.location.href = "index.html";
     };
   }
-
   if(backBtn) {
     backBtn.style.display = "inline-flex";
     backBtn.onclick = () => window.location.href = "chat.html";
   }
-
   if(btnLang) {
     btnLang.onclick = () => applyLang(currentLang === "en" ? "ar" : "en");
   }
 }
 
-// ════════════════════════════════════
-// ✅ INIT
-// ════════════════════════════════════
 window.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("currentUserName").textContent = currentUser.name || "---";
-
-  // اقرأ التقارير من localStorage
-  initUserReports();
-
   try {
     const res  = await fetch("header.html");
     const html = await res.text();
     document.getElementById("header-placeholder").innerHTML = html;
-    setTimeout(() => {
+    setTimeout(async () => {
       setupHeader();
+      await initUserReports();
       applyLang(currentLang);
     }, 100);
   } catch(e) {
     console.error("Header load error:", e);
+    await initUserReports();
     applyLang(currentLang);
   }
 });
