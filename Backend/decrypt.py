@@ -1,18 +1,33 @@
 
 import os
 import subprocess
+import re
 from datetime import datetime
 
 
 def _ensure_dir(path: str) -> None:
     os.makedirs(path, exist_ok=True)
+CRYPT_RE = re.compile(r"^msgstore\.db\.crypt(\d+)$", re.IGNORECASE)
 
+def _pick_crypt_file(evidence_dir: str) -> str | None:
+    best_ver = -1
+    best_name = None
+
+    for name in os.listdir(evidence_dir):
+        m = CRYPT_RE.match(name)
+        if m:
+            ver = int(m.group(1))
+            if ver > best_ver:
+                best_ver = ver
+                best_name = name
+
+    return best_name
 
 def decrypt_whatsapp_db(
     case_id: str,
     base_cases_dir: str = "Cases",
     wadecrypt_path: str = "wadecrypt",
-    crypt_filename: str = "msgstore.db.crypt14",
+    crypt_filename: str | None = None,
     key_filename: str = "key",
     out_filename: str = "msgstore_decrypted.db",
     timeout_sec: int = 180
