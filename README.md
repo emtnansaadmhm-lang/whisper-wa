@@ -1,4 +1,4 @@
-# 🔍 Whisper-WA - Digital Forensics Platform
+#  Whisper-WA - Digital Forensics Platform
 ## منصة التحليل الجنائي الرقمي لواتساب
 
 <div align="center">
