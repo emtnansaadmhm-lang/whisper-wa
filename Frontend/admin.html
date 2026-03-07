@@ -286,35 +286,29 @@ const _role = localStorage.getItem("userRole");
 if(!_role) window.location.href = "auth.html"; 
 else if(_role !== "admin") window.location.href = "connect.html";
 
-const API_BASE = "http://localhost:5000";
-
-async function fetchAPI(endpoint, options = {}) {
-  try {
-    const response = await fetch(`${API_BASE}${endpoint}`, {
-      headers: { 'Content-Type': 'application/json', ...options.headers },
-      ...options
-    });
-    const data = await response.json();
-    return { ok: response.ok, data, status: response.status };
-  } catch (error) {
-    console.error('API Error:', error);
-    return { ok: false, error: error.message };
-  }
-}
+// ✅ TEMPORARY: Using localStorage (no backend required)
+// Switch back to API when backend is ready
 
 let pendingRequests = [];
 let allUsers = [];
 
-async function loadPendingRequests() {
-  const result = await fetchAPI('/api/access-requests/pending');
-  if (result.ok) pendingRequests = result.data.requests || [];
-  else { console.error('Failed to load pending requests'); pendingRequests = []; }
+function loadPendingRequests() {
+  try {
+    const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    pendingRequests = requests.filter(r => r.status === "pending");
+  } catch(e) {
+    console.error('Failed to load pending requests:', e);
+    pendingRequests = [];
+  }
 }
 
-async function loadAllUsers() {
-  const result = await fetchAPI('/api/users');
-  if (result.ok) allUsers = result.data.users || [];
-  else { console.error('Failed to load users'); allUsers = []; }
+function loadAllUsers() {
+  try {
+    allUsers = JSON.parse(localStorage.getItem("activeUsers") || "[]");
+  } catch(e) {
+    console.error('Failed to load users:', e);
+    allUsers = [];
+  }
 }
 
 function showAlert(type, message){
@@ -327,10 +321,18 @@ function showAlert(type, message){
 function updateStats(){
   const pending = pendingRequests.length;
   const active = allUsers.filter(u => u.status === 'active').length;
+  
+  // حساب المرفوضة
+  let rejected = 0;
+  try {
+    const allRequests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    rejected = allRequests.filter(r => r.status === 'rejected').length;
+  } catch(e) {}
+  
   document.getElementById("statPending").textContent = pending;
   document.getElementById("statActive").textContent = active;
-  document.getElementById("statRejected").textContent = 0;
-  document.getElementById("statTotal").textContent = pending;
+  document.getElementById("statRejected").textContent = rejected;
+  document.getElementById("statTotal").textContent = pending + rejected;
   document.getElementById("badgePending").textContent = pending;
 }
 
@@ -396,34 +398,72 @@ function renderActiveUsers(){
 }
 
 async function approveRequest(id){
-  const result = await fetchAPI(`/api/access-requests/${id}/approve`, {
-    method: 'POST',
-    body: JSON.stringify({ admin_id: 1 })
-  });
-  if(result.ok){
-    showAlert("success", `✓ Request approved!`);
+  try {
+    // جلب جميع الطلبات
+    const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    const request = requests.find(r => r.id === id);
+    
+    if (!request) {
+      showAlert("danger", "Request not found!");
+      return;
+    }
+    
+    // تحديث حالة الطلب
+    request.status = "approved";
+    request.reviewed_at = new Date().toISOString();
+    localStorage.setItem("accountRequests", JSON.stringify(requests));
+    
+    // إضافة المستخدم للقائمة النشطة
+    const activeUsers = JSON.parse(localStorage.getItem("activeUsers") || "[]");
+    activeUsers.push({
+      id: Date.now(),
+      name: request.name,
+      email: request.email,
+      job_title: request.job_title,
+      department: request.department || "---",
+      role: "user",
+      status: "active",
+      created_at: new Date().toISOString()
+    });
+    localStorage.setItem("activeUsers", JSON.stringify(activeUsers));
+    
+    showAlert("success", `✓ Request approved! User created.`);
     await refresh();
-  } else {
-    showAlert("danger", `Failed: ${result.data.error || 'Unknown error'}`);
+    
+  } catch(e) {
+    console.error('Approve error:', e);
+    showAlert("danger", `Failed: ${e.message}`);
   }
 }
 
 async function rejectRequest(id){
-  const result = await fetchAPI(`/api/access-requests/${id}/reject`, {
-    method: 'POST',
-    body: JSON.stringify({ admin_id: 1 })
-  });
-  if(result.ok){
+  try {
+    // جلب جميع الطلبات
+    const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+    const request = requests.find(r => r.id === id);
+    
+    if (!request) {
+      showAlert("danger", "Request not found!");
+      return;
+    }
+    
+    // تحديث حالة الطلب
+    request.status = "rejected";
+    request.reviewed_at = new Date().toISOString();
+    localStorage.setItem("accountRequests", JSON.stringify(requests));
+    
     showAlert("info", `Request rejected.`);
     await refresh();
-  } else {
-    showAlert("danger", `Failed: ${result.data.error || 'Unknown error'}`);
+    
+  } catch(e) {
+    console.error('Reject error:', e);
+    showAlert("danger", `Failed: ${e.message}`);
   }
 }
 
-async function refresh(){
-  await loadPendingRequests();
-  await loadAllUsers();
+function refresh(){
+  loadPendingRequests();
+  loadAllUsers();
   updateStats();
   renderPendingRequests();
   renderActiveUsers();
@@ -450,10 +490,13 @@ window.addEventListener("DOMContentLoaded", async () => {
     const headerHtml = await res.text();
     const placeholder = document.getElementById("header-placeholder");
     if(placeholder) placeholder.innerHTML = headerHtml;
-    setTimeout(async () => { setupAdminHeader(); await refresh(); }, 300);
+    setTimeout(() => { 
+      setupAdminHeader(); 
+      refresh(); // ✅ No await needed now
+    }, 300);
   } catch (e) {
     console.error("❌ Error:", e);
-    await refresh();
+    refresh(); // ✅ No await needed now
   }
 });
 </script>
