@@ -15,40 +15,40 @@
 
 ---
 
-## 🌟 Key Features
+##  Key Features
 
-### ✨ **Advanced User Interface**
-- 🎨 Modern design with Glass Morphism effects
-- 🌐 Full bilingual support (Arabic/English) with RTL
-- 📱 Responsive interface works on all devices
-- 🔐 Multi-level authentication system (Admin/User)
+### **Advanced User Interface**
+-  Modern design with Glass Morphism effects
+-  Full bilingual support (Arabic/English) with RTL
+-  Responsive interface works on all devices
+-  Multi-level authentication system (Admin/User)
 
 ### 🔧 **Technical Capabilities**
-- 📲 Automatic WhatsApp data extraction from devices
-- 🔓 WhatsApp database decryption (crypt12-15)
-- 🔍 Comprehensive message and attachment analysis
-- 📊 Suspicious pattern and entity detection
-- 🔎 Advanced search engine
-- 📄 Professional report generation (PDF/CSV)
+-  Automatic WhatsApp data extraction from devices
+-  WhatsApp database decryption (crypt12-15)
+-  Comprehensive message and attachment analysis
+-  Suspicious pattern and entity detection
+-  Advanced search engine
+-  Professional report generation (PDF/CSV)
 
-### 🛡️ **Security & Privacy**
-- 🔐 Password encryption (SHA-256)
-- 🎫 Session token system
-- 👥 User permission management
-- 📝 Complete activity logging
-- ✅ Request approval system
+###  **Security & Privacy**
+-  Password encryption (SHA-256)
+-  Session token system
+-  User permission management
+-  Complete activity logging
+-  Request approval system
 
 ---
 
-## 📋 Requirements
+##  Requirements
 
-### 🖥️ **System Requirements**
+###  **System Requirements**
 - Python 3.8+
 - ADB (Android Debug Bridge)
 - wadecrypt (for WhatsApp decryption)
 - Rooted Android device
 
-### 📦 **Required Libraries**
+### **Required Libraries**
 ```bash
 Flask==3.0.0
 Flask-SQLAlchemy==3.1.1
@@ -59,9 +59,9 @@ Werkzeug==3.0.1
 
 ---
 
-## 🚀 Installation & Setup Guide
+##  Installation & Setup Guide
 
-### 1️⃣ **Install Dependencies**
+### 1️ **Install Dependencies**
 
 ```bash
 # Install from requirements.txt
@@ -71,7 +71,7 @@ pip install -r requirements.txt --break-system-packages
 pip install Flask Flask-CORS --break-system-packages
 ```
 
-### 2️⃣ **Initialize Database**
+### 2️ **Initialize Database**
 
 ```bash
 # Run database file
@@ -80,23 +80,23 @@ python database.py
 ```
 
 This will create:
-- ✅ Database file `whisper_wa.db`
-- ✅ Default admin account
+- Database file `whisper_wa.db`
+-  Default admin account
 
 **Admin Credentials:**
-- 📧 Email: `admin@whisper-wa.local`
-- 🔑 Password: `admin123`
+-  Email: `admin@whisper-wa.local`
+-  Password: `admin123`
 
-### 3️⃣ **Start Server**
+### 3️ **Start Server**
 
 ```bash
 # From Backend directory
 python app.py
 ```
 
-Server will run on: **http://localhost:5000** 🌐
+Server will run on: **http://localhost:5000** 
 
-### 4️⃣ **Open Interface**
+### 4️ **Open Interface**
 
 Open your browser and navigate to:
 ```
@@ -107,7 +107,7 @@ Or use Live Server in VS Code
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 Whisper-WA/
@@ -145,46 +145,46 @@ Whisper-WA/
 
 ---
 
-## 🔄 Workflow
+##  Workflow
 
 ```
-1. 🔐 Login
+1.  Login
    └─ Admin: admin@whisper-wa.local / admin123
    └─ User: Request account → Admin approval
 
-2. 📱 Connect Device
+2.  Connect Device
    └─ USB or Wi-Fi
    └─ Root access check
 
-3. 📥 Data Extraction
+3.  Data Extraction
    └─ msgstore.db.cryptXX
    └─ key file
 
-4. 🔓 Decryption
+4.  Decryption
    └─ Using wadecrypt
    └─ msgstore_decrypted.db
 
-5. 🔍 Analysis
+5.  Analysis
    └─ Message extraction
    └─ Pattern detection
    └─ Entity extraction
 
-6. 📊 Report
+6.  Report
    └─ Display results
    └─ Export PDF/CSV
 ```
 
 ---
 
-## 🎯 API Endpoints
+##  API Endpoints
 
-### 🔐 **Authentication**
+###  **Authentication**
 ```http
 POST /api/auth/login
 Body: { "email": "", "password": "" }
 ```
 
-### 👥 **User Management**
+###  **User Management**
 ```http
 GET  /api/users
 POST /api/access-requests
@@ -193,7 +193,7 @@ POST /api/access-requests/<id>/approve
 POST /api/access-requests/<id>/reject
 ```
 
-### 📱 **Device & Workflow**
+###  **Device & Workflow**
 ```http
 POST /api/device/connect
 Body: { "method": "wifi|usb", "ip_port": "", "case_id": "" }
@@ -202,7 +202,7 @@ POST /api/workflow/run
 Body: { "case_id": "", "wadecrypt_path": "", "timeout_sec": 180 }
 ```
 
-### 💬 **Messages & Analysis**
+###  **Messages & Analysis**
 ```http
 GET  /api/messages/<case_id>
 GET  /api/chats/<case_id>
@@ -210,7 +210,7 @@ GET  /api/analysis/<case_id>
 POST /api/analysis/run/<case_id>
 ```
 
-### 🔎 **Search**
+###  **Search**
 ```http
 POST /api/index/build
 Body: { "messages": {"1": "text1", "2": "text2"} }
@@ -220,7 +220,7 @@ GET  /api/links
 GET  /api/images
 ```
 
-### 📊 **Cases & Reports**
+###  **Cases & Reports**
 ```http
 POST /api/cases
 GET  /api/cases/<user_id>
@@ -230,7 +230,7 @@ GET  /api/reports/<user_id>
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 ### Backend:
 - **Flask** - Web Framework
@@ -249,9 +249,9 @@ GET  /api/reports/<user_id>
 
 ---
 
-## 📊 Database Schema
+##  Database Schema
 
-### 📦 **Main Tables:**
+### **Main Tables:**
 
 #### **1. users**
 ```sql
