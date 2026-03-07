@@ -1,56 +1,54 @@
-#  Whisper-WA - Digital Forensics Platform
-## منصة التحليل الجنائي الرقمي لواتساب
+# Whisper-WA - Digital Forensics Platform
+## WhatsApp Digital Forensics Analysis Platform
 
 <div align="center">
 
 ![Whisper-WA Logo](Frontend/logo.png)
 
-**نظام شامل لتحليل بيانات واتساب للأغراض الجنائية**
+**Comprehensive WhatsApp Data Analysis System for Forensic Purposes**
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.0.0-green.svg)](https://flask.palletsprojects.com/)
 [![License](https://img.shields.io/badge/License-Educational-yellow.svg)]()
 
-[English](#english) | [العربية](#arabic)
-
 </div>
 
 ---
 
-## 🌟 المميزات الرئيسية
+## 🌟 Key Features
 
-### ✨ **واجهة مستخدم متقدمة**
-- 🎨 تصميم عصري بتأثيرات Glass Morphism
-- 🌐 دعم كامل للغتين (عربي/إنجليزي) مع RTL
-- 📱 واجهة متجاوبة تعمل على جميع الأجهزة
-- 🔐 نظام مصادقة متعدد المستويات (Admin/User)
+### ✨ **Advanced User Interface**
+- 🎨 Modern design with Glass Morphism effects
+- 🌐 Full bilingual support (Arabic/English) with RTL
+- 📱 Responsive interface works on all devices
+- 🔐 Multi-level authentication system (Admin/User)
 
-### 🔧 **إمكانيات تقنية**
-- 📲 استخراج تلقائي لبيانات واتساب من الأجهزة
-- 🔓 فك تشفير قواعد بيانات واتساب (crypt12-15)
-- 🔍 تحليل شامل للرسائل والملفات المرفقة
-- 📊 كشف الأنماط المشبوهة والكيانات
-- 🔎 محرك بحث متقدم
-- 📄 توليد تقارير احترافية (PDF/CSV)
+### 🔧 **Technical Capabilities**
+- 📲 Automatic WhatsApp data extraction from devices
+- 🔓 WhatsApp database decryption (crypt12-15)
+- 🔍 Comprehensive message and attachment analysis
+- 📊 Suspicious pattern and entity detection
+- 🔎 Advanced search engine
+- 📄 Professional report generation (PDF/CSV)
 
-### 🛡️ **الأمان والخصوصية**
-- 🔐 تشفير كلمات المرور (SHA-256)
-- 🎫 نظام Session Tokens
-- 👥 إدارة صلاحيات المستخدمين
-- 📝 تسجيل كامل لجميع الأنشطة
-- ✅ نظام موافقة على الطلبات
+### 🛡️ **Security & Privacy**
+- 🔐 Password encryption (SHA-256)
+- 🎫 Session token system
+- 👥 User permission management
+- 📝 Complete activity logging
+- ✅ Request approval system
 
 ---
 
-## 📋 متطلبات التشغيل
+## 📋 Requirements
 
-### 🖥️ **المتطلبات الأساسية**
+### 🖥️ **System Requirements**
 - Python 3.8+
 - ADB (Android Debug Bridge)
-- wadecrypt (لفك تشفير واتساب)
-- جهاز Android بصلاحيات Root
+- wadecrypt (for WhatsApp decryption)
+- Rooted Android device
 
-### 📦 **المكتبات المطلوبة**
+### 📦 **Required Libraries**
 ```bash
 Flask==3.0.0
 Flask-SQLAlchemy==3.1.1
@@ -61,124 +59,124 @@ Werkzeug==3.0.1
 
 ---
 
-## 🚀 دليل التثبيت والتشغيل
+## 🚀 Installation & Setup Guide
 
-### 1️⃣ **تثبيت المكتبات**
+### 1️⃣ **Install Dependencies**
 
 ```bash
-# تثبيت المكتبات من requirements.txt
+# Install from requirements.txt
 pip install -r requirements.txt --break-system-packages
 
-# أو تثبيت يدوي
+# Or manual installation
 pip install Flask Flask-CORS --break-system-packages
 ```
 
-### 2️⃣ **تهيئة قاعدة البيانات**
+### 2️⃣ **Initialize Database**
 
 ```bash
-# تشغيل ملف قاعدة البيانات
+# Run database file
 cd Backend
 python database.py
 ```
 
-هذا سينشئ:
-- ✅ قاعدة بيانات `whisper_wa.db`
-- ✅ حساب المسؤول الافتراضي
+This will create:
+- ✅ Database file `whisper_wa.db`
+- ✅ Default admin account
 
-**بيانات المسؤول:**
-- 📧 البريد: `admin@whisper-wa.local`
-- 🔑 كلمة المرور: `admin123`
+**Admin Credentials:**
+- 📧 Email: `admin@whisper-wa.local`
+- 🔑 Password: `admin123`
 
-### 3️⃣ **تشغيل السيرفر**
+### 3️⃣ **Start Server**
 
 ```bash
-# من مجلد Backend
+# From Backend directory
 python app.py
 ```
 
-السيرفر سيشتغل على: **http://localhost:5000** 🌐
+Server will run on: **http://localhost:5000** 🌐
 
-### 4️⃣ **فتح الواجهة**
+### 4️⃣ **Open Interface**
 
-افتح المتصفح وروح على:
+Open your browser and navigate to:
 ```
 Frontend/index.html
 ```
 
-أو استخدم Live Server في VS Code
+Or use Live Server in VS Code
 
 ---
 
-## 📁 هيكل المشروع
+## 📁 Project Structure
 
 ```
 Whisper-WA/
 │
-├── Backend/                    # الباك اند
-│   ├── app.py                 # السيرفر الرئيسي (Flask)
-│   ├── database.py            # إدارة قاعدة البيانات
-│   ├── acquisition.py         # سحب البيانات من الجهاز
-│   ├── decrypt.py             # فك تشفير قاعدة البيانات
-│   ├── parser.py              # استخراج الرسائل
-│   ├── analysis.py            # التحليل الشامل
-│   ├── index.py               # محرك البحث
-│   ├── export.py              # تصدير التقارير
-│   ├── reports.py             # إدارة التقارير
-│   └── requirements.txt       # المكتبات المطلوبة
+├── Backend/                    # Backend
+│   ├── app.py                 # Main server (Flask)
+│   ├── database.py            # Database management
+│   ├── acquisition.py         # Data extraction from device
+│   ├── decrypt.py             # Database decryption
+│   ├── parser.py              # Message extraction
+│   ├── analysis.py            # Comprehensive analysis
+│   ├── index.py               # Search engine
+│   ├── export.py              # Report export
+│   ├── reports.py             # Report management
+│   └── requirements.txt       # Dependencies
 │
-├── Frontend/                   # الفرونت اند
-│   ├── index.html             # الصفحة الرئيسية
-│   ├── auth.html              # تسجيل الدخول/طلب حساب
-│   ├── pending.html           # انتظار الموافقة
-│   ├── connect.html           # ربط الجهاز
-│   ├── chat.html              # بناء التقرير
-│   ├── analysis.html          # التحليل
-│   ├── reports.html           # عرض التقارير
-│   ├── admin.html             # لوحة الأدمن
-│   ├── header.html            # الهيدر الموحد
-│   └── logo.png               # اللوغو
+├── Frontend/                   # Frontend
+│   ├── index.html             # Home page
+│   ├── auth.html              # Login/Request account
+│   ├── pending.html           # Approval pending
+│   ├── connect.html           # Device connection
+│   ├── chat.html              # Report builder
+│   ├── analysis.html          # Analysis
+│   ├── reports.html           # Reports view
+│   ├── admin.html             # Admin dashboard
+│   ├── header.html            # Unified header
+│   └── logo.png               # Logo
 │
-└── Cases/                      # مجلد القضايا (يُنشأ تلقائياً)
+└── Cases/                      # Cases folder (auto-created)
     └── Case_001/
-        ├── Evidence/          # الأدلة المسحوبة
-        ├── Decrypted/         # قاعدة البيانات المفككة
-        └── Analysis/          # نتائج التحليل
+        ├── Evidence/          # Extracted evidence
+        ├── Decrypted/         # Decrypted database
+        └── Analysis/          # Analysis results
 ```
 
 ---
 
-## 🔄 سير العمل (Workflow)
+## 🔄 Workflow
 
 ```
-1. 🔐 تسجيل الدخول
+1. 🔐 Login
    └─ Admin: admin@whisper-wa.local / admin123
-   └─ User: طلب حساب → موافقة الأدمن
+   └─ User: Request account → Admin approval
 
-2. 📱 ربط الجهاز
-   └─ USB أو Wi-Fi
-   └─ فحص صلاحيات Root
+2. 📱 Connect Device
+   └─ USB or Wi-Fi
+   └─ Root access check
 
-3. 📥 سحب البيانات
+3. 📥 Data Extraction
    └─ msgstore.db.cryptXX
    └─ key file
 
-4. 🔓 فك التشفير
-   └─ استخدام wadecrypt
+4. 🔓 Decryption
+   └─ Using wadecrypt
    └─ msgstore_decrypted.db
 
-5. 🔍 التحليل
-   └─ استخراج الرسائل
-   └─ كشف الأنماط
-   └─ استخراج الكيانات
+5. 🔍 Analysis
+   └─ Message extraction
+   └─ Pattern detection
+   └─ Entity extraction
 
-6. 📊 التقرير
-   └─ عرض النتائج
-   └─ تصدير PDF/CSV
+6. 📊 Report
+   └─ Display results
+   └─ Export PDF/CSV
 ```
 
 ---
 
-## 🎯 الـ API Endpoints
+## 🎯 API Endpoints
 
 ### 🔐 **Authentication**
 ```http
@@ -232,18 +230,18 @@ GET  /api/reports/<user_id>
 
 ---
 
-## 🛠️ الأدوات المستخدمة
+## 🛠️ Technology Stack
 
 ### Backend:
 - **Flask** - Web Framework
-- **SQLite** - قاعدة البيانات
+- **SQLite** - Database
 - **SQLAlchemy** - ORM
 
 ### Frontend:
-- **HTML5/CSS3** - الهيكل والتصميم
-- **JavaScript (Vanilla)** - البرمجة
-- **Font Awesome** - الأيقونات
-- **Google Fonts (Tajawal)** - الخط العربي
+- **HTML5/CSS3** - Structure & Design
+- **JavaScript (Vanilla)** - Programming
+- **Font Awesome** - Icons
+- **Google Fonts (Tajawal)** - Arabic Typography
 
 ### Tools:
 - **ADB** - Android Debug Bridge
@@ -251,9 +249,9 @@ GET  /api/reports/<user_id>
 
 ---
 
-## 📊 قاعدة البيانات
+## 📊 Database Schema
 
-### 📦 **الجداول الرئيسية:**
+### 📦 **Main Tables:**
 
 #### **1. users**
 ```sql
@@ -321,5 +319,7 @@ GET  /api/reports/<user_id>
 ```
 
 ---
+
+
 
 </div>
