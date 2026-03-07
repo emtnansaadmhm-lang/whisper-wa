@@ -14,365 +14,196 @@
       --primary-mid:#3f9b5f;
       --primary-light:#5fbf7a;
       --accent-glow:#8fd9a8;
-
       --bg-dark:#0e1a12;
-
       --glass-bg: rgba(20, 40, 30, 0.65);
       --glass-border: rgba(95, 191, 122, 0.3);
-
       --text-white:#ffffff;
       --text-muted:#c2dec9;
     }
-
     *{ box-sizing:border-box; margin:0; padding:0; }
-
     body{
       font-family:'Tajawal',sans-serif;
       background-color: var(--bg-dark);
       color: var(--text-white);
       min-height:100vh;
       overflow-x:hidden;
-
       background-image:
         linear-gradient(rgba(31, 95, 59, 0.10) 1px, transparent 1px),
         linear-gradient(90deg, rgba(31, 95, 59, 0.10) 1px, transparent 1px);
       background-size: 40px 40px;
     }
-
     .animated-bg-logo{
-      position: fixed;
-      top:50%;
-      left:50%;
+      position: fixed; top:50%; left:50%;
       transform: translate(-50%,-50%);
-      z-index:-1;
-      width: 650px;
-      pointer-events:none;
-      opacity:0.15;
+      z-index:-1; width: 650px;
+      pointer-events:none; opacity:0.15;
       animation: cyberGlowPulse 8s ease-in-out infinite alternate;
     }
     .animated-bg-logo img{
-      width:100%;
-      height:auto;
+      width:100%; height:auto;
       filter: drop-shadow(0 0 30px var(--primary-mid));
     }
     @keyframes cyberGlowPulse{
       0%{ opacity:0.10; transform: translate(-50%,-50%) scale(0.95); }
       100%{ opacity:0.25; transform: translate(-50%,-50%) scale(1.05); }
     }
-
     .main-container{
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 24px;
-      display:flex;
-      flex-direction:column;
-      gap: 20px;
+      max-width: 1400px; margin: 0 auto; padding: 24px;
+      display:flex; flex-direction:column; gap: 20px;
     }
-
-    /* ========== HEADER ========== */
     .page-header{
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
-      border-radius: 18px;
-      padding: 20px 24px;
-      display: flex;
-      justify-content: space-between;
+      border-radius: 18px; padding: 20px 24px;
+      display: flex; justify-content: space-between;
       align-items: center;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
-
-    .header-left h1{
-      font-size: 1.8rem;
-      margin-bottom: 4px;
-      color: var(--primary-light);
-    }
-
-    .header-left p{
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .header-actions{
-      display: flex;
-      gap: 10px;
-    }
-
-    .btn{
-      padding: 10px 18px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-weight: 800;
-      font-family: inherit;
-      transition: 0.25s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-ghost{
-      background: rgba(0,0,0,0.18);
-      color: var(--accent-glow);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .btn-ghost:hover{
-      background: rgba(95,191,122,0.12);
-      transform: translateY(-1px);
-    }
-
-    /* ========== STATS CARDS ========== */
+    .header-left h1{ font-size: 1.8rem; margin-bottom: 4px; color: var(--primary-light); }
+    .header-left p{ color: var(--text-muted); font-size: 0.95rem; }
     .stats-grid{
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 16px;
     }
-
     .stat-card{
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
-      border-radius: 18px;
-      padding: 20px;
+      border-radius: 18px; padding: 20px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     }
-
     .stat-card .icon{
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+      width: 48px; height: 48px; border-radius: 12px;
       background: rgba(95,191,122,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--accent-glow);
-      font-size: 1.4rem;
-      margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent-glow); font-size: 1.4rem; margin-bottom: 12px;
     }
-
-    .stat-card .value{
-      font-size: 2rem;
-      font-weight: 900;
-      margin-bottom: 4px;
-    }
-
-    .stat-card .label{
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* ========== PANELS ========== */
+    .stat-card .value{ font-size: 2rem; font-weight: 900; margin-bottom: 4px; }
+    .stat-card .label{ color: var(--text-muted); font-size: 0.9rem; }
     .panel{
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       backdrop-filter: blur(14px);
       border-radius: 18px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-      padding: 20px;
-      overflow: hidden;
+      padding: 20px; overflow: hidden;
     }
-
     .panel-header{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 16px;
       padding-bottom: 12px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-
     .panel-header h3{
-      font-size: 1.3rem;
-      color: var(--primary-light);
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-size: 1.3rem; color: var(--primary-light);
+      display: flex; align-items: center; gap: 10px;
     }
-
     .badge{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 24px;
-      height: 24px;
-      padding: 0 8px;
-      border-radius: 999px;
-      font-size: 0.8rem;
+      display: inline-flex; align-items: center;
+      justify-content: center; min-width: 24px;
+      height: 24px; padding: 0 8px;
+      border-radius: 999px; font-size: 0.8rem;
       font-weight: 900;
       background: rgba(255,193,7,0.2);
       color: #ffe7a6;
       border: 1px solid rgba(255,193,7,0.3);
     }
-
-    /* ========== REQUEST CARD ========== */
     .request-card{
       background: rgba(0,0,0,0.18);
       border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-      transition: 0.25s;
+      border-radius: 14px; padding: 16px;
+      margin-bottom: 12px; transition: 0.25s;
     }
-
     .request-card:hover{
       background: rgba(95,191,122,0.08);
       border-color: rgba(95,191,122,0.2);
     }
-
     .request-header{
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 10px;
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 10px;
     }
-
     .request-info h4{
-      font-size: 1.05rem;
-      margin-bottom: 4px;
-      color: white;
+      font-size: 1.05rem; margin-bottom: 4px; color: white;
     }
-
     .request-info .email{
-      color: var(--accent-glow);
-      font-size: 0.9rem;
-      margin-bottom: 4px;
+      color: var(--accent-glow); font-size: 0.9rem; margin-bottom: 4px;
     }
-
-    .request-info .meta{
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
+    .request-info .meta{ color: var(--text-muted); font-size: 0.85rem; }
     .request-reason{
       background: rgba(0,0,0,0.2);
       border-left: 3px solid var(--primary-mid);
-      padding: 10px 12px;
-      border-radius: 8px;
-      margin: 10px 0;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.9);
+      padding: 10px 12px; border-radius: 8px;
+      margin: 10px 0; font-size: 0.9rem;
+      line-height: 1.5; color: rgba(255,255,255,0.9);
     }
-
-    .request-actions{
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
+    .request-actions{ display: flex; gap: 8px; margin-top: 12px; }
     .btn-small{
-      padding: 8px 16px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      font-weight: 800;
-      font-family: inherit;
-      font-size: 0.85rem;
-      transition: 0.25s;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      padding: 8px 16px; border-radius: 10px;
+      border: none; cursor: pointer;
+      font-weight: 800; font-family: inherit;
+      font-size: 0.85rem; transition: 0.25s;
+      display: inline-flex; align-items: center; gap: 6px;
     }
-
     .btn-approve{
-      background: rgba(95,191,122,0.2);
-      color: #d8ffe4;
+      background: rgba(95,191,122,0.2); color: #d8ffe4;
       border: 1px solid rgba(95,191,122,0.3);
     }
     .btn-approve:hover{
-      background: rgba(95,191,122,0.35);
-      transform: translateY(-1px);
+      background: rgba(95,191,122,0.35); transform: translateY(-1px);
     }
-
     .btn-reject{
-      background: rgba(255,107,107,0.2);
-      color: #ffd1d1;
+      background: rgba(255,107,107,0.2); color: #ffd1d1;
       border: 1px solid rgba(255,107,107,0.3);
     }
     .btn-reject:hover{
-      background: rgba(255,107,107,0.35);
-      transform: translateY(-1px);
+      background: rgba(255,107,107,0.35); transform: translateY(-1px);
     }
-
-    /* ========== USER TABLE ========== */
     .user-table-wrap{
-      overflow-x: auto;
-      border-radius: 12px;
+      overflow-x: auto; border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.08);
       background: rgba(0,0,0,0.18);
     }
-
     .user-table{
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 600px;
+      width: 100%; border-collapse: collapse; min-width: 600px;
     }
-
     .user-table thead th{
       background: rgba(20, 40, 30, 0.95);
       color: var(--primary-light);
-      font-size: 0.9rem;
-      text-align: left;
+      font-size: 0.9rem; text-align: left;
       padding: 12px 16px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-
     .user-table tbody td{
-      padding: 12px 16px;
-      font-size: 0.9rem;
+      padding: 12px 16px; font-size: 0.9rem;
       border-bottom: 1px solid rgba(255,255,255,0.06);
       color: var(--text-white);
     }
-
-    .user-table tbody tr:hover{
-      background: rgba(95, 191, 122, 0.08);
-    }
-
-    .btn-revoke{
-      background: rgba(255,107,107,0.15);
-      color: #ffd1d1;
-      border: 1px solid rgba(255,107,107,0.25);
-      padding: 6px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.8rem;
-      font-weight: 800;
-      transition: 0.2s;
-    }
-    .btn-revoke:hover{
-      background: rgba(255,107,107,0.3);
-    }
-
+    .user-table tbody tr:hover{ background: rgba(95, 191, 122, 0.08); }
     .empty-state{
-      padding: 40px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
+      padding: 40px; text-align: center;
+      color: var(--text-muted); font-size: 0.95rem;
     }
-
     .empty-state i{
-      font-size: 3rem;
-      margin-bottom: 12px;
-      opacity: 0.3;
+      font-size: 3rem; margin-bottom: 12px; opacity: 0.3;
     }
-
     .alert{
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      font-weight: 800;
-      display: none;
+      padding: 12px 16px; border-radius: 12px;
+      margin-bottom: 16px; font-weight: 800; display: none;
     }
     .alert.show{ display: block; }
     .alert.success{
-      background: rgba(95,191,122,0.2);
-      color: #d8ffe4;
+      background: rgba(95,191,122,0.2); color: #d8ffe4;
       border: 1px solid rgba(95,191,122,0.3);
     }
     .alert.info{
-      background: rgba(99,179,237,0.2);
-      color: #d1e7ff;
+      background: rgba(99,179,237,0.2); color: #d1e7ff;
       border: 1px solid rgba(99,179,237,0.3);
+    }
+    .alert.danger{
+      background: rgba(255,107,107,0.2); color: #ffd1d1;
+      border: 1px solid rgba(255,107,107,0.3);
     }
   </style>
 </head>
@@ -381,54 +212,42 @@
   <div class="animated-bg-logo">
     <img src="logo.png" alt="Background Logo">
   </div>
-<div class="main-container">
-  <!-- ✅ Header -->
-  <div id="header-placeholder"></div>
 
+  <div class="main-container">
+    <div id="header-placeholder"></div>
 
-    <!-- ========== HEADER ========== -->
-    
     <header class="page-header">
       <div class="header-left">
         <h1><i class="fa-solid fa-shield-halved"></i> Admin Dashboard</h1>
         <p>Manage user access requests and active accounts</p>
       </div>
-      <div class="header-actions">
-        
-      </div>
     </header>
 
-    <!-- ========== ALERT ========== -->
     <div id="alertBox" class="alert"></div>
 
-    <!-- ========== STATS ========== -->
     <div class="stats-grid">
       <div class="stat-card">
         <div class="icon"><i class="fa-solid fa-clock"></i></div>
         <div class="value" id="statPending">0</div>
         <div class="label">Pending Requests</div>
       </div>
-
       <div class="stat-card">
         <div class="icon"><i class="fa-solid fa-user-check"></i></div>
         <div class="value" id="statActive">0</div>
         <div class="label">Active Users</div>
       </div>
-
       <div class="stat-card">
         <div class="icon"><i class="fa-solid fa-user-xmark"></i></div>
         <div class="value" id="statRejected">0</div>
-        <div class="label">Rejected Requests</div>
+        <div class="label">Rejected</div>
       </div>
-
       <div class="stat-card">
         <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
         <div class="value" id="statTotal">0</div>
-        <div class="label">Total Requests</div>
+        <div class="label">Total</div>
       </div>
     </div>
 
-    <!-- ========== PENDING REQUESTS ========== -->
     <section class="panel">
       <div class="panel-header">
         <h3>
@@ -440,13 +259,9 @@
       <div id="pendingRequestsContainer"></div>
     </section>
 
-    <!-- ========== ACTIVE USERS ========== -->
     <section class="panel">
       <div class="panel-header">
-        <h3>
-          <i class="fa-solid fa-users"></i> 
-          Active Users
-        </h3>
+        <h3><i class="fa-solid fa-users"></i> Active Users</h3>
       </div>
       <div class="user-table-wrap">
         <table class="user-table">
@@ -455,8 +270,8 @@
               <th>Name</th>
               <th>Email</th>
               <th>Job Title</th>
-              <th>Approved On</th>
-              <th>Actions</th>
+              <th>Department</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody id="activeUsersTable"></tbody>
@@ -465,383 +280,182 @@
     </section>
 
   </div>
+
 <script>
-// =========================
-// ✅ Admin Route Protection
-// =========================
 const _role = localStorage.getItem("userRole");
-if(!_role){ 
-  window.location.href = "auth.html"; 
-}
-else if(_role !== "admin"){ 
-  window.location.href = "connect.html"; 
+if(!_role) window.location.href = "auth.html"; 
+else if(_role !== "admin") window.location.href = "connect.html";
+
+const API_BASE = "http://localhost:5000";
+
+async function fetchAPI(endpoint, options = {}) {
+  try {
+    const response = await fetch(`${API_BASE}${endpoint}`, {
+      headers: { 'Content-Type': 'application/json', ...options.headers },
+      ...options
+    });
+    const data = await response.json();
+    return { ok: response.ok, data, status: response.status };
+  } catch (error) {
+    console.error('API Error:', error);
+    return { ok: false, error: error.message };
+  }
 }
 
-// ========== DATA MANAGEMENT ==========
-function getRequests(){
-  return JSON.parse(localStorage.getItem("accountRequests") || "[]");
+let pendingRequests = [];
+let allUsers = [];
+
+async function loadPendingRequests() {
+  const result = await fetchAPI('/api/access-requests/pending');
+  if (result.ok) pendingRequests = result.data.requests || [];
+  else { console.error('Failed to load pending requests'); pendingRequests = []; }
 }
 
-function saveRequests(requests){
-  localStorage.setItem("accountRequests", JSON.stringify(requests));
+async function loadAllUsers() {
+  const result = await fetchAPI('/api/users');
+  if (result.ok) allUsers = result.data.users || [];
+  else { console.error('Failed to load users'); allUsers = []; }
 }
 
-function getActiveUsers(){
-  return JSON.parse(localStorage.getItem("activeUsers") || "[]");
-}
-
-function saveActiveUsers(users){
-  localStorage.setItem("activeUsers", JSON.stringify(users));
-}
-
-// ========== ALERT ==========
 function showAlert(type, message){
   const alertBox = document.getElementById("alertBox");
   alertBox.className = `alert ${type} show`;
-  alertBox.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i> ${message}`;
+  alertBox.innerHTML = `<i class="fa-solid fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'}"></i> ${message}`;
   setTimeout(() => alertBox.classList.remove("show"), 4000);
 }
 
-// ========== UPDATE STATS ==========
 function updateStats(){
-  const requests = getRequests();
-  const activeUsers = getActiveUsers();
-
-  const pending = requests.filter(r => r.status === "pending").length;
-  const rejected = requests.filter(r => r.status === "rejected").length;
-
-  // ✅ تحقق من وجود العناصر قبل الكتابة
-  const statPending = document.getElementById("statPending");
-  const statActive = document.getElementById("statActive");
-  const statRejected = document.getElementById("statRejected");
-  const statTotal = document.getElementById("statTotal");
-  const badgePending = document.getElementById("badgePending");
-
-  if(statPending) statPending.textContent = pending;
-  if(statActive) statActive.textContent = activeUsers.length;
-  if(statRejected) statRejected.textContent = rejected;
-  if(statTotal) statTotal.textContent = requests.length;
-  if(badgePending) badgePending.textContent = pending;
+  const pending = pendingRequests.length;
+  const active = allUsers.filter(u => u.status === 'active').length;
+  document.getElementById("statPending").textContent = pending;
+  document.getElementById("statActive").textContent = active;
+  document.getElementById("statRejected").textContent = 0;
+  document.getElementById("statTotal").textContent = pending;
+  document.getElementById("badgePending").textContent = pending;
 }
-// ========== RENDER PENDING REQUESTS ==========
+
 function renderPendingRequests(){
   const container = document.getElementById("pendingRequestsContainer");
-  const requests = getRequests().filter(r => r.status === "pending");
-   const isAr = document.documentElement.lang === "ar";
-
- if(requests.length === 0){
+  if(pendingRequests.length === 0){
     container.innerHTML = `
       <div class="empty-state">
         <i class="fa-solid fa-inbox"></i>
-        <p>${isAr ? "لا توجد طلبات معلقة حالياً." : "No pending requests at the moment."}</p>
-      </div>
-    `;
+        <p>No pending requests at the moment.</p>
+      </div>`;
     return;
   }
- container.innerHTML = requests.map(req => `
-    <div class="request-card" data-id="${req.id}">
+  container.innerHTML = pendingRequests.map(req => `
+    <div class="request-card">
       <div class="request-header">
         <div class="request-info">
           <h4>${req.name}</h4>
           <div class="email"><i class="fa-solid fa-envelope"></i> ${req.email}</div>
           <div class="meta">
-            <i class="fa-solid fa-briefcase"></i> ${req.job} 
-            ${req.department !== "Not specified" ? `• ${req.department}` : ""}
+            <i class="fa-solid fa-briefcase"></i> ${req.job_title} 
+            ${req.department ? `• ${req.department}` : ""}
             <br>
-            <i class="fa-solid fa-clock"></i> ${isAr ? "تاريخ التقديم:" : "Submitted:"} ${new Date(req.timestamp).toLocaleString()}
+            <i class="fa-solid fa-clock"></i> Submitted: ${new Date(req.submitted_at).toLocaleString()}
           </div>
         </div>
       </div>
-      <div class="request-reason">
-        <strong>${isAr ? "سبب طلب الوصول:" : "Reason for Access:"}</strong><br>
-        ${req.reason}
-      </div>
+      <div class="request-reason"><strong>Reason:</strong><br>${req.reason}</div>
       <div class="request-actions">
         <button class="btn-small btn-approve" onclick="approveRequest(${req.id})">
-          <i class="fa-solid fa-check"></i> ${isAr ? "موافقة" : "Approve"}
+          <i class="fa-solid fa-check"></i> Approve
         </button>
         <button class="btn-small btn-reject" onclick="rejectRequest(${req.id})">
-          <i class="fa-solid fa-xmark"></i> ${isAr ? "رفض" : "Reject"}
+          <i class="fa-solid fa-xmark"></i> Reject
         </button>
       </div>
     </div>
   `).join("");
 }
 
-// ========== RENDER ACTIVE USERS ==========
 function renderActiveUsers(){
   const tbody = document.getElementById("activeUsersTable");
-  const users = getActiveUsers();
-   const isAr = document.documentElement.lang === "ar";
-
-if(users.length === 0){
+  const activeUsers = allUsers.filter(u => u.status === 'active' && u.role !== 'admin');
+  if(activeUsers.length === 0){
     tbody.innerHTML = `
       <tr>
         <td colspan="5" style="text-align:center; padding:40px; color:var(--text-muted);">
           <i class="fa-solid fa-users-slash" style="font-size:2rem; opacity:0.3; display:block; margin-bottom:10px;"></i>
-          ${isAr ? "لا يوجد مستخدمون نشطون بعد." : "No active users yet."}
+          No active users yet.
         </td>
-      </tr>
-    `;
+      </tr>`;
     return;
   }
-
-  tbody.innerHTML = users.map(user => `
+  tbody.innerHTML = activeUsers.map(user => `
     <tr>
       <td><strong>${user.name}</strong></td>
       <td>${user.email}</td>
-      <td>${user.job}</td>
-      <td>${new Date(user.approvedOn).toLocaleDateString()}</td>
-      <td>
-        <button class="btn-revoke" onclick="revokeUser('${user.email}')">
-          <i class="fa-solid fa-ban"></i> ${isAr ? "إلغاء" : "Revoke"}
-        </button>
-      </td>
+      <td>${user.job_title || '---'}</td>
+      <td>${user.department || '---'}</td>
+      <td><span style="color: var(--accent-glow);">Active</span></td>
     </tr>
   `).join("");
 }
 
-// ========== APPROVE REQUEST ==========
-function approveRequest(id){
-  const requests = getRequests();
-  const request = requests.find(r => r.id === id);
-  
-  if(!request) return;
-
-  request.status = "approved";
-  saveRequests(requests);
-
-  const activeUsers = getActiveUsers();
-  activeUsers.push({
-    name: request.name,
-    email: request.email,
-    job: request.job,
-    department: request.department,
-    approvedOn: new Date().toISOString()
+async function approveRequest(id){
+  const result = await fetchAPI(`/api/access-requests/${id}/approve`, {
+    method: 'POST',
+    body: JSON.stringify({ admin_id: 1 })
   });
-  saveActiveUsers(activeUsers);
-
-  showAlert("success", `✓ ${request.name}'s request has been approved!`);
-  refresh();
+  if(result.ok){
+    showAlert("success", `✓ Request approved!`);
+    await refresh();
+  } else {
+    showAlert("danger", `Failed: ${result.data.error || 'Unknown error'}`);
+  }
 }
 
-// ========== REJECT REQUEST ==========
-function rejectRequest(id){
-  const requests = getRequests();
-  const request = requests.find(r => r.id === id);
-  
-  if(!request) return;
-
-  request.status = "rejected";
-  saveRequests(requests);
-
-  showAlert("info", `${request.name}'s request has been rejected.`);
-  refresh();
+async function rejectRequest(id){
+  const result = await fetchAPI(`/api/access-requests/${id}/reject`, {
+    method: 'POST',
+    body: JSON.stringify({ admin_id: 1 })
+  });
+  if(result.ok){
+    showAlert("info", `Request rejected.`);
+    await refresh();
+  } else {
+    showAlert("danger", `Failed: ${result.data.error || 'Unknown error'}`);
+  }
 }
 
-// ========== REVOKE USER ==========
-function revokeUser(email){
-  if(!confirm(`Are you sure you want to revoke access for ${email}?`)) return;
-
-  const activeUsers = getActiveUsers();
-  const filtered = activeUsers.filter(u => u.email !== email);
-  saveActiveUsers(filtered);
-
-  showAlert("info", `Access revoked for ${email}.`);
-  refresh();
-}
-
-// ========== REFRESH DATA ==========
-function refresh(){
+async function refresh(){
+  await loadPendingRequests();
+  await loadAllUsers();
   updateStats();
   renderPendingRequests();
   renderActiveUsers();
 }
 
-// =========================
-// ✅ إعداد الهيدر
-// =========================
 function setupAdminHeader(){
   const btnAccount = document.getElementById("btnAccount");
   const menu = document.getElementById("accountMenu");
   const logoutBtn = document.getElementById("menuLogout");
   const menuAdmin = document.getElementById("menuAdmin");
-  const menuAdminBadge = document.getElementById("menuAdminBadge");
-  const avatarBadge = document.getElementById("avatarBadge");
   const backBtn = document.getElementById("btnBack");
-
-  if (!btnAccount || !menu) {
-    console.error("Header elements not found!");
-    return;
-  }
-
-  if(menuAdmin){
-    menuAdmin.classList.add("show");
-  }
-
-  // Update badge
-  try{
-    const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
-    const pendingCount = requests.filter(r => r.status === "pending").length;
-    
-    if(pendingCount > 0 && menuAdminBadge && avatarBadge){
-      menuAdminBadge.textContent = pendingCount;
-      avatarBadge.textContent = pendingCount;
-      avatarBadge.classList.add("show");
-    }
-  } catch(e){
-    console.error("Error updating badge:", e);
-  }
-
-  btnAccount.onclick = (e) => {
-    e.stopPropagation();
-    menu.classList.toggle("open");
-  };
-
-  document.onclick = () => {
-    if(menu.classList.contains("open")){
-      menu.classList.remove("open");
-    }
-  };
-
+  if (!btnAccount || !menu) return;
+  if(menuAdmin) menuAdmin.classList.add("show");
+  btnAccount.onclick = (e) => { e.stopPropagation(); menu.classList.toggle("open"); };
+  document.onclick = () => { if(menu.classList.contains("open")) menu.classList.remove("open"); };
   menu.onclick = (e) => e.stopPropagation();
-
-  if (logoutBtn){
-    logoutBtn.onclick = () => {
-      localStorage.removeItem("userRole");
-      window.location.href = "index.html";
-    };
-  }
-
-  // ✅ زر الرجوع يروح للشات
-  if(backBtn){
-    backBtn.style.display = "inline-flex";
-    backBtn.onclick = () => window.location.href = "chat.html";
-  }
-
-  // ✅ زر اللغة مع ترجمة كاملة
-  const btnLang = document.getElementById("btnLang");
-  
-  if(btnLang){
-    btnLang.onclick = () => {
-      const currentLang = document.documentElement.lang;
-      const newLang = (currentLang === "ar") ? "en" : "ar";
-      
-      applyAdminLanguage(newLang);
-    };
-  }
-  
-  // تطبيق اللغة المحفوظة
-  const savedLang = localStorage.getItem("lang") || "en";
-  applyAdminLanguage(savedLang);
+  if (logoutBtn) logoutBtn.onclick = () => { localStorage.removeItem("userRole"); window.location.href = "index.html"; };
+  if(backBtn){ backBtn.style.display = "inline-flex"; backBtn.onclick = () => window.location.href = "chat.html"; }
 }
 
-// =========================
-// ✅ تطبيق اللغة على الصفحة
-// =========================
-function applyAdminLanguage(lang){
-  const isAr = (lang === "ar");
-  
-  document.documentElement.lang = lang;
-  document.documentElement.dir = isAr ? "rtl" : "ltr";
-  localStorage.setItem("lang", lang);
-
-  // الهيدر
-  const langText = document.getElementById("langText");
-  const topSubtitle = document.getElementById("top-subtitle");
-  if(langText) langText.textContent = isAr ? "EN" : "AR";
-  if(topSubtitle) topSubtitle.textContent = isAr ? "منصة التحليل الجنائي الرقمي" : "Digital Forensics Platform";
-
-  // Page Header
-  document.title = isAr ? "Whisper-WA | لوحة تحكم المسؤول" : "Whisper-WA | Admin Dashboard";
-  
-  const pageTitle = document.querySelector(".page-header h1");
-  const pageSubtitle = document.querySelector(".page-header p");
-  if(pageTitle) pageTitle.innerHTML = isAr 
-    ? '<i class="fa-solid fa-shield-halved"></i> لوحة تحكم المسؤول'
-    : '<i class="fa-solid fa-shield-halved"></i> Admin Dashboard';
-  if(pageSubtitle) pageSubtitle.textContent = isAr 
-    ? "إدارة طلبات الوصول والحسابات النشطة"
-    : "Manage user access requests and active accounts";
-
-  // Back Button
-  const backBtnText = document.querySelector(".btn-ghost");
-  if(backBtnText) backBtnText.innerHTML = isAr
-    ? '<i class="fa-solid fa-arrow-left"></i> العودة للتطبيق'
-    : '<i class="fa-solid fa-arrow-left"></i> Back to App';
-
-  // Stats Cards
-  const statLabels = document.querySelectorAll(".stat-card .label");
-  const statTexts = isAr 
-    ? ["الطلبات المعلقة", "المستخدمون النشطون", "الطلبات المرفوضة", "إجمالي الطلبات"]
-    : ["Pending Requests", "Active Users", "Rejected Requests", "Total Requests"];
-  statLabels.forEach((label, i) => {
-    if(label) label.textContent = statTexts[i];
-  });
-
-  // Pending Requests Section
-  const pendingTitle = document.querySelector(".panel-header h3");
-  if(pendingTitle){
-    const badge = pendingTitle.querySelector(".badge");
-    const badgeText = badge ? badge.textContent : "0";
-    pendingTitle.innerHTML = isAr
-      ? `<i class="fa-solid fa-hourglass-half"></i> الطلبات المعلقة <span class="badge">${badgeText}</span>`
-      : `<i class="fa-solid fa-hourglass-half"></i> Pending Requests <span class="badge">${badgeText}</span>`;
-  }
-
-  // Active Users Section
-  const usersTitle = document.querySelectorAll(".panel-header h3")[1];
-  if(usersTitle){
-    usersTitle.innerHTML = isAr
-      ? '<i class="fa-solid fa-users"></i> المستخدمون النشطون'
-      : '<i class="fa-solid fa-users"></i> Active Users';
-  }
-
-  // Table Headers
-  const tableHeaders = document.querySelectorAll(".user-table thead th");
-  const headerTexts = isAr
-    ? ["الاسم", "البريد الإلكتروني", "المسمى الوظيفي", "تاريخ الموافقة", "الإجراءات"]
-    : ["Name", "Email", "Job Title", "Approved On", "Actions"];
-  tableHeaders.forEach((th, i) => {
-    if(th) th.textContent = headerTexts[i];
-  
-
-  // Re-render content with new language
-  refresh();
-}
-// =========================
-// ✅ تحميل الهيدر + تفعيل
-// =========================
 window.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await fetch("header.html");
     const headerHtml = await res.text();
     const placeholder = document.getElementById("header-placeholder");
-    
-    if(placeholder){
-      placeholder.innerHTML = headerHtml;
-      console.log("Header loaded successfully!");
-    } else {
-      console.error("header-placeholder not found!");
-    }
-
-    setTimeout(() => {
-      setupAdminHeader();
-      
-      // ✅ انتظر frame إضافي
-      requestAnimationFrame(() => {
-        refresh();
-        console.log("✅ All loaded! Pending:", getRequests().filter(r => r.status === "pending").length);
-      });
-    }, 300);
-
+    if(placeholder) placeholder.innerHTML = headerHtml;
+    setTimeout(async () => { setupAdminHeader(); await refresh(); }, 300);
   } catch (e) {
     console.error("❌ Error:", e);
-    refresh();
-
+    await refresh();
   }
 });
 </script>
 </body>
 </html>
-
