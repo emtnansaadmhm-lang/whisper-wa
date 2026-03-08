@@ -505,6 +505,8 @@
       if (langText) langText.textContent = isAr ? "AR" : "EN";
 
       document.title = isAr ? "Whisper-WA | بناء التقرير" : "Whisper-WA | Report Builder";
+      setText("txt-draft-title", isAr ? "مسودة التقرير" : "Report Draft");
+      setText("txt-add-btn", isAr ? "إضافة للتقرير الحالي" : "Add to Current Report");
       setText("txt-export", isAr ? "تنزيل التقرير" : "Download Report");
       setText("txt-analysis", isAr ? "تحليل" : "Analysis");
       setText("txt-view", isAr ? "عرض التقرير" : "View Report");
