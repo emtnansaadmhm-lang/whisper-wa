@@ -32,7 +32,6 @@
       color: var(--text-white);
       min-height:100vh;
       overflow-x:hidden;
-
       background-image:
         linear-gradient(rgba(31, 95, 59, 0.10) 1px, transparent 1px),
         linear-gradient(90deg, rgba(31, 95, 59, 0.10) 1px, transparent 1px);
@@ -50,11 +49,13 @@
       opacity:0.18;
       animation: cyberGlowPulse 8s ease-in-out infinite alternate;
     }
+
     .animated-bg-logo img{
       width:100%;
       height:auto;
       filter: drop-shadow(0 0 30px var(--primary-mid));
     }
+
     @keyframes cyberGlowPulse{
       0%{ opacity:0.12; transform: translate(-50%,-50%) scale(0.95); }
       100%{ opacity:0.32; transform: translate(-50%,-50%) scale(1.05); }
@@ -69,12 +70,12 @@
       gap: 18px;
     }
 
-    /* ===== Content Cards ===== */
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 16px;
     }
+
     .panel{
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
@@ -94,6 +95,7 @@
       padding-bottom: 10px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
+
     .panel-title h4{
       font-size: 1rem;
       color: var(--primary-light);
@@ -102,15 +104,24 @@
       gap: 10px;
     }
 
-    .muted{ color: var(--text-muted); font-size: 0.85rem; }
+    .muted{
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
 
     .stat-grid{
       display:grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
-    @media(max-width: 980px){ .stat-grid{ grid-template-columns: repeat(2, 1fr);} }
-    @media(max-width: 560px){ .stat-grid{ grid-template-columns: 1fr;} }
+
+    @media(max-width: 980px){
+      .stat-grid{ grid-template-columns: repeat(2, 1fr);}
+    }
+
+    @media(max-width: 560px){
+      .stat-grid{ grid-template-columns: 1fr;}
+    }
 
     .stat{
       background: rgba(0,0,0,0.18);
@@ -121,9 +132,21 @@
       flex-direction:column;
       gap:6px;
     }
-    .stat .label{ color: var(--text-muted); font-size: 0.82rem; }
-    .stat .value{ font-size: 1.25rem; font-weight: 700; }
-    .stat .sub{ color: rgba(255,255,255,0.75); font-size: 0.82rem; }
+
+    .stat .label{
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .stat .value{
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .stat .sub{
+      color: rgba(255,255,255,0.75);
+      font-size: 0.82rem;
+    }
 
     .list{
       display:flex;
@@ -164,9 +187,24 @@
       background: rgba(95,191,122,0.12);
       white-space: nowrap;
     }
-    .danger{ background: rgba(255, 77, 77, 0.12); color:#ffd0d0; border-color: rgba(255,77,77,0.25); }
-    .warn{ background: rgba(255, 193, 7, 0.12); color:#ffe7a6; border-color: rgba(255,193,7,0.25); }
-    .ok{ background: rgba(95,191,122,0.12); color:#d8ffe4; border-color: rgba(95,191,122,0.25); }
+
+    .danger{
+      background: rgba(255, 77, 77, 0.12);
+      color:#ffd0d0;
+      border-color: rgba(255,77,77,0.25);
+    }
+
+    .warn{
+      background: rgba(255, 193, 7, 0.12);
+      color:#ffe7a6;
+      border-color: rgba(255,193,7,0.25);
+    }
+
+    .ok{
+      background: rgba(95,191,122,0.12);
+      color:#d8ffe4;
+      border-color: rgba(95,191,122,0.25);
+    }
 
     .mono{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -175,9 +213,26 @@
       overflow-wrap:anywhere;
     }
 
+    .loading-box,
+    .error-box{
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 8px;
+    }
+
+    .error-box{
+      border-color: rgba(255,77,77,0.35);
+      color: #ffd0d0;
+    }
+
     .col-12{ grid-column: span 12; }
     .col-6{ grid-column: span 6; }
-    @media(max-width: 980px){ .col-6{ grid-column: span 12; } }
+
+    @media(max-width: 980px){
+      .col-6{ grid-column: span 12; }
+    }
   </style>
 </head>
 
@@ -187,13 +242,11 @@
   </div>
 
   <div class="main-container">
-
-    <!-- ✅ الهيدر الموحد (نفس باقي الصفحات) -->
     <div id="header-placeholder"></div>
 
-    <div class="grid">
+    <div id="pageMessage"></div>
 
-      <!-- Summary -->
+    <div class="grid">
       <section class="panel col-12">
         <div class="panel-title">
           <h4><i class="fa-solid fa-chart-simple"></i> <span id="txt-summary-title">ملخص عام</span></h4>
@@ -201,7 +254,6 @@
         <div class="stat-grid" id="summaryStats"></div>
       </section>
 
-      <!-- Activity -->
       <section class="panel col-6">
         <div class="panel-title">
           <h4><i class="fa-solid fa-clock"></i> <span id="txt-activity-title">نمط النشاط</span></h4>
@@ -209,7 +261,6 @@
         <div class="list" id="activityList"></div>
       </section>
 
-      <!-- Flags -->
       <section class="panel col-6">
         <div class="panel-title">
           <h4><i class="fa-solid fa-triangle-exclamation"></i> <span id="txt-flags-title">مؤشرات مبدئية</span></h4>
@@ -217,7 +268,6 @@
         <div class="list" id="flagsList"></div>
       </section>
 
-      <!-- URLs -->
       <section class="panel col-6">
         <div class="panel-title">
           <h4><i class="fa-solid fa-link"></i> <span id="txt-urls-title">الروابط المستخرجة</span></h4>
@@ -226,7 +276,6 @@
         <div class="list" id="urlsList"></div>
       </section>
 
-      <!-- Numbers -->
       <section class="panel col-6">
         <div class="panel-title">
           <h4><i class="fa-solid fa-hashtag"></i> <span id="txt-numbers-title">الأرقام المستخرجة</span></h4>
@@ -235,7 +284,6 @@
         <div class="list" id="numbersList"></div>
       </section>
 
-      <!-- Keywords -->
       <section class="panel col-12">
         <div class="panel-title">
           <h4><i class="fa-solid fa-magnifying-glass"></i> <span id="txt-keywords-title">كلمات مهمة</span></h4>
@@ -243,22 +291,16 @@
         </div>
         <div class="list" id="keywordsList"></div>
       </section>
-
     </div>
   </div>
 
   <script>
-    // =========================
-    // ✅ Language + UI Text
-    // =========================
     let currentLang = localStorage.getItem("lang") || "ar";
 
     const UI = {
       ar: {
         title: "Whisper-WA | التحليل",
         topSubtitle: "منصة التحليل الجنائي الرقمي",
-        nav: { home:"الرئيسية", chats:"الشات", reports:"التقارير", account:"حسابي" },
-
         summaryTitle: "ملخص عام",
         activityTitle: "نمط النشاط",
         flagsTitle: "مؤشرات مبدئية",
@@ -266,34 +308,35 @@
         numbersTitle: "الأرقام المستخرجة",
         keywordsTitle: "كلمات مهمة",
         keywordsNote: "Hits",
-
         s_total: "عدد الرسائل",
         s_first: "أول تواصل",
         s_last: "آخر تواصل",
         s_artifacts: "Artifacts",
         s_sent: "مرسل",
         s_recv: "مستلم",
-
         times: "مرة",
         links: "روابط",
         numbers: "أرقام",
         hits: "Hits",
-
         a_peak_hour: "أكثر ساعة نشاط",
         a_peak_day: "أكثر يوم نشاط",
         a_duration: "مدة التواصل",
-        a_ratio: "نسبة مرسل/مستلم",
-
+        a_ratio: "مرسل / مستلم",
         p_important: "مهم",
         p_warn: "تنبيه",
-        p_ok: "مقبول"
+        p_ok: "مقبول",
+        no_urls: "لا توجد روابط.",
+        no_numbers: "لا توجد أرقام.",
+        no_keywords: "لا توجد كلمات مطابقة.",
+        no_flags: "لا توجد مؤشرات حالياً.",
+        no_activity: "لا توجد بيانات نشاط.",
+        loading: "جاري تحميل التحليل...",
+        failed: "تعذر تحميل التحليل.",
+        not_found: "لم يتم العثور على تقرير التحليل. شغلي workflow أول."
       },
-
       en: {
         title: "Whisper-WA | Analysis",
         topSubtitle: "Digital Forensics Platform",
-        nav: { home:"Home", chats:"Chats", reports:"Reports", account:"Account" },
-
         summaryTitle: "Overview",
         activityTitle: "Activity Pattern",
         flagsTitle: "Initial Flags",
@@ -301,104 +344,97 @@
         numbersTitle: "Extracted Numbers",
         keywordsTitle: "Important Keywords",
         keywordsNote: "Hits",
-
         s_total: "Total Messages",
         s_first: "First Contact",
         s_last: "Last Contact",
         s_artifacts: "Artifacts",
         s_sent: "Sent",
         s_recv: "Received",
-
         times: "times",
         links: "URLs",
         numbers: "Numbers",
         hits: "Hits",
-
         a_peak_hour: "Most active hour",
         a_peak_day: "Most active day",
         a_duration: "Communication span",
-        a_ratio: "Sent / Received ratio",
-
+        a_ratio: "Sent / Received",
         p_important: "Important",
         p_warn: "Warning",
-        p_ok: "OK"
+        p_ok: "OK",
+        no_urls: "No URLs found.",
+        no_numbers: "No numbers found.",
+        no_keywords: "No matching keywords.",
+        no_flags: "No flags for now.",
+        no_activity: "No activity data.",
+        loading: "Loading analysis...",
+        failed: "Failed to load analysis.",
+        not_found: "Analysis report not found. Run workflow first."
       }
     };
 
-    // =========================
-    // ✅ Demo Raw Data (language-neutral)
-    // =========================
-    const raw = {
-      summary: {
-        total_messages: 342,
-        sent: 180,
-        received: 162,
-        first_contact: "2026-02-01 09:20",
-        last_contact: "2026-02-12 23:10",
-        urls_count: 12,
-        numbers_count: 6,
-        keyword_hits_total: 9
-      },
-      activity: [
-        { id:"peak_hour", value_ar:"11:00 مساءً", value_en:"11:00 PM" },
-        { id:"peak_day", value_ar:"2026-02-12", value_en:"2026-02-12" },
-        { id:"duration", value_ar:"12 يوم", value_en:"12 days" },
-        { id:"ratio", value_ar:"52% / 48%", value_en:"52% / 48%" }
-      ],
-      flags: [
-        {
-          level:"warn",
-          title_ar:"وجود روابط مختصرة",
-          title_en:"Shortened links detected",
-          desc_ar:"تم رصد روابط قصيرة (مثل bit.ly) تحتاج تحقق.",
-          desc_en:"Short URLs (e.g., bit.ly) were detected and need verification."
-        },
-        {
-          level:"danger",
-          title_ar:"كلمات مرتبطة بالتحويل/التحقق",
-          title_en:"Transfer/verification keywords",
-          desc_ar:"تم رصد كلمات مثل: OTP، تحويل، كود.",
-          desc_en:"Keywords found such as: OTP, transfer, code."
-        },
-        {
-          level:"ok",
-          title_ar:"تسلسل زمني واضح",
-          title_en:"Clear timeline",
-          desc_ar:"الرسائل مرتبة بزمنها بدون فجوات كبيرة في هذا الديمو.",
-          desc_en:"Messages appear chronological with no large gaps in this demo."
-        }
-      ],
-      urls: [
-        { url:"https://bit.ly/3xxxx", count:4 },
-        { url:"https://t.me/example", count:3 },
-        { url:"https://example.com/login", count:2 },
-        { url:"https://maps.app.goo.gl/xxxxx", count:1 }
-      ],
-      numbers: [
-        { value:"0501234567", context_ar:"رقم مذكور داخل رسالة", context_en:"Number mentioned in a message", count:2 },
-        { value:"SA0000000000000000000000", context_ar:"شكل IBAN (تجريبي)", context_en:"IBAN-like pattern (demo)", count:1 },
-        { value:"123456", context_ar:"كود/OTP محتمل", context_en:"Possible code/OTP", count:3 }
-      ],
-      keywords: [
-        { keyword:"OTP", hits:3, examples_ar:["أرسل OTP بسرعة","لا تعطي OTP لأحد"], examples_en:["Send the OTP quickly","Never share OTP with anyone"] },
-        { keyword:"Transfer", hits:2, examples_ar:["حول المبلغ","تم التحويل"], examples_en:["Transfer the amount","Transfer completed"] },
-        { keyword:"Bank", hits:1, examples_ar:["من البنك اتصلوا"], examples_en:["They called from the bank"] },
-        { keyword:"Code", hits:3, examples_ar:["أرسل الكود","الكود وصل"], examples_en:["Send the code","The code arrived"] }
-      ]
+    let raw = {
+      summary: {},
+      activity: [],
+      flags: [],
+      urls: [],
+      numbers: [],
+      keywords: []
     };
 
-    function setPill(el, text){ el.textContent = text; }
+    function setPill(el, text){
+      if(el) el.textContent = text;
+    }
+
+    function showMessage(type, text){
+      const box = document.getElementById("pageMessage");
+      if(!box) return;
+
+      if(!text){
+        box.innerHTML = "";
+        return;
+      }
+
+      box.innerHTML = `<div class="${type === 'error' ? 'error-box' : 'loading-box'}">${text}</div>`;
+    }
 
     function renderSummary(s){
       const t = UI[currentLang];
       const wrap = document.getElementById("summaryStats");
       wrap.innerHTML = "";
 
+      const totalMessages = s.total_messages || 0;
+      const sent = s.sent || 0;
+      const received = s.received || 0;
+      const firstContact = s.first_contact || "-";
+      const lastContact = s.last_contact || "-";
+      const urlsCount = s.urls_count || 0;
+      const numbersCount = s.numbers_count || 0;
+      const keywordHits = s.keyword_hits_total || 0;
+
+      const firstDate = firstContact !== "-" && firstContact.includes(" ") ? firstContact.split(" ")[0] : firstContact;
+      const lastDate = lastContact !== "-" && lastContact.includes(" ") ? lastContact.split(" ")[0] : lastContact;
+
       const cards = [
-        { label: t.s_total, value: s.total_messages, sub: `${t.s_sent}: ${s.sent} | ${t.s_recv}: ${s.received}` },
-        { label: t.s_first, value: s.first_contact.split(" ")[0], sub: s.first_contact },
-        { label: t.s_last, value: s.last_contact.split(" ")[0], sub: s.last_contact },
-        { label: t.s_artifacts, value: `${s.urls_count} ${t.links}`, sub: `${s.numbers_count} ${t.numbers} | ${s.keyword_hits_total} ${t.hits}` }
+        {
+          label: t.s_total,
+          value: totalMessages,
+          sub: `${t.s_sent}: ${sent} | ${t.s_recv}: ${received}`
+        },
+        {
+          label: t.s_first,
+          value: firstDate || "-",
+          sub: firstContact
+        },
+        {
+          label: t.s_last,
+          value: lastDate || "-",
+          sub: lastContact
+        },
+        {
+          label: t.s_artifacts,
+          value: `${urlsCount} ${t.links}`,
+          sub: `${numbersCount} ${t.numbers} | ${keywordHits} ${t.hits}`
+        }
       ];
 
       cards.forEach(c=>{
@@ -418,6 +454,11 @@
       const wrap = document.getElementById("activityList");
       wrap.innerHTML = "";
 
+      if(!list.length){
+        wrap.innerHTML = `<div class="muted">${t.no_activity}</div>`;
+        return;
+      }
+
       const labelMap = {
         peak_hour: t.a_peak_hour,
         peak_day: t.a_peak_day,
@@ -432,7 +473,7 @@
         div.innerHTML = `
           <div class="row">
             <span class="mono">${labelMap[r.id] || r.id}</span>
-            <span class="pill ok">${val}</span>
+            <span class="pill ok">${val || "-"}</span>
           </div>
         `;
         wrap.appendChild(div);
@@ -444,6 +485,11 @@
       const wrap = document.getElementById("flagsList");
       wrap.innerHTML = "";
 
+      if(!flags.length){
+        wrap.innerHTML = `<div class="muted">${t.no_flags}</div>`;
+        return;
+      }
+
       flags.forEach(f=>{
         const div = document.createElement("div");
         div.className = "item";
@@ -452,7 +498,7 @@
         const pillText = f.level === "danger" ? t.p_important : (f.level === "warn" ? t.p_warn : t.p_ok);
 
         const title = (currentLang === "ar") ? f.title_ar : f.title_en;
-        const desc  = (currentLang === "ar") ? f.desc_ar  : f.desc_en;
+        const desc = (currentLang === "ar") ? f.desc_ar : f.desc_en;
 
         div.innerHTML = `
           <div class="row">
@@ -473,7 +519,7 @@
       setPill(document.getElementById("urlsCountPill"), `${urls.length} ${t.links}`);
 
       if(!urls.length){
-        wrap.innerHTML = `<div class="muted">${currentLang==="ar" ? "لا توجد روابط." : "No URLs found."}</div>`;
+        wrap.innerHTML = `<div class="muted">${t.no_urls}</div>`;
         return;
       }
 
@@ -498,7 +544,7 @@
       setPill(document.getElementById("numbersCountPill"), `${nums.length} ${t.numbers}`);
 
       if(!nums.length){
-        wrap.innerHTML = `<div class="muted">${currentLang==="ar" ? "لا توجد أرقام." : "No numbers found."}</div>`;
+        wrap.innerHTML = `<div class="muted">${t.no_numbers}</div>`;
         return;
       }
 
@@ -522,11 +568,18 @@
       const wrap = document.getElementById("keywordsList");
       wrap.innerHTML = "";
 
+      if(!keys.length){
+        wrap.innerHTML = `<div class="muted">${t.no_keywords}</div>`;
+        return;
+      }
+
       keys.forEach(k=>{
         const div = document.createElement("div");
         div.className = "item";
         const examples = (currentLang==="ar" ? (k.examples_ar||[]) : (k.examples_en||[]))
-          .slice(0,3).map(x => `• ${x}`).join("<br>");
+          .slice(0,3)
+          .map(x => `• ${x}`)
+          .join("<br>");
 
         div.innerHTML = `
           <div class="row">
@@ -540,12 +593,91 @@
     }
 
     function renderAll(){
-      renderSummary(raw.summary);
-      renderActivity(raw.activity);
-      renderFlags(raw.flags);
-      renderUrls(raw.urls);
-      renderNumbers(raw.numbers);
-      renderKeywords(raw.keywords);
+      renderSummary(raw.summary || {});
+      renderActivity(raw.activity || []);
+      renderFlags(raw.flags || []);
+      renderUrls(raw.urls || []);
+      renderNumbers(raw.numbers || []);
+      renderKeywords(raw.keywords || []);
+    }
+
+    function mapBackendToFrontend(data){
+      const phoneNumbers = data.entities?.phone_numbers || [];
+      const ibans = data.entities?.ibans || [];
+      const urls = data.entities?.urls || [];
+      const keywordsObj = data.keywords || {};
+      const flagsArr = data.flags || [];
+
+      return {
+        summary: {
+          total_messages: data.summary?.total_messages || 0,
+          sent: data.summary?.sent_messages || 0,
+          received: data.summary?.received_messages || 0,
+          first_contact: data.summary?.first_message || "-",
+          last_contact: data.summary?.last_message || "-",
+          urls_count: urls.length,
+          numbers_count: phoneNumbers.length + ibans.length,
+          keyword_hits_total: Object.keys(keywordsObj).length
+        },
+
+        activity: [
+          {
+            id: "peak_hour",
+            value_ar: data.temporal?.peak_hour || "-",
+            value_en: data.temporal?.peak_hour || "-"
+          },
+          {
+            id: "peak_day",
+            value_ar: data.temporal?.peak_day || "-",
+            value_en: data.temporal?.peak_day || "-"
+          },
+          {
+            id: "duration",
+            value_ar: `${data.temporal?.duration_days || 0} يوم`,
+            value_en: `${data.temporal?.duration_days || 0} days`
+          },
+          {
+            id: "ratio",
+            value_ar: `${data.summary?.sent_messages || 0} / ${data.summary?.received_messages || 0}`,
+            value_en: `${data.summary?.sent_messages || 0} / ${data.summary?.received_messages || 0}`
+          }
+        ],
+
+        flags: flagsArr.map(f => ({
+          level: f.severity === "high" ? "danger" : (f.severity === "medium" ? "warn" : "ok"),
+          title_ar: f.description_ar || "مؤشر",
+          title_en: f.description_en || "Flag",
+          desc_ar: `العدد: ${f.count || 0}`,
+          desc_en: `Count: ${f.count || 0}`
+        })),
+
+        urls: urls.map(u => ({
+          url: u,
+          count: 1
+        })),
+
+        numbers: [
+          ...phoneNumbers.map(n => ({
+            value: n,
+            context_ar: "رقم جوال مستخرج من الرسائل",
+            context_en: "Phone number extracted from messages",
+            count: 1
+          })),
+          ...ibans.map(n => ({
+            value: n,
+            context_ar: "رقم IBAN مستخرج من الرسائل",
+            context_en: "IBAN extracted from messages",
+            count: 1
+          }))
+        ],
+
+        keywords: Object.entries(keywordsObj).map(([keyword, info]) => ({
+          keyword,
+          hits: info.count || 0,
+          examples_ar: (info.messages || []).map(m => m.text).slice(0, 3),
+          examples_en: (info.messages || []).map(m => m.text).slice(0, 3)
+        }))
+      };
     }
 
     function applyLangToHeaderAndPage(){
@@ -553,16 +685,15 @@
       const html = document.documentElement;
 
       html.lang = currentLang;
-      html.dir  = (currentLang === "ar") ? "rtl" : "ltr";
+      html.dir = (currentLang === "ar") ? "rtl" : "ltr";
       document.title = t.title;
 
-      // header text
       const topSubtitle = document.getElementById("top-subtitle");
       const langText = document.getElementById("langText");
+
       if (topSubtitle) topSubtitle.textContent = t.topSubtitle;
       if (langText) langText.textContent = (currentLang === "en") ? "AR" : "EN";
 
-      // page text
       document.getElementById("txt-summary-title").textContent = t.summaryTitle;
       document.getElementById("txt-activity-title").textContent = t.activityTitle;
       document.getElementById("txt-flags-title").textContent = t.flagsTitle;
@@ -574,113 +705,123 @@
       renderAll();
     }
 
-    // =========================
-    // ✅ Load header.html + Back button for analysis
-   // =========================
-// ✅ Route Protection
-// =========================
-if(!localStorage.getItem("userRole")){
-  window.location.href = "auth.html";
-}
+    async function loadAnalysis(){
+      const t = UI[currentLang];
+      showMessage("loading", t.loading);
 
-// =========================
-// ✅ تحميل الهيدر + تفعيل كامل
-// =========================
-window.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const res = await fetch("header.html");
-    const headerHtml = await res.text();
-    const holder = document.getElementById("header-placeholder");
-    if (holder) holder.innerHTML = headerHtml;
+      try {
+        const caseId = localStorage.getItem("case_id") || "Case_001";
+        const res = await fetch(`http://127.0.0.1:5000/api/analysis/${caseId}`);
+        const data = await res.json();
 
-    setTimeout(() => {
-      setupHeader();
-      setupBackButton("chat.html"); // يرجع للشات
-      setupLanguage();
-    }, 100);
+        if (!res.ok || !data.ok) {
+          showMessage("error", data.error || t.failed);
+          return;
+        }
 
-  } catch (e) {
-    console.error("Header load error:", e);
-    applyLangToHeaderAndPage();
-  }
-});
-
-// =========================
-// ✅ إعداد الهيدر كامل
-// =========================
-function setupHeader(){
-  const btnAccount = document.getElementById("btnAccount");
-  const menu = document.getElementById("accountMenu");
-  const logoutBtn = document.getElementById("menuLogout");
-  const menuAdmin = document.getElementById("menuAdmin");
-  const menuAdminBadge = document.getElementById("menuAdminBadge");
-  const avatarBadge = document.getElementById("avatarBadge");
-
-  if (!btnAccount || !menu) return;
-
-  const userRole = localStorage.getItem("userRole");
-
-  if(userRole === "admin" && menuAdmin){
-    menuAdmin.classList.add("show");
-    
-    try{
-      const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
-      const pendingCount = requests.filter(r => r.status === "pending").length;
-
-      if(pendingCount > 0){
-        menuAdminBadge.textContent = pendingCount;
-        avatarBadge.textContent = pendingCount;
-        avatarBadge.classList.add("show");
+        raw = mapBackendToFrontend(data);
+        renderAll();
+        showMessage("", "");
+      } catch (error) {
+        console.error("Failed to load analysis:", error);
+        showMessage("error", t.not_found);
       }
-    } catch(e){}
-  }
-
-  btnAccount.onclick = (e) => {
-    e.stopPropagation();
-    menu.classList.toggle("open");
-  };
-
-  document.onclick = () => {
-    if(menu.classList.contains("open")){
-      menu.classList.remove("open");
     }
-  };
 
-  menu.onclick = (e) => e.stopPropagation();
+    if(!localStorage.getItem("userRole")){
+      window.location.href = "auth.html";
+    }
 
-  if (logoutBtn){
-    logoutBtn.onclick = () => {
-      localStorage.removeItem("userRole");
-      window.location.href = "index.html";
-    };
-  }
-}
+    function setupHeader(){
+      const btnAccount = document.getElementById("btnAccount");
+      const menu = document.getElementById("accountMenu");
+      const logoutBtn = document.getElementById("menuLogout");
+      const menuAdmin = document.getElementById("menuAdmin");
+      const menuAdminBadge = document.getElementById("menuAdminBadge");
+      const avatarBadge = document.getElementById("avatarBadge");
 
-// =========================
-// ✅ إعداد زر الرجوع
-// =========================
-function setupBackButton(returnPage){
-  const backBtn = document.getElementById("btnBack");
-  if(backBtn){
-    backBtn.style.display = "inline-flex";
-    backBtn.onclick = () => window.location.href = returnPage;
-  }
-}
+      if (!btnAccount || !menu) return;
 
-// =========================
-// ✅ إعداد اللغة
-// =========================
-function setupLanguage(){
-  const btnLang = document.getElementById("btnLang");
-  if (btnLang) {
-    btnLang.onclick = () => {
-      currentLang = (currentLang === "ar") ? "en" : "ar";
-      localStorage.setItem("lang", currentLang);
+      const userRole = localStorage.getItem("userRole");
+
+      if(userRole === "admin" && menuAdmin){
+        menuAdmin.classList.add("show");
+
+        try{
+          const requests = JSON.parse(localStorage.getItem("accountRequests") || "[]");
+          const pendingCount = requests.filter(r => r.status === "pending").length;
+
+          if(pendingCount > 0){
+            if (menuAdminBadge) menuAdminBadge.textContent = pendingCount;
+            if (avatarBadge){
+              avatarBadge.textContent = pendingCount;
+              avatarBadge.classList.add("show");
+            }
+          }
+        } catch(e){}
+      }
+
+      btnAccount.onclick = (e) => {
+        e.stopPropagation();
+        menu.classList.toggle("open");
+      };
+
+      document.onclick = () => {
+        if(menu.classList.contains("open")){
+          menu.classList.remove("open");
+        }
+      };
+
+      menu.onclick = (e) => e.stopPropagation();
+
+      if (logoutBtn){
+        logoutBtn.onclick = () => {
+          localStorage.removeItem("userRole");
+          window.location.href = "index.html";
+        };
+      }
+    }
+
+    function setupBackButton(returnPage){
+      const backBtn = document.getElementById("btnBack");
+      if(backBtn){
+        backBtn.style.display = "inline-flex";
+        backBtn.onclick = () => window.location.href = returnPage;
+      }
+    }
+
+    function setupLanguage(){
+      const btnLang = document.getElementById("btnLang");
+      if (btnLang) {
+        btnLang.onclick = () => {
+          currentLang = (currentLang === "ar") ? "en" : "ar";
+          localStorage.setItem("lang", currentLang);
+          applyLangToHeaderAndPage();
+        };
+      }
       applyLangToHeaderAndPage();
-    };
-  }
-  applyLangToHeaderAndPage();
-}
+    }
+
+    window.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const res = await fetch("header.html");
+        const headerHtml = await res.text();
+        const holder = document.getElementById("header-placeholder");
+        if (holder) holder.innerHTML = headerHtml;
+
+        setTimeout(() => {
+          setupHeader();
+          setupBackButton("chat.html");
+          setupLanguage();
+          loadAnalysis();
+        }, 100);
+
+      } catch (e) {
+        console.error("Header load error:", e);
+        applyLangToHeaderAndPage();
+        loadAnalysis();
+      }
+    });
   </script>
 </body>
 </html>
