@@ -42,9 +42,7 @@ def pull_whatsapp_evidence(case_id: str = "Case_001") -> dict:
 
     save_path = os.path.join("Cases", case_id, "Evidence")
     os.makedirs(save_path, exist_ok=True)
-
-    # الملفات المطلوبة من الجهاز
-    android_db = "/sdcard/WhatsApp/Databases/msgstore.db.crypt14"
+    android_db = "/sdcard/whatsApp/Databases/msgstore.db.crypt14"
     android_key = "/data/data/com.whatsapp/files/key"
 
     files_to_pull = [
@@ -125,3 +123,4 @@ def pull_whatsapp_evidence(case_id: str = "Case_001") -> dict:
         "failed_count": len(files_to_pull) - success_count,
         "results": results
     }
+
