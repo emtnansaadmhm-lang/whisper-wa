@@ -1,168 +1,199 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Whisper-WA | تسجيل الدخول</title>
+<title>Whisper-WA | Access Control</title>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-:root{
---primary-dark:#1f5f3b;
---primary-mid:#3f9b5f;
---primary-light:#5fbf7a;
---accent-glow:#8fd9a8;
---bg-dark:#0e1a12;
---glass-bg:rgba(20,40,30,0.65);
---glass-border:rgba(95,191,122,0.3);
---text-white:#ffffff;
---text-muted:#c2dec9;
+/* ===== RESET ===== */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;}
-
+/* ===== BACKGROUND ===== */
 body{
-font-family:'Tajawal',sans-serif;
-background:var(--bg-dark);
-color:white;
-min-height:100vh;
-padding:20px;
+height:100vh;
+background:
+radial-gradient(circle at 20% 30%, #0f3d25 0%, transparent 40%),
+radial-gradient(circle at 80% 70%, #124d2e 0%, transparent 40%),
+#06140c;
+display:flex;
+justify-content:center;
+align-items:center;
+color:#e6fff1;
 }
 
+/* ===== TOP BAR ===== */
+.topbar{
+position:absolute;
+top:25px;
+width:92%;
+max-width:1100px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 22px;
+border-radius:18px;
+background:rgba(20,50,30,.55);
+border:1px solid rgba(120,255,170,.15);
+backdrop-filter:blur(14px);
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:12px;
+font-weight:600;
+}
+
+.brand span{
+font-size:13px;
+color:#a7d7b7;
+}
+
+.lang{
+width:40px;
+height:40px;
+border-radius:50%;
+background:rgba(90,200,120,.2);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:600;
+}
+
+/* ===== CARD ===== */
 .card{
-width:min(820px,95vw);
-margin:auto;
-background:var(--glass-bg);
-border:1px solid var(--glass-border);
+width:520px;
+padding:35px;
 border-radius:22px;
-padding:26px;
+background:rgba(12,32,20,.65);
+border:1px solid rgba(120,255,170,.15);
+backdrop-filter:blur(20px);
+box-shadow:0 0 60px rgba(0,0,0,.6);
 }
 
-h1{margin-bottom:6px}
-.subtitle{color:var(--text-muted);margin-bottom:18px}
+/* ===== TITLE ===== */
+h1{
+font-size:26px;
+margin-bottom:6px;
+}
 
+.subtitle{
+color:#9ec9ad;
+margin-bottom:22px;
+font-size:14px;
+}
+
+/* ===== TABS ===== */
 .tabs{
 display:flex;
-background:#0003;
-border-radius:16px;
+background:#0c2417;
+border-radius:12px;
 overflow:hidden;
-margin-bottom:14px;
+margin-bottom:22px;
 }
 
-.tab-btn{
+.tab{
 flex:1;
 padding:12px;
-border:none;
-background:none;
-color:var(--text-muted);
-font-weight:900;
-cursor:pointer;
+text-align:center;
+font-weight:600;
+color:#9ec9ad;
 }
 
-.tab-btn.active{
-background:#5fbf7a22;
-color:var(--accent-glow);
+.tab.active{
+background:linear-gradient(90deg,#2f8f57,#46b873);
+color:white;
 }
 
-.tab-content{display:none}
-.tab-content.active{display:block}
+/* ===== FORM ===== */
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+}
+
+.full{
+grid-column:span 2;
+}
 
 label{
+font-size:13px;
+color:#a7d7b7;
+margin-bottom:6px;
 display:block;
-margin:10px 0 6px;
-color:var(--text-muted);
-font-weight:800;
 }
-
-.required{color:#ff6b6b}
 
 input,select,textarea{
 width:100%;
-padding:12px;
+padding:14px;
 border-radius:12px;
-border:1px solid var(--glass-border);
-background:#0004;
+border:1px solid rgba(120,255,170,.15);
+background:#081b11;
 color:white;
+outline:none;
 }
 
-textarea{min-height:110px}
-
-.row{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
+textarea{
+height:120px;
+resize:none;
 }
 
+.note{
+margin-top:14px;
+padding:14px;
+border-radius:12px;
+background:#0e2a1b;
+border:1px solid rgba(120,255,170,.15);
+font-size:13px;
+color:#b7e6c8;
+}
+
+/* ===== BUTTONS ===== */
 .actions{
 display:flex;
-gap:12px;
-margin-top:14px;
+gap:14px;
+margin-top:18px;
 }
 
 .btn{
 flex:1;
-padding:12px;
-border-radius:14px;
-font-weight:900;
-cursor:pointer;
+padding:14px;
+border-radius:12px;
 border:none;
+font-weight:600;
+cursor:pointer;
 }
 
-.btn-primary{
-background:linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
+.primary{
+background:linear-gradient(90deg,#2f8f57,#46b873);
 color:white;
 }
 
-.btn-ghost{
-background:#0004;
-color:var(--accent-glow);
-border:1px solid rgba(255,255,255,0.1);
+.ghost{
+background:#081b11;
+color:#9ec9ad;
+border:1px solid rgba(120,255,170,.2);
 }
 
-.alert{
-margin-top:16px;
-padding:12px;
-border-radius:14px;
-font-weight:900;
-}
-
-.success{
-background:#1f5f3b55;
-border:1px solid #3f9b5f88;
-}
-
-.danger{
-background:#aa333355;
-border:1px solid #ff6b6b66;
-}
-
-.hidden{display:none}
-
-.note{
-margin-top:10px;
-padding:10px;
-background:rgba(99,179,237,0.08);
-border:1px solid rgba(99,179,237,0.2);
-border-radius:10px;
-font-size:0.9rem;
-line-height:1.6;
-}
-
-.lang-btn{
-position:absolute;
-top:20px;
-left:20px;
-background:#5fbf7a22;
-border:1px solid #5fbf7a55;
-color:#8fd9a8;
-padding:6px 14px;
-border-radius:999px;
-cursor:pointer;
-font-weight:900;
+/* ===== LOGIN ONLY ===== */
+.demo{
+margin-top:18px;
+padding:14px;
+border-radius:12px;
+background:#0e2a1b;
+border:1px solid rgba(120,255,170,.15);
+font-size:13px;
+color:#b7e6c8;
 }
 
 </style>
@@ -170,223 +201,48 @@ font-weight:900;
 
 <body>
 
-<button class="lang-btn" id="btnLang">EN</button>
+<!-- TOP BAR -->
+<div class="topbar">
+<div class="brand">
+<strong>Whisper-WA</strong>
+<span>Digital Forensics Platform</span>
+</div>
+<div class="lang">AR</div>
+</div>
 
+<!-- CARD -->
 <div class="card">
 
-<h1 id="page-title">التحكم بالوصول</h1>
-<p class="subtitle" id="page-subtitle">سجّل دخول أو قدّم طلب حساب للمراجعة</p>
+<h1>Access Control</h1>
+<p class="subtitle">Login to continue, or request an account for approval.</p>
 
+<!-- TABS -->
 <div class="tabs">
-<button class="tab-btn active" data-tab="login" id="tab-login-btn">تسجيل الدخول</button>
-<button class="tab-btn" data-tab="request" id="tab-request-btn">طلب حساب</button>
+<div class="tab active">Login</div>
+<div class="tab">Request Account</div>
 </div>
 
-<!-- LOGIN -->
-<div class="tab-content active" id="login">
+<!-- LOGIN FORM -->
+<div class="full">
 
-<label id="lbl-email">البريد الإلكتروني</label>
-<input id="loginUser">
+<label>Email</label>
+<input placeholder="Enter your email">
 
-<label id="lbl-password">كلمة المرور</label>
-<input id="loginPass" type="password">
+<label style="margin-top:14px;">Password</label>
+<input type="password" placeholder="Enter your password">
 
 <div class="actions">
-<button class="btn btn-primary" id="btnLogin">تسجيل الدخول</button>
+<button class="btn primary">Sign In</button>
+</div>
+
+<div class="demo">
+<strong>Demo Credentials:</strong><br>
+Email: <b>admin</b> | Password: <b>admin123</b>
 </div>
 
 </div>
 
-<!-- REQUEST -->
-<div class="tab-content" id="request">
-
-<div class="row">
-<div>
-<label id="lbl-name">الاسم الكامل <span class="required">*</span></label>
-<input id="reqName">
 </div>
-
-<div>
-<label id="lbl-req-email">البريد الإلكتروني <span class="required">*</span></label>
-<input id="reqEmail">
-</div>
-</div>
-
-<div class="row">
-<div>
-<label id="lbl-code">رمز الوصول <span class="required">*</span></label>
-<input id="reqCode">
-</div>
-
-<div>
-<label id="lbl-dept">القسم</label>
-<select id="reqDept">
-<option value="">-- اختر --</option>
-<option>الأدلة الجنائية الرقمية</option>
-<option>التحقيقات</option>
-<option>الأمن السيبراني</option>
-<option>القانوني والامتثال</option>
-<option>أخرى</option>
-</select>
-</div>
-</div>
-
-<label id="lbl-reason">سبب طلب الوصول <span class="required">*</span></label>
-<textarea id="reqReason"></textarea>
-
-<div class="note" id="adminNote">
-سيتم إرسال طلبك إلى مسؤول النظام (Administrator)،
-وسيتم مراجعة الطلب والموافقة عليه أو رفضه.
-</div>
-
-<div class="actions">
-<button class="btn btn-primary" id="btnSubmitRequest">إرسال الطلب</button>
-<button class="btn btn-ghost" id="btnClearRequest">مسح النموذج</button>
-</div>
-
-</div>
-
-<div id="alertBox" class="alert hidden"></div>
-
-</div>
-
-<script>
-
-/* Tabs */
-document.querySelectorAll(".tab-btn").forEach(btn=>{
-btn.onclick=()=>{
-document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"))
-document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"))
-btn.classList.add("active")
-document.getElementById(btn.dataset.tab).classList.add("active")
-}
-})
-
-function showAlert(type,msg){
-const box=document.getElementById("alertBox")
-box.className="alert "+type
-box.textContent=msg
-box.classList.remove("hidden")
-}
-
-/* Login */
-btnLogin.onclick=()=>{
-const u=loginUser.value.trim()
-const p=loginPass.value.trim()
-
-if(u==="admin" && p==="admin123"){
-showAlert("success","✓ تم تسجيل الدخول بنجاح")
-setTimeout(()=>location.href="connect.html",1200)
-}else{
-showAlert("danger","بيانات الدخول غير صحيحة")
-}
-}
-
-/* Request */
-btnSubmitRequest.onclick=()=>{
-
-const name=reqName.value.trim()
-const email=reqEmail.value.trim()
-const code=reqCode.value.trim()
-const dept=reqDept.value
-const reason=reqReason.value.trim()
-
-if(!name||!email||!code||!reason){
-showAlert("danger","الرجاء ملء جميع الحقول المطلوبة")
-return
-}
-
-const requests=JSON.parse(localStorage.getItem("accountRequests")||"[]")
-
-requests.push({
-id:Date.now(),
-name,email,code,department:dept,reason,status:"pending"
-})
-
-localStorage.setItem("accountRequests",JSON.stringify(requests))
-
-showAlert("success","✓ تم إرسال الطلب وسيتم مراجعته من قبل المسؤول")
-setTimeout(()=>location.href="pending.html",1500)
-}
-
-/* Clear */
-btnClearRequest.onclick=()=>{
-["reqName","reqEmail","reqCode","reqDept","reqReason"].forEach(id=>{
-document.getElementById(id).value=""
-})
-}
-
-/* Language System */
-
-let currentLang="ar"
-
-const UI={
-ar:{
-title:"التحكم بالوصول",
-subtitle:"سجّل دخول أو قدّم طلب حساب للمراجعة",
-login:"تسجيل الدخول",
-request:"طلب حساب",
-email:"البريد الإلكتروني",
-password:"كلمة المرور",
-name:"الاسم الكامل",
-code:"رمز الوصول",
-dept:"القسم",
-reason:"سبب طلب الوصول",
-send:"إرسال الطلب",
-clear:"مسح النموذج",
-loginBtn:"تسجيل الدخول",
-note:"سيتم إرسال طلبك إلى مسؤول النظام (Administrator)، وسيتم مراجعة الطلب والموافقة عليه أو رفضه."
-},
-en:{
-title:"Access Control",
-subtitle:"Login or request an account for approval",
-login:"Login",
-request:"Request Account",
-email:"Email",
-password:"Password",
-name:"Full Name",
-code:"Access Code",
-dept:"Department",
-reason:"Reason for Access",
-send:"Submit Request",
-clear:"Clear Form",
-loginBtn:"Sign In",
-note:"Your request will be sent to the system administrator for approval or rejection."
-}
-}
-
-function applyLang(lang){
-
-currentLang=lang
-const t=UI[lang]
-
-document.documentElement.dir=lang==="ar"?"rtl":"ltr"
-
-page-title.textContent=t.title
-page-subtitle.textContent=t.subtitle
-tab-login-btn.textContent=t.login
-tab-request-btn.textContent=t.request
-lbl-email.textContent=t.email
-lbl-password.textContent=t.password
-lbl-name.innerHTML=t.name+' <span class="required">*</span>'
-lbl-code.innerHTML=t.code+' <span class="required">*</span>'
-lbl-dept.textContent=t.dept
-lbl-reason.innerHTML=t.reason+' <span class="required">*</span>'
-btnSubmitRequest.textContent=t.send
-btnClearRequest.textContent=t.clear
-btnLogin.textContent=t.loginBtn
-adminNote.textContent=t.note
-
-btnLang.textContent=lang==="ar"?"EN":"AR"
-}
-
-btnLang.onclick=()=>{
-applyLang(currentLang==="ar"?"en":"ar")
-}
-
-applyLang("ar")
-
-</script>
 
 </body>
 </html>
