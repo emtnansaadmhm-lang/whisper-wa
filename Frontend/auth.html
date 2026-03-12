@@ -1,4 +1,478 @@
-} else if(approvedUser && pass === "demo123"){
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Whisper-WA | تسجيل الدخول</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary-dark:#1f5f3b;
+      --primary-mid:#3f9b5f;
+      --primary-light:#5fbf7a;
+      --accent-glow:#8fd9a8;
+      --bg-dark:#0e1a12;
+      --glass-bg: rgba(20, 40, 30, 0.65);
+      --glass-border: rgba(95, 191, 122, 0.3);
+      --text-white:#ffffff;
+      --text-muted:#c2dec9;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+
+    body{
+      font-family:'Tajawal',sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      min-height:100vh;
+      overflow-y:auto;
+      padding: 20px;
+      background-image:
+        radial-gradient(1200px 700px at 20% 10%, rgba(95,191,122,0.12), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(143,217,168,0.10), transparent 55%),
+        linear-gradient(rgba(31,95,59,0.10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(31,95,59,0.10) 1px, transparent 1px);
+      background-size: auto, auto, 40px 40px, 40px 40px;
+    }
+
+    .animated-bg-logo{
+      position: fixed;
+      top:50%; left:50%;
+      transform: translate(-50%,-50%);
+      z-index:-1;
+      width: 620px;
+      opacity:0.18;
+      pointer-events: none;
+      animation: glow 8s ease-in-out infinite alternate;
+    }
+    .animated-bg-logo img{
+      width:100%;
+      filter: drop-shadow(0 0 30px var(--primary-mid));
+    }
+    @keyframes glow{
+      from{ opacity:0.1; transform:translate(-50%,-50%) scale(0.96); }
+      to{ opacity:0.26; transform:translate(-50%,-50%) scale(1.04); }
+    }
+
+    /* ========== HEADER ========== */
+    .ww-topbar{
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+      position: relative;
+      z-index: 9999;
+      margin-bottom: 0;
+    }
+
+    .ww-left{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .ww-icon-btn{
+      border:none;
+      background: rgba(0,0,0,0.18);
+      color:#c2dec9;
+      width:38px; height:38px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      transition:0.2s;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    .ww-icon-btn:hover{
+      background: rgba(95,191,122,0.14);
+      color:#8fd9a8;
+      transform: translateY(-1px);
+    }
+
+    .ww-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .ww-logo{
+      height:42px; width:auto;
+      filter: drop-shadow(0 0 6px rgba(63,155,95,0.5));
+    }
+    .ww-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .ww-title b{ font-size:1.15rem; color:#fff; }
+    .ww-title span{ color:#c2dec9; font-size:0.85rem; margin-top:4px; }
+
+    .ww-lang-btn{
+      background: rgba(95,191,122,0.10);
+      border: 1px solid rgba(95,191,122,0.3);
+      color:#8fd9a8;
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight:900;
+      font-family: inherit;
+      transition:0.25s;
+      user-select:none;
+    }
+    .ww-lang-btn:hover{
+      background: rgba(95,191,122,0.18);
+      transform: translateY(-1px);
+    }
+
+    /* ========== PAGE ========== */
+    .page-container{
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .main-container{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height: calc(100vh - 120px);
+      padding: 40px 0;
+    }
+          .card{
+      width:min(820px,95vw);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(14px);
+      border-radius: 22px;
+      padding: 26px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35);
+      position: relative;
+      z-index: 10;
+    }
+
+    h1{ font-size:1.7rem; margin-bottom:6px; }
+    .subtitle{ color:var(--text-muted); margin-bottom:18px; line-height:1.5; }
+
+    .tabs{
+      display:flex;
+      background: rgba(0,0,0,0.18);
+      border-radius: 16px;
+      overflow:hidden;
+      margin-bottom:14px;
+    }
+    .tab-btn{
+      flex:1; padding:12px; border:none; background:none;
+      color:var(--text-muted); font-weight:900; cursor:pointer; font-family:inherit;
+    }
+    .tab-btn.active{
+      background: rgba(95,191,122,0.16);
+      color: var(--accent-glow);
+    }
+
+    .tab-content{ display:none; }
+    .tab-content.active{ display:block; }
+
+    label{
+      display:block; margin:10px 0 6px;
+      color:var(--text-muted); font-weight:800;
+    }
+    .required{ color:#ff6b6b; margin-inline-start:4px; }
+
+    input, select, textarea{
+      width:100%; padding:12px; border-radius:12px;
+      border:1px solid var(--glass-border);
+      background: rgba(0,0,0,0.25);
+      color:white; font-family:inherit; font-size: 1rem;
+    }
+    input::placeholder, textarea::placeholder{
+      color: rgba(194,222,201,0.5);
+    }
+    textarea{ min-height:110px; resize:vertical; }
+
+    .row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media(max-width:720px){ .row{ grid-template-columns:1fr; } }
+
+    .actions{ display:flex; gap:12px; margin-top:14px; }
+
+    .btn{
+      flex:1; padding:12px; border-radius:14px;
+      font-weight:900; cursor:pointer; border:none;
+      transition:0.25s; font-family:inherit; font-size: 1rem;
+    }
+    .btn:disabled{ opacity:0.5; cursor:not-allowed; }
+    .btn-primary{
+      background: linear-gradient(45deg,var(--primary-dark),var(--primary-mid));
+      color:white;
+    }
+    .btn-primary:hover:not(:disabled){ filter:brightness(1.15); transform:translateY(-1px); }
+    .btn-ghost{
+      background: rgba(0,0,0,0.2);
+      color: var(--accent-glow);
+      border:1px solid rgba(255,255,255,0.1);
+    }
+    .btn-ghost:hover:not(:disabled){ background:rgba(95,191,122,0.12); transform:translateY(-1px); }
+
+    .alert{
+      margin-top:16px; padding:12px; border-radius:14px; font-weight:900;
+    }
+    .hidden{ display:none; }
+    .success{
+      background:rgba(95,191,122,0.14); color:#dffbe7;
+      border:1px solid rgba(95,191,122,0.3);
+    }
+    .danger{
+      background:rgba(255,107,107,0.14); color:#ffd1d1;
+      border:1px solid rgba(255,107,107,0.3);
+    }
+
+    .note{
+      margin-top:10px; padding:10px;
+      background:rgba(99,179,237,0.08);
+      border:1px solid rgba(99,179,237,0.2);
+      border-radius:10px;
+      color:rgba(209,231,255,0.9);
+      font-size:0.9rem; line-height:1.6;
+    }
+    .note code{
+      background: rgba(0,0,0,0.25);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      color: var(--accent-glow);
+    }
+  </style>
+</head>
+
+<body>
+<div class="animated-bg-logo">
+  <img src="logo.png" alt="">
+</div>
+
+<div class="page-container">
+
+  <!-- ========== HEADER ========== -->
+  <header class="ww-topbar">
+    <div class="ww-left">
+      <!-- زر الرجوع -->
+      <a href="index.html" class="ww-icon-btn" title="Back">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <!-- اللوغو -->
+      <div class="ww-brand">
+        <img src="logo.png" class="ww-logo" alt="Whisper-WA Logo" />
+        <div class="ww-title">
+          <b>Whisper-WA</b>
+          <span id="top-subtitle">منصة التحليل الجنائي الرقمي</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- زر اللغة فقط (بدون أيقونة حساب) -->
+    <button class="ww-lang-btn" id="btnLang" type="button">
+      <span id="langText">EN</span>
+    </button>
+  </header>
+
+  <!-- ========== CONTENT ========== -->
+  <div class="main-container">
+    <section class="card">
+            <h1 id="page-title">التحكم بالوصول</h1>
+      <p class="subtitle" id="page-subtitle">سجّل دخول للمتابعة، أو قدّم طلب حساب للمراجعة.</p>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login" id="tab-login-btn">تسجيل الدخول</button>
+        <button class="tab-btn" data-tab="request" id="tab-request-btn">طلب حساب</button>
+      </div>
+
+      <!-- ========== LOGIN ========== -->
+      <div class="tab-content active" id="login">
+
+        <label id="lbl-email">البريد الإلكتروني</label>
+        <input id="loginUser" type="text" placeholder="أدخل بريدك الإلكتروني"
+          onkeypress="if(event.key==='Enter') document.getElementById('btnLogin').click()">
+
+        <label id="lbl-password">كلمة المرور</label>
+        <input id="loginPass" type="password" placeholder="أدخل كلمة المرور"
+          onkeypress="if(event.key==='Enter') document.getElementById('btnLogin').click()">
+
+        <div class="actions">
+          <button class="btn btn-primary" id="btnLogin">تسجيل الدخول</button>
+        </div>
+
+        <div class="note">
+          <strong id="note-demo-label">بيانات تجريبية:</strong><br>
+          <span id="note-demo-creds">البريد: <code>admin</code> | كلمة المرور: <code>admin123</code></span>
+        </div>
+      </div>
+
+      <!-- ========== REQUEST ========== -->
+      <div class="tab-content" id="request">
+
+        <div class="row">
+          <div>
+            <label id="lbl-name">الاسم الكامل <span class="required">*</span></label>
+            <input id="reqName" type="text" placeholder="مثال: سارة الزهراني">
+          </div>
+          <div>
+            <label id="lbl-req-email">البريد الإلكتروني <span class="required">*</span></label>
+            <input id="reqEmail" type="email" placeholder="مثال: sara@company.sa">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label id="lbl-job">المسمى الوظيفي <span class="required">*</span></label>
+            <input id="reqJob" type="text" placeholder="مثال: محلل جنائي رقمي">
+          </div>
+          <div>
+            <label id="lbl-dept">القسم</label>
+            <select id="reqDept">
+              <option value="">-- اختر --</option>
+              <option value="Digital Forensics">الأدلة الجنائية الرقمية</option>
+              <option value="Investigations">التحقيقات</option>
+              <option value="Cybersecurity">الأمن السيبراني</option>
+              <option value="Legal/Compliance">القانوني والامتثال</option>
+              <option value="Other">أخرى</option>
+            </select>
+          </div>
+        </div>
+
+        <label id="lbl-reason">سبب طلب الوصول <span class="required">*</span></label>
+        <textarea id="reqReason" placeholder="اشرح بإيجاز سبب احتياجك للوصول (مثال: رقم القضية، تفاصيل المشروع، تعيين الفريق)"></textarea>
+
+        <div class="note" id="req-note">
+          Your request will be reviewed by the administrator. You will receive an email notification once your account is approved or if additional information is needed.
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="btnSubmitRequest">إرسال الطلب</button>
+          <button class="btn btn-ghost" id="btnClearRequest">مسح النموذج</button>
+        </div>
+      </div>
+
+      <div id="alertBox" class="alert hidden"></div>
+
+    </section>
+  </div>
+</div>
+<script>
+  let currentLang = localStorage.getItem("lang")  "ar";
+
+  const UI = {
+    ar: {
+      title: "Whisper-WA | تسجيل الدخول",
+      subtitle: "منصة التحليل الجنائي الرقمي",
+      langText: "EN",
+      pageTitle: "التحكم بالوصول",
+      pageSubtitle: "سجّل دخول للمتابعة، أو قدّم طلب حساب للمراجعة.",
+      tabLogin: "تسجيل الدخول",
+      tabRequest: "طلب حساب",
+      lblEmail: "البريد الإلكتروني",
+      lblPassword: "كلمة المرور",
+      lblName: "الاسم الكامل",
+      lblReqEmail: "البريد الإلكتروني",
+      lblJob: "المسمى الوظيفي",
+      lblDept: "القسم",
+      lblReason: "سبب طلب الوصول",
+      phEmail: "أدخل بريدك الإلكتروني",
+      phPassword: "أدخل كلمة المرور",
+      phName: "مثال: سارة الزهراني",
+      phReqEmail: "مثال: sara@company.sa",
+      phJob: "مثال: محلل جنائي رقمي",
+      phReason: "اشرح بإيجاز سبب احتياجك للوصول (مثال: رقم القضية، تفاصيل المشروع، تعيين الفريق)",
+      selectOpt: "-- اختر --",
+      dept1: "الأدلة الجنائية الرقمية",
+      dept2: "التحقيقات",
+      dept3: "الأمن السيبراني",
+      dept4: "القانوني والامتثال",
+      dept5: "أخرى",
+      btnLogin: "تسجيل الدخول",
+      btnSubmit: "إرسال الطلب",
+      btnClear: "مسح النموذج",
+      noteDemoLabel: "بيانات تجريبية:",
+      noteDemoCreds: "البريد: <code>admin</code> | كلمة المرور: <code>admin123</code>",
+      reqNote: "سيتم مراجعة طلبك من قبل المسؤول. ستتلقى إشعارًا بالبريد الإلكتروني بمجرد الموافقة على حسابك أو في حالة الحاجة إلى معلومات إضافية.",
+      errFields: "الرجاء ملء جميع الحقول المطلوبة (*)",
+      errEmail: "الرجاء إدخال بريد إلكتروني صحيح",
+      errLogin: "الرجاء إدخال البريد الإلكتروني وكلمة المرور",
+      errCreds: "بيانات الدخول غير صحيحة أو الحساب غير معتمد بعد.",
+      successLogin: "✓ تم تسجيل الدخول بنجاح! جاري التحويل...",
+      successRequest: "✓ تم إرسال الطلب بنجاح! جاري التحويل...",
+      signingIn: "جاري التسجيل...",
+      submitting: "جاري الإرسال..."
+    },
+    en: {
+      title: "Whisper-WA | Login",
+      subtitle: "Digital Forensics Platform",
+      langText: "AR",
+      pageTitle: "Access Control",
+      pageSubtitle: "Login to continue, or request an account for approval.",
+      tabLogin: "Login",
+      tabRequest: "Request Account",
+      lblEmail: "Email",
+      lblPassword: "Password",
+      lblName: "Full Name",
+      lblReqEmail: "Email",
+      lblJob: "Job Title",
+      lblDept: "Department",
+      lblReason: "Reason for Access",
+      phEmail: "Enter your email",
+      phPassword: "Enter your password",
+      phName: "e.g. Sara Al-Zahrani",
+      phReqEmail: "e.g. sara@company.sa",
+      phJob: "e.g. Digital Forensics Analyst",
+      phReason: "Briefly explain why you need access (e.g., case number, project details)",
+      selectOpt: "-- Select --",
+      dept1: "Digital Forensics",
+      dept2: "Investigations",
+      dept3: "Cybersecurity",
+      dept4: "Legal/Compliance",
+      dept5: "Other",
+      btnLogin: "Sign In",
+      btnSubmit: "Submit Request",
+      btnClear: "Clear Form",
+      noteDemoLabel: "Demo Credentials:",
+      noteDemoCreds: "Email: <code>admin</code> | Password: <code>admin123</code>",
+      reqNote: "Your request will be reviewed by the administrator. You will receive an email notification once your account is approved or if additional information is needed.",
+      errFields: "Please fill in all required fields (*)",
+      errEmail: "Please enter a valid email address",
+      errLogin: "Please enter your email and password",
+      errCreds: "Invalid credentials or account not approved yet.",
+      successLogin: "✓ Login successful! Redirecting...",
+      successRequest: "✓ Request submitted successfully! Redirecting...",
+      signingIn: "Signing in...",
+      submitting: "Submitting..."
+    }
+  };
+
+  // ========== APPLY LANGUAGE ==========
+  function applyLang(lang) {
+    currentLang = lang;
+    const t = UI[lang];
+    const isAr = lang === "ar";
+
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isAr ? "rtl" : "ltr";
+    document.title = t.title;
+    localStorage.setItem("lang", lang);
+
+    document.getElementById("top-subtitle").textContent =
+            } else if(approvedUser && pass === "demo123"){
         localStorage.setItem("userRole", "user");
         localStorage.setItem("currentUser", JSON.stringify({ name:approvedUser.name, email:approvedUser.email, role:"user" }));
         showAlert("success", t.successLogin);
