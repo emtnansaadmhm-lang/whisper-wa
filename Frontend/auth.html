@@ -318,4 +318,229 @@ border:1px solid rgba(255,107,107,0.3);
 <div class="row">
 
 <div>
-<label id="lbl-name">الاسم الكامل
+<label id="lbl-name">الاسم الكامل <span class="required">*</span></label>
+<input id="reqName">
+</div>
+
+<div>
+<label id="lbl-req-email">البريد الإلكتروني <span class="required">*</span></label>
+<input id="reqEmail">
+</div>
+
+</div>
+
+<div class="row">
+
+<div>
+<label id="lbl-code">رمز الدخول <span class="required">*</span></label>
+<input id="reqCode">
+</div>
+
+<div>
+<label id="lbl-dept">القسم</label>
+
+<select id="reqDept">
+<option value="">-- اختر --</option>
+<option>الأدلة الجنائية الرقمية</option>
+<option>التحقيقات</option>
+<option>الأمن السيبراني</option>
+<option>القانوني والامتثال</option>
+<option>أخرى</option>
+</select>
+
+</div>
+</div>
+
+<label id="lbl-reason">سبب طلب الوصول <span class="required">*</span></label>
+<textarea id="reqReason"></textarea>
+
+<div class="actions">
+<button class="btn btn-primary" id="btnSubmitRequest">إرسال الطلب</button>
+<button class="btn btn-ghost" id="btnClearRequest">مسح النموذج</button>
+</div>
+
+</div>
+
+<div id="alertBox" class="alert hidden"></div>
+
+</section>
+</div>
+
+<script>
+
+const translations = {
+    ar: {
+        windowTitle: "Whisper-WA | تسجيل الدخول",
+        langBtn: "English",
+        topSubtitle: "منصة التحليل الجنائي الرقمي",
+        pageTitle: "التحكم بالوصول",
+        pageSubtitle: "سجّل دخول أو اطلب حساب",
+        tabLoginBtn: "تسجيل الدخول",
+        tabRequestBtn: "طلب حساب",
+        lblEmail: "البريد الإلكتروني",
+        lblPassword: "كلمة المرور",
+        btnLogin: "تسجيل الدخول",
+        lblName: "الاسم الكامل <span class='required'>*</span>",
+        lblReqEmail: "البريد الإلكتروني <span class='required'>*</span>",
+        lblCode: "رمز الدخول <span class='required'>*</span>",
+        lblDept: "القسم",
+        deptOpts: ["-- اختر --", "الأدلة الجنائية الرقمية", "التحقيقات", "الأمن السيبراني", "القانوني والامتثال", "أخرى"],
+        lblReason: "سبب طلب الوصول <span class='required'>*</span>",
+        btnSubmitRequest: "إرسال الطلب",
+        btnClearRequest: "مسح النموذج",
+        alertEmptyLogin: "الرجاء إدخال البريد وكلمة المرور",
+        alertLoginSuccess: "تم تسجيل الدخول",
+        alertLoginFail: "بيانات غير صحيحة",
+        alertEmptyReq: "الرجاء تعبئة الحقول المطلوبة",
+        alertReqSuccess: "تم إرسال الطلب"
+    },
+    en: {
+        windowTitle: "Whisper-WA | Login",
+        langBtn: "العربية",
+        topSubtitle: "Digital Forensics Platform",
+        pageTitle: "Access Control",
+        pageSubtitle: "Login or Request an Account",
+        tabLoginBtn: "Login",
+        tabRequestBtn: "Request Account",
+        lblEmail: "Email Address",
+        lblPassword: "Password",
+        btnLogin: "Login",
+        lblName: "Full Name <span class='required'>*</span>",
+        lblReqEmail: "Email Address <span class='required'>*</span>",
+        lblCode: "Access Code <span class='required'>*</span>",
+        lblDept: "Department",
+        deptOpts: ["-- Select --", "Digital Forensics", "Investigations", "Cybersecurity", "Legal & Compliance", "Other"],
+        lblReason: "Reason for Access <span class='required'>*</span>",
+        btnSubmitRequest: "Submit Request",
+        btnClearRequest: "Clear Form",
+        alertEmptyLogin: "Please enter email and password",
+        alertLoginSuccess: "Login Successful",
+        alertLoginFail: "Invalid Credentials",
+        alertEmptyReq: "Please fill all required fields",
+        alertReqSuccess: "Request Submitted Successfully"
+    }
+};
+
+let currentLang = "ar";
+
+function updateLanguage() {
+    const t = translations[currentLang];
+    
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+    
+    const backIcon = document.getElementById("back-icon");
+    if(currentLang === "en") {
+        backIcon.className = "fa-solid fa-arrow-right";
+    } else {
+        backIcon.className = "fa-solid fa-arrow-left";
+    }
+    
+    document.getElementById("page-window-title").innerText = t.windowTitle;
+    document.getElementById("langText").innerText = t.langBtn;
+    document.getElementById("top-subtitle").innerText = t.topSubtitle;
+    document.getElementById("page-title").innerText = t.pageTitle;
+    document.getElementById("page-subtitle").innerText = t.pageSubtitle;
+    document.getElementById("tab-login-btn").innerText = t.tabLoginBtn;
+    document.getElementById("tab-request-btn").innerText = t.tabRequestBtn;
+    document.getElementById("lbl-email").innerText = t.lblEmail;
+    document.getElementById("lbl-password").innerText = t.lblPassword;
+    document.getElementById("btnLogin").innerText = t.btnLogin;
+    document.getElementById("lbl-name").innerHTML = t.lblName;
+    document.getElementById("lbl-req-email").innerHTML = t.lblReqEmail;
+    document.getElementById("lbl-code").innerHTML = t.lblCode;
+    document.getElementById("lbl-dept").innerText = t.lblDept;
+    document.getElementById("lbl-reason").innerHTML = t.lblReason;
+    document.getElementById("btnSubmitRequest").innerText = t.btnSubmitRequest;
+    document.getElementById("btnClearRequest").innerText = t.btnClearRequest;
+
+    const deptSelect = document.getElementById("reqDept");
+    for (let i = 0; i < deptSelect.options.length; i++) {
+        deptSelect.options[i].innerText = t.deptOpts[i];
+    }
+
+    document.getElementById("alertBox").classList.add("hidden");
+}
+
+document.getElementById("btnLang").addEventListener("click", function() {
+    currentLang = currentLang === "ar" ? "en" : "ar";
+    updateLanguage();
+});
+
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.onclick=()=>{
+        document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+        document.querySelectorAll(".tab-content").forEach(c=>c.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+    };
+});
+
+function showAlert(type,msg){
+    const box=document.getElementById("alertBox");
+    box.className="alert "+type;
+    box.textContent=msg;
+    box.classList.remove("hidden");
+}
+
+document.getElementById("btnLogin").onclick=()=>{
+    const user=document.getElementById("loginUser").value.trim();
+    const pass=document.getElementById("loginPass").value.trim();
+    const t = translations[currentLang];
+
+    if(!user||!pass){
+        showAlert("danger", t.alertEmptyLogin);
+        return;
+    }
+
+    if(user==="admin" && pass==="admin123"){
+        showAlert("success", t.alertLoginSuccess);
+        setTimeout(()=>location.href="connect.html",1000);
+    }
+    else{
+        showAlert("danger", t.alertLoginFail);
+    }
+};
+
+document.getElementById("btnSubmitRequest").onclick=()=>{
+    const name=document.getElementById("reqName").value.trim();
+    const email=document.getElementById("reqEmail").value.trim();
+    const code=document.getElementById("reqCode").value.trim();
+    const dept=document.getElementById("reqDept").value;
+    const reason=document.getElementById("reqReason").value.trim();
+    const t = translations[currentLang];
+
+    if(!name||!email||!code||!reason){
+        showAlert("danger", t.alertEmptyReq);
+        return;
+    }
+
+    const requests=JSON.parse(localStorage.getItem("accountRequests")||"[]");
+
+    requests.push({
+        id:Date.now(),
+        name,
+        email,
+        code: code,
+        department:dept,
+        reason,
+        status:"pending"
+    });
+
+    localStorage.setItem("accountRequests",JSON.stringify(requests));
+
+    showAlert("success", t.alertReqSuccess);
+
+    setTimeout(()=>location.href="pending.html",1200);
+};
+
+document.getElementById("btnClearRequest").onclick=()=>{
+    ["reqName","reqEmail","reqCode","reqDept","reqReason"].forEach(id=>{
+        document.getElementById(id).value="";
+    });
+};
+
+</script>
+
+</body>
+</html>
