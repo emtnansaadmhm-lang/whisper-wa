@@ -332,14 +332,12 @@ font-size:0.9rem;
 <label id="lbl-dept">القسم</label>
 
 <select id="reqDept">
-
 <option value="">-- اختر --</option>
 <option>الأدلة الجنائية الرقمية</option>
 <option>التحقيقات</option>
 <option>الأمن السيبراني</option>
 <option>القانوني والامتثال</option>
 <option>أخرى</option>
-
 </select>
 
 </div>
@@ -362,7 +360,103 @@ font-size:0.9rem;
 
 <script>
 
-let currentLang="ar";
+// قاموس الترجمة
+const translations = {
+    ar: {
+        langBtn: "EN",
+        topSubtitle: "منصة التحليل الجنائي الرقمي",
+        pageTitle: "التحكم بالوصول",
+        pageSubtitle: "سجّل دخول أو اطلب حساب",
+        tabLoginBtn: "تسجيل الدخول",
+        tabRequestBtn: "طلب حساب",
+        lblEmail: "البريد الإلكتروني",
+        lblPassword: "كلمة المرور",
+        btnLogin: "تسجيل الدخول",
+        lblName: "الاسم الكامل <span class='required'>*</span>",
+        lblReqEmail: "البريد الإلكتروني <span class='required'>*</span>",
+        lblCode: "رمز الدخول <span class='required'>*</span>",
+        lblDept: "القسم",
+        deptOpts: ["-- اختر --", "الأدلة الجنائية الرقمية", "التحقيقات", "الأمن السيبراني", "القانوني والامتثال", "أخرى"],
+        lblReason: "سبب طلب الوصول <span class='required'>*</span>",
+        btnSubmitRequest: "إرسال الطلب",
+        btnClearRequest: "مسح النموذج",
+        alertEmptyLogin: "الرجاء إدخال البريد وكلمة المرور",
+        alertLoginSuccess: "تم تسجيل الدخول",
+        alertLoginFail: "بيانات غير صحيحة",
+        alertEmptyReq: "الرجاء تعبئة الحقول المطلوبة",
+        alertReqSuccess: "تم إرسال الطلب"
+    },
+    en: {
+        langBtn: "عربي",
+        topSubtitle: "Digital Forensics Platform",
+        pageTitle: "Access Control",
+        pageSubtitle: "Login or Request an Account",
+        tabLoginBtn: "Login",
+        tabRequestBtn: "Request Account",
+        lblEmail: "Email Address",
+        lblPassword: "Password",
+        btnLogin: "Login",
+        lblName: "Full Name <span class='required'>*</span>",
+        lblReqEmail: "Email Address <span class='required'>*</span>",
+        lblCode: "Access Code <span class='required'>*</span>",
+        lblDept: "Department",
+        deptOpts: ["-- Select --", "Digital Forensics", "Investigations", "Cybersecurity", "Legal & Compliance", "Other"],
+        lblReason: "Reason for Access Request <span class='required'>*</span>",
+        btnSubmitRequest: "Submit Request",
+        btnClearRequest: "Clear Form",
+        alertEmptyLogin: "Please enter email and password",
+        alertLoginSuccess: "Login Successful",
+        alertLoginFail: "Invalid Credentials",
+        alertEmptyReq: "Please fill all required fields",
+        alertReqSuccess: "Request Submitted Successfully"
+    }
+};
+
+let currentLang = "ar";
+
+// دالة تحديث اللغة
+function updateLanguage() {
+    const t = translations[currentLang];
+    
+    // تغيير اتجاه الصفحة
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === "ar" ? "rtl" : "ltr";
+    
+    // تحديث النصوص
+    document.getElementById("langText").innerText = t.langBtn;
+    document.getElementById("top-subtitle").innerText = t.topSubtitle;
+    document.getElementById("page-title").innerText = t.pageTitle;
+    document.getElementById("page-subtitle").innerText = t.pageSubtitle;
+    document.getElementById("tab-login-btn").innerText = t.tabLoginBtn;
+    document.getElementById("tab-request-btn").innerText = t.tabRequestBtn;
+    document.getElementById("lbl-email").innerText = t.lblEmail;
+    document.getElementById("lbl-password").innerText = t.lblPassword;
+    document.getElementById("btnLogin").innerText = t.btnLogin;
+    document.getElementById("lbl-name").innerHTML = t.lblName;
+    document.getElementById("lbl-req-email").innerHTML = t.lblReqEmail;
+    document.getElementById("lbl-code").innerHTML = t.lblCode;
+    document.getElementById("lbl-dept").innerText = t.lblDept;
+    document.getElementById("lbl-reason").innerHTML = t.lblReason;
+    document.getElementById("btnSubmitRequest").innerText = t.btnSubmitRequest;
+    document.getElementById("btnClearRequest").innerText = t.btnClearRequest;
+
+    // تحديث الخيارات في القائمة المنسدلة
+    const deptSelect = document.getElementById("reqDept");
+    for (let i = 0; i < deptSelect.options.length; i++) {
+        deptSelect.options[i].innerText = t.deptOpts[i];
+        // نحافظ على قيمة الـ value ثابتة باللغة العربية لو أردت تخزينها دائمًا بالعربي، أو نغيرها حسب الحاجة
+        // هنا تم تغيير النص المعروض فقط
+    }
+
+    // إخفاء التنبيه عند تغيير اللغة إذا كان ظاهر
+    document.getElementById("alertBox").classList.add("hidden");
+}
+
+// تشغيل تغيير اللغة عند الضغط على الزر
+document.getElementById("btnLang").onclick = () => {
+    currentLang = currentLang === "ar" ? "en" : "ar";
+    updateLanguage();
+};
 
 document.querySelectorAll(".tab-btn").forEach(btn=>{
 btn.onclick=()=>{
@@ -384,18 +478,19 @@ document.getElementById("btnLogin").onclick=()=>{
 
 const user=document.getElementById("loginUser").value.trim();
 const pass=document.getElementById("loginPass").value.trim();
+const t = translations[currentLang];
 
 if(!user||!pass){
-showAlert("danger","الرجاء إدخال البريد وكلمة المرور");
+showAlert("danger", t.alertEmptyLogin);
 return;
 }
 
 if(user==="admin" && pass==="admin123"){
-showAlert("success","تم تسجيل الدخول");
+showAlert("success", t.alertLoginSuccess);
 setTimeout(()=>location.href="connect.html",1000);
 }
 else{
-showAlert("danger","بيانات غير صحيحة");
+showAlert("danger", t.alertLoginFail);
 }
 
 };
@@ -407,9 +502,10 @@ const email=document.getElementById("reqEmail").value.trim();
 const code=document.getElementById("reqCode").value.trim();
 const dept=document.getElementById("reqDept").value;
 const reason=document.getElementById("reqReason").value.trim();
+const t = translations[currentLang];
 
 if(!name||!email||!code||!reason){
-showAlert("danger","الرجاء تعبئة الحقول المطلوبة");
+showAlert("danger", t.alertEmptyReq);
 return;
 }
 
@@ -420,14 +516,14 @@ id:Date.now(),
 name,
 email,
 code,
-department:dept,
+department:dept, // سيخزن القيمة الموجودة سواء كانت بالعربي أو الإنجليزي وقت الإرسال
 reason,
 status:"pending"
 });
 
 localStorage.setItem("accountRequests",JSON.stringify(requests));
 
-showAlert("success","تم إرسال الطلب");
+showAlert("success", t.alertReqSuccess);
 
 setTimeout(()=>location.href="pending.html",1200);
 
