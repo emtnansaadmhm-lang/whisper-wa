@@ -1,4 +1,4 @@
-[3/13/2026 10:18 PM] R A: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
@@ -155,7 +155,6 @@ border:1px solid rgba(255,107,107,0.3);
 <button class="tab-btn" data-tab="request">طلب حساب</button>
 </div>
 
-<!-- LOGIN -->
 <div class="tab-content active" id="login">
 
 <label>البريد الإلكتروني</label>
@@ -170,7 +169,6 @@ border:1px solid rgba(255,107,107,0.3);
 
 </div>
 
-<!-- REQUEST -->
 <div class="tab-content" id="request">
 
 <label>الاسم الكامل *</label>
@@ -180,7 +178,7 @@ border:1px solid rgba(255,107,107,0.3);
 <input id="reqEmail">
 
 <label>كلمة المرور *</label>
-<input id="reqCode">
+<input id="reqCode" type="password">
 
 <label>القسم</label>
 <select id="reqDept">
@@ -208,7 +206,7 @@ border:1px solid rgba(255,107,107,0.3);
 </div>
 
 <script>
-[3/13/2026 10:18 PM] R A: /* tabs */
+/* tabs */
 document.querySelectorAll(".tab-btn").forEach(btn=>{
 btn.onclick=()=>{
 document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
