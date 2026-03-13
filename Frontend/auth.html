@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 
 <style>
-
 :root{
 --primary-dark:#1f5f3b;
 --primary-mid:#3f9b5f;
@@ -251,7 +250,6 @@ border:1px solid rgba(255,107,107,0.3);
 }
 
 .hidden{display:none;}
-
 </style>
 </head>
 
@@ -392,7 +390,7 @@ const translations = {
         alertLoginSuccess: "تم تسجيل الدخول",
         alertLoginFail: "بيانات غير صحيحة",
         alertEmptyReq: "الرجاء تعبئة الحقول المطلوبة",
-        alertReqSuccess: "تم إرسال طلبك بنجاح. سيتم توجيه الطلب إلى البريد الإلكتروني لمسؤول النظام للمراجعة والاعتماد، وسيتم إشعارك بالنتيجة قريباً."
+        alertReqSuccess: "تم إرسال طلبك بنجاح. سيتم توجيهه لصفحة المسؤول لمراجعة واعتماد الطلب، وسيتم إشعارك بالنتيجة قريباً."
     },
     en: {
         windowTitle: "Whisper-WA | Login",
@@ -417,7 +415,7 @@ const translations = {
         alertLoginSuccess: "Login Successful",
         alertLoginFail: "Invalid Credentials",
         alertEmptyReq: "Please fill all required fields",
-        alertReqSuccess: "Request submitted successfully. It has been forwarded to the administrator's email for review and approval. You will be notified of the outcome shortly."
+        alertReqSuccess: "Request submitted successfully. It has been forwarded to the admin page for review and approval. You will be notified of the outcome shortly."
     }
 };
 
@@ -502,6 +500,7 @@ document.getElementById("btnLogin").onclick=()=>{
     }
 };
 
+// تعديل الطلب ليذهب للصفحة وليس البريد
 document.getElementById("btnSubmitRequest").onclick=()=>{
     const name=document.getElementById("reqName").value.trim();
     const email=document.getElementById("reqEmail").value.trim();
@@ -531,7 +530,7 @@ document.getElementById("btnSubmitRequest").onclick=()=>{
 
     showAlert("success", t.alertReqSuccess);
 
-    setTimeout(()=>location.href="pending.html", 4000);
+    setTimeout(()=>location.href="pending.html", 2000);
 };
 
 document.getElementById("btnClearRequest").onclick=()=>{
