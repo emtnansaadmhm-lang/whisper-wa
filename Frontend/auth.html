@@ -194,11 +194,6 @@ color:white;
 font-family: inherit;
 }
 
-/* تفتيح لون الـ Placeholder ليكون أوضح قليلاً */
-::placeholder {
-  color: rgba(194, 222, 201, 0.4);
-}
-
 textarea{
 min-height:110px;
 resize:vertical;
@@ -210,21 +205,10 @@ grid-template-columns:1fr 1fr;
 gap:12px;
 }
 
-.info-box {
-background: rgba(31, 95, 59, 0.25);
-border: 1px solid rgba(95, 191, 122, 0.15);
-padding: 14px 18px;
-border-radius: 12px;
-margin-top: 16px;
-font-size: 0.9rem;
-color: #c2dec9;
-line-height: 1.6;
-}
-
 .actions{
 display:flex;
 gap:12px;
-margin-top:16px;
+margin-top:14px;
 }
 
 .btn{
@@ -318,7 +302,7 @@ border:1px solid rgba(255,107,107,0.3);
 <div class="tab-content active" id="login">
 
 <label id="lbl-email">البريد الإلكتروني</label>
-<input id="loginUser" placeholder="admin@company.sa">
+<input id="loginUser" placeholder="admin">
 
 <label id="lbl-password">كلمة المرور</label>
 <input id="loginPass" type="password" placeholder="••••••••">
@@ -335,12 +319,12 @@ border:1px solid rgba(255,107,107,0.3);
 
 <div>
 <label id="lbl-name">الاسم الكامل <span class="required">*</span></label>
-<input id="reqName" placeholder="مثال: سارة الزهراني">
+<input id="reqName">
 </div>
 
 <div>
 <label id="lbl-req-email">البريد الإلكتروني <span class="required">*</span></label>
-<input id="reqEmail" placeholder="مثال: sara@company.sa">
+<input id="reqEmail">
 </div>
 
 </div>
@@ -348,8 +332,8 @@ border:1px solid rgba(255,107,107,0.3);
 <div class="row">
 
 <div>
-<label id="lbl-job">المسمى الوظيفي <span class="required">*</span></label>
-<input id="reqJob" placeholder="مثال: محلل أدلة رقمية">
+<label id="lbl-code">كلمة المرور<span class="required">*</span></label>
+<input id="reqCode">
 </div>
 
 <div>
@@ -368,11 +352,7 @@ border:1px solid rgba(255,107,107,0.3);
 </div>
 
 <label id="lbl-reason">سبب طلب الوصول <span class="required">*</span></label>
-<textarea id="reqReason" placeholder="اشرح باختصار سبب احتياجك للوصول (مثل: رقم القضية، تفاصيل المشروع)"></textarea>
-
-<div class="info-box" id="info-review-box">
-ستتم مراجعة طلبك من قبل مسؤول النظام. ستتلقى إشعارًا عبر البريد الإلكتروني بمجرد الموافقة على حسابك أو في حال الحاجة إلى معلومات إضافية.
-</div>
+<textarea id="reqReason"></textarea>
 
 <div class="actions">
 <button class="btn btn-primary" id="btnSubmitRequest">إرسال الطلب</button>
@@ -402,52 +382,42 @@ const translations = {
         btnLogin: "تسجيل الدخول",
         lblName: "الاسم الكامل <span class='required'>*</span>",
         lblReqEmail: "البريد الإلكتروني <span class='required'>*</span>",
-        lblJob: "المسمى الوظيفي <span class='required'>*</span>",
+        lblCode: "كلمة المرور <span class='required'>*</span>",
         lblDept: "القسم",
         deptOpts: ["-- اختر --", "الأدلة الجنائية الرقمية", "التحقيقات", "الأمن السيبراني", "القانوني والامتثال", "أخرى"],
         lblReason: "سبب طلب الوصول <span class='required'>*</span>",
-        phName: "مثال: سارة الزهراني",
-        phEmail: "مثال: sara@company.sa",
-        phJob: "مثال: محلل أدلة رقمية",
-        phReason: "اشرح باختصار سبب احتياجك للوصول (مثل: رقم القضية، تفاصيل المشروع)",
-        infoReviewBox: "ستتم مراجعة طلبك من قبل مسؤول النظام. ستتلقى إشعارًا عبر البريد الإلكتروني بمجرد الموافقة على حسابك أو في حال الحاجة إلى معلومات إضافية.",
         btnSubmitRequest: "إرسال الطلب",
         btnClearRequest: "مسح النموذج",
         alertEmptyLogin: "الرجاء إدخال البريد وكلمة المرور",
-        alertLoginSuccess: "تم تسجيل الدخول بنجاح",
+        alertLoginSuccess: "تم تسجيل الدخول",
         alertLoginFail: "بيانات غير صحيحة",
-        alertEmptyReq: "الرجاء تعبئة جميع الحقول المطلوبة",
-        alertReqSuccess: "تم رفع طلبك بنجاح، جاري التحويل..."
+        alertEmptyReq: "الرجاء تعبئة الحقول المطلوبة",
+        alertReqSuccess: "تم إرسال طلبك بنجاح. سيتم توجيه الطلب إلى البريد الإلكتروني لمسؤول النظام للمراجعة والاعتماد، وسيتم إشعارك بالنتيجة قريباً."
     },
     en: {
         windowTitle: "Whisper-WA | Login",
         langBtn: "العربية",
         topSubtitle: "Digital Forensics Platform",
         pageTitle: "Access Control",
-        pageSubtitle: "Login to continue, or request an account for approval.",
+        pageSubtitle: "Login or Request an Account",
         tabLoginBtn: "Login",
         tabRequestBtn: "Request Account",
-        lblEmail: "Email",
+        lblEmail: "Email Address",
         lblPassword: "Password",
         btnLogin: "Login",
         lblName: "Full Name <span class='required'>*</span>",
-        lblReqEmail: "Email <span class='required'>*</span>",
-        lblJob: "Job Title <span class='required'>*</span>",
+        lblReqEmail: "Email Address <span class='required'>*</span>",
+        lblCode: "Password <span class='required'>*</span>",
         lblDept: "Department",
         deptOpts: ["-- Select --", "Digital Forensics", "Investigations", "Cybersecurity", "Legal & Compliance", "Other"],
         lblReason: "Reason for Access <span class='required'>*</span>",
-        phName: "e.g. Sara Al-Zahrani",
-        phEmail: "e.g. sara@company.sa",
-        phJob: "e.g. Digital Forensics Analyst",
-        phReason: "Briefly explain why you need access (e.g., case number, project details)",
-        infoReviewBox: "Your request will be reviewed by the administrator. You will receive an email notification once your account is approved or if additional information is needed.",
         btnSubmitRequest: "Submit Request",
         btnClearRequest: "Clear Form",
         alertEmptyLogin: "Please enter email and password",
         alertLoginSuccess: "Login Successful",
         alertLoginFail: "Invalid Credentials",
         alertEmptyReq: "Please fill all required fields",
-        alertReqSuccess: "Request submitted successfully, redirecting..."
+        alertReqSuccess: "Request submitted successfully. It has been forwarded to the administrator's email for review and approval. You will be notified of the outcome shortly."
     }
 };
 
@@ -476,20 +446,11 @@ function updateLanguage() {
     document.getElementById("lbl-email").innerText = t.lblEmail;
     document.getElementById("lbl-password").innerText = t.lblPassword;
     document.getElementById("btnLogin").innerText = t.btnLogin;
-    
     document.getElementById("lbl-name").innerHTML = t.lblName;
     document.getElementById("lbl-req-email").innerHTML = t.lblReqEmail;
-    document.getElementById("lbl-job").innerHTML = t.lblJob;
+    document.getElementById("lbl-code").innerHTML = t.lblCode;
     document.getElementById("lbl-dept").innerText = t.lblDept;
     document.getElementById("lbl-reason").innerHTML = t.lblReason;
-    
-    document.getElementById("reqName").placeholder = t.phName;
-    document.getElementById("reqEmail").placeholder = t.phEmail;
-    document.getElementById("reqJob").placeholder = t.phJob;
-    document.getElementById("reqReason").placeholder = t.phReason;
-    
-    document.getElementById("info-review-box").innerText = t.infoReviewBox;
-
     document.getElementById("btnSubmitRequest").innerText = t.btnSubmitRequest;
     document.getElementById("btnClearRequest").innerText = t.btnClearRequest;
 
@@ -544,12 +505,12 @@ document.getElementById("btnLogin").onclick=()=>{
 document.getElementById("btnSubmitRequest").onclick=()=>{
     const name=document.getElementById("reqName").value.trim();
     const email=document.getElementById("reqEmail").value.trim();
-    const jobTitle=document.getElementById("reqJob").value.trim();
+    const code=document.getElementById("reqCode").value.trim();
     const dept=document.getElementById("reqDept").value;
     const reason=document.getElementById("reqReason").value.trim();
     const t = translations[currentLang];
 
-    if(!name || !email || !jobTitle || !reason){
+    if(!name||!email||!code||!reason){
         showAlert("danger", t.alertEmptyReq);
         return;
     }
@@ -560,7 +521,7 @@ document.getElementById("btnSubmitRequest").onclick=()=>{
         id:Date.now(),
         name,
         email,
-        jobTitle,
+        code: code,
         department:dept,
         reason,
         status:"pending"
@@ -570,12 +531,11 @@ document.getElementById("btnSubmitRequest").onclick=()=>{
 
     showAlert("success", t.alertReqSuccess);
 
-    // تم إعادة الوقت لـ 1500 بما أن رسالة التنبيه الطويلة أصبحت ثابتة في الصندوق
-    setTimeout(()=>location.href="pending.html", 1500);
+    setTimeout(()=>location.href="pending.html", 4000);
 };
 
 document.getElementById("btnClearRequest").onclick=()=>{
-    ["reqName","reqEmail","reqJob","reqDept","reqReason"].forEach(id=>{
+    ["reqName","reqEmail","reqCode","reqDept","reqReason"].forEach(id=>{
         document.getElementById(id).value="";
     });
 };
