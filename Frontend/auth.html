@@ -13,6 +13,7 @@
 :root{
 --primary-dark:#1f5f3b;
 --primary-mid:#3f9b5f;
+--primary-light:#5fbf7a;
 --accent-glow:#8fd9a8;
 --bg-dark:#0e1a12;
 --glass-bg: rgba(20,40,30,0.65);
@@ -48,7 +49,7 @@ backdrop-filter:blur(14px);
 
 .tabs{
 display:flex;
-background:rgba(0,0,0,0.2);
+background:rgba(0,0,0,0.18);
 border-radius:16px;
 overflow:hidden;
 margin-bottom:14px;
@@ -90,7 +91,10 @@ color:white;
 font-family:inherit;
 }
 
-textarea{min-height:110px;}
+textarea{
+min-height:110px;
+resize:vertical;
+}
 
 .actions{
 display:flex;
@@ -120,11 +124,10 @@ border:1px solid rgba(255,255,255,0.1);
 }
 
 .alert{
-margin-top:18px;
-padding:14px;
+margin-top:16px;
+padding:12px;
 border-radius:14px;
 font-weight:900;
-line-height:1.8;
 }
 
 .success{
@@ -139,12 +142,25 @@ border:1px solid rgba(255,107,107,0.3);
 
 .hidden{display:none;}
 
+/* ✅ صندوق الرسالة مثل الصورة */
+.info-box{
+margin-top:14px;
+padding:14px;
+border-radius:12px;
+background:rgba(95,191,122,0.08);
+border:1px solid rgba(95,191,122,0.25);
+color:#cfe8d7;
+font-size:14px;
+line-height:1.7;
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="main-container">
+
 <section class="card">
 
 <h1>التحكم بالوصول</h1>
@@ -194,6 +210,11 @@ border:1px solid rgba(255,107,107,0.3);
 
 <label>سبب طلب الوصول *</label>
 <textarea id="reqReason"></textarea>
+
+<!-- ✅ الرسالة المطلوبة مثل الصورة -->
+<div class="info-box">
+سيتم مراجعة طلبك من قبل مسؤول النظام. ستصلك رسالة عبر البريد الإلكتروني بعد اعتماد الحساب أو في حال الحاجة لمعلومات إضافية.
+</div>
 
 <div class="actions">
 <button class="btn btn-primary" id="btnSubmitRequest">إرسال الطلب</button>
@@ -259,7 +280,6 @@ showAlert("danger","الرجاء تعبئة الحقول المطلوبة");
 return;
 }
 
-/* حفظ الطلب */
 const requests=JSON.parse(localStorage.getItem("accountRequests")||"[]");
 
 requests.push({
@@ -274,26 +294,14 @@ status:"pending"
 
 localStorage.setItem("accountRequests",JSON.stringify(requests));
 
-/* ✅ الرسالة تظهر تحت الريكوست */
-showAlert(
-"success",
-"تم إرسال طلبك بنجاح. سيتم توجيه الطلب إلى البريد الإلكتروني لمسؤول النظام للمراجعة والاعتماد، وسيتم إشعارك بالنتيجة قريباً."
-);
+showAlert("success","تم إرسال الطلب بنجاح");
 
-/* النزول تلقائياً للرسالة */
-document.getElementById("alertBox").scrollIntoView({
-behavior:"smooth",
-block:"center"
-});
-
-/* انتظار قبل التحويل */
 setTimeout(()=>{
 location.href="pending.html";
-},6000);
+},3000);
 
 };
 
-/* clear */
 btnClearRequest.onclick=()=>{
 ["reqName","reqEmail","reqCode","reqDept","reqReason"]
 .forEach(id=>document.getElementById(id).value="");
