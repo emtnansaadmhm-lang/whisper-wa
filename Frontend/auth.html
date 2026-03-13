@@ -392,7 +392,7 @@ const translations = {
         alertLoginSuccess: "تم تسجيل الدخول",
         alertLoginFail: "بيانات غير صحيحة",
         alertEmptyReq: "الرجاء تعبئة الحقول المطلوبة",
-        alertReqSuccess: "تم إرسال الطلب"
+        alertReqSuccess: "تم إرسال طلبك بنجاح. سيتم توجيه الطلب إلى البريد الإلكتروني لمسؤول النظام للمراجعة والاعتماد، وسيتم إشعارك بالنتيجة قريباً."
     },
     en: {
         windowTitle: "Whisper-WA | Login",
@@ -417,7 +417,7 @@ const translations = {
         alertLoginSuccess: "Login Successful",
         alertLoginFail: "Invalid Credentials",
         alertEmptyReq: "Please fill all required fields",
-        alertReqSuccess: "Request Submitted Successfully"
+        alertReqSuccess: "Request submitted successfully. It has been forwarded to the administrator's email for review and approval. You will be notified of the outcome shortly."
     }
 };
 
@@ -531,7 +531,7 @@ document.getElementById("btnSubmitRequest").onclick=()=>{
 
     showAlert("success", t.alertReqSuccess);
 
-    setTimeout(()=>location.href="pending.html",1200);
+    setTimeout(()=>location.href="pending.html", 4000);
 };
 
 document.getElementById("btnClearRequest").onclick=()=>{
